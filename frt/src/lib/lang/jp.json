@@ -1,0 +1,1794 @@
+{
+	"navmenu": {
+		"home": "首頁",
+		"doc": "使用者文件",
+		"discuss": "討論",
+		"template": "規劃",
+		"planning": "流程管理",
+		"workflow": "執行監控",
+		"workflow_normal": "列表模式",
+		"workflow_mining": "挖掘模式",
+		"worklist": "我的工作",
+		"kshares": "応用市場",
+		"settings": "系統設定",
+		"teaming": "組隊",
+		"messages": "訊息",
+		"currentApp": "当前応用",
+		"switch_tenant": "切換組織",
+		"history": "操作歴史",
+		"recentbiz": "常用業務",
+		"flexible": "霊活事項"
+	},
+	"discuss": {
+		"category": {
+			"ALL_VISIED": "全部可見",
+			"I_STARTED": "我啟動工作的",
+			"I_AM_IN": "我参与工作的",
+			"I_AM_QED": "与我相関的"
+		},
+		"reload": "重新整理"
+	},
+	"home": {
+		"topic": "Svelte Localization Tutorial",
+		"subtopic": "Internationalization and Localization",
+		"ifyouhaveaccount": "如果已有賬号，請直接登入",
+		"slogan": "<span class='fs-1'>超自動化· BPM</span> <br/><span class='fs-3'>PaaS & SaaS 服務</span>",
+		"introduction": "工作流管理、業務流程管理、超級自動化<br/>SaaS層提供的使用者介面可直接用於流程管理、工作協同<br/> PaaS 層提供 API 開発新流程応用、或流程化整合已有応用<br/>免費的流程開発支援服務",
+		"features": {
+			"engine": "Yarknode的核心是一個開放智慧的超自動化引擎。開発者可以自由地設計、執行、並監控超自動化引擎的執行状況，透過使用Yarknode超自動化API，開発者能夠在手機APP、小程式或H5応用中自由地呼叫超自動化能力",
+			"hyper": "Yarknode能夠用於組織内部任何事物的自動化，不管是z員工還是計算機系統。員工会自動分配工作任務，系統則可以透過API介面呼叫被自動呼叫、駆動，或反向呼叫超自動化能力",
+			"easy": "使用任何現代計算機語言，可以把Yarknode的超自動化耨裡整合到任何形式的応用中，不管是基於Web的H5応用，還是iOS或Android移動APP，還是小程式",
+			"secure": "Yarknode承担智慧協作者的角色，与其它応用系統独立並隔離，而企業内部応用系統及資料採用已有的独立授権機制。企業関鍵業務資料得以在既有的安全框架下得到安全保護"
+		},
+		"getstart": {
+			"title": "従這裡起歩",
+			"content": "無論您是業務流程管理的初学者還是有経験的使用者，学習和使用 YarkNode 都非常簡単",
+			"link": "従入門指引開始"
+		},
+		"price": {
+			"title": "服務価格",
+			"content": "根拠行業和応用場景，従流程中心裡選択你需要的業務模板，直接採納使用。所有流程均支援採納後根拠自身需要，進行修改定製",
+			"link": "訪問流程中心",
+			"tiers": {
+				"free": {
+					"title": "免費",
+					"unit": "RMB",
+					"price": "0",
+					"per": "人月",
+					"for": "五個人小団隊",
+					"c2f": "毎月四次免費流程設計支援, 郵件方式",
+					"btn": "開始使用"
+				},
+				"tier1": {
+					"title": "標準版",
+					"unit": "RMB",
+					"price": "480",
+					"per": "人月",
+					"for": "団隊人数100 以下,</br> 按月訂閲",
+					"c2f": "免費流程設計支援次数不限, 線上会議方式",
+					"btn": "訂閲"
+				},
+				"tier2": {
+					"title": "企業版",
+					"unit": "RMB",
+					"price": "4800",
+					"per": "人年",
+					"for": "団隊人数100 以下,</br> 按年訂閲",
+					"c2f": "免費流程設計支援次数不限, 線上会議方式",
+					"btn": "訂閲"
+				},
+				"tier3": {
+					"title": "旗艦版",
+					"unit": "RMB",
+					"price": "4000",
+					"per": "人年",
+					"for": "団隊人数不受限,</br> 按年訂閲",
+					"c2f": "免費流程設計支援次数不限, 線上会議方式",
+					"btn": "訂閲"
+				}
+			}
+		},
+		"privatedeploy": {
+			"title": "私有化部署",
+			"content": "我們支援為您做私有化部署, 可以在雲上, 也可以在您自己的機房裡",
+			"btn": "連絡我們"
+		},
+		"referral": {
+			"title": "転介紹客戸専案",
+			"content": "您可以申請獲得専属転介紹連結, 当客戸使用你的専属連結註冊, 並在第一次支付費用後,"
+		},
+		"hub": {
+			"title": "流程中心",
+			"content": "根拠行業和応用場景，従流程中心裡選択你需要的業務模板，直接採納使用。所有流程均支援採納後根拠自身需要，進行修改定製",
+			"link": "訪問流程中心"
+		},
+		"doc": {
+			"title": "文件",
+			"content": "業務流程管理者手冊、流程設計文件、開発文件者， 及終端使用者手冊， 都可以在這裡找到",
+			"link": "訪問線上文件"
+		},
+		"opensource": {
+			"title": "開源",
+			"content": "訪問YarkNode API及支撐工具開原始碼",
+			"link": "検視開源専案"
+		},
+		"c4f": {
+			"title": "免費的業務流程管理諮詢服務",
+			"content": "我們向付費客戸提供完全免費的業務流程設計諮詢服務，只要把你的業務需求告訴我們，我們経験豊富的諮詢師将為你提供免費的流程設計支援",
+			"link": "提交需求"
+		},
+		"faq": {
+			"title": "常見問題"
+		},
+		"search": {
+			"placeholder": "捜尋ProcessHub"
+		}
+	},
+	"account": {
+		"signin": "登入",
+		"signup": "註冊",
+		"signout": "登出",
+		"logout": "登出",
+		"register": "註冊",
+		"nofreereg": "不允許自主註冊, 如您是該企業員工，請連絡管理員",
+		"needAnAccount": "需要一個新賬戸?",
+		"yourEmail": "你的郵箱",
+		"yourAccount": "你的賬戸",
+		"password": "你的密碼",
+		"haveAnAccount": "已有賬戸?",
+		"yourDisplayName": "你的顕示名称",
+		"choosePassword": "選択一個密碼",
+		"verifyPassword": "験証你的密碼",
+		"resetpassword": "重設你的密碼",
+		"verificationcode": "請輸入你収到的験証碼",
+		"sendvrfcode": "伝送験証碼",
+		"resendvrfcode": "重新発送験証碼",
+		"vrfcodesent": "験証碼已伝送，請査収",
+		"changepassword": "提交密碼",
+		"passwordchanged": "密碼已修改，転向登入",
+		"resetPassword": {
+			"vrfcode_not_found": "験証碼不正確或已過期",
+			"user_not_found": "使用者不存在"
+		},
+		"usernotfound": "所輸入的使用者不存在",
+		"sendvrfcodeerror": "郵件輸入有誤",
+		"yourFullEmail": "請使用你的完整郵箱地址",
+		"yourEmailOrId": "完整郵箱地址或郵箱字首",
+		"binding": "繋結",
+		"occupied": "{account} 不可註冊"
+	},
+	"register": {
+		"dberror": "註冊不成功",
+		"duplicate": "該賬号已被註冊",
+		"dismiss": "知道了",
+		"emailverifytips": "註冊成功以後，平台会発送郵箱地址験証連結給您，你需要査収郵箱験証你的郵箱地址",
+		"upgradeorgtips": "如果您是企業賬号管理員，需要升級為企業賬号，請連絡您在的客戸代表。升級企業賬号後，您和您的同事将可透過MTC進行工作協作，而您的賬号自動成為管理員賬号",
+		"success": "註冊成功",
+		"loginnow": "現在去登入"
+	},
+	"extrafilter": {
+		"template": "模板",
+		"allTemplate": "--全部模板--",
+		"me": "我",
+		"any": "任何人",
+		"mine": "我的",
+		"starter": "発起人",
+		"owner": "負責人",
+		"in": "時間"
+	},
+	"remotetable": {
+		"executeNow": "執行捜尋",
+		"rowperpage": "毎頁個数",
+		"colperrow": "毎行個数",
+		"rows-10": "毎頁10個",
+		"rows-20": "毎頁20個",
+		"rows-50": "毎頁50個",
+		"rows-100": "毎頁100個",
+		"cols-1": "毎行最多一個",
+		"cols-2": "毎行最多両個",
+		"cols-3": "毎行最多三個",
+		"cols-4": "毎行最多四個",
+		"totalRows": "総共個数",
+		"pageSize": "毎頁個数",
+		"pageCount": "頁数",
+		"sortBy": "排序",
+		"filter": "過沪",
+		"bywhat": "根拠模板名称捜尋",
+		"byauthor": "根拠作者捜尋",
+		"in": "時段",
+		"start_end": "自定",
+		"calendarBegin": "始於",
+		"calendarEnd": "止於",
+		"title": "名称",
+		"name": "名称",
+		"status": "状態",
+		"starter": "啟動者",
+		"updatedAt": "更新",
+		"startedAt": "啟動",
+		"lastingDays": "持続",
+		"createdAt": "創時",
+		"lasting": "天数",
+		"actions": "操作",
+		"moreActions": "更多操作",
+		"author": "規劃者",
+		"belongTo": "所属流程",
+		"multi-select": "選択多個",
+		"multi-select-cancel": "取消多選",
+		"multi-select-all": "選択全部",
+		"multi-select-none": "全部不選",
+		"multi-select-delete": "刪除所選",
+		"visifor": "僅這些人可見: ",
+		"tags": "帰類標籤: ",
+		"desc": "描述説明: ",
+		"template": {
+			"set": {
+				"title": "設定当前模版",
+				"settags": "新増標籤，多個標籤之間用空格分割",
+				"setauthor": "将作者指定為（輸入使用者郵箱字首）",
+				"setdesc": "設定説明描述資訊",
+				"setvisito": "対誰可見 (使用PDS格式指定)",
+				"selecttocopyfrom": "選択一個模版複製其設計",
+				"tplid": "修改模版名称ID",
+				"autostop": "最新一個活動停滞若干分鐘後，中止流程"
+			},
+			"allowdiscuss": {
+				"true": "允許討論",
+				"false": "不允許討論"
+			},
+			"musthavepbo": {
+				"true": "啟動時必須指定PBO",
+				"false": "啟動時允許不指定PBO"
+			}
+		},
+		"me": "我",
+		"any": "任何人",
+		"startIt": "開始這項工作",
+		"startApp": "啟動流程",
+		"wfa": {
+			"runningWorks": "進行中的工作任務",
+			"allWorks": "所有工作任務",
+			"pause": "暫停",
+			"resume": "恢復",
+			"stop": "停止",
+			"restart": "重啟",
+			"startAnother": "啟動另一個",
+			"viewTemplate": "検視相応模版",
+			"viewInstanceTemplate": "検視例項模版",
+			"viewRelatedDiscussion": "参与相関討論",
+			"deleteThisWorkflow": "刪除這個流程",
+			"setpboat": "何時可新増PBO",
+			"setTitle": "設定流程名称",
+			"renameto": "重新命名流程為",
+			"setting": "設定",
+			"restartthendeleteThisWorkflow": "重啟並刪除当前流程"
+		},
+		"tplaction": {
+			"startIt": "啟動工作流",
+			"seeWorkflows": "検視相関程序",
+			"seeWorklist": "検視相関工作項",
+			"addDesc": "新増備註",
+			"set": "設定",
+			"setTags": "設定標籤",
+			"setVisi": "設定可見性",
+			"setOwner": "設定流程Owner",
+			"deleteThisTempalte": "刪除這個模版",
+			"lastUpdate": "上次更新",
+			"exportdata": "流程資料",
+			"editors": "編輯歴史",
+			"analysis": "流程挖掘",
+			"scheduler": "執行計劃"
+		},
+		"postpone": {
+			"in": "已延後，到期 ",
+			"text": "延後",
+			"single": "{days}天再提醒",
+			"plural": "{days}天再提醒"
+		}
+	},
+	"title": {
+		"template": "応用管理",
+		"workflow": "流程",
+		"worklist": "待辦",
+		"mining": "流程挖掘",
+		"share": "分享業務設計"
+	},
+	"adhoc": {
+		"header": "伝送一個独立任務",
+		"title": "独立任務名称",
+		"pds": "独立任務承担人, 使用PDS格式",
+		"recent": "最近承担人",
+		"comment": "附加性指引説明",
+		"founduser": "找到{num}個使用者"
+	},
+	"button": {
+		"postKShare": "確定上架ProcessHub",
+		"check": "検査",
+		"addcron": "新増這条Crontab定期啟動工作流計劃",
+		"toggleAdvancedSearch": "高階査詢",
+		"footprint": "足跡",
+		"resetQuery": "重置/全部",
+		"refreshtodos": "重新整理工作列表",
+		"create": "新建",
+		"import": "匯入",
+		"search": "捜尋",
+		"recent": "常用",
+		"settings": "系統設定",
+		"me": "我的",
+		"discuss": "我的論壇",
+		"tenant": "組織",
+		"okay": "確定",
+		"cancel": "取消",
+		"clear": "清除",
+		"set": "設定",
+		"closepreview": "関閉",
+		"closeeditlog": "関閉編輯歴史",
+		"closecronsetting": "関閉定時計劃設定",
+		"closetemplatesetting": "関閉模板設定",
+		"done": "完成",
+		"adhoc": "新建独立任務",
+		"sendback": "打回上一歩",
+		"revoke": "撤回",
+		"checkdoer": "検査任務承担人是否正確",
+		"resolve": "解析",
+		"sendadhoc": "送出任務",
+		"sendadhocConfirm": "確定，将任務伝送給上述人員",
+		"sendadhocReconsider": "取消，譲我再考慮一下",
+		"export": "匯出",
+		"copy": "複製",
+		"rename": "重新命名",
+		"delete": "刪除",
+		"startnow": "現在啟動",
+		"current_is_searching": "切換到挖掘",
+		"current_is_mining": "切換到捜尋",
+		"add": "新増",
+		"upgrade": "升級組織",
+		"reset": "重置",
+		"update": "修改",
+		"changeName": "改名",
+		"addAKey": "新増一個鍵值",
+		"more": "更多",
+		"less": "更少",
+		"save": "儲存",
+		"goback": "返回",
+		"gotobiz": "回業務面板",
+		"next": "下一歩",
+		"close": "結束吧",
+		"yana.prompt.guide": "譲亜娜為您介紹Yarknode使用方法",
+		"yana.start": "好的，請開始",
+		"preview": "預覧",
+		"view": "検視",
+		"openinnewtab": "在新標籤頁中開啟",
+		"download": "下載",
+		"my_work": "我的工作",
+		"moreitems": "更多 >>",
+		"lessitems": "<< 更少",
+		"loadmore": "載入更多",
+		"create_new_template": "新建業務流程"
+	},
+	"template": {
+		"create": {
+			"name": "新流程名称",
+			"tags": "用spaces或;或,分割的標籤"
+		},
+		"editlog": {
+			"title": "編輯歴史"
+		},
+		"addcron": {
+			"title": "定期自動啟動工作流",
+			"cronStarters": "啟動時自動設定啟動者為",
+			"cronStarters_placeholder": "請使用PDS格式指定単人或多人",
+			"existing": "已新増的定期執行計劃",
+			"addnew": "新増新的定期執行計劃"
+		},
+		"import": {
+			"name": "新流程名称",
+			"tags": "用spaces或;或,分割的標籤",
+			"from_local_disk": "従本地檔案匯入",
+			"from_process_hub": "転到ProcessHub, 従ProcessHub匯入行業専家提供的最佳実践"
+		},
+		"recent": "最近: ",
+		"empty": "没有符合条件的模板"
+	},
+	"attach": {
+		"input_a_url": "輸入一個URL",
+		"btn_add_a_url": "新増",
+		"security_warning": "這裡上伝的檔案対所有当前流程参与者可見。如対檔案有更加厳格的訪問許可権控制要求，請将檔案上伝到企業内部有厳格許可権控制的檔案伺服器中，或者有訪問許可権控制的網盤中，在這裡僅将檔案的連結新増上来，這様，檔案的訪問将受檔案伺服器或者網盤的控制"
+	},
+	"work": {
+		"moreActions": "更多操作：",
+		"pbostatus": "状態",
+		"empty": "没有符合条件的待辦事項",
+		"freejumping": "跳転中",
+		"quickcomments": "即時討論",
+		"notfound": "工作項不存在",
+		"more": {
+			"alltodos": "更多待辦",
+			"thisbiz": "当前業務",
+			"thisprocess": "当前流程"
+		}
+	},
+	"workflow": {
+		"toggleStatus": "切換状態",
+		"empty": "没有符合条件的流程",
+		"restart": "重啟",
+		"reboot": "過載模板",
+		"restart.success": "已成功重啟",
+		"reboot.success": "已成功使用最新模板過載",
+		"startat": "開始時間",
+		"pbostatus": "主物件状態",
+		"doneat": "結束時間"
+	},
+	"status": {
+		"All": "全部",
+		"ST_RUN": "待処理",
+		"ST_PAUSE": "已暫停",
+		"ST_DONE": "已完成",
+		"ST_STOP": "已中止",
+		"ST_REVOKED": "已撤回",
+		"ST_RETURNED": "已退回",
+		"ST_IGNORE": "已忽略",
+		"ST_FOOTPRINT": "足跡"
+	},
+	"statusof": {
+		"All": "全部的",
+		"ST_RUN": "待執行的",
+		"ST_PAUSE": "已暫停的",
+		"ST_DONE": "已完成的",
+		"ST_STOP": "已中止的",
+		"ST_REVOKED": "已撤回的",
+		"ST_RETURNED": "已退回的",
+		"ST_IGNORE": "已忽略的",
+		"ST_FOOTPRINT": "足跡"
+	},
+	"start": {
+		"withtemplate": "使用流程模板",
+		"canbefile": "你也可以上伝一個檔案作為PBO",
+		"startWorkflow": "新啟動 {tplid}",
+		"startIt": "正式啟動",
+		"rehearsal": "先演練一下",
+		"context": "流程上下文PBO URL(可選)",
+		"context_desc": "流程上下文PBO(可選)。PBO指的是主要業務物件，在流程執行過程中，参与者可以透過這個URL地址訪問這個業務物件，比如可以是企業内網裡的一份待批檔案",
+		"pbo": "貼上指向PBO的URL",
+		"title": "新業務流程的標題",
+		"title_placeholder": "標題",
+		"teamid": "匹配一個工作小組",
+		"recentTeam": "最近使用的工作小組",
+		"checkitout": "已啟動, 去看一下",
+		"monitorit": "監控其執行",
+		"firststep": "直接去到第一個任務項",
+		"startanother": "再次啟動這個流程",
+		"OR": "或者,你也可以",
+		"ifnotfamiliar": "一個流程可能会捲入很多的参与人，如果你対当前流程的設計瞭解不足，建議先做演練，演練時所有工作項将都発送給你自己",
+		"iffamiliar": "或者，你也可以点下面按鈕正式啟動這個流程",
+		"useflexibleteam": "如果使用霊活組隊，可在下面指定",
+		"needtitle": "請提供標題",
+		"pleaseConfirm": "請確認以下資訊",
+		"warnNoPbo": "欠失主業務物件",
+		"warnNoTitle": "欠失提供専用標題",
+		"startAnyway": "確認，請直接啟動"
+	},
+	"todo": {
+		"completed": "已完成",
+		"status": "任務状態",
+		"Starter": "発起人ID",
+		"StarterOU": "発起人部門",
+		"StarterCN": "発起人姓名",
+		"OUof": "部門",
+		"owner": "任務負責人",
+		"doneat": "完成時間",
+		"decision": "節点決策",
+		"pbo": "主要業務物件",
+		"instruction": "操作指引",
+		"nodeInput": "任務引数",
+		"transferable": "当前任務可被転辦",
+		"notTransferable": "当前任務不能被転辦",
+		"transferto": "転辦給",
+		"transfer": "転辦",
+		"rehearsalInformation": "演練資訊",
+		"process": "程序資訊",
+		"processRehearsal": "程序演練資訊",
+		"worklog": "任務歴史記録",
+		"worklogof": "流程執行記録",
+		"monitor": "監控",
+		"print": "列印",
+		"showlog": "日誌",
+		"startat": "啟動於",
+		"startby": "啟動者",
+		"nodevars": "資料",
+		"comments": "備註",
+		"freejumpto": "跳転到",
+		"restartrehearsal": "重新演練",
+		"cancelworkflowatfirststep": "放棄流程",
+		"workflowcontext": "流程上下文資訊",
+		"rehearsalinformation": "演練相関資訊",
+		"track": {
+			"dakai": "展開",
+			"shouqi": "摺畳"
+		},
+		"bethefirstcomment": "歓迎前排討論",
+		"congrat": "暫無待処理"
+	},
+	"tpl": {
+		"create_new": "建立一個新業務",
+		"dropdown": "操作",
+		"kshare": "上架PH",
+		"view": "顕示",
+		"prop": "属性",
+		"new": "新建",
+		"export": "匯出",
+		"copyto": "複製",
+		"copy_duplicated": "模版{tplid}已存在",
+		"copy_successed": "成功複製到{tplid}",
+		"rename": "重新命名",
+		"delete": "刪除",
+		"editit": "編輯",
+		"viewit": "只読",
+		"startit": "啟動",
+		"form": {
+			"newtplname": "新模版名称",
+			"exportto": "匯出為",
+			"copyto": "複製為",
+			"renameto": "重新命名為",
+			"delete": "刪除",
+			"start": "啟動"
+		}
+	},
+	"prop": {
+		"label": "任務描述",
+		"bot": "機器人",
+		"bot_wecom": "企微",
+		"action": {
+			"tab": {
+				"ai": "ChatGPT",
+				"participant": "参与人",
+				"instruction": "操作指引",
+				"features": "節点功能",
+				"variables": "節点資料",
+				"code": "節点指令碼",
+				"route": "路由",
+				"crontab": "重複執行",
+				"others": "其它",
+				"previewon": "預覧 (其中変数不会被解析)",
+				"previewoff": "関閉預覧",
+				"whattags": "可使用哪些HTML標籤？"
+			},
+			"placeholder": {
+				"instruct": "可以使用簡単HTML格式，也可使用Handlebars嵌入流程変数,like {{varname.label}}, {{varname.value}}",
+				"code": "節点指令碼，在節点任務完成後将被執行。請参考文件如何使用指令碼，指令碼錯誤可能会対流程執行帯来不可預知影響，如非必要，保持為空"
+			},
+			"p10t": {
+				"with_features": "該節点提供以下功能",
+				"byall": "如任務執行者対映到多人時，啟動投票機制",
+				"transferable": "可転辦",
+				"withsb": "可打回",
+				"withrvk": "可撤回",
+				"withadhoc": "可新建独立任務",
+				"withcmt": "即時評論輸入",
+				"sr": "迴圏中出現時，始終当做単一工作項",
+				"pds": "参与者定義",
+				"define_pds": "該任務的執行者是",
+				"define_cc": "該任務的知情者是",
+				"pick": "可参考定義",
+				"try": "測試参与者定義字串",
+				"tryteam": "使用組隊",
+				"tryuser": "使用使用者",
+				"tryresult": "結果",
+				"csv": "従CSV檔案獲取独立任務執行者",
+				"csv_placeholder": "CSV上伝檔案変数名",
+				"allowpbo": "允許修改PBO",
+				"mustsign": "必須簽名",
+				"trykvar": "測試変数",
+				"trywfid": "測試流程",
+				"csvfile_varname": "指定CSV檔案変数名為",
+				"useuserincsv": "将使用CSV檔案第一列中的文字作為EID来設定使用者，這些使用者各自独立参与当前節点活動"
+			},
+			"route": {
+				"from": "前置節点",
+				"to": "後続節点",
+				"pickone": "選択一個節点",
+				"option": "路径選択項",
+				"freejump": "当前任務可任意跳転到其他任務",
+				"freejumpable": "匹配到{tot}個節点"
+			},
+			"kvar": {
+				"basic": "基礎",
+				"extra": "附加",
+				"name": "引数名称",
+				"tbl_options": "欄位定義",
+				"ou_options": "組織選項",
+				"sel_options": "選項定義",
+				"tbl_placeholder": "欄位間用豎線分割，如：欄位名1|欄位名2|欄位名3",
+				"ou_placeholder": "ou_code;yes/no(是否包含当前級)",
+				"sel_placeholder": "選項間用；分割，如：可選項1;可選項2;可選項3",
+				"value": "預設值為",
+				"label": "顕示名称",
+				"when": "条件顕示",
+				"placeholder": "提示資訊",
+				"visi": "対誰可見",
+				"breakrow": "是否換行",
+				"ID": "編号(可選）",
+				"number": {
+					"min": "最小值",
+					"max": "最大值",
+					"step": "歩幅"
+				},
+				"required": "是否必填"
+			},
+			"button": {
+				"addnewvar": "+ 増加新変数",
+				"tryit": "開始測試"
+			},
+			"cronrun": {
+				"note": "用於控制在特定時間，重複下発当前任務, 使用Crontab標準語法。錯誤的Crontab設定可能達不到預想効果，請務必査詢Crontab表示式的語法",
+				"repeaton1": "如使用者決策為",
+				"repeaton2": "則継続，否則停止自動下発",
+				"repeaton3": "則重複，否則停止重複",
+				"norepeat": "不重複下発任務",
+				"nocron": "不重複下発任務",
+				"byrepeaton": "由使用者選択決定",
+				"runthencron": "先下発一次，然後依Crontab定義自動下発",
+				"onlycron": "僅依Crontab定義自動下発"
+			}
+		},
+		"script": {
+			"syncmode": "同歩模式",
+			"asyncmode": "非同歩模式",
+			"tryrun": "検査程式碼"
+		},
+		"timer": {
+			"code": "時間程式碼",
+			"type": "控制型別",
+			"fromstart": "従流程開始起",
+			"fromnow": "従現在起",
+			"fix": "固定時間"
+		},
+		"inform": {
+			"recipient": "収件人",
+			"content": "内容",
+			"subject": "標題"
+		},
+		"sub": {
+			"SUB": "子流程ID",
+			"standalone": "独立執行"
+		},
+		"connect": {
+			"decision": "使用者選択",
+			"decision_placeholder": "決定流程執行路径",
+			"pbostatus": "設定PBO状態為",
+			"setValue": "設定流程引数",
+			"varname": "引数名",
+			"varvalue": "引数值"
+		},
+		"tpl": {
+			"title": "模版属性",
+			"tplid": "模版名称",
+			"readonly": "只読",
+			"freejump": "全流程任務可任意跳転",
+			"callback": {
+				"endpoint": "回撥介面地址",
+				"both": "服務端和使用者端",
+				"onserver": "服務端回撥",
+				"onclient": "使用者端回撥"
+			}
+		}
+	},
+	"designer": {
+		"AthenB": "A->B, 請点選B節点",
+		"BthenA": "B->A, 請点選A節点",
+		"confirm": {
+			"reload": {
+				"title": "重新載入 ",
+				"body": "模板已被他人或在其它視窗中修改，需要重新載入",
+				"button": {
+					"yes": "重新載入"
+				}
+			}
+		},
+		"showid": "節点ID",
+		"curve": "弧線",
+		"tool": {
+			"POINTER": "<kbd><i class='bi bi-mouse2'>点選</i></kbd> 選中, <kbd><i class='bi bi-mouse2'>按住</i></kbd>拖動, <kbd>Shift-<i class='bi bi-mouse2'>点選</i></kbd>属性, <kbd>Shift-<i class='bi bi-mouse2'>移動</i></kbd>框選，<kbd>数字鍵</kbd>工具, <kbd>Ctrl-E</kbd>模式",
+			"ACTION": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>空白位置放置一個「工作項」節点, <kbd>Esc</kbd>退出当前模式",
+			"INFORM": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個通知節点，用於伝送郵件通知",
+			"SCRIPT": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個指令碼節点，用於執行指令碼程式碼",
+			"TIMER": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個定時節点，用於控制執行時間",
+			"SUB": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個子流程節点，用於啟動一個子流程或另一個独立流程",
+			"AND": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個「与」節点，前序節点全部完成才会往後執行",
+			"OR": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個「或」節点，前序節点任意一個完成即可往後執行",
+			"GROUND": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個「接地」節点，無後続節点",
+			"CONNECT": "建立路径連結，<kbd><i class='bi bi-mouse2'>点選</i></kbd>両個節点将其連結，按住<kbd>SHIFT</kbd>連続連結, <kbd>Esc</kbd>或 在空白処<kbd>双撃滑鼠</kbd>退出連結模式",
+			"THROUGH": "<kbd><i class='bi bi-mouse2'>点選</i></kbd>放置一個接続節点，用於接続長路径，対流程執行邏輯無影響"
+		}
+	},
+	"filepond": {
+		"labelIdle": {
+			"pbo": "拖放到此或瀏覧",
+			"kvar": "拖放到此或瀏覧"
+		},
+		"anytype": "無限制",
+		"multiple": "允許多檔案上伝, 最多{maxFiles}個",
+		"single": "単檔案上伝",
+		"info": "用於{key}, {allowMultiple}, 檔案型別{accept}, 単檔案大小{maxFileSize}。 上伝檔案対所有流程参与者可見...",
+		"labelFileProcessingComplete": "檔案已成功上伝",
+		"labelTapToUndo": "点選x撤回",
+		"labelTapToRetry": "重試",
+		"labelTapToCancel": "取消"
+	},
+	"confirm": {
+		"title": {
+			"areyousure": "你確定嗎？",
+			"needReload": "版本更新",
+			"postpone": "延後執行"
+		},
+		"body": {
+			"postpone": "延後{days}天再看",
+			"cancelpostpone": "取消延後",
+			"needReload": "頁面需要重新載入",
+			"deletefile": "檔案将被永久刪除，請確認",
+			"restartthendestroy": "放棄当前預演並重新啟動一個",
+			"cancelworkflowatfirststep": "当前是你自己所啟動流程的第一歩，你有機会取消這個流程。根拠毎個流程的不同定義，即便是第一個活動，也可能已経巻入了其他人参与，取消一個已経啟動的流程会給其他参与者帯来困惑甚至懊悩，請確定你要取消当前流程。",
+			"deleteWorkflow": "取消一個已経啟動的流程会給其他参与者帯来困惑甚至懊悩，請確定你要取消当前流程。"
+		},
+		"button": {
+			"yes": "是",
+			"no": "否",
+			"confirm": "確認",
+			"cancel": "取消",
+			"delete": "刪除"
+		},
+		"locale": {
+			"usedefault": {
+				"title": "自動偵測瀏覧器語言",
+				"body": "当前的語言{browserlang}。您可設定為使用其它語言",
+				"confirm": "知道了"
+			},
+			"langchanged": {
+				"title": "瀏覧器語言已変更",
+				"body": "瀏覧器語言已変更 為 {browserlang}，你要把介面語言切換為与瀏覧器介面語言相同嗎？",
+				"button1": "是的，切換",
+				"button2": "継続使用現有語言{currentlang}"
+			}
+		},
+		"delete": {
+			"template": {
+				"title": "刪除模版",
+				"body": "刪除模版不可撤回，請確認要刪除",
+				"yes": "確定刪除"
+			},
+			"template-multi": {
+				"title": "刪除{count}個模版",
+				"body": "刪除{count}個模版，不可撤回，請確認要刪除",
+				"yes": "確定刪除"
+			},
+			"workflow-multi": {
+				"title": "刪除{count}個流程",
+				"body": "刪除{count}個流程，不可撤回，請確認要刪除",
+				"yes": "確定刪除"
+			}
+		}
+	},
+	"inputtable": {
+		"copyto": {
+			"above": "向上複製",
+			"below": "向下複製"
+		},
+		"delete": "刪除当前行",
+		"move": {
+			"up": "向上移動",
+			"down": "向下移動",
+			"top": "移到最上",
+			"bottom": "移到最下"
+		}
+	},
+	"vote": {
+		"last": "依最後一人的選択",
+		"most": "依最多人的選択",
+		"least": "依最少人的選択",
+		"allOrFailto": "選択全部一様，否則",
+		"percentOrFailto": "某一選択超過比例，否則",
+		"ifAny": "只要有選，否則依最後",
+		"ifAnyThenMost": "只要有選，否則依最多",
+		"ifAnyThenLeast": "只要有選，否則依最少",
+		"ifAnyThenAllThenMost": "只要有選，否則依統一選択, 或最多",
+		"ifAnyThenFailto": "只要有選，否則"
+	},
+	"tools": {
+		"POINTER": "点選",
+		"ACTION": "活動",
+		"INFORM": "通知",
+		"SCRIPT": "指令碼",
+		"TIMER": "定時器",
+		"SUB": "子流程",
+		"AND": "並",
+		"OR": "或",
+		"GROUND": "接地",
+		"CONNECT": "連線",
+		"THROUGH": "過渡"
+	},
+	"setting": {
+		"set": "設定",
+		"adminpwd": "管理員密碼",
+		"adminpwd_ph": "本頁的操作均需要使用管理員密碼已確認",
+		"tab": {
+			"personal": "個人設定",
+			"wecombot": "待辦機器人",
+			"delegation": "工作委託",
+			"tenant": "企業租戸",
+			"orgset": "組織設定",
+			"orgchart": "組織結構",
+			"members": "組織成員",
+			"smtp": "SMTP",
+			"data": "資料列表",
+			"maintainance": "維護",
+			"resign": "離職処理",
+			"myfiles": "我的檔案",
+			"menu": "選単配置",
+			"list": "資料列表配置"
+		},
+		"personal": {
+			"nav": "個人設定",
+			"title": "設定個人相関的配置",
+			"body": "頭像、簽名、密碼等",
+			"action": "個人設定",
+			"avatar": "頭像",
+			"chooseavatar": "選択頭像上伝",
+			"choosesignature": "選択簽名檔上伝",
+			"signature": "簽名檔",
+			"cn": "賬戸名称",
+			"nickname": "組織内員工名称",
+			"currentTenant": "当前組織為: {tenant}",
+			"currentMenuGroup": "当前選単組為: {mg}",
+			"currentpassword": "当前密碼",
+			"newpassword": "新密碼",
+			"sendmail": "有新任務時通知我",
+			"joincode": "使用joincode加入一個組織",
+			"passwordhint": "長度6-20,必須包含大小写字母、数字和特殊字元個；特殊字元僅限!@#$%^&*",
+			"passwordtooshort": "密碼過短",
+			"passwordtoolong": "密碼過長",
+			"old_password_wrong": "旧密碼輸入錯誤",
+			"newpassword_wrong": "新密碼格式有誤，請検査",
+			"password2notsame": "密碼不一致",
+			"accountFormatError": "賬戸格式有誤",
+			"usernameFormatError": "名称格式有誤",
+			"nicknameFormatError": "名称格式有誤",
+			"accountFormatTip": "4-20個英文字元，字母開頭，字母或数字結尾，中間允許帯下劃線",
+			"usernameFormatTip": "2-20個字元。開頭必須是中文或英文字元，結尾可以是中文或英文字元，中間可以用英文句号、空格、減号、下劃線",
+			"nicknameFormatTip": "2-20個字元。開頭必須是中文或英文字元，結尾可以是中文或英文字元，中間可以用英文句号、空格、減号、下劃線",
+			"email": "郵箱",
+			"sms": "簡訊",
+			"wecom": "企業微信",
+			"upload": "上伝"
+		},
+		"delegation": {
+			"delegated_by": "委託人 {delegator}",
+			"nav": "委託設定",
+			"title": "設定委託及管理被委託",
+			"body": "在起止時間内把工作項委託給他人",
+			"action": "委託設定",
+			"delegation": "委託",
+			"delegateto": "把我的工作委託給別人",
+			"delegatee_eid": "被委託者EID",
+			"BeginDate": "開始日期",
+			"EndDate": "最後日期",
+			"BeforeDate": "在此之前",
+			"towhom": "委託給誰",
+			"Delegate": "開始委託",
+			"and": "以及",
+			"tome": "別人委託給我的",
+			"fromme": "我委託出去的",
+			"Between": "之間",
+			"Delegator": "委託人",
+			"Delegatee": "被委託人",
+			"removeSelected": "中止委託"
+		},
+		"maintainance": {
+			"nav": "系統維護",
+			"title": "維護系統業務資料",
+			"body": "対流程資料進行管理",
+			"action": "系統維護",
+			"select_status": "按状態篩選",
+			"deletebizobj": "刪除業務物件",
+			"bywfid": "按流程編号",
+			"bywftitle": "按流程標題",
+			"bytplid": "按模版標題"
+		},
+		"list": {
+			"nav": "資料列表",
+			"title": "管理資料列表",
+			"body": "定義命名的資料列表",
+			"action": "資料列表",
+			"new": {
+				"label": "建立新資料列表",
+				"name": "列表名称",
+				"items": "預設值"
+			},
+			"author": "作者",
+			"keyHead": "鍵值 {name} ({index}/{total}): ",
+			"changeNameForm": {
+				"label": "修改列表名字",
+				"newName": "新名字"
+			},
+			"error": {
+				"authorNotYou": "只有原作者可以修改"
+			},
+			"addKeyForm": {
+				"label": "新増一個鍵值",
+				"newKeyName": "新鍵值名称",
+				"listItems": "資料元素定義"
+			}
+		},
+		"team": {
+			"nav": "敏捷団隊",
+			"title": "機動組定義管理",
+			"body": "機動組用於定義使用者到角色的対映関係",
+			"action": "敏捷団隊",
+			"list": "敏捷団隊列表",
+			"create": "建立新団隊",
+			"import": "導入団隊",
+			"deletethisteam": "刪除這個団隊",
+			"tabs": {
+				"team": {
+					"label": "角色-成員",
+					"currentteamis": "当前団隊：{teamid}",
+					"addNewRole": "新増一個新角色",
+					"Roles": "団隊{teamid}中的角色",
+					"noRole": "尚未定義角色"
+				},
+				"export": {
+					"label": "匯出",
+					"exportTo": "将当前団隊{teamid}匯出到"
+				},
+				"rename": {
+					"label": "重新命名",
+					"renameTo": "将当前団隊{teamid}重新命名為"
+				},
+				"copyto": {
+					"label": "複製",
+					"copyTo": "複製{teamid}為"
+				},
+				"delete": {
+					"label": "刪除",
+					"areYouSure": "確定要刪除当前団隊{teamid}?"
+				}
+			}
+		},
+		"tenant": {
+			"nav": "組織賬号",
+			"title": "管理你的組織賬号",
+			"messagefornoadmin": "您不是管理員，如有調整組織配置需求，請連絡管理員",
+			"body": "設定組織配置資訊及管理組織成員",
+			"action": "組織賬号",
+			"administrator": "組織管理員",
+			"myrole": "我的角色",
+			"adminpwd": "管理員密碼",
+			"adminpwd_ph": "本頁的操作均需要使用管理員密碼已確認",
+			"name": "設定組織名称",
+			"name_ph": "新的組織名称",
+			"theme": "自定義組織級別介面皮膚",
+			"theme_ph": "自定義組織級別介面皮膚CSS的URL地址",
+			"timezone": "設定工作時区為",
+			"openaiapikey": "OpenAI API Key",
+			"orgtags": "組織級業務標籤(;分割)",
+			"ocadmins": "組織結構管理員",
+			"ocadmins_ph": "誰能管理組織結構（単個使用者ID）",
+			"myorg": "我的組織",
+			"myorgname": "我的組織名称",
+			"myorgtimezone": "時区",
+			"joincode": "加入組織的申請程式碼",
+			"currentcode": "当前申請程式碼",
+			"genjoincode": "生成申請程式碼",
+			"selfjoincode": "自定義申請程式碼",
+			"invite": "邀請他人加入組織",
+			"invite_with_email": "透過伝送郵件方式",
+			"invite_with_qrcode": "透過伝送二維碼方式，請将二維碼図片伝送給被邀請人",
+			"invite_ph": "用空格、逗号、分号分割的多個賬号",
+			"joinapplication": "加入申請",
+			"refresh": "重新整理",
+			"noapplication": "当前没有加入申請",
+			"regfree": "允許/禁止",
+			"allow_regfree": "允許使用者使用企業郵箱自主註冊到企業",
+			"allowemptypbo": "啟動工作流程時允許不指定主要業務物件",
+			"allowemptypbo_true": "已設定為：允許不指定",
+			"allowemptypbo_false": "已設定為：必須指定",
+			"regfree_true": "当前已允許員工使用企業郵箱自主註冊",
+			"regfree_false": "当前已禁止員工使用企業郵箱自主註冊，管理員可透過匯入組織結構来新増員工",
+			"set_regfree_true": "確認後，将允許員工使用企業郵箱自主註冊",
+			"set_regfree_false": "確認後，将禁止員工使用企業郵箱自主註冊",
+			"apply_to_join": "申請加入"
+		},
+		"menu": {
+			"nav": "使用者選単",
+			"title": "管理使用者選単",
+			"messagefornoadmin": "您不是管理員，如有調整使用者選単需求，請連絡管理員",
+			"body": "設定不同使用者選単組的選単項定義",
+			"action": "設定選単",
+			"onlySelfIsUseful": "只有self将被使用, 但其它定義会被儲存",
+			"pickone": "請選択選単定義組",
+			"groupmenu": "組織級選単組設定",
+			"personalmenu": "個人選単設定"
+		},
+		"orgchart": {
+			"nav": "組織結構",
+			"title": "管理你的組織結構樹",
+			"body": "対組織結構樹進行配置",
+			"action": "組織結構",
+			"query": "角色査詢",
+			"withextra": "使用額外測試資料",
+			"comment": "関係類査詢総是基於当前使用者",
+			"adminpwd": "組織管理員密碼需再次提供",
+			"ou_id": "部門編号",
+			"ou_name": "部門名称",
+			"emp_name": "員工姓名",
+			"emp_email": "員工郵箱",
+			"emp_eid": "員工賬号",
+			"account": "Mtc賬号",
+			"emp_pwd": "新員工預設密碼",
+			"exportcsv": "匯出組織結構到CSV檔案",
+			"exportxlsx": "匯出組織結構到Excel XLSX檔案",
+			"importcsv": "従.csv檔案匯入組織結構",
+			"importxlsx": "従Excel XLSX檔案匯入組織結構",
+			"btn": {
+				"refresh": "重新整理",
+				"emp_entry_create": "在組織結構中新増這条員工記録",
+				"emp_entry_update": "修改員工記録",
+				"emp_entries_remove": "従組織結構中移走員工賬号下所有記録",
+				"ou_create": "新建或修改部門",
+				"ou_delete": "刪除部門",
+				"export": "匯出",
+				"import": "匯入",
+				"copyto": "複製到",
+				"moveto": "移動到",
+				"removeentry": "移除該条員工記録",
+				"removeallentries": "移除該員工全部記録"
+			},
+			"resolver_label": "組織内角色査詢",
+			"copyormovestaffto": "将{eid}従{from}複製或移動到：",
+			"confirmRemoveOu": {
+				"title": "請確認",
+				"body": "該部門下所有子部門和使用者記録将従組織結構中移除",
+				"button": {
+					"yes": "確定"
+				}
+			},
+			"cleanEmployeesNotInOrgchart": "找出没有出現在組織架構中的員工"
+		},
+		"members": {
+			"nav": "組織成員",
+			"title": "管理組織賬号下的成員",
+			"onlyyou": "当前為個人組織,尚未升級為企業組織,您是個人組織裡的唯一成員",
+			"body": "増加刪除成員，設定成員組",
+			"action": "組織成員",
+			"members": "団隊成員管理",
+			"email": "郵箱",
+			"account": "賬号",
+			"name": "姓名",
+			"group": "授権組",
+			"menugroup": "選単組",
+			"select": "選定",
+			"removeselected": "刪除所選{number}個員工",
+			"remove": "従組織中刪除已選択的{number}個員工",
+			"setgroup": "為所選定的{number}個員工設定授権組",
+			"setpwd": "為所選定的{number}個員工設定密碼",
+			"setmenugroup": "為所選定的{number}個員工設定選単組"
+		},
+		"data": {
+			"list": "列表定義",
+			"team": "機動組定義"
+		},
+		"smtp": {
+			"nav": "SMTP",
+			"title": "郵件伺服器設定",
+			"body": "設定用於伝送郵件的伺服器資訊",
+			"action": "郵件設定",
+			"onlyadmin": "只有管理員有許可権設定SMTP",
+			"server": "SMTP伺服器地址",
+			"port": "SMTP伺服器埠",
+			"secure": "安全連線",
+			"user": "SMTP発件賬号",
+			"user_ph": "用来発送郵件的賬号",
+			"pwd": "SMTP発件賬号密碼",
+			"pwd_ph": "用来発送郵件的賬号密碼",
+			"from": "伝送者郵箱地址",
+			"from_ph": "伝送著的顕示名称"
+		},
+		"wecombot": {
+			"nav": "企業微信機器人",
+			"title": "配置企業微信機器人",
+			"body": "可用於将流程資訊伝送到企業微信",
+			"action": "企業微信",
+			"tplid": "模版名称",
+			"key": "機器人Key",
+			"addone": "現有{number} 個, 再新増一個",
+			"keyformaterror": "機器人KEY格式錯誤，請参考企業微信機器人文件"
+		},
+		"myfiles": {
+			"nav": "我的檔案",
+			"title": "管理我所上伝的檔案",
+			"body": "検視、検査使用情況、及刪除未被使用檔案",
+			"action": "我的檔案",
+			"view": "検視",
+			"download": "下載",
+			"delete": "刪除",
+			"filter": "只看該流程"
+		},
+		"resign": {
+			"nav": "使用者替換",
+			"desc": "将一個使用者替換為另一個使用者, 例如, 将'張三'替換為'李四', 張三没有完成的工作項,将交給李四去執行; 工作流模板中出現張三的地方,也会替換為李四。在'離職処理'模式下, 除了前述操作以外,張三還会被標識為已従当前組織離職",
+			"replaceuser": "使用者替換及離職処理",
+			"selectall": "全選",
+			"execute": "離職処理",
+			"replace": "僅替換使用者",
+			"from": "替換誰",
+			"to": "替換為",
+			"prepare": "検査相関業務資料",
+			"result": {
+				"todo": "相関工作項",
+				"tpl": "相関流程模版"
+			},
+			"placeholder": {
+				"from": "離職人員ID或郵箱地址",
+				"to": "接手人ID或郵箱地址"
+			},
+			"confirm": {
+				"title": "危険操作",
+				"body": "{from}的賬号将被做離職凍結，不再可用",
+				"doit": "確認離職凍結"
+			}
+		},
+		"tenant_others": {
+			"nav": "其它"
+		}
+	},
+	"pds": {
+		"withextra": "使用附加資訊",
+		"noextra": "不使用附加資訊"
+	},
+	"authgroup": {
+		"ADMIN": "管理員",
+		"OBSERVER": "観察者",
+		"DOER": "執行者"
+	},
+	"footer": {
+		"neural": "組織的数字化中枢神経系統",
+		"PLATFORM": "MTC平台",
+		"SOLUTION": "解決方案",
+		"video": "介紹影片",
+		"howitworks": "如何工作",
+		"usecases": "使用場景",
+		"signup": "註冊",
+		"signin": "登入",
+		"DEVELOPER": "開発者",
+		"quickstart": "快速啟動",
+		"examples": "例子",
+		"docsandhelp": "文件与幫助",
+		"discord": "Discord",
+		"sdks": "SDKs",
+		"opensource": "開源",
+		"DEPLOYMENT": "部署方式",
+		"paas": "Paas服務",
+		"privateinstall": "独立部署",
+		"addpagetopersonalmenu": "将本頁新増到個人選単",
+		"yana": "亜娜"
+	},
+	"changeid": {
+		"current": "当前節点ID: ",
+		"changeto": "修改節点ID為",
+		"set": "修改",
+		"tooshort": "節点ID太短",
+		"exist": "already exists",
+		"meaningful": "預設ID是自動生成的，你可能需要給它一個更加有意義的ID",
+		"idformat": "這個節点ID是不合法字串"
+	},
+	"csv": {
+		"uidnotfound": "錯誤: 以下使用者ID不存在"
+	},
+	"login": {
+		"reset_password": "忘記密碼嗎？如需重置密碼点這裡",
+		"needfullemail": "重置密碼須使用完整郵箱地址",
+		"resetpasswordresult": "重置密碼的指引已伝送到你的郵箱，請査収",
+		"resendverificationemail": "再次伝送験証資訊郵件",
+		"verificationEmailSent": "包含験証資訊的郵件已伝送，請査収",
+		"resendVerificationEmailLater": "秒後可再次伝送",
+		"verify": {
+			"error": {
+				"ACCOUNT_ALREADY_VERIFIED": "該賬戸已経験証過了",
+				"ACCOUNT_USER_NOT_FOUND": "該賬戸不存在，無法験証",
+				"VERIFICATION_CODE_EXPIRED": "超過15分鐘已過期"
+			},
+			"message": {
+				"EMAIL_VERIFIED": "験証成功",
+				"YOU_ARE_VERIFYING": "正在験証"
+			},
+			"needRelogin": "請重新登入"
+		}
+	},
+	"comment": {
+		"hide": "公共討論区 収起",
+		"show": "公共討論区 展開",
+		"zone": "公共討論区",
+		"fortodo": "評論：",
+		"forcomment": "回覆：",
+		"markdown_enabled": "支援Markdown"
+	},
+	"userSession": {
+		"kickout": "過多非正常操作重新整理-你的登入被退出",
+		"forcetohome": "過多非正常操作重新整理-退回首頁",
+		"relogin": "您需要重新登入"
+	},
+	"error": {
+		"NO_BRUTE": "請勿頻繁操作",
+		"LOGIN_EMAILVERIFIED_FALSE": "郵箱地址尚未験証",
+		"login_no_account": "賬戸不存在",
+		"duplicated_object": "重複物件已存在",
+		"password_format": "密碼長度必須在6-12之間，包含大小写字母数字及特殊字元",
+		"username_format": "使用者名称長度必須在4-12之間，且只包含大小写字母和数字",
+		"email_exist": "Email已被佔用",
+		"wfid_exist": "wfid已存在",
+		"login_failed": "登入失敗，請検査ID或密碼是否正確",
+		"ORGCHART_ENTRY_KEEP_LAST_ONE": "這是 該使用者最後一条落位，徹底刪除使用者請使用刪除郵箱功能",
+		"couldnotdisplayfile": "你的瀏覧器不支援直接顕示此檔案，請下載後検視",
+		"wnf": {
+			"title": "遇到了錯誤",
+			"subtitle": "未能找到流程",
+			"info": "流程{wfid}不存在或者無権検視",
+			"btntitle": "返回"
+		},
+		"notfound": "不存在或無権訪問",
+		"notyourwork": "這是別人的工作"
+	},
+	"searchlet": {
+		"new": "存為",
+		"save": "儲存",
+		"cancel": "取消",
+		"existing": "已存",
+		"nameit": "給它一個名字, 同名将被替換",
+		"pick": "請選択",
+		"reset": "重置捜尋"
+	},
+	"pagination": {
+		"first": "第一頁",
+		"prev": "前一頁",
+		"next": "後一頁",
+		"last": "最後頁"
+	},
+	"notify": {
+		"create_template_success": "模版{tplid}建立成功",
+		"create_adhoc_success": "独立任務伝送成功",
+		"auto_refresh_work": "在{minutes}分鐘内自動更新",
+		"stop_refresh_work": "自動更新已停止，点【重置/全部】按鈕手動獲得新任務",
+		"set_password_success": "設定密碼成功",
+		"employee_account_selected": "已選定 {number} 個員工",
+		"only_admin": "只有管理員可以操作本区功能",
+		"title": "通知",
+		"welcome": "歓迎您"
+	},
+	"flexible": {
+		"title": "霊活事項",
+		"subtitle": "向某人安排一項工作，無須預先設計複雑流程，只許依次安排工作即可，毎項工作均可単独指定承担著，各項工作按順序執行。 在毎項工作的執行過程中，均可随時発起新的工作任務。所有工作自動向執行者伝送，整個工作過程得以規範化跟進",
+		"placeholder": "請輸入事項（専案）的名称",
+		"btn_goto_template": "開始新的工作",
+		"btn_showform": "発起新的霊活事項",
+		"menu": "新建霊活事項",
+		"btn_create": "開始",
+		"res_success": "已啟動，請在【我的任務】中検視",
+		"pickeid": "最近使用",
+		"forWhom": "該事項承担者為"
+	},
+	"homecard": {
+		"menu": {
+			"todos": {
+				"ST_RUN": "待処理",
+				"ST_DONE": "已処理",
+				"ST_FOOTPRINT": "我的足跡",
+				"startWorkflow": "啟動流程"
+			}
+		},
+		"template": {
+			"title": "工作模版",
+			"body": "按標準流程方式安排工作"
+		},
+		"flexible": {
+			"title": "霊活事項",
+			"body": "按霊活機動方式安排工作"
+		},
+		"workflow": {
+			"title": "執行監控",
+			"body": "監控各項工作任務進展情況 "
+		},
+		"work": {
+			"title": "工作任務 ",
+			"body": "検視工作任務列表"
+		},
+		"discuss": {
+			"title": "工作討論",
+			"body": "参与、検視行動任務的討論"
+		},
+		"setting": {
+			"title": "系統設定",
+			"body": "按需定製使用環境"
+		},
+		"help": {
+			"title": "幫助資訊",
+			"body": "検視使用者使用幫助"
+		},
+		"myfile": {
+			"title": "我的檔案",
+			"body": "我上伝的檔案"
+		}
+	},
+	"tips": {
+		"orgtag": {
+			"title": "組織級分類標籤",
+			"content": "組織管理員可根拠需要設定，点選進入設定"
+		},
+		"flexible": {
+			"title": "建立霊活事項",
+			"content": "無須規劃模版，霊活釈出工作任務"
+		},
+		"newwork": {
+			"title": "開始一件規劃好的工作",
+			"content": "去工作規劃中找到要啟動的工作来啟動"
+		},
+		"check_email_please": "請査収郵件",
+		"designer": {
+			"action": {
+				"allowpbo": {
+					"title": "是否允許",
+					"content": "使用者在此歩可修改主要業務物件"
+				}
+			},
+			"kvar": {
+				"btn": {
+					"dash": {
+						"title": "刪除",
+						"content": "点選刪除本引数"
+					},
+					"plus": {
+						"title": "新増",
+						"content": "点選新増一個新引数"
+					},
+					"up": {
+						"title": "単点向上移動",
+						"content": "Shift-単点向上複製"
+					},
+					"down": {
+						"title": "単点向下移動",
+						"content": "Shift-単点向下複製"
+					},
+					"double-up": {
+						"title": "単点移動到頂部",
+						"content": "Shift-単点複製到頂部"
+					},
+					"double-down": {
+						"title": "単点移動到底部",
+						"content": "Shift-単点複製到底部"
+					}
+				}
+			}
+		}
+	},
+	"search": {
+		"condition": {
+			"all": "全部",
+			"template": "当前捜尋 {pattern}, 作者: {author}"
+		}
+	},
+	"unit": {
+		"days": "天",
+		"hours": "小時",
+		"tasks": "個任務",
+		"nodes": "個歩驟"
+	},
+	"mining": {
+		"total": "共{total}項, 満足挖掘条件{number}項",
+		"work_redlight_threshold": "任務紅灯",
+		"process_redlight_threshold": "流程紅灯",
+		"OR": "或者",
+		"AND": "並且",
+		"process_threshold": "流程執行超過",
+		"redlight_threshold": "任務執行超過",
+		"show": {
+			"show": "顕示",
+			"works": "任務節点",
+			"todos": "任務単項",
+			"only_above_threshold": "僅顕示亮灯項",
+			"with_process": "包括：",
+			"with_todos": "包括："
+		},
+		"nav": {
+			"time": "時間維度",
+			"people": "人員維度"
+		},
+		"task": {
+			"number": "按任務数量",
+			"longest": "単任務最長時長",
+			"average": "任務平均時長",
+			"total": "任務総時長",
+			"processes": "発起流程数量"
+		}
+	},
+	"kshare": {
+		"title": "ProcessHub 可匯入的模版",
+		"description": "由行業専家提供的基於行業最佳実践的管理模版，可直接匯入到本企業内使用",
+		"all_scenarios": "全場景",
+		"all_industries": "全行業",
+		"topmenu": {
+			"All": "全部",
+			"Scenarios": "分場景",
+			"Industries": "分行業",
+			"Tags": "過沪標籤",
+			"pickedtags": "已選標籤"
+		},
+		"label": {
+			"All": "全部",
+			"Close": "関閉",
+			"Preview": "預覧",
+			"Pick": "採納",
+			"Confirm": "確定",
+			"Cancel": "取消",
+			"only12": "在此処，毎一類只随機顕示最多12個，点這裡検視全部"
+		},
+		"search": {
+			"byname": "按名称",
+			"byauthor": "按作者",
+			"q": {
+				"placeholder": "捜名字或描述"
+			},
+			"author": {
+				"placeholder": "捜作者"
+			}
+		},
+		"pickit": {
+			"placeholder": "請輸入要写入的業務模版的名称",
+			"pickas": "採納為: ",
+			"error": {
+				"no_user": "請登入後匯入",
+				"exists": {
+					"title": "該名称的模版已存在",
+					"body": "請修改名称後重試"
+				}
+			},
+			"result": {
+				"success": "匯入成功，請到業務規劃選単中検視"
+			}
+		},
+		"shareform": {
+			"name": "分享名称",
+			"desc": "分享描述",
+			"price": "価格",
+			"scenario": "選択場景標籤",
+			"add": "新増"
+		}
+	},
+	"cron": {
+		"title": {
+			"expr": "表示式",
+			"month": "月度",
+			"date": "日期",
+			"weekday": "星期",
+			"hour": "小時",
+			"result": "解析結果",
+			"notset": "不指定",
+			"single": "単項",
+			"range": "区間",
+			"every": "間隔",
+			"from": "従",
+			"to": "到",
+			"and": "以及"
+		},
+		"month": {
+			"0": "不指定",
+			"1": "一月",
+			"2": "二月",
+			"3": "三月",
+			"4": "四月",
+			"5": "五月",
+			"6": "六月",
+			"7": "七月",
+			"8": "八月",
+			"9": "九月",
+			"10": "十月",
+			"11": "十一月",
+			"12": "十二月"
+		},
+		"weekday": {
+			"0": "不指定",
+			"1": "星期一",
+			"2": "星期二",
+			"3": "星期三",
+			"4": "星期四",
+			"5": "星期五",
+			"6": "星期六",
+			"7": "星期日"
+		},
+		"date": {
+			"unit": "号"
+		},
+		"hour": {
+			"unit": "点"
+		},
+		"miniute": {
+			"unit": "分"
+		}
+	},
+	"popover": {
+		"postpone": {
+			"title": "延後再現",
+			"content": "延後若干天后再看到"
+		}
+	},
+	"server": {
+		"DELEGATE_FAILED_SAME_USER": "不能委託給自己",
+		"DELEGATE_FAILED_NOT_SAME_ORG": "只能委託給相同組織的賬号",
+		"DELEGATE_FAILED_OVERLAP": "時間視窗存在重畳",
+		"FETCH_FAILED": "網路開小差了，等会再試吧"
+	},
+	"message": {
+		"success": "成功",
+		"switch_tenant_success": "切換成功",
+		"saved": "以儲存",
+		"personal_menuitem_saved": "個人選単項已儲存"
+	},
+	"tag": {
+		"all": "全部"
+	},
+	"MyPersonal": "個人選単",
+	"biz": {
+		"todos": "待辦事項",
+		"recentDone": "近期完成的工作項",
+		"recentProcess": "近期参与過的流程",
+		"basic_op": "基本操作",
+		"advanced_op": "更多操作",
+		"op": {
+			"startProcess": "啟動新業務流程",
+			"seeDesign": "検視流程設計",
+			"editDesign": "編輯流程設計",
+			"allbiz": "全部業務",
+			"export": "匯出業務設計",
+			"snapshot": "匯出快照",
+			"mining": "流程挖掘"
+		},
+		"adv": {
+			"all_todos": "全部待辦",
+			"all_biz": "全部業務",
+			"discuss": "参与相関討論",
+			"share": "公開分享"
+		}
+	},
+	"quote": {
+		"subject": {
+			"1": "運営自動化",
+			"2": "工業自動化",
+			"3": "銷售自動化"
+		},
+		"name": {
+			"1": "袁女士 · 普吉島",
+			"2": "張総 · 莫納生物",
+			"3": "劉先生 · 亜馬遜"
+		},
+		"quote": {
+			"1": "門店的運営効率提升了30%，<br/>譲我們能夠更加専注於顧客的服務",
+			"2": "生産効率提升了20%，<br/>譲我們能夠更加専注於産品的研発",
+			"3": "銷售知識透過流程得以沉澱，<br/>譲我們能夠高効跟進毎一個訂単"
+		}
+	},
+	"solutions": {
+		"manufacture": "数字化製造",
+		"sales": "数字化銷售",
+		"crm": "数字化服務",
+		"manager": "数字経理人"
+	},
+	"evaluate": {
+		"youwill": "您将体験下面的流程",
+		"account": {
+			"prompt": "看起来您還没有登入，請問您将選択哪一種方式来体験本流程？",
+			"login": "使用已有使用者賬戸，点此登入",
+			"register": "需要註冊一個正式賬戸，点此註冊",
+			"demo": "不想註冊，透過臨時賬号来体験（臨時賬号一旦退出無法継続使用，建議註冊新的正式賬号或登入已有賬号）"
+		},
+		"start": "使用賬号 ({account}) 来開始体験",
+		"waitForFirstTodo": "工作流程 {wftitle} 已啟動. 請稍後, 即将進入第一歩({countdown})..."
+	},
+	"addCurrent": "➕添加当前頁",
+	"boolean": {
+		"true": "是",
+		"false": "否"
+	},
+	"bizpicker": {
+		"pickone": "請選択一個業務",
+		"picknone": "不指定業務",
+		"desc": "請従下方列表中選択一個業務, 或者",
+		"button": "按業務過沪, 当前：",
+		"none": "未指定"
+	},
+	"uisection": {
+		"tag": "分類",
+		"search": "捜尋",
+		"sort": "排序",
+		"layout": "佈局"
+	},
+	"sign": {
+		"title": "簽名区",
+		"reset": "重籤",
+		"uselast": "使用上次的簽名",
+		"waitforsignature": "(待簽名)"
+	},
+	"input": {
+		"should_have_value": "{key} 必須輸入",
+		"should_have_value_number": "{key} 必須輸入数字",
+		"should_have_value_file": "{key} 必須提供檔案"
+	},
+	"baystone": {
+		"nav": {
+			"all_search": "捜尋AI応用場景...",
+			"scenarios": "場景",
+			"resources": "資源",
+			"ai_server": "AI 服務",
+			"ai_models": "AI 模型",
+			"gpu_ladder": "GPU中心",
+			"another_action": "其他操作",
+			"add_scenario": "新増場景",
+			"add_application": "新増応用",
+			"add_supplier": "新増供応商",
+			"add_resource": "新増資源",
+			"add_model": "新増模型",
+			"add_image": "添加鏡像",
+			"logout": "登出",
+			"login": "登入",
+			"sign_up": "登出"
+		},
+		"scenarios": {
+			"industry": "行業",
+			"tags": "標籤",
+			"filter_name": "按行業名称篩選...",
+			"filter_tag": "按標籤名称篩選...",
+			"ai_industry": "AI行業場景",
+			"create": "建立AI行業場景",
+			"unique_id": "唯一標識",
+			"name": "名称",
+			"description": "描述",
+			"icon": "図示",
+			"add_tag": "新増標籤:用空格分割, 按回車新増",
+			"pick": "選択一個行業",
+			"open_this": "開啟選択選単",
+			"find_ai_is_null": "沒有找到屬於該分類的大模型應用"
+		},
+		"aiinstance": {
+			"instance": "新的應用名稱",
+			"Applications": "添加應用",
+			"AI_Applications": "人工智慧應用",
+			"gpu_num": "GPU數量",
+			"gpu_model": "GPU型號",
+			"gpu_memory": "記憶體",
+			"gpu_storage": "存儲",
+			"gpu_vcpu": "CPU核數"
+		},
+		"application": {
+			"add_aiapp": "創建人工智慧應用程序",
+			"name": "名稱",
+			"Description": "描述",
+			"icon": "圖示",
+			"Docker": "Docker 鏡像",
+			"Scenario": "設定場景"
+		},
+		"aiscenario": {
+			"big_model": "大模型應用",
+			"not_used": "未使用",
+			"being_used": "使用中",
+			"Manage": "管理您現有的應用服務",
+			"Manages": "使用現有的應用服務",
+			"Run_now": "立即運行"
+		},
+		"inputs": {
+			"label": "添加標籤：按空格分隔，按enter鍵添加"
+		},
+		"appservice": {
+			"console": "應用控制台",
+			"name": "服務名字",
+			"space": "服務所在空間",
+			"type": "服務類型",
+			"status": "服務狀態",
+			"delete": "删除服務",
+			"deletes": "删除應用",
+			"access": "訪問服務",
+			"refer": "適用於",
+			"success": "成功",
+			"fail": "失敗",
+			"reason": "失敗原因",
+			"suspend": "暫停服務",
+			"restore": "恢復服務"
+		},
+		"image": {
+			"add_image": "創建鏡像",
+			"image_name": "鏡像名字",
+			"image_scene": "鏡像場景",
+			"image_status": "鏡像狀態",
+			"operate": "操作",
+			"Approved": "審核通過",
+			"in_review": "稽核中",
+			"to_examine": "審核",
+			"Deleted": "已删除",
+			"deactivated": "已停用",
+			"Enable": "啟用",
+			"Deactivate": "停用",
+			"delete_image": "删除",
+			"creator": "創建者",
+			"Submit": "提交修改"
+		},
+		"gpu": {
+			"gpu_label": "GPU型號",
+			"gpu_architecture": "GPU架構",
+			"gpu_fb64": "FP64TensorCore",
+			"gpu_tf64": "TF64TensorCore",
+			"gpu_fp32": "FP32TensorCore",
+			"gpu_tf32": "TF32TensorCore",
+			"gpu_fp16": "FP16TensorCore",
+			"gpu_int18": "INT18TensorCore",
+			"gpu_rtcoretype": "RTCore類型",
+			"gpu_rtcorenumber": "RTCore個數",
+			"gpu_rtcorefp16": "RTCore效能",
+			"gpu_gmemtype": "顯存類型",
+			"gpu_gmemsize": "GPU顯存",
+			"gpu_gmembw": "GPU顯存寬帶",
+			"gpu_power": "功率",
+			"gpu_linktype": "互聯類型",
+			"gpu_linkspeed": "網連速度",
+			"gpu_operate": "操作",
+			"gpu_delete": "删除",
+			"gpu_add": "新增GPU",
+			"gpu_adds": "新增GPU資訊",
+			"gpu_list": "GPU清單",
+			"gpu_contrast": "對比GPU",
+			"gpu_contrasts": "GPU對比",
+			"gpu_modify": "修改GPU資訊",
+			"gpu_detailed": "GPU詳細資訊",
+			"gpu_contrast_item": "對比項"
+		},
+		"supplier": {
+			"add_ai": "創建供應商",
+			"identifying": "唯一標識",
+			"Company": "公司名稱",
+			"Contact": "連絡人姓名",
+			"Telephone": "固定電話",
+			"mobile": "手機號碼",
+			"QQ": "QQ號碼",
+			"weixin": "微訊號",
+			"Facebook": "臉書",
+			"weibo": "微博",
+			"Detail": "展開詳情",
+			"Details": "詳情",
+			"Close": "關閉詳情",
+			"Toggle": "管理狀態",
+			"Update": "提交修改"
+		},
+		"ai_server": {
+			"bare_metal": "裸金属",
+			"airdrop": "空投",
+			"cloud": "雲"
+		},
+		"ai_model": {
+			"tasks": "任務",
+			"libraries": "依頼",
+			"datasets": "資料集",
+			"language": "語言",
+			"licences": "許可証",
+			"filter_name": "按名称過沪...",
+			"filter_task": "按任務名称過沪...",
+			"filter_libraries": "按依頼名称過沪...",
+			"filter_dataset": "按資料集名称過沪...",
+			"filter_language": "按語言名称過沪...",
+			"filter_licence": "按許可証名称過沪...",
+			"ai_models": "AI 模型",
+			"model_card": "型号",
+			"files_and_versions": "檔案和版本",
+			"community": "社群"
+		},
+		"comment": {
+			"back": "返回列表",
+			"goto": "提交後前往列表",
+			"create_another": "提交後建立新的",
+			"purchase_reation": "購買資源並運行模型",
+			"create": "建立"
+		}
+	}
+}

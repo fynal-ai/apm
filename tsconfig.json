@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"outDir": "build",
+		"rootDir": "src",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"typeRoots": ["node_modules/@types"],
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"noUnusedLocals": false,
+		// "target": "es6",
+		// "module": "commonjs",
+		"target": "es2020",
+		"module": "esnext"
+	},
+	"include": ["./src", "../secret"],
+	"exclude": ["./node_modules"]
+}

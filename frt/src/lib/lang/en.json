@@ -1,0 +1,2920 @@
+{
+	"navmenu": {
+		"home": "Home",
+		"doc": "Doc",
+		"discuss": "Discuss",
+		"template": "Template",
+		"planning": "Planning",
+		"workflow": "Monitoring",
+		"workflow_normal": "List",
+		"workflow_mining": "Mining",
+		"worklist": "My Works",
+		"kshares": "App Store",
+		"settings": "Settings",
+		"teaming": "Teaming",
+		"messages": "Messages",
+		"currentApp": "Application",
+		"switch_tenant": "Switch Tenant",
+		"history": "History",
+		"recentbiz": "Recent Biz",
+		"flexible": "Flexible Task"
+	},
+	"discuss": {
+		"category": {
+			"ALL_VISIED": "All Visable",
+			"I_STARTED": "My Workflow",
+			"I_AM_IN": "My Works",
+			"I_AM_QED": "Related to Me"
+		},
+		"reload": "Reload"
+	},
+	"home": {
+		"topic": "Svelte Localization Tutorial",
+		"subtopic": "Internationalization and Localization",
+		"ifyouhaveaccount": "or if you already have an account",
+		"slogan": "Run Hyper-Automation applications with Metatocome",
+		"introduction": "Metatocome is a Hyper-Automation engine online service which can be used to automate everything in an organization that can be automated. Developers can build advanced wokflow based applications that dispatch tasks to both human and computer systems with any modern computer languages.",
+		"features": {
+			"engine": "Metatocome's core component is an advanced hyper-automation Engine running in the cloud. Developers can design, run, monitor workflow processes on this site, or develop fully customized UIs with the support of Metatocome APIs.",
+			"hyper": "Metatocome can automate the process of any sort of entities, no matter they are human or computer system, from a integrated enterprise perspective. these entities take the role of \"workers\", Staff get their work instructions from worklist, system provide API endpoints Metatocome engine will call.",
+			"easy": "Integrate workflow into your application, web-based, iOS or Android APP, with SDK of any modern computer language.",
+			"secure": "Metatocome take the role of a pure collaboration engine running separatedly from other systems, and has separated authentication, and access control from enterprise's internal IT system. Metatocome use resource URI to refer to any internal or external IT resources."
+		},
+		"getstart": {
+			"title": "Get Started",
+			"content": "Whether you're new to BPM or an experienced user, it's easy to learn and use Yarknode",
+			"link": "Start with our Beginner's Guide"
+		},
+		"hub": {
+			"title": "Process Hub",
+			"content": "There are a lot of shared processes in processhub, categoried by industry and business scenario, pick one, make it yours, and start work with it.",
+			"link": "Startwith our Beginner's Guide"
+		},
+		"doc": {
+			"title": "Docs",
+			"content": "Documentation for Yarknode's Administrators, Developers, and End Users",
+			"link": "docs.yarknode.com"
+		},
+		"c4f": {
+			"title": "Free BMP consultant",
+			"content": "We provide free consulting service for your business process management, tell us your business requirements, our experienced consultant will create process for you, completely free.",
+			"link": "Submit your ticket now"
+		},
+		"faq": {
+			"title": "Frequntly Asked Questions"
+		},
+		"search": {
+			"placeholder": "Search ProcessHub"
+		}
+	},
+	"account": {
+		"signin": "Sign In",
+		"signup": "Sign Up",
+		"signout": "Sign Out",
+		"logout": "Log out",
+		"register": "Register",
+		"nofreereg": "self-registration is not allowed, contact your admin",
+		"needAnAccount": "Need an account?",
+		"yourEmail": "Your email",
+		"yourAccount": "Your account",
+		"password": "Password",
+		"haveAnAccount": "Have an account?",
+		"yourDisplayName": "Your display name",
+		"choosePassword": "Choose your password",
+		"verifyPassword": "Verify your password",
+		"resetpassword": "Reset your password",
+		"verificationcode": "Input Verification Code You Received",
+		"sendvrfcode": "Send Verification Code",
+		"resendvrfcode": "Resend Verification Code",
+		"vrfcodesent": "Verification Code Sent, Check your email pls",
+		"changepassword": "Submit New Password",
+		"passwordchanged": "Password reset done, goto Login",
+		"resetPassword": {
+			"vrfcode_not_found": "Verification Code not correct or expired",
+			"user_not_found": "User not found"
+		},
+		"usernotfound": "User not found",
+		"sendvrfcodeerror": "Email is invalid",
+		"yourFullEmail": "Your full email address",
+		"yourEmailOrId": "Full email address or prefix ID",
+		"binding": "Binding",
+		"occupied": "{account} is occupied"
+	},
+	"register": {
+		"dberror": "Registration failed",
+		"duplicate": "Account already registered",
+		"dismiss": "Acknowledged",
+		"emailverifytips": "After registration, you need to verify your email address by clicking the link in the email platform send to you",
+		"upgradeorgtips": "If you are enterprise account administrator, and are going to upgrade your account to enterprise-level, please contact Metatocome client representives. After upgrading succesfully, your workmates will be able to collaborate with MTC, and your account will be the Administrator automatically.",
+		"success": "Registration successfully",
+		"loginnow": "Go to login now"
+	},
+	"extrafilter": {
+		"template": "Template",
+		"allTemplate": "--All Templates--",
+		"me": "Me",
+		"any": "Any",
+		"mine": "Mine",
+		"starter": "Starter",
+		"owner": "Owner",
+		"in": "In"
+	},
+	"remotetable": {
+		"executeNow": "Search Now",
+		"rowperpage": "Rows per page",
+		"colperrow": "Cols per row",
+		"rows-10": "10 items per page",
+		"rows-20": "20 items per page",
+		"rows-50": "50 items per page",
+		"rows-100": "100 items per page",
+		"cols-1": "one item per row",
+		"cols-2": "two items per row",
+		"cols-3": "three items per row",
+		"cols-4": "four items per row",
+		"totalRows": "Total",
+		"pageSize": "Page Size",
+		"pageCount": "Page Count",
+		"sortBy": "Sorting",
+		"filter": "Filter",
+		"bywhat": "by name or title",
+		"byauthor": "by author",
+		"in": "In",
+		"start_end": "Specify Period",
+		"calendarBegin": "Begin",
+		"calendarEnd": "End",
+		"title": "Title",
+		"name": "Name",
+		"status": "Status",
+		"starter": "Starter",
+		"updatedAt": "Updated at",
+		"startedAt": "Started at",
+		"lastingDays": "Lasting Days",
+		"createdAt": "Assign at",
+		"lasting": "Days",
+		"actions": "Actions",
+		"moreActions": "More Actions",
+		"author": "Author",
+		"belongTo": "Belonging to",
+		"multi-select": "Multi-select",
+		"multi-select-cancel": "Cancel",
+		"multi-select-all": "Select all",
+		"multi-select-none": "Select none",
+		"multi-select-delete": "Delete Selected",
+		"visifor": "Only visible for: ",
+		"tags": "Tags: ",
+		"desc": "Description: ",
+		"template": {
+			"set": {
+				"title": "Template Settings",
+				"settags": "Set tags (delimited by spaces)",
+				"setauthor": "Set author to（user id/email prefix）",
+				"setdesc": "Set description",
+				"setvisito": "Set visible for (specify with PDS format)",
+				"selecttocopyfrom": "Select to copy from",
+				"tplid": "Rename Template ID",
+				"autostop": "Cancel process when last task stale more than minutes"
+			},
+			"allowdiscuss": {
+				"true": "Allow Discussion",
+				"false": "No Discussion"
+			},
+			"musthavepbo": {
+				"true": "Must have PBO when start",
+				"false": "Could have no PBO when start"
+			}
+		},
+		"me": "Me",
+		"any": "Any",
+		"startIt": "Start it",
+		"startApp": "Start App",
+		"wfa": {
+			"runningWorks": "Running Works",
+			"allWorks": "All Works",
+			"pause": "Pause",
+			"resume": "Resume",
+			"stop": "Stop",
+			"restart": "Restart",
+			"startAnother": "Start Another",
+			"viewTemplate": "View Template",
+			"viewInstanceTemplate": "View Instance Template",
+			"viewRelatedDiscussion": "Dicussion",
+			"deleteThisWorkflow": "Delete This Workflow",
+			"setpboat": "Set PBO checkpoint",
+			"setTitle": "Set Title",
+			"renameto": "Rename to",
+			"setting": "Settings",
+			"restartthendeleteThisWorkflow": "Restart And Delete This"
+		},
+		"tplaction": {
+			"startIt": "Start It",
+			"seeWorkflows": "See Workflows",
+			"seeWorklist": "See Worklist",
+			"addDesc": "Add Description",
+			"set": "Setting",
+			"setTags": "Set TAGS",
+			"setVisi": "Set Visibility",
+			"setOwner": "Set Owner",
+			"deleteThisTempalte": "Delete This Template",
+			"lastUpdate": "Last Update",
+			"exportdata": "Export Data",
+			"editors": "Editors",
+			"analysis": "Process mining",
+			"scheduler": "Scheduler"
+		},
+		"postpone": {
+			"in": "Postponed，expire in ",
+			"text": "Postpone",
+			"single": "{days} Day",
+			"plural": "{days} Days"
+		}
+	},
+	"title": {
+		"template": "Template",
+		"workflow": "Workflow",
+		"worklist": "Work list",
+		"mining": "Process Mining",
+		"share": "Share Business Design"
+	},
+	"adhoc": {
+		"header": "Send out an Adhoc Task",
+		"title": "Task title",
+		"pds": "Who should take it? (use PDS format)",
+		"recent": "Recent doers",
+		"comment": "Extra instructions",
+		"foundduser": "Found {num} users"
+	},
+	"button": {
+		"postKShare": "Post to ProcessHub",
+		"check": "Check",
+		"addcron": "Add this Crontab automatically-start-workflow-plan",
+		"toggleAdvancedSearch": "Advanced Search",
+		"footprint": "Footprint",
+		"resetQuery": "Reset/All",
+		"refreshtodos": "Refresh Worklist",
+		"create": "Create",
+		"import": "Import",
+		"search": "Search",
+		"recent": "Recent",
+		"settings": "Settings",
+		"me": "Me",
+		"discuss": "Discuss",
+		"tenant": "Tenant",
+		"okay": "Okay",
+		"cancel": "Cancel",
+		"clear": "Clear",
+		"set": "Set",
+		"close": "Close",
+		"closeeditlog": "Close Edit Log",
+		"closecronsetting": "Close Crontab Setting",
+		"closetemplatesetting": "Close Template Setting",
+		"done": "Done",
+		"adhoc": "New Adhoc",
+		"sendback": "Push back",
+		"revoke": "Revoke",
+		"checkdoer": "Check PDS as your expectation",
+		"resolve": "Resolve",
+		"sendadhoc": "Send it out",
+		"sendadhocConfirm": "Yes, send task to above people",
+		"sendadhocReconsider": "No, let me re-considerate",
+		"export": "Export",
+		"copy": "Copy",
+		"rename": "Rename",
+		"delete": "Delte",
+		"startnow": "Start Now",
+		"current_is_searching": "to Mining mode",
+		"current_is_mining": "to Search mode",
+		"add": "Add",
+		"upgrade": "upgrade Tenant",
+		"reset": "Reset",
+		"update": "Update",
+		"changeName": "Change name",
+		"addAKey": "Add a key",
+		"more": "More",
+		"less": "Less",
+		"save": "Save",
+		"goback": "Back",
+		"gotobiz": "BizPanel",
+		"next": "next",
+		"close": "Close",
+		"yana.prompt.guide": "Let Yana introduce Yarknode to you",
+		"yana.start": "Okay",
+		"preview": "Preview",
+		"view": "View it",
+		"openinnewtab": "Open in new tab",
+		"download": "Download",
+		"my_work": "My Work",
+		"moreitems": "More",
+		"lessitems": "Less",
+		"loadmore": "load more",
+		"create_new_template": "Create new workflow template"
+	},
+	"template": {
+		"create": {
+			"name": "Template name",
+			"tags": "Tags delimited by spaces/;/,"
+		},
+		"editlog": {
+			"title": "Editting log"
+		},
+		"addcron": {
+			"title": "Automatically start workflow",
+			"cronStarters": "Set Starter to",
+			"cronStarters_placeholder": "One or more people specified in PDS format",
+			"existing": "Existing Crontab plan",
+			"addnew": "Add new Crontab plan"
+		},
+		"import": {
+			"name": "Template name",
+			"tags": "Tags delimited by spaces/;/,",
+			"from_local_disk": "Import from local file",
+			"from_process_hub": "Import domain exports shared best practices from Process Hub"
+		},
+		"recent": "Recent: ",
+		"empty": "No template found"
+	},
+	"attach": {
+		"input_a_url": "Input a URL",
+		"btn_add_a_url": "Add",
+		"security_warning": "The files uploaded here are visible to all participants. It's strongly recommanded to upload files to strictly access controled file server or net-disk, then only add the urls of them here. "
+	},
+	"work": {
+		"moreActions": "More actions: ",
+		"pbostatus": "Status",
+		"empty": "Your todo list is empty at this moment",
+		"freejumping": "Jumping",
+		"quickcomments": "Quick comments",
+		"notfound": "Work not found",
+		"more": {
+			"alltodos": "More todos",
+			"thisbiz": "Explore This Biz",
+			"thisprocess": "Explore This Process"
+		}
+	},
+	"workflow": {
+		"toggleStatus": "Toggle status: ",
+		"empty": "No process found",
+		"restart": "Restart",
+		"reboot": "Reboot",
+		"restart.success": "Restart success",
+		"reboot.success": "Reboot success.",
+		"startat": "Begin at",
+		"pbostatus": "PBO status",
+		"doneat": "End at"
+	},
+	"status": {
+		"All": "All",
+		"ST_RUN": "Running",
+		"ST_PAUSE": "Paused",
+		"ST_DONE": "Finished",
+		"ST_STOP": "Stopped",
+		"ST_REVOKED": "Revoked",
+		"ST_RETURNED": "Returned",
+		"ST_IGNORE": "Ignored",
+		"ST_FOOTPRINT": "Footprint"
+	},
+	"statusof": {
+		"All": "All",
+		"ST_RUN": "Running",
+		"ST_PAUSE": "Paused",
+		"ST_DONE": "Finished",
+		"ST_STOP": "Stopped",
+		"ST_REVOKED": "Revoked",
+		"ST_RETURNED": "Returned",
+		"ST_IGNORE": "Ignored",
+		"ST_FOOTPRINT": "Footprint"
+	},
+	"start": {
+		"withtemplate": "Use template",
+		"canbefile": "You may upload a file as PBO",
+		"startWorkflow": "Start Workflow",
+		"startIt": "Start It",
+		"rehearsal": "Rehearsal",
+		"context": "Optional Workflow Context",
+		"context_desc": "Some urls",
+		"pbo": "Primary Business Object URL",
+		"title": "Workflow title",
+		"title_placeholder": "title",
+		"teamid": "Start with team",
+		"recentTeam": "Recent used team",
+		"checkitout": "Check it out",
+		"monitorit": "Goto Monitor",
+		"firststep": "Goto the first task",
+		"startanother": "Start another",
+		"OR": "Or",
+		"ifnotfamiliar": "A workflow may involve a lot of people, you'd better rehearsal it if are not familiar with this workflow",
+		"iffamiliar": "Or you may start it formally",
+		"useflexibleteam": "Specify flexible team if necessary",
+		"needtitle": "Please provide title",
+		"pleaseConfirm": "Please confirm",
+		"warnNoPbo": "PBO not set",
+		"warnNoTitle": "Title not specified",
+		"startAnyway": "Start Anyway"
+	},
+	"todo": {
+		"completed": "Completed",
+		"status": "Task Status",
+		"Starter": "Starter UID",
+		"StarterOU": "Starter Department",
+		"StarterCN": "Starter Name",
+		"OUof": "OU",
+		"owner": "Task Owner",
+		"doneat": "Completed",
+		"decision": "Decision",
+		"pbo": "Primary Business Object",
+		"instruction": "Instruction",
+		"nodeInput": "Task Variables",
+		"transferable": "This task is transferable",
+		"notTransferable": "This task is not transferable",
+		"transferto": "Transfer to",
+		"transfer": "Transfer",
+		"rehearsalInformation": "Rehearsal Information",
+		"process": "Process",
+		"processRehearsal": "Process Rehearsal",
+		"worklog": "Work log",
+		"worklogof": "Work log of",
+		"monitor": "Monitor",
+		"print": "Print",
+		"showlog": "Show log",
+		"startat": "Start at",
+		"startby": "Start by",
+		"nodevars": "Data",
+		"comments": "Comments",
+		"freejumpto": "Jump to",
+		"restartrehearsal": "Restart Rehearsal",
+		"cancelworkflowatfirststep": "Abandon Process",
+		"workflowcontext": "Workflow Context",
+		"rehearsalinformation": "Rehearsal Information",
+		"track": {
+			"dakai": "Expand",
+			"shouqi": "Collapse"
+		},
+		"bethefirstcomment": "Be the first to discuss",
+		"congrat": "Congratulations! You have completed all tasks."
+	},
+	"tpl": {
+		"create_new": "Create a new template",
+		"dropdown": "File",
+		"kshare": "Share PH",
+		"view": "View",
+		"prop": "Prop",
+		"new": "New",
+		"export": "Export",
+		"copyto": "Copy to",
+		"copy_duplicated": "{tplid} Already exists",
+		"copy_successed": "Successfully copy to {tplid}",
+		"rename": "Rename",
+		"delete": "Delete",
+		"editit": "Edit it",
+		"viewit": "View it",
+		"startit": "Start it",
+		"form": {
+			"newtplname": "New template name",
+			"exportto": "Export curent template to",
+			"copyto": "Copy to",
+			"renameto": "Rename to",
+			"delete": "Delete",
+			"start": "Start"
+		}
+	},
+	"prop": {
+		"label": "Activity Description",
+		"bot": "Webhook",
+		"bot_wecom": "WeCom",
+		"action": {
+			"tab": {
+				"ai": "ChatGPT",
+				"participant": "Participant",
+				"instruction": "Instruction",
+				"features": "Features",
+				"variables": "Variables",
+				"code": "Script code",
+				"route": "Routing",
+				"crontab": "Repeat",
+				"others": "Others",
+				"previewon": "Preview (Variables will not be inteperated in preview)",
+				"previewoff": "Close preview",
+				"whattags": "What HTML tags could I have?"
+			},
+			"placeholder": {
+				"instruct": "may use simple HTML format and Handlebars to include Kvars",
+				"code": "Keep it blank unless MUST-to-have"
+			},
+			"p10t": {
+				"with_features": "Include following features on this node:",
+				"byall": "Vote if multiple participants",
+				"transferable": "Transferable",
+				"withsb": "with Sendback",
+				"withrvk": "with Revoke",
+				"withadhoc": "with Adhoc",
+				"withcmt": "with Comment",
+				"sr": "Keep single running task if looped",
+				"pds": "Participants",
+				"define_pds": "Task's owner",
+				"define_cc": "CC to",
+				"pick": "Pick PDS",
+				"try": "Try a PDS",
+				"tryteam": "with Team",
+				"tryuser": "with User",
+				"tryresult": "Result",
+				"csv": "From CSV File",
+				"csv_placeholder": "CSV file input variable name",
+				"allowpbo": "Allow to edit PBO",
+				"mustsign": "Need signature",
+				"trykvar": "Try with Vars",
+				"trywfid": "Try with wfid",
+				"csvfile_varname": "varialbe name for csv file",
+				"useuserincsv": "Use participants defined in CSV"
+			},
+			"route": {
+				"from": "Prev",
+				"to": "Followings",
+				"pickone": "Pick one",
+				"option": "Routing",
+				"freejump": "Can jump freely from here",
+				"freejumpable": "Matched {tot} nodes"
+			},
+			"kvar": {
+				"basic": "Basic",
+				"extra": "Extra",
+				"name": "Name",
+				"tbl_options": "Headers",
+				"ou_options": "OU Code",
+				"sel_options": "Options",
+				"tbl_placeholder": "Colname1;Colname2;Colname3",
+				"ou_placeholder": "ou_code;yes/no(include top level)",
+				"sel_placeholder": "Option1;Option2;Option3",
+				"value": "Value",
+				"label": "Label",
+				"when": "When",
+				"placeholder": "Placeholder",
+				"visi": "Visible",
+				"breakrow": "Break row",
+				"ID": "ID",
+				"number": {
+					"min": "Min",
+					"max": "Max",
+					"step": "Step"
+				},
+				"required": "Required"
+			},
+			"button": {
+				"addnewvar": "+ Add new variable",
+				"tryit": "Try it"
+			},
+			"cronrun": {
+				"note": "Used to dispatch task on specific time with Crontab standard expression. Make sure you are familiar with Crontab, unexpected behaviour may occur otherwise",
+				"repeaton1": "If user choice is not",
+				"repeaton2": "then stop crontab dispatching",
+				"repeaton3": "then stop repeating",
+				"norepeat": "Don't disptach repeatedly",
+				"nocron": "Don't disptach repeatedly",
+				"byrepeaton": "According to user choice",
+				"runthencron": "Dispatch task first, then dispatch automatically following Crontab",
+				"onlycron": "Only dispatch task automatically following Crontab"
+			}
+		},
+		"script": {
+			"syncmode": "Sync Mode",
+			"asyncmode": "Async Mode",
+			"tryrun": "Try Run"
+		},
+		"timer": {
+			"code": "Code",
+			"type": "Type",
+			"fromstart": "From Start",
+			"fromnow": "From Now",
+			"fix": "Fix"
+		},
+		"inform": {
+			"recipient": "Recipient",
+			"content": "Content",
+			"subject": "Subject"
+		},
+		"sub": {
+			"SUB": "Sub TPLID",
+			"standalone": "Standalone"
+		},
+		"connect": {
+			"decision": "Decision",
+			"decision_placeholder": "Route depends on user decision",
+			"pbostatus": "Set PBO Status to",
+			"setValue": "Set Process Value",
+			"varname": "Var Name",
+			"varvalue": "Var Value"
+		},
+		"tpl": {
+			"title": "Template Properties",
+			"tplid": "Template Name",
+			"readonly": "Read only",
+			"freejump": "Can jump freely on any node",
+			"callback": {
+				"endpoint": "Callback endpoint",
+				"both": "From Server and Client",
+				"onserver": "Server only",
+				"onclient": "Client only"
+			}
+		}
+	},
+	"designer": {
+		"AthenB": "A->B, Waiting for B",
+		"BthenA": "B->A, Waiting for A",
+		"confirm": {
+			"reload": {
+				"title": "Reload",
+				"body": "Template was modified by else other, or in other window, need reloading",
+				"button": {
+					"yes": "Reload"
+				}
+			}
+		},
+		"showid": "nodeID",
+		"curve": "Curve",
+		"tool": {
+			"POINTER": "<kbd><i class='bi bi-mouse2'>click</i></kbd> select, <kbd>click and hold</kbd> move, <kbd>shift-click</kbd>properties, <kbd>shift-move</kbd>multi-select, <kbd>num</kbd>tool, <kbd>Ctrl-E</kbd>mode",
+			"ACTION": "<kbd><i class='bi bi-mouse2'>click</i></kbd>anywhere to place a task node, <kbd>Esc</kbd> to quite this mode",
+			"INFORM": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an INFORM node for sending email(s) notifications",
+			"SCRIPT": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an SCRIPT node for embedding Javascript program in workflow",
+			"TIMER": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place a TIMER node for controlling time",
+			"SUB": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place a SUB node for running sub-process or another standalone process",
+			"AND": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an AND node for continueing only when previous tasks are all done",
+			"OR": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an OR node for continuing after any previous task is done",
+			"GROUND": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an GROUND node for end here without following",
+			"CONNECT": "<kbd><i class='bi bi-mouse2'>click</i></kbd>Click two nodes to connect them, hold <kbd>SHIFT</kbd> for contineous linking, <kbd>Esc</kbd> or <kbd>double-click</kbd> on blank area to cancel",
+			"THROUGH": "<kbd><i class='bi bi-mouse2'>click</i></kbd> place an THROUGH node, for cotinueing a long route, no effect to process flow logic"
+		}
+	},
+	"filepond": {
+		"labelIdle": {
+			"pbo": "Drop file or Browse",
+			"kvar": "Drop file or Browse"
+		},
+		"anytype": "Any type",
+		"multiple": "allow multiple, max: {maxFiles}个",
+		"single": "single file",
+		"info": "For {key}, {allowMultiple}, file type: {accept}, max file size:{maxFileSize} ...",
+		"labelFileProcessingComplete": "Upload successfully",
+		"labelTapToUndo": "Click x to undo",
+		"labelTapToRetry": "Retry",
+		"labelTapToCancel": "Cancel"
+	},
+	"confirm": {
+		"title": {
+			"areyousure": "Are you sure?",
+			"needReload": "Version updated",
+			"postpone": "Postpone"
+		},
+		"body": {
+			"postpone": "Postpone for {days} days(s)",
+			"cancelpostpone": "Cancel postpone",
+			"needReload": "Application should be refreshed",
+			"deletefile": "File will be delete permanately, plase confirm",
+			"restartthendestroy": "Destroy this rehearsal and start a new one",
+			"cancelworkflowatfirststep": "You have opportunity to cancel this process at its first step. Canceling a running process often makes other people who are involved in the process confused even annonyed, please confirm you are ok with it",
+			"deleteWorkflow": "Canceling a running process often makes other people who are involved in the process confused even annonyed, please confirm you are ok with it"
+		},
+		"button": {
+			"yes": "Yes",
+			"no": "No",
+			"confirm": "Confirm",
+			"cancel": "Cancel",
+			"delete": "Delete"
+		},
+		"locale": {
+			"usedefault": {
+				"title": "Browser language detected",
+				"body": "For first time user, MTC use your browser default language {browserlang}, you may change to other language language in MTC setting",
+				"confirm": "Got it"
+			},
+			"langchanged": {
+				"title": "Browser language changed",
+				"body": "Browser language changed to '{browserlang}', change MTC language to it respectively?",
+				"button1": "Yes",
+				"button2": "Stick on current {currentlang}"
+			}
+		},
+		"delete": {
+			"template": {
+				"title": "Delete Template",
+				"body": "Deletion is not revocable",
+				"yes": "Confirm to delete"
+			},
+			"template-multi": {
+				"title": "Delete {count} templates",
+				"body": "Delete {count} templates，can not undo",
+				"yes": "Confirm to delete"
+			},
+			"workflow-multi": {
+				"title": "Delete {count} workflows",
+				"body": "Delete {count} workflows, can not undo",
+				"yes": "Confirm to delete"
+			}
+		}
+	},
+	"inputtable": {
+		"copyto": {
+			"above": "Copy to Above",
+			"below": "Copy to Below"
+		},
+		"delete": "Delte this row",
+		"move": {
+			"up": "Move up",
+			"down": "Move down",
+			"top": "Move to top",
+			"bottom": "Move to bottom"
+		}
+	},
+	"vote": {
+		"last": "The last one",
+		"most": "The most",
+		"least": "The least",
+		"allOrFailto": "All the same or fail to",
+		"percentOrFailto": "More than %, or fail to",
+		"ifAny": "If any match",
+		"ifAnyThenMost": "If any, or else the most",
+		"ifAnyThenLeast": "If any, or else the least",
+		"ifAnyThenAllThenMost": "If any, then all the same , then the most",
+		"ifAnyThenFailto": "If any, or fail to"
+	},
+	"tools": {
+		"POINTER": "Select",
+		"ACTION": "Activity",
+		"INFORM": "Notify",
+		"SCRIPT": "Script",
+		"TIMER": "Timer",
+		"SUB": "Sub process",
+		"AND": "And",
+		"OR": "OR",
+		"GROUND": "Ground",
+		"CONNECT": "Connect",
+		"THROUGH": "Through"
+	},
+	"setting": {
+		"set": "Set",
+		"adminpwd": "Admin Password",
+		"adminpwd_ph": "Admin password is required for security consideration",
+		"tab": {
+			"personal": "Personal",
+			"wecombot": "Wecom TODO Bot",
+			"delegation": "Delegation",
+			"tenant": "Tenant",
+			"orgset": "Org",
+			"orgchart": "Orgchart",
+			"members": "Members",
+			"smtp": "SMTP",
+			"data": "Data",
+			"maintainance": "Maintainance",
+			"resign": "Resign",
+			"myfiles": "My files",
+			"menu": "Menu config",
+			"list": "Datalist config"
+		},
+		"personal": {
+			"nav": "Personal",
+			"title": "Your Personal Configuration",
+			"body": "Avatar, Signature, Password etc.",
+			"action": "Configure",
+			"avatar": "Your Avatar",
+			"chooseavatar": "Choose Avatar Image",
+			"choosesignature": "Choose Signature Image",
+			"signature": "Signature",
+			"cn": "Account Display Name",
+			"nickname": "Employee Name",
+			"currentTenant": "Current Org is: {tenant}",
+			"currentMenuGroup": "Current menu group is: {mg}",
+			"currentpassword": "Current password",
+			"newpassword": "New password",
+			"sendmail": "Tell me on new work comming",
+			"joincode": "Join Org with joincode",
+			"passwordhint": "1. length between 6 and 20; 2. Must has letter, number and spechars;  3. Spechars are !@#$%^&*",
+			"passwordtooshort": "Too short",
+			"passwordtoolong": "Too long",
+			"old_password_wrong": "Old password is wrong",
+			"newpassword_wrong": "New password is invalid",
+			"password2notsame": "Passwords not the same",
+			"accountFormatError": "The account format is invalid",
+			"usernameFormatError": "The username format is invalid",
+			"nicknameFormatError": "The nickname format is invalid",
+			"accountFormatTip": "4-20 characters long, must beginning with a letter, may have letter/number/underscore in the middle, and must end with letter/number",
+			"usernameFormatTip": "2-20 characters long, must beginning with a letter, may have letter/number/underscore/space/dot in the middle, and must end with letter/number",
+			"nicknameFormatTip": "2-20 characters long, must beginning with a letter, may have letter/number/underscore/space/dot in the middle, and must end with letter/number",
+			"email": "Email",
+			"sms": "SMS",
+			"wecom": "WeCom",
+			"upload": "Upload"
+		},
+		"delegation": {
+			"delegated_by": "Delegated from {delegator}",
+			"nav": "Delegation",
+			"title": "Delegate to/from others",
+			"body": "Delegate work to/from others within a period",
+			"action": "Configure",
+			"delegation": "Delegation",
+			"delegateto": "Delegate My Task to",
+			"delegatee_eid": "Delegatee's EID",
+			"BeginDate": "Begin Date",
+			"EndDate": "End Date",
+			"BeforeDate": "Before Date",
+			"towhom": "To whom",
+			"Delegate": "Delegate now",
+			"and": "and",
+			"tome": "Delegations to me",
+			"fromme": "My Delegate",
+			"Between": "Between",
+			"Delegator": "Delegator",
+			"Delegatee": "Delegatee",
+			"removeSelected": "Cancel selected"
+		},
+		"maintainance": {
+			"nav": "Maintainance",
+			"title": "Business Data Admin",
+			"body": "Delete process etc.",
+			"action": "Admin",
+			"select_status": "Filter by status",
+			"deletebizobj": "Delete business object",
+			"bywfid": "By Workflow ID",
+			"bywftitle": "By Workflow Title",
+			"bytplid": "By Template ID"
+		},
+		"list": {
+			"nav": "List",
+			"title": "Manage Data List",
+			"body": "Define Named Data List",
+			"action": "Manage",
+			"new": {
+				"label": "Create New List",
+				"name": "Name",
+				"items": "Default items"
+			},
+			"author": "Author: ",
+			"keyHead": "Key {name} ({index}/{total}): ",
+			"changeNameForm": {
+				"label": "Change Name Form",
+				"newName": "New name"
+			},
+			"error": {
+				"authorNotYou": "Sorry, not created by you"
+			},
+			"addKeyForm": {
+				"label": "Add Key Form",
+				"newKeyName": "New key name",
+				"listItems": "Data items"
+			}
+		},
+		"team": {
+			"nav": "Team",
+			"title": "Manage Flexible Team",
+			"body": "Team is used to map user to role",
+			"action": "Manage",
+			"list": "Exiting Teams",
+			"create": "Create Team",
+			"import": "Import Team",
+			"deletethisteam": "Delete",
+			"tabs": {
+				"team": {
+					"label": "Role-Employee",
+					"currentteamis": "Current Team：{teamid}",
+					"addNewRole": "Add a new role",
+					"Roles": "Roles in {teamid}",
+					"noRole": "No roles defined"
+				},
+				"export": {
+					"label": "Export",
+					"exportTo": "Export {teamid} to: "
+				},
+				"rename": {
+					"label": "Rename",
+					"renameTo": "Rename {teamid} to: "
+				},
+				"copyto": {
+					"label": "Copy",
+					"copyTo": "Copy {teamid} to: "
+				},
+				"delete": {
+					"label": "Delete",
+					"areYouSure": "Are your sure to delete {teamid}?"
+				}
+			}
+		},
+		"tenant": {
+			"nav": "Org Account",
+			"title": "Set your Org Account",
+			"messagefornoadmin": "Please contact administrator to change org level settings",
+			"body": "Config Org Account, manage org members",
+			"action": "Admin",
+			"adiministrator": "Administrator",
+			"myrole": "My Role",
+			"adminpwd": "Admin Password",
+			"adminpwd_ph": "Admin password is required",
+			"name": "Set Org name to",
+			"name_ph": "New name of this org",
+			"theme": "Use Theme URL",
+			"theme_ph": "Customized theme CSS URL",
+			"timezone": "Set timezone to",
+			"openaiapikey": "OpenAI API Key",
+			"orgtags": "Org level tags",
+			"ocadmins": "Orgchart Administrators",
+			"ocadmins_ph": "Who can modify orgchart (single user id)",
+			"myorg": "My org name",
+			"myorgname": "The name",
+			"myorgtimezone": "Timezone",
+			"joincode": "Join Code",
+			"currentcode": "Current code",
+			"genjoincode": "Generated Join Code",
+			"selfjoincode": "Self-defined Join Code",
+			"invite": "Invite",
+			"invite_with_email": "Invite people with their emails",
+			"invite_with_qrcode": "Send QRCode to them",
+			"invite_ph": "Account list to invite, separated by space or comma or semicolon",
+			"joinapplication": "Join applications",
+			"refresh": "Refresh",
+			"noapplication": "There is no application at thistime",
+			"regfree": "Allow/Disallow",
+			"allow_regfree": "Allow empoloyees to self-register with company email",
+			"allowemptypbo": "Allow empty PBO on starting new process",
+			"allowemptypbo_true": "Set to: allow empty PBO",
+			"allowemptypbo_false": "Set to: must provide PBO",
+			"regfree_true": "Empoloyees are allowed to self-register with company email",
+			"regfree_false": "Self-registration is prohibited, however, administrators are able to add employee by importing org-chart",
+			"set_regfree_true": "On set, empoloyees will be allowed to self-register with company email",
+			"set_regfree_false": "On set, Self-registration will be prohibited, however, administrators are able to add employee by importing org-chart",
+			"apply_to_join": "Apply to join"
+		},
+		"menu": {
+			"nav": "User Menu",
+			"title": "User Menu Admin",
+			"messagefornoadmin": "You are not in Administrator group, ask one of them to change system menu",
+			"body": "Define menu for menu groups",
+			"action": "Menu admin",
+			"onlySelfIsUseful": "Only 'self' will be used, others will be saved however",
+			"pickone": "Select one",
+			"groupmenu": "Org-level menu groups",
+			"personalmenu": "Personal menus"
+		},
+		"orgchart": {
+			"nav": "OrgChart",
+			"title": "Manage your Org-Chart",
+			"body": "Add/Delete Department/employee etc.",
+			"action": "Manage",
+			"query": "Role Query",
+			"withextra": "with Extra Information",
+			"comment": "Relational query always start from the current user",
+			"adminpwd": "Admin password is required",
+			"ou_id": "OU_ID",
+			"emp_name": "Employee name",
+			"emp_email": "Employee email",
+			"emp_eid": "Employee account",
+			"account": "Mtc Account",
+			"emp_pwd": "New employee default password",
+			"ou_name": "OU Name",
+			"exprotcsv": "Export the whole OrgChart to CSV file",
+			"exportxlsx": "Export OrgChart to Excel XLSX file",
+			"importcsv": "Import from Orgchart CSV file",
+			"importxlsx": "Import from Excel XLSX file",
+			"btn": {
+				"refresh": "Refresh",
+				"emp_entry_create": "Add this employee as orgchart entry",
+				"emp_entry_update": "Update employee orgchart-entry",
+				"emp_entries_remove": "Remove all entries of this EID from orgchart",
+				"ou_create": "New or update department",
+				"ou_delete": "Delete department",
+				"export": "Export",
+				"import": "Import",
+				"copyto": "Copy to",
+				"moveto": "Move to",
+				"removeentry": "Remove entry from",
+				"removeallentries": "Remove all entries of EID"
+			},
+			"resolver_label": "Org Role Query",
+			"copyormovestaffto": "Copy or move {eid} from {from} to: ",
+			"confirmRemoveOu": {
+				"title": "Please confirm ",
+				"body": "All entries in this department will be removed",
+				"button": {
+					"yes": "Confirm"
+				}
+			},
+			"cleanEmployeesNotInOrgchart": "List employees who are not in Orgchart"
+		},
+		"members": {
+			"nav": "Members",
+			"title": "Administrate Members within Org Account",
+			"onlyyou": "This is a PRIVTATE orgnization, the only member is youself.",
+			"body": "Add/Delete, Set Group etc.",
+			"action": "Administation",
+			"members": "Members",
+			"email": "Email",
+			"account": "Account",
+			"name": "Name",
+			"group": "Auth Group",
+			"menugroup": "Menu Group",
+			"select": "Select",
+			"removeselected": "Remove selected {number} members",
+			"remove": "Remove selected {number} members from my org",
+			"setgroup": "Set group for selected {number} members",
+			"setpwd": "Set password for selected {number} members",
+			"setmenugroup": "Set menu group for selected {number} members"
+		},
+		"data": {
+			"list": "List Definitions",
+			"team": "Team Definitions"
+		},
+		"smtp": {
+			"nav": "SMTP",
+			"title": "Set SMTP Server",
+			"body": "Will be use to send emails",
+			"action": "Configure",
+			"onlyadmin": "Email setting is managed by org admin",
+			"server": "SMTP Server",
+			"port": "SMTP ServerPort",
+			"secure": "Secure Connection",
+			"user": "SMTP User Name",
+			"user_ph": "account name of SMPT user",
+			"pwd": "SMTP user password",
+			"pwd_ph": "Password of SMTP user",
+			"from": "Sent from",
+			"from_ph": "The sender's display name"
+		},
+		"wecombot": {
+			"nav": "Wecom Bot",
+			"title": "Configure WeCom Bot API",
+			"body": "To send messages to WeCom",
+			"action": "Configure",
+			"tplid": "Template ID",
+			"key": "Bot Key",
+			"addone": "Add one. now we have {number} ",
+			"keyformaterror": "Bot KEY format is illegal, please refer to WeCom bot manual"
+		},
+		"myfiles": {
+			"nav": "My Files",
+			"title": "Manage your upload files",
+			"body": "View, check usage, or delete unused",
+			"action": "Manage",
+			"view": "View",
+			"download": "Download",
+			"delete": "Delete",
+			"filter": "Only this Wf"
+		},
+		"resign": {
+			"nav": "User replacement",
+			"desc": "Replace task owner from one member to another, replace eid type PDS in template , for example: replace 'steven' to 'john', will cause all running tasks belong to Steven are re-distributed to John;  In 'Resign' mode, besides the operations above, Steven will also be marked as resigned from current orgnanization",
+			"replaceuser": "User replacement and Resign",
+			"selectall": "Select all",
+			"execute": "Resign",
+			"replace": "Replace Only",
+			"from": "Replace from",
+			"to": "Replace to",
+			"prepare": "Check related",
+			"result": {
+				"todo": "Owned Tasks",
+				"tpl": "Participated Templates"
+			},
+			"placeholder": {
+				"from": "ID or email of the leaver",
+				"to": "ID or email of the replacer"
+			},
+			"confirm": {
+				"title": "Caution",
+				"body": "Resign {from} account will be frozen, no operation will be allowed.",
+				"doit": "Confirm Resign"
+			}
+		},
+		"tenant_others": {
+			"nav": "Others"
+		}
+	},
+	"pds": {
+		"withextra": "With Extra",
+		"noextra": "Without Extra"
+	},
+	"authgroup": {
+		"ADMIN": "Administrator",
+		"OBSERVER": "Observer",
+		"DOER": "Doer"
+	},
+	"footer": {
+		"ai_public_service_platform": "AGI Public Service Platform",
+		"neural": "Neural system for your organiation",
+		"PLATFORM": "PLATFORM",
+		"SOLUTION": "Solution",
+		"video": "Explainer Video",
+		"howitworks": "How it works",
+		"usecases": "Use cases",
+		"signup": "Sign up",
+		"signin": "Sign in",
+		"DEVELOPER": "DEVELOPER",
+		"quickstart": "Quick Start",
+		"examples": "Examples",
+		"docsandhelp": "Docs & Help",
+		"discord": "Discord",
+		"sdks": "SDKs",
+		"opensource": "Open Source",
+		"DEPLOYMENT": "DEPLOYMENT",
+		"paas": "Paas Service",
+		"privateinstall": "Private Install",
+		"addpagetopersonalmenu": "Add to personal menu",
+		"yana": "Ask Yana"
+	},
+	"changeid": {
+		"current": "Current ID: ",
+		"changeto": "Change ID to",
+		"set": "Set",
+		"tooshort": "id is too short",
+		"exist": "already exists",
+		"meaningful": "You may need to give it a meaningful unique ID",
+		"idformat": "This is not a valid node id"
+	},
+	"csv": {
+		"uidnotfound": "Error: User IDs not found:"
+	},
+	"login": {
+		"reset_password": "Forget password? reset it here",
+		"needfullemail": "Full email address is required",
+		"resetpasswordresult": "Reset password instruction has been sent to your email, check your email now please",
+		"resendverificationemail": "Resend verification email",
+		"verificationEmailSent": "Verification Email has been sent",
+		"resendVerificationEmailLater": "seconds later could send again",
+		"verify": {
+			"error": {
+				"ACCOUNT_ALREADY_VERIFIED": "This account has been verified",
+				"ACCOUNT_USER_NOT_FOUND": "Account does not exist",
+				"VERIFICATION_CODE_EXPIRED": "15 minutes waiting time expired"
+			},
+			"message": {
+				"EMAIL_VERIFIED": "Verified Successfully",
+				"YOU_ARE_VERIFYING": "Verifying"
+			},
+			"needRelogin": "Please login again"
+		}
+	},
+	"comment": {
+		"hide": "Hide Discussion",
+		"show": "Show Discussion",
+		"zone": "Discussion Borad",
+		"fortodo": "Comment to:",
+		"forcomment": "Reply to:",
+		"markdown_enabled": "Markdown is enabled"
+	},
+	"userSession": {
+		"kickout": "abnormal refreshs detected-session terminated",
+		"forcetohome": "abnormal refreshs detected-force to home",
+		"relogin": "You need to relogin"
+	},
+	"error": {
+		"NO_BRUTE": "Please don't operate too frequently",
+		"LOGIN_EMAILVERIFIED_FALSE": "Email Verification is required",
+		"login_no_account": "Account does not exist",
+		"duplicated_object": "Duplicated Objects",
+		"password_format": "Password length should be between 6-12, upper case, lower case letters and special characters must be included",
+		"username_format": "User name length should be between 4-12, upper case, lower case lettersand numbers are allowed",
+		"email_exist": "Email has been registered",
+		"wfid_exist": "wfid already",
+		"login_failed": "Login failed，check ID or password pls.",
+		"ORGCHART_ENTRY_KEEP_LAST_ONE": "This is the only one entry, delete email if confirmed",
+		"couldnotdisplayfile": "Your browser does not show this sort of tile, download it instead.",
+		"wnf": {
+			"title": "Error",
+			"subtitle": "Workflow Not Found",
+			"info": "Workflow {wfid} does not exist or you have no access to it",
+			"btntitle": "Back"
+		},
+		"notfound": "Not Found or no access right",
+		"notyourwork": "This work is not yours"
+	},
+	"searchlet": {
+		"new": "Save query",
+		"save": "Save",
+		"cancel": "Cancel",
+		"existing": "Saved Query",
+		"nameit": "Give it a name, will replace exiting if duplicate",
+		"pick": "Pick on please-->",
+		"reset": "Reset Query"
+	},
+	"pagination": {
+		"first": "Fist",
+		"prev": "Previous",
+		"next": "Next",
+		"last": "Last"
+	},
+	"notify": {
+		"create_template_success": "Template {tplid} created successfully",
+		"create_adhoc_success": "Adhoc Task dispatched",
+		"auto_refresh_work": "Auto retrieve tasks in {minutes} mins.",
+		"stop_refresh_work": "Stop auto retrieving, click [Reset/All] to get new tasks manually",
+		"set_password_success": "Set new password successfully",
+		"employee_account_selected": "selected {number} employee account(s)",
+		"only_admin": "Only Administrator has access to operations in this section",
+		"title": "Notification",
+		"welcome": "Welcome"
+	},
+	"flexible": {
+		"title": "Flexible arrangement",
+		"subtitle": "Arrange a task to other people, no need to design workflow template first",
+		"placeholder": "Input issue name",
+		"btn_goto_template": "Start a new task",
+		"btn_showform": "Start a flexible issue",
+		"menu": "Adhoc Task",
+		"btn_create": "Start it",
+		"res_success": "Started, see it in 'My Task'",
+		"pickeid": "Recent",
+		"forWhom": "For people"
+	},
+	"homecard": {
+		"menu": {
+			"todos": {
+				"ST_RUN": "Todo",
+				"ST_DONE": "Done",
+				"ST_FOOTPRINT": "Footprint",
+				"startWorkflow": "Start"
+			}
+		},
+		"template": {
+			"title": "Template",
+			"body": "Arrange tasks in a standard way"
+		},
+		"flexible": {
+			"title": "Flexible",
+			"body": "Arrange tasks in a flexible way"
+		},
+		"workflow": {
+			"title": "Monitor",
+			"body": "Monitor running status"
+		},
+		"work": {
+			"title": "Worklist",
+			"body": "See current worklist"
+		},
+		"discuss": {
+			"title": "Discuss",
+			"body": "Discuss on certain tasks"
+		},
+		"setting": {
+			"title": "Setting",
+			"body": "Customize your work environment"
+		},
+		"help": {
+			"title": "Help",
+			"body": "Help, Q&A etc."
+		},
+		"myfile": {
+			"title": "My Files",
+			"body": "File uploaded by me"
+		}
+	},
+	"tips": {
+		"orgtag": {
+			"title": "Org-level Tags",
+			"content": "Set by administrators, click to see details"
+		},
+		"flexible": {
+			"title": "Flexible Actions",
+			"content": "Start to arrange tasks in a flexible way."
+		},
+		"newwork": {
+			"title": "Start a new planned workflow",
+			"content": "Select a planned workflow and start it"
+		},
+		"check_email_please": "Check email please",
+		"designer": {
+			"action": {
+				"allowpbo": {
+					"title": "Whether allow user to",
+					"content": "Modify PBO on this step"
+				}
+			},
+			"kvar": {
+				"btn": {
+					"dash": {
+						"title": "Delete",
+						"content": "Click to delete this variable"
+					},
+					"plus": {
+						"title": "Add",
+						"content": "Click to create a new variable"
+					},
+					"up": {
+						"title": "Click to move up",
+						"content": "Shift-Click to copy to upper"
+					},
+					"down": {
+						"title": "Click to move down",
+						"content": "Shift-Click to copy to lower"
+					},
+					"double-up": {
+						"title": "Click to move to top",
+						"content": "Shift-Click to copy to top"
+					},
+					"double-down": {
+						"title": "Click to move to bottom",
+						"content": "Shift-Click to copy to bottom"
+					}
+				}
+			}
+		}
+	},
+	"search": {
+		"condition": {
+			"all": "All",
+			"template": "Search '{pattern}', Author: {author}"
+		}
+	},
+	"unit": {
+		"days": "Days",
+		"hours": "Hours",
+		"tasks": "Tasks",
+		"nodes": "Steps"
+	},
+	"mining": {
+		"total": "{number} of {total}",
+		"work_redlight_threshold": "Task Redlight Threshold",
+		"process_redlight_threshold": "Process Redlight Threshold",
+		"OR": "or",
+		"AND": "and",
+		"process_threshold": "Process longer than",
+		"redlight_threshold": "Tasks longer than",
+		"show": {
+			"show": "Show",
+			"works": "Process Steps",
+			"todos": "Individual Tasks",
+			"only_above_threshold": "Only above threshold",
+			"with_process": "Include",
+			"with_todos": "Include"
+		},
+		"nav": {
+			"time": "by Time",
+			"people": "by People"
+		},
+		"task": {
+			"number": "Task Number",
+			"longest": "Task Longest Lasting",
+			"average": "Task Average Lasting",
+			"total": "Task Total Lasting",
+			"processes": "Started processes"
+		}
+	},
+	"kshare": {
+		"title": "Process Hub",
+		"description": "Management process best practice provided by domain exports, you may import and use them with one-click",
+		"all_scenarios": "All Scenarios",
+		"all_industries": "All Industries",
+		"topmenu": {
+			"All": "All",
+			"Scenarios": "Scenarios",
+			"Industries": "Industries",
+			"Tags": "Filters",
+			"pickedtags": "Picked tags"
+		},
+		"label": {
+			"All": "All",
+			"Close": "Close",
+			"Preview": "Preview",
+			"Pick": "Pick it",
+			"Confirm": "Confirm",
+			"Cancel": "Cancel",
+			"only12": "Only show 12 randomly, click here to see them all"
+		},
+		"search": {
+			"byname": "by name",
+			"byauthor": "by author",
+			"q": {
+				"placeholder": "by name or description"
+			},
+			"author": {
+				"placeholder": "by author"
+			}
+		},
+		"pickit": {
+			"placeholder": "Give it a name",
+			"pickas": "Take it as:",
+			"error": {
+				"no_user": "Please login first",
+				"exists": {
+					"title": "This template already exists",
+					"body": "Please modify and try again"
+				}
+			},
+			"result": {
+				"success": "Import successfully, go to templates menu to see it"
+			}
+		},
+		"shareform": {
+			"name": "Share as",
+			"desc": "Description",
+			"price": "Price",
+			"scenario": "Pick Scenario Tag",
+			"add": "Add"
+		}
+	},
+	"cron": {
+		"title": {
+			"expr": "Crontab Expression",
+			"month": "Month",
+			"date": "Date",
+			"weekday": "WDay",
+			"hour": "Hour",
+			"result": "Result",
+			"notset": "Not Set",
+			"single": "Single",
+			"range": "Range",
+			"every": "every",
+			"from": "From",
+			"to": "to",
+			"and": "and"
+		},
+		"month": {
+			"0": "Not Set",
+			"1": "January",
+			"2": "February",
+			"3": "March",
+			"4": "April",
+			"5": "May",
+			"6": "June",
+			"7": "July",
+			"8": "August",
+			"9": "September",
+			"10": "October",
+			"11": "November",
+			"12": "December"
+		},
+		"weekday": {
+			"0": "Not Set",
+			"1": "Monday",
+			"2": "Tuesday",
+			"3": "Wednesday",
+			"4": "Tursday",
+			"5": "Friday",
+			"6": "Saturday",
+			"7": "Sundy"
+		},
+		"date": {
+			"unit": "D"
+		},
+		"hour": {
+			"unit": "H"
+		},
+		"miniute": {
+			"unit": "M"
+		}
+	},
+	"popover": {
+		"postpone": {
+			"title": "Postpone",
+			"content": "Postpone to selected days"
+		}
+	},
+	"server": {
+		"DELEGATE_FAILED_SAME_USER": "Can't delegate to self",
+		"DELEGATE_FAILED_NOT_SAME_ORG": "Not in the same organization",
+		"DELEGATE_FAILED_OVERLAP": "Delegation failed overlap exists",
+		"FETCH_FAILED": "The network is wandering. Try again later"
+	},
+	"message": {
+		"success": "成功",
+		"switch_tenant_success": "Switch tenant successfully",
+		"saved": "saved",
+		"personal_menuitem_saved": "Personal menu item saved"
+	},
+	"tag": {
+		"all": "All"
+	},
+	"MyPersonal": "MyPersonal",
+	"biz": {
+		"todos": "My Todos",
+		"recentdone": "Done Recently",
+		"recentprocess": "Processes Invovled",
+		"basic_op": "Baisc Operations",
+		"advanced_op": "More Operations",
+		"op": {
+			"startProcess": "Start New Process",
+			"seeDesign": "View Busienss Desin",
+			"editDesign": "Change Business Design",
+			"allbiz": "All business",
+			"export": "Export",
+			"snapshot": "Snapshot",
+			"mining": "Business Mining"
+		},
+		"adv": {
+			"all_todos": "All Tasks",
+			"all_biz": "All Business",
+			"discuss": "Forum",
+			"share": "Share to Processhub"
+		}
+	},
+	"quote": {
+		"subject": {
+			"1": "运营自动化",
+			"2": "工业自动化",
+			"3": "销售自动化"
+		},
+		"name": {
+			"1": "袁女士 · 普吉岛",
+			"2": "张总 · 莫纳生物",
+			"3": "Lucas · 亚马逊"
+		},
+		"quote": {
+			"1": "ProcessHub让我能够更加高效地完成工作，<br/>让我能够更加专注于创造价值",
+			"2": "ProcessHub让我能够更加高效地完成工作，<br/>让我能够更加专注于创造价值",
+			"3": "ProcessHub让我能够更加高效地完成工作，<br/>让我能够更加专注于创造价值"
+		}
+	},
+	"solutions": {
+		"manufacture": "DigiMake",
+		"sales": "DigiSales",
+		"crm": "DigiService",
+		"manager": "DigiManager"
+	},
+	"evaluate": {
+		"youwill": "You are evaluating the workflow below",
+		"account": {
+			"prompt": "Seems that you have not logged in, what would you like? ",
+			"login": "use existing account，login now",
+			"register": "Register a new account",
+			"demo": "Try under a temporary one-time account. Register a formal account is strongly recommended."
+		},
+		"start": "Evaluate under account ({account}) ",
+		"waitForFirstTodo": "Workflow {wfid} has been started. Wait a moment, you are on the way to the first step ({countdown})..."
+	},
+	"addCurrent": "Add page",
+	"boolean": {
+		"true": "Yes",
+		"false": "No"
+	},
+	"bizpicker": {
+		"pickone": "Pick one template",
+		"picknone": "Not specified",
+		"desc": "Please pick one business template from next list. or",
+		"button": "Select a template, current: ",
+		"none": "Not specified"
+	},
+	"uisection": {
+		"tag": "Tag",
+		"search": "Search",
+		"sort": "Sorting",
+		"layout": "Layout"
+	},
+	"sign": {
+		"title": "Signature",
+		"reset": "Reset",
+		"uselast": "Use last",
+		"waitforsignature": "(Sign first pls)"
+	},
+	"input": {
+		"should_have_value": "{key} should have value",
+		"should_have_value_number": "{key} should have a number",
+		"should_have_value_file": "{key} should have a file",
+		"empty": "This field is required.",
+		"email": "Please enter a valid email address.",
+		"phone": "Please enter a valid phone number.",
+		"json": "Please enter a valid json object.",
+		"string": {
+			"min": "must be at least {min} characters long",
+			"max": "must be less than or equal to {max} characters long",
+			"uri": "must be a valid uri"
+		},
+		"number": {
+			"max": "must be less than or equal to max",
+			"min": "must be greater than or equal to min",
+			"unsafe": "must be a safe number"
+		},
+		"datetime": "Please enter a valid date time."
+	},
+	"baystone": {
+		"nav": {
+			"AboutUs": "About Us",
+			"Operations": "Operations Center",
+			"all_search": "Search Ai usage scenarios...",
+			"scenarios": "Scenarios",
+			"market": "Market",
+			"rent_resource": "Renting",
+			"ai_server": "AI_Server",
+			"ai_models": "Models",
+			"console": "Console",
+			"datasets": "Datasets",
+			"my": "My",
+			"gpu_ladder": "IDC GPU Ladder",
+			"ai_blog": "AI Blog",
+			"ov": "NVIDIA Omniverse",
+			"ai_req": "AI Request",
+			"ai_config": "AI Config",
+			"another_action": "Another action",
+			"add_scenario": "Add scenario",
+			"add_application": "Add application",
+			"add_supplier": "Add supplier",
+			"add_resource": "Add resource",
+			"add_model": "Add model",
+			"add_image": "Add image",
+			"logout": "Logout",
+			"login": "Login",
+			"sign_up": "Sign up",
+			"add_dataset": "Add dataset"
+		},
+		"homepage": {
+			"roll_card": {
+				"greeting": {
+					"time": {
+						"morning": "Good morning",
+						"midday": "Good afternoon",
+						"afternoon": "Good afternoon",
+						"evening": "Good evening"
+					},
+					"message": ", what do you need today?"
+				},
+				"airesource": "Renting resources | Purchase equipments",
+				"developer": {
+					"title": "I'm a developer",
+					"subtitle": "I need",
+					"needs": {
+						"models": "Develop large models",
+						"apps": "Develop large model applications",
+						"datasets": "Look for industry data",
+						"gpus": "Renting a GPU server"
+					}
+				},
+				"app_demand_side": {
+					"title": "Application demand side",
+					"subtitle": "I'm Looking",
+					"needs": {
+						"ai_industry_solutions": "Artificial intelligence industry solutions",
+						"scenario_apps": "Situational application",
+						"omniverse_software": "Omniverse related software",
+						"ai_software_training_courses": "AI related software and training courses"
+					}
+				},
+				"industry_data_practitioners": {
+					"title": "Industry data practitioners",
+					"subtitle": "I am",
+					"needs": {
+						"provide_industry_data": "Provide industry data",
+						"look_for_industry_data": "Look for industry data"
+					}
+				},
+				"supply_demand_computing_equipment": {
+					"title": "Supply and demand of computing services and equipment",
+					"subtitle": "I want",
+					"needs": {
+						"renting_computing": "Renting remote computing resources",
+						"supply_computing": "Supply my own computing power",
+						"sell_cards_servers": "Sell computer cards, servers",
+						"purchasing_cards_servers": "Purchasing computer cards, servers"
+					}
+				}
+			},
+			"statistics": {
+				"airesources": "Resources",
+				"models": "Models",
+				"datasets": "Datasets",
+				"apps": "Scenario Applications",
+				"ecopartners": "Ecological Partners"
+			},
+			"news": {
+				"top_ai_scenario": "Popular AI application scenarios",
+				"computing_support_demand": "Computing power supply and demand",
+				"ai_industry_policy": "Industrial Policy on artificial intelligence"
+			}
+		},
+		"scenarios": {
+			"create_ai": "Create Ai Industry Scenario",
+			"industry": "Industry",
+			"tags": "Tags",
+			"filter_name": "Filter industry by name...",
+			"ai_industry": "AI Industry Scenario",
+			"create": "Create Ai Industry Scenario",
+			"unique_id": "Unique ID",
+			"name": "Name",
+			"description": "Description",
+			"icon": "Icon",
+			"add_tag": "Add tags:separate by space, press enter to add",
+			"pick": "Pick an industry",
+			"open_this": "Open this select menu",
+			"create_message": "Create success",
+			"create_error_message": "Create fail",
+			"find_ai_is_null": "No large model applications belonging to this classification were found"
+		},
+		"application": {
+			"add_aiapp": "Create Ai Application",
+			"name": "Name",
+			"Description": "Description",
+			"icon": "Icon",
+			"Docker": "Docker image",
+			"Scenario": "Set scenario"
+		},
+		"aiscenario": {
+			"big_model": "Large Model Applications",
+			"not_used": "Not Used",
+			"being_used": "Being Used",
+			"Manage": "Manage Your Existing App",
+			"Manages": "Using Existing Application Services",
+			"Run_now": "Run Now"
+		},
+		"aiinstance": {
+			"instance": "new instance of",
+			"Applications": "Deploy the same Application",
+			"AI_Applications": "Ai Applications in",
+			"gpu_num": "GPU Number",
+			"gpu_model": "GPU Model",
+			"gpu_memory": "Memory",
+			"gpu_storage": "Storage",
+			"gpu_vcpu": "Virtual CPU"
+		},
+		"inputs": {
+			"label": "Add tags: separate by space，press enter to add"
+		},
+		"ai_resource": {
+			"price_unit": "* 10 thousands",
+			"supplier_filter_placeholder": "Please enter the supplier filtering condition",
+			"airesource_list_error": "The available resource data is temporarily unavailable",
+			"expert_contact_info": "Expert Assistance",
+			"order_now": "Order Now",
+			"view_detail": "View Detail",
+			"status": "Status",
+			"active": "Active",
+			"deactive": "DeActive",
+			"spec": "Spec: ",
+			"renting_resources": "Renting resources",
+			"purchase_equipments": "Purchase equipments",
+			"category": "Category",
+			"city": "City",
+			"gpu": "GPU",
+			"charge": "Charge",
+			"available_resources": "Available resources",
+			"available": "Available",
+			"inventory_unit": "Set",
+			"everyDesc": {
+				"hour": "Hourly Renting",
+				"day": "Daily Renting",
+				"month": "Monthly Renting",
+				"year": "Yearly Renting",
+				"sale": "By Contract"
+			},
+			"everyUnit": {
+				"hour": "per hour",
+				"day": "per day",
+				"month": "per month",
+				"year": "per year"
+			},
+			"theUnit": {
+				"hour": "hour",
+				"day": "day",
+				"month": "month",
+				"year": "year"
+			},
+			"all": "All",
+			"active_confirm": {
+				"title": "Change active/deactive status",
+				"body": "Confirm {status}？"
+			},
+			"list": {
+				"edit": "Edit",
+				"delete": "Delete"
+			},
+			"create": {
+				"create_ai_resource": "Create AI Resource",
+				"browse_resource_list": "Browse Resource List",
+				"submit": "Submit Resource",
+				"package_type": "Package Type",
+				"create_pacakge_type": "Create Package Type",
+				"maximum_package_limit": "Maximum Package Limit: {limit}",
+				"create_info": "After adding resources, the platform can be opened after the operation of the audit",
+				"formItems": {
+					"supplier": "Supplier",
+					"bizmodel": "The mode of resource supply",
+					"name": "Name",
+					"abstract": "Abstract",
+					"gpu": "GPU",
+					"city": {
+						"default": "City",
+						"service": "Data Center City",
+						"sale": "Delivery City"
+					},
+					"category": "Category",
+					"amount": "Amount",
+					"image": "Image",
+					"agreement": "Agreement"
+				},
+				"options": {
+					"bizmodel": {
+						"service": "Service",
+						"sale": "Sale"
+					},
+					"category": {
+						"service": {
+							"baremetal": "Bare Metal",
+							"airdrop": "Airdrop",
+							"cloud": "Cloud"
+						},
+						"sale": {
+							"server": "GPU Server",
+							"gpu": "GPU Card",
+							"network": "IB Network",
+							"storage": "Storage"
+						}
+					}
+				},
+				"packages": {
+					"unit": "Unit",
+					"unit_price": "Unit Price",
+					"delete_confirm": {
+						"title": "Confirm delete this package?",
+						"body": "Can not be restored after deletion, please confirm this operation.",
+						"ok": "OK"
+					},
+					"clone_pacakge": "Clone Package",
+					"purchase_type": "Purchase Type",
+					"contract": "By Contract",
+					"formItems": {
+						"name": "Name",
+						"gpu": "GPU",
+						"link": "Link",
+						"cpu": "CPU",
+						"memory": "Memory",
+						"disk": "Disk",
+						"storage": "Storage",
+						"duration": "Duration",
+						"amount": {
+							"default": "Amount",
+							"service": "Renting Number",
+							"sale": "Purchase Number"
+						},
+						"totalPrice": "Total Price"
+					},
+					"prices": {
+						"gpu": "GPU Unit Price",
+						"link": "Link Unit Price",
+						"cpu": "CPU Unit Price",
+						"storage": "Storage Unit Price"
+					},
+					"units": {
+						"yuan": "Yuan",
+						"ten_thousands_yuan": "10 thousands Yuan",
+						"t": "T",
+						"gb": "GB",
+						"yuan_10t": "Yuan / 10T",
+						"month": "Month",
+						"set": "Set",
+						"hour": "Hour",
+						"day": "Day",
+						"year": "Year"
+					},
+					"options": {
+						"duration": {
+							"unit": {
+								"hour": "Hour",
+								"day": "Day",
+								"month": "Month",
+								"year": "Year"
+							}
+						},
+						"totalPrice": {
+							"unit": {
+								"yuan": "Yuan",
+								"ten_thousands_yuan": "Ten Thousands Yuan"
+							}
+						}
+					}
+				},
+				"success": {
+					"submit_success": "The submit of the resource was successful",
+					"need_audit": "The resources you submit still need to go through the platform operations audit before they can be opened",
+					"audited": "The resources you submit is opened.",
+					"continue": "Continue",
+					"view_detail": "View Current Resource Detail",
+					"create_next": "Create Next",
+					"edit": "Edit Current Resource"
+				}
+			},
+			"edit": {
+				"edit": "Edit",
+				"edit_ai_resource": "Edit AI Resource",
+				"edit_info": "After editing the resources, the platform still has to go through the operation of the audit before opening.",
+				"not_support_edit": "This resource does not support modification"
+			},
+			"back_to_list": "Back to list",
+			"custom_package": "Custom Package"
+		},
+		"order": {
+			"browse_my_orders": "Browse my orders",
+			"resource_service_name": "Resource Service Name",
+			"new_order_audit_info": "New orders placed after the platform operation can be opened after the audit",
+			"confirm_rental": "Please confirm the number of rental",
+			"confirm_purchase": "Please confirm the purchase quantity",
+			"renting": "Renting",
+			"purchasing": "Purchasing",
+			"set": "set",
+			"total_rent": "Total rent is",
+			"total_cost": "Total cost is",
+			"place_order": "Place Order",
+			"spec": "Spec",
+			"ask_before_order": "Ask before placing an order",
+			"agreement": "Agreement",
+			"cancel": "Cancel",
+			"ok": "OK",
+			"planstart": "Planning Start Time",
+			"planFor": "I plan to use the server for",
+			"planOtherGPU": "What other GPU server types and number do I expect to use?",
+			"otherMemo": "Other description",
+			"agreeAgreement": "I have carefully read the service agreement and agree to abide by all the terms of this agreement.",
+			"contact_later": "Our computer expert will contact you within 3 working days.",
+			"order_now": "Order Now",
+			"confirm_order": "Confirm Order",
+			"base_info": "Base Information",
+			"contact_info": "Contact Information",
+			"placed_order": "Placed Order",
+			"view_current_order": "View Current Order Information",
+			"order_info": "Order Information",
+			"demand_description": "Demand Description",
+			"start_end_time": "Start End Time",
+			"instances_status": "Instances Status",
+			"back_to_view_detail": "Back to View Detail",
+			"storageTypeLabel": "Storage Type",
+			"storageType": {
+				"gpu": "GPU",
+				"link": "Link",
+				"cpu": "CPU",
+				"memory": "Memory",
+				"disk": "Disk",
+				"storage": "Storage",
+				"duration": "Duration",
+				"number": {
+					"resource": "Renting Number",
+					"sale": "Purchase Number"
+				},
+				"price": "Price"
+			},
+			"packageTypeLabel": "Package Type",
+			"packageType": {
+				"gpu": "GPU",
+				"link": "Link",
+				"cpu": "CPU",
+				"memory": "Memory",
+				"disk": "Disk",
+				"storage": "Storage",
+				"duration": "Duration",
+				"amount": {
+					"service": "Renting Number",
+					"sale": "Purchase Number"
+				},
+				"totalPrice": "Total Price"
+			},
+			"cost_measurement": "Price Measurement",
+			"company": "Company Name",
+			"businessLicense": "Busienss License",
+			"legalRepresentative": "Legal Representative",
+			"phone": "Phone",
+			"email": "Email",
+			"contactName": "Contact Name",
+			"expert_confirm_info": "Order success, computer scheduling experts will contact you as soon as possible, please pay attention to answer the phone",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"customerInfo": "Customer Information",
+			"setInstanceTimeConfirm": {
+				"title": "Set Instance",
+				"body": "The time you set is not equal to the length of the order( {total} {unit}). Do you want to continue setting the instance? Time diff: {diff} {unit}."
+			}
+		},
+		"appservice": {
+			"console": "Console APP",
+			"name": "Service Name",
+			"space": "Service location space",
+			"type": "Service Type",
+			"status": "Service Status",
+			"delete": "Delete Service",
+			"deletes": "Delete Application",
+			"access": "Access Service",
+			"suspend": "Suspend Service",
+			"success": "Success",
+			"fail": "Fail",
+			"reason": "Failure Reason",
+			"refer": "Refer to",
+			"restore": "Restore Services"
+		},
+		"cognihub": {
+			"page_title": "Open test for AI resource",
+			"train": "Yingzhi Al Private Large Model Training",
+			"browse_my_orders": "Browse my orders",
+			"resource_service_name": "Resource Service Name",
+			"new_order_audit_info": "New orders placed after the platform operation can be opened after the audit",
+			"confirm_rental": "Please confirm the number of rental",
+			"confirm_purchase": "Please confirm the purchase quantity",
+			"renting": "Renting",
+			"purchasing": "Purchasing",
+			"set": "set",
+			"total_rent": "Total rent is",
+			"total_cost": "Total cost is",
+			"place_order": "Place Order",
+			"spec": "Spec",
+			"ask_before_order": "Ask before placing an order",
+			"agreement": "Agreement",
+			"cancel": "Cancel",
+			"ok": "OK",
+			"planstart": "Planning Start Time",
+			"planstarts": "When do I plan to start training?",
+			"planend": "Planning End Time",
+			"planFor": "I plan to use the server for",
+			"planGPU": "What GPU server types do I expect to use?",
+			"ScaleSize": "The size of the data planned for training",
+			"disseminate": "Do you need Yingzhi to prepare promotional copy",
+			"planGPUAmount": "What GPU server number do I expect to use?",
+			"DataType": "Data types planned for training",
+			"planOtherGPU": "What other GPU server types and number do I expect to use?",
+			"otherMemo": "Please share a bit more context on what you are building and what you would like to discuss with our sales team.",
+			"agreeAgreement": "I have carefully read the service agreement and agree to abide by all the terms of this agreement.",
+			"contact_later": "Our computer expert will contact you within 3 working days.",
+			"contact_laters": "Our computer expert will contact you within 3 working days.",
+			"Training_experts": "After submitting the application, our AI training experts will contact you within 3 working days.",
+			"order_now": "Order Now",
+			"confirm_order": "Confirm Order",
+			"base_info": "Base Information",
+			"contact_info": "Contact Information",
+			"placed_order": "Placed Order",
+			"view_current_order": "View Current Order Information",
+			"order_info": "Order Information",
+			"demand_description": "Demand Description",
+			"start_end_time": "Start End Time",
+			"instances_status": "Instances Status",
+			"back_to_view_detail": "Back to View Detail",
+			"storageTypeLabel": "Storage Type",
+			"storageType": {
+				"gpu": "GPU",
+				"link": "Link",
+				"cpu": "CPU",
+				"memory": "Memory",
+				"disk": "Disk",
+				"storage": "Storage",
+				"duration": "Duration",
+				"number": {
+					"resource": "Renting Number",
+					"sale": "Purchase Number"
+				},
+				"price": "Price"
+			},
+			"packageTypeLabel": "Package Type",
+			"packageType": {
+				"placeholder": "Please enter",
+				"gpu": "GPU",
+				"link": "Link",
+				"cpu": "CPU",
+				"memory": "Memory",
+				"disk": "Disk",
+				"card": "Network card",
+				"power": "Source",
+				"storage": "Storage",
+				"thousand": "Ten thousand yuan",
+				"Yuan": "Yuan / Hour",
+				"ThousandYuan": "Ten thousand yuan / Hour",
+				"Year": "Yuan / Year",
+				"ThousandYear": "Ten thousand yuan / Year",
+				"Month": "Yuan / Month",
+				"ThousandMonth": "Ten thousand yuan / Month",
+				"Day": "Yuan / Day",
+				"ThousandDay": "Ten thousand yuan / Day",
+				"custom": "Custom configuration parameters",
+				"amount": {
+					"service": "Renting Number",
+					"sale": "Purchase Number"
+				},
+				"duration": {
+					"service": "Lease duration",
+					"sale": "Purchase duration"
+				},
+				"totalPrice": "Total Price"
+			},
+			"cost_measurement": "Price Measurement",
+			"company": "Company Name",
+			"businessLicense": "Busienss License",
+			"legalRepresentative": "Legal Representative",
+			"name": "Name",
+			"jobTitle": "Job Title",
+			"phone": "Phone",
+			"email": "Email",
+			"companyScale": "Company Scale",
+			"contactName": "Contact Name",
+			"expert_confirm_info": "Order success, computer scheduling experts will contact you as soon as possible, please pay attention to answer the phone",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"customerInfo": "Customer Information",
+			"setInstanceTimeConfirm": {
+				"title": "Set Instance",
+				"body": "The time you set is not equal to the length of the order( {total} {unit}). Do you want to continue setting the instance? Time diff: {diff} {unit}."
+			}
+		},
+		"image": {
+			"add_image": "Add Image",
+			"image_name": "Image Name",
+			"image_scene": "Image Scene",
+			"image_status": "Image Status",
+			"operate": "Operate",
+			"Approved": "Approved",
+			"in_review": "In Review",
+			"to_examine": "To Examine",
+			"Deleted": "Deleted",
+			"deactivated": "Deactivated",
+			"Enable": "Enable Image",
+			"Deactivate": "Deactivate Image",
+			"delete_image": "Delete Image",
+			"creator": "Creator",
+			"Submit": "Modify Image"
+		},
+		"gpu": {
+			"gpu_label": "GPU Model",
+			"gpu_architecture": "GPU A+rchitecture",
+			"gpu_fb64": "FB64 TensorCore",
+			"gpu_tf64": "TF64 TensorCore",
+			"gpu_fp32": "FP32 TensorCore",
+			"gpu_tf32": "TF32 TensorCore",
+			"gpu_fp16": "FP16 TensorCore",
+			"gpu_int18": "INT18 TensorCore",
+			"gpu_rtcoretype": "RTCore Type",
+			"gpu_rtcorenumber": "Number of RTCores",
+			"gpu_rtcorefp16": "RTCore Performance",
+			"gpu_gmemtype": "Video Memory Type",
+			"gpu_gmemsize": "GPU Memory",
+			"gpu_gmembw": "GPU Memory Bandwidth",
+			"gpu_power": "Power",
+			"gpu_linktype": "Interconnection Type",
+			"gpu_linkspeed": "Internet Connection Speed",
+			"gpu_operate": "Operate",
+			"gpu_delete": "Delete",
+			"gpu_add": "Add New GPU",
+			"gpu_adds": "Added GPU Information",
+			"gpu_list": "GPU List",
+			"gpu_contrast": "Compare GPU",
+			"gpu_contrasts": "GPU Comparison",
+			"gpu_modify": "Modify GPU Information",
+			"gpu_detailed": "GPU Details",
+			"gpu_contrast_item": "Comparative Item"
+		},
+		"supplier": {
+			"add_ai": "Create supplier",
+			"identifying": "SPID",
+			"Company": "Company Name",
+			"Contact": "Contact Name",
+			"Telephone": "Telephone",
+			"mobile": "Mobile",
+			"QQ": "QQ",
+			"weixin": "Weixin",
+			"Facebook": "Facebook",
+			"weibo": "Weibo",
+			"Detail": "Detail",
+			"Details": "Detail",
+			"Close": "Close",
+			"Toggle": "Toggle",
+			"Update": "Update"
+		},
+		"ai_server": {
+			"bare_metal": "Bare Metal",
+			"airdrop": "Airdrop",
+			"cloud": "Cloud",
+			"server": "GPU Server",
+			"gpu": "GPU Card",
+			"network": "IB Network",
+			"storage": "Storage"
+		},
+		"ai_blog": {
+			"reading_more": "Reading more...",
+			"all": "All",
+			"categories": {
+				"howto": "How to",
+				"casestudy": "Case study",
+				"solution": "Solution",
+				"policy": "Policy"
+			},
+			"header": "Blog",
+			"create": "Create",
+			"back_to_list": "Back to list",
+			"edit": "Edit",
+			"delete": "Delete",
+			"reset": "Reset",
+			"cancel": "Cancel",
+			"save": "Save",
+			"category": "Category",
+			"title": "Title",
+			"tags_add": "Add tags: separate by space，press enter to add",
+			"icon": "Icon",
+			"image": "Image",
+			"abstract": "Abstract",
+			"content": "Content",
+			"tags": "Tags",
+			"reading_time": "Reading time",
+			"minutes": "minutes",
+			"editor_mismatch_error": "Error 403, you are not the author of this article and have no right to edit.",
+			"editor_need-audit_warning": "Your content needs to be reviewed before it can be published successfully",
+			"register_no_audit_editor": "Apply for exemption from audit",
+			"notpublish": "Not Publish",
+			"publish": "Publish",
+			"notpublished": "Not Published",
+			"draft": "Draft",
+			"published": "Published",
+			"deleted": "Deleted",
+			"restore_to_draft": "Restore",
+			"restored_to_draft": "Restored to draft",
+			"editor_save_success_info": "Save succeed. Your content still needs to be reviewed before it can be displayed.",
+			"editor_deleted_warning": "The current content has been deleted.",
+			"editor_auditing_warning": "The current content is under audit.",
+			"editor_not_found_warning": "The current content does not exist",
+			"delete_confirm": {
+				"title": "Delete",
+				"body": "Are you sure you want to delete the current content? When deleted, it will not be viewable or editable."
+			},
+			"ok": "OK",
+			"contact": {
+				"title": "Contact AIFuture",
+				"subtitle": "Thank you for your interest in AI2Future BayStone. We are happy to help you rent or purchase a high-end GPU computing server. Please fill in the form and the expert will contact you soon.",
+				"formItems": {
+					"name": "What's Your Name?",
+					"company": "Company Name",
+					"email": "Email",
+					"phone": "Phone Number",
+					"gpu": "GPU Server",
+					"amount": "How much do you need?"
+				},
+				"submit": "Submit",
+				"submit_success": "Submit Successfully. We'll contact you soon."
+			}
+		},
+		"ai_model": {
+			"my_branches": "My Branches",
+			"tasks": "Tasks",
+			"libraries": "Libraries",
+			"datasets": "Datasets",
+			"language": "Languages",
+			"licences": "Licences",
+			"filter_name": "Filter by name...",
+			"filter_task": "Filter task by name...",
+			"filter_libraries": "Filter libraries by name...",
+			"filter_dataset": "Filter datasets by name...",
+			"filter_language": "Filter language by name...",
+			"filter_licence": "Filter licences by name...",
+			"ai_models": "AI Models",
+			"model_card": "Model card",
+			"files_and_versions": "Files and versions",
+			"community": "Feedback",
+			"create_model": "Create AI model",
+			"unique_id": "Unique ID",
+			"model_name": "Model name",
+			"base_model": "Base model",
+			"description": "Description",
+			"icon": "Icon",
+			"to_gitlab": "I don't have a GitLab repository yet?",
+			"gitlab_token": "GitLab token",
+			"gitlab_url": "Clone url",
+			"public": "Public",
+			"private": "Private",
+			"find_model_is_null": "Did not find a large model belonging to this category.",
+			"edit_card": "Edit model card",
+			"push": "Save update",
+			"my_project": "My project",
+			"reset": "Reset"
+		},
+		"ai_model_task": {
+			"multimodal": "Multimodal",
+			"feature_extraction": "Feature Extraction",
+			"text_to_image": "Text To Image",
+			"image_to_text": "Image To Text",
+			"text_to_video": "Text To Video",
+			"visual_question_answering": "Visual Question Answering",
+			"document_question_answering": "Document Question Answering",
+			"graph_machine_learning": "Graph Machine Learning",
+			"computer_vision": "Computer Vision",
+			"depth_estimation": "Depth Estimation",
+			"image_classification": "Image Classification",
+			"object_detection": "Object Detection",
+			"image_segmentation": "Image Segmentation",
+			"image_to_image": "Image To Image",
+			"unconditional_image_generation": "Unconditional Image Generation",
+			"video_classification": "Video Classification",
+			"zero_shot_image_classification": "Zero Shot Image Classification",
+			"natural_language_processing": "Natural Language Processing",
+			"text_classification": "Text Classification",
+			"token_classification": "Token Classification",
+			"table_question_answering": "Table Question Answering",
+			"question_answering": "Question Answering",
+			"zero_shot_classification": "Zero Shot Classification",
+			"translation": "Translation",
+			"summarization": "Summarization",
+			"conversational": "Conversational",
+			"text_generation": "Text Generation",
+			"text2text_generation": "Text2text Generation",
+			"fill_mask": "Fill Mask",
+			"sentence_similarity": "Sentence Similarity",
+			"audio": "Audio",
+			"text_to_speech": "Text To Speech",
+			"text_to_audio": "Text To Audio",
+			"automatic_speech_recognition": "Automatic Speech Recognition",
+			"audio_to_audio": "Audio To Audio",
+			"audio_classification": "Audio Classification",
+			"voice_activity_detection": "Voice Activity Detection",
+			"tabular": "Tabular",
+			"tabular_classification": "Tabular Classification",
+			"tabular_regression": "Tabular Regression",
+			"reinforcement_learning": "Reinforcement Learning",
+			"robotics": "Robotics"
+		},
+		"datasets": {},
+		"console": {
+			"app": {
+				"my_application": "My Application"
+			},
+			"repo": {
+				"my_dev_repository": "My Dev Repository"
+			},
+			"order": {
+				"my_gpu_servers": "My GPU Servers",
+				"my_gpu_servers_subscribe": "My GPU Servers Subscribe",
+				"orderStatusDesc": {
+					"order": "New Order",
+					"run": "Running",
+					"stop": "Stoped",
+					"ofm": "Arrearage",
+					"deleted": "Deleted"
+				},
+				"ip": "IP",
+				"url": "URL",
+				"renew": "Renew",
+				"one_more": "One More",
+				"all": "All"
+			},
+			"dataset": {
+				"my_dataset": "My Datasets"
+			}
+		},
+		"comment": {
+			"back": "Back to list",
+			"goto": "Goto list after submit",
+			"create_another": "Create another after submit",
+			"purchase_reation": "Purchase resources and run models",
+			"create": "Create",
+			"edit": "Edit",
+			"preview": "Preview",
+			"cenel": "Cenel",
+			"access_token": "Access Token",
+			"my_model": "My models",
+			"my_app": "My app",
+			"my_scene": "My scene",
+			"notebook": "Notebook"
+		},
+		"ov": {
+			"homepage": {
+				"banner": {
+					"title": "NVIDIA Omniverse Enterprise",
+					"subtitle": "Develop industrial metaverse applications with OpenUSD.",
+					"contact": "Get in Touch"
+				},
+				"introduction": {
+					"title": "Connect, Build, and Operate 3D Pipelines and Virtual Worlds",
+					"abstract": "Metaverse and 3D internet applications are here, and with them come highly complex production pipelines, geographically dispersed teams, and a vast collection of incompatible software tools and siloed data. <br><br> From designing true-to-reality 3D assets and environments to operating large-scale digital twins, NVIDIA Omniverse™ Enterprise and Universal Scene Description (OpenUSD) help teams overcome the challenges of physically accurate, large-scale simulations and demanding AI, industrial, and scientific workflows.",
+					"details": {
+						"visualization": {
+							"title": "Scalable Visualization and Simulation",
+							"abstract": "Create physically accurate visualizations and simulations of products and environments, reducing the time and costs of physical testing."
+						},
+						"developer": {
+							"title": "Easy-to-Use Suite of Developer Tools",
+							"abstract": "Quickly create and deploy custom workflows and apps without extensive programming knowledge. Use foundation apps to get started and focus on design and building."
+						},
+						"ecosystem": {
+							"title": "Ecosystem of Application Building Blocks",
+							"abstract": "​​Use Omniverse's rich catalog of industry-leading third-party extensions to integrate your team's tools seamlessly with proven applications and connectors."
+						},
+						"ai": {
+							"title": "Built-In AI",
+							"abstract": "​​Embed AI into your workflows to automate repetitive tasks with predictive capabilities and natural language processing."
+						}
+					}
+				},
+				"scenario": {
+					"architecture": {
+						"title": "Architecture, Engineering, <br> Construction, and Operations",
+						"abstract": "The design, construction and operation of buildings and infrastructure pose complex challenges. To overcome these challenges, architecture, engineering, construction and operations (AECO ) companies around the world are using NVIDIA technology to optimize design, reduce risk and improve collaboration, even when working remotely. With breakthroughs in collaborative solutions such as AI, 3D graphics virtualization, virtual reality (VR) , and NVIDIA Omniverse™, many companies are altering workflows to reshape the future of our world.",
+						"details": [
+							{
+								"title": "Speed up the design workflow",
+								"content": "Advanced technologies such as immersive VR, real-time light tracking, and 3D graphics virtualization have greatly improved the design and visualization of BIM models, as well as the efficiency and level of innovation."
+							},
+							{
+								"title": "Implement data-driven decisions",
+								"content": "With GPU-powered data science and AI, the AECO team can use a wealth of data-including design, environment, simulation and structure-to gain insight into everything from traffic flow to weather conditions."
+							},
+							{
+								"title": "To ensure safety and to maximize cost savings",
+								"content": "GPU-assisted AI and robotics support self-driving vehicles on the construction site, enabling real-time monitoring of on-site safety compliance and automated, more accurate infrastructure inspection processes."
+							}
+						]
+					},
+					"entertainment": {
+						"title": "Media and <br> Entertainment",
+						"abstract": "The film and television industry is innovating and reshaping its production processes to meet the growing demand for high-quality content, while maintaining a tight pace of work across a worldwide workforce. In addition, there is a growing demand for continuous publishing and refreshing of streaming services to meet a growing subscriber base. As a result, studios are turning to AI, virtual production, real-time rendering, and content collaboration, whether on desktops or in data centers or in the cloud, to significantly speed up production.",
+						"details": [
+							{
+								"title": "Speed up your 3D workflow",
+								"content": "Omniverse, as a collaboration hub, can interconnect existing 3D workflows, upgrading linear processes to real-time synchronous authoring, enabling you to leverage the common scenario description (OpenUSD) format, create in a way and at an unprecedented speed."
+							}
+						]
+					},
+					"automotive": {
+						"title": "Automotive",
+						"abstract": "Nvidia's automotive solutions offer superior performance and scalability for designing, visualizing, and simulating future driving. Build virtual showrooms and car configurators, develop in-car AI assistants, and validate self-driving technology-all with the help of Nvidia AI Omniverse and accelerated computing platforms.",
+						"details": [
+							{
+								"title": "Design visualization",
+								"content": "From concept to collaboration to final design, reshaping the future of the automotive industry."
+							},
+							{
+								"title": "Engineering simulation",
+								"content": "Improve performance with advanced computing power, scalability, and reliability."
+							},
+							{
+								"title": "Industrial Digital Twins",
+								"content": "Create accurate virtual representations powered by Omniverse Enterprise."
+							},
+							{
+								"title": "Virtual showrooms and vehicle configurators",
+								"content": "Create an immersive retail experience using virtual reality and augmented reality."
+							},
+							{
+								"title": "Intelligent Assistant",
+								"content": "Build a smart car service."
+							},
+							{
+								"title": "Self-driving and parking",
+								"content": "Large-scale implementation of more intelligent software defines self-driving cars."
+							}
+						]
+					},
+					"manufacturing": {
+						"title": "Manufacturing",
+						"abstract": "Using breakthroughs in design, rendering, simulation, production, remote collaboration, and visualization to revolutionize product development, transform engineering, and power the factories of the future.",
+						"details": [
+							{
+								"title": "Product Development",
+								"content": "Change the work flow of product development."
+							},
+							{
+								"title": "Engineering simulation",
+								"content": "Accelerate the computer-aided engineering workflow."
+							},
+							{
+								"title": "Ai-enabled factory",
+								"content": "Improve plant agility, efficiency and productivity."
+							}
+						]
+					},
+					"visualization": {
+						"title": "Science and Research",
+						"abstract": "NVIDIA Omniverse™ provides researchers with a shared virtual space where they can quickly view, analyze, discover and publish scientific breakthroughs through real-time collaboration and simplified workflow.",
+						"details": [
+							{
+								"title": "Real-time collaboration",
+								"content": "Using Omniverse, researchers everywhere can visualize, analyze, and modify the same data, and collaborate in real time to improve productivity."
+							},
+							{
+								"title": "Large-scale interactive visualization",
+								"content": "Omniverse can be extended to provide real-time interactive visualizations of large volumes of 2D data, enabling researchers to quickly and intuitively scan the entire data set for faster discovery."
+							},
+							{
+								"title": "Vivid visual effects",
+								"content": "Omniverse supports 3D geometry and advanced light tracking to create realistic visuals and highlight insights that may be lost in 2D data."
+							}
+						]
+					}
+				}
+			},
+			"contact": {
+				"title": "Contact AIFuture",
+				"subtitle": "Thank you for your interest in NVIDIA Omniverse. We would love to help you get started. Fill out the form and an expert will get back to you shortly.",
+				"formItems": {
+					"firstName": "First Name",
+					"lastName": "Last Name",
+					"businessEmailAddress": "Business Email Address",
+					"businessPhoneNumber": "Business Phone Number",
+					"organizationUniversityName": "Organization / University Name",
+					"industry": "Industry",
+					"jobTitle": "Job Title",
+					"location": "Location",
+					"preferredLanguage": "Preferred Language",
+					"whyAreYouGetInTouch": "Why are you get in touch?",
+					"yourProjectAndToDo": "Tell us about your project  and what you want to do",
+					"involvedEmployeesInProject": "How many employees are involved in the project?",
+					"whenToStartProject": "When do you want to start the project?",
+					"hasNVIDIARTXHardware": "Do you have NVIDIA RTX hardware?"
+				},
+				"privacyItems": {
+					"privacyDataCollect": "I am aware and agree to the collection and processing of the above information for the purposes of research and event organization, and have read and agreed to <a href='/ov/privacy' target='_blank'>AIFuture privacy policy</a>。",
+					"privacyDataStore": "I understand and agree that this information will be transmitted to AIFuture for the purposes of research, organization, and, accordingly, the future of AIFuture's internal management and system operations, stored as conforming to <a href='/ov/privacy' target='_blank'>AIFuture privacy policy</a>, you can do so by sending an email to <a href='mailto:privacy@ai2nv.com'>privacy@ai2nv.com</a> to address related issues and realize applicable rights under the data protection law."
+				},
+				"submit": "Submit",
+				"submit_success": "Submit Successfully. We'll contact you soon.",
+				"options": {
+					"industry": [
+						"Academia / Education",
+						"Aerospace",
+						"Agriculture",
+						"Architecture / Engineering / Construction",
+						"Automotive / Transportation",
+						"Cloud Services",
+						"Consumer Internet",
+						"Energy",
+						"Financial Services",
+						"Gaming",
+						"Hardware / Semiconductor",
+						"Healthcare & Life Sciences",
+						"HPC / Scientific Computing",
+						"Manufacturing",
+						"Media & Entertainment",
+						"Public Sector",
+						"Restaurant / Quick-Service",
+						"Retail / Consumer Packaged Goods",
+						"Smart Cities / Spaces",
+						"Telecommunications",
+						"Other"
+					],
+					"jobTitle": [
+						"CEO",
+						"CFO",
+						"CIO",
+						"CISO",
+						"Consultant",
+						"CTO",
+						"Data Analyst",
+						"Data Scientist",
+						"Developer / Engineer",
+						"Film / Video Editor",
+						"Financial Analyst",
+						"Founder / Co-Founder",
+						"Gamer",
+						"Graphic Designer / Animator",
+						"Industrial Designer / Product Designer",
+						"Industry Analyst",
+						"IT Specialist",
+						"Marketing Professional",
+						"President / Vice President",
+						"Press",
+						"Professor / Instructor",
+						"Project Manager",
+						"Researcher: Academic",
+						"Researcher: Non-Academic",
+						"Sales Representative / Manager",
+						"Security Operations",
+						"Solutions Architect",
+						"Student: Graduate",
+						"Student: Other",
+						"Student: Undergraduate",
+						"System Administrator",
+						"Venture Capitalist",
+						"Other"
+					],
+					"location": [
+						"Afghanistan",
+						"Aland Islands",
+						"Albania",
+						"Algeria",
+						"American Samoa",
+						"Andorra",
+						"Angola",
+						"Anguilla",
+						"Antarctica",
+						"Antigua and Barbuda",
+						"Argentina",
+						"Armenia",
+						"Aruba",
+						"Australia",
+						"Austria",
+						"Azerbaijan",
+						"Bahamas",
+						"Bahrain",
+						"Bangladesh",
+						"Barbados",
+						"Belarus",
+						"Belgium",
+						"Belize",
+						"Benin",
+						"Bermuda",
+						"Bhutan",
+						"Bolivia",
+						"Bonaire, Sint Eustatius and Saba",
+						"Bosnia and Herzegovina",
+						"Botswana",
+						"Bouvet Island",
+						"Brazil",
+						"British Indian Ocean Territory",
+						"British Virgin Islands",
+						"Brunei Darussalam",
+						"Bulgaria",
+						"Burkina Faso",
+						"Burundi",
+						"Cambodia",
+						"Cameroon",
+						"Canada",
+						"Cape Verde",
+						"Cayman Islands",
+						"Central African Republic",
+						"Chad",
+						"Chile",
+						"China",
+						"Christmas Island",
+						"Cocos (Keeling) Islands",
+						"Colombia",
+						"Comoros",
+						"Congo",
+						"Congo, Democratic Republic of the",
+						"Cook Islands",
+						"Costa Rica",
+						"Cote D'Ivoire",
+						"Croatia",
+						"Cuba",
+						"Curaçao",
+						"Cyprus",
+						"Czech Republic",
+						"Denmark",
+						"Djibouti",
+						"Dominica",
+						"Dominican Republic",
+						"Ecuador",
+						"Egypt",
+						"El Salvador",
+						"Equatorial Guinea",
+						"Eritrea",
+						"Estonia",
+						"Eswatini",
+						"Ethiopia",
+						"Falkland Islands (Malvinas)",
+						"Faroe Islands",
+						"Fiji",
+						"Finland",
+						"France",
+						"French Guiana",
+						"French Polynesia",
+						"French Southern Territories",
+						"Gabon",
+						"Gambia",
+						"Georgia",
+						"Germany",
+						"Ghana",
+						"Gibraltar",
+						"Greece",
+						"Greenland",
+						"Grenada",
+						"Guadeloupe",
+						"Guam",
+						"Guatemala",
+						"Guernsey",
+						"Guinea",
+						"Guinea-Bissau",
+						"Guyana",
+						"Haiti",
+						"Heard Island and Mcdonald Islands",
+						"Honduras",
+						"Hong Kong",
+						"Hungary",
+						"Iceland",
+						"India",
+						"Indonesia",
+						"Iran",
+						"Iraq",
+						"Ireland",
+						"Isle of Man",
+						"Israel",
+						"Italy",
+						"Jamaica",
+						"Japan",
+						"Jersey",
+						"Jordan",
+						"Kazakhstan",
+						"Kenya",
+						"Kiribati",
+						"Korea Democratic People's Republic of",
+						"Korea Republic of",
+						"Kuwait",
+						"Kyrgyzstan",
+						"Lao People's Democratic Republic",
+						"Latvia",
+						"Lebanon",
+						"Lesotho",
+						"Liberia",
+						"Libya",
+						"Liechtenstein",
+						"Lithuania",
+						"Luxembourg",
+						"Macao",
+						"Madagascar",
+						"Malawi",
+						"Malaysia",
+						"Maldives",
+						"Mali",
+						"Malta",
+						"Marshall Islands",
+						"Martinique",
+						"Mauritania",
+						"Mauritius",
+						"Mayotte",
+						"Mexico",
+						"Micronesia, Federated States of",
+						"Moldova, Republic of",
+						"Monaco",
+						"Mongolia",
+						"Montenegro",
+						"Montserrat",
+						"Morocco",
+						"Mozambique",
+						"Myanmar",
+						"Namibia",
+						"Nauru",
+						"Nepal",
+						"New Caledonia",
+						"New Zealand",
+						"Nicaragua",
+						"Niger",
+						"Nigeria",
+						"Niue",
+						"Norfolk Island",
+						"North Macedonia",
+						"Northern Mariana Islands",
+						"Norway",
+						"Oman",
+						"Pakistan",
+						"Palau",
+						"Palestine, State of",
+						"Panama",
+						"Papua New Guinea",
+						"Paraguay",
+						"Peru",
+						"Philippines",
+						"Pitcairn",
+						"Poland",
+						"Portugal",
+						"Puerto Rico",
+						"Qatar",
+						"Réunion",
+						"Romania",
+						"Russian Federation",
+						"Rwanda",
+						"Saint Helena",
+						"Saint Kitts and Nevis",
+						"Saint Lucia",
+						"Saint Pierre and Miquelon",
+						"Saint Vincent and the Grenadines",
+						"Saint-Barthélemy",
+						"Saint-Martin (French part)",
+						"Samoa",
+						"San Marino",
+						"Sao Tome and Principe",
+						"Saudi Arabia",
+						"Senegal",
+						"Serbia",
+						"Seychelles",
+						"Sierra Leone",
+						"Singapore",
+						"Sint Maarten",
+						"Slovakia",
+						"Slovenia",
+						"Solomon Islands",
+						"Somalia",
+						"South Africa",
+						"South Georgia and the South Sandwich Islands",
+						"South Sudan",
+						"Spain",
+						"Sri Lanka",
+						"Sudan",
+						"Suriname",
+						"Svalbard and Jan Mayen",
+						"Sweden",
+						"Switzerland",
+						"Syria",
+						"Taiwan",
+						"Tajikistan",
+						"Tanzania",
+						"Thailand",
+						"The Netherlands",
+						"Timor-Leste",
+						"Togo",
+						"Tokelau",
+						"Tonga",
+						"Trinidad and Tobago",
+						"Tunisia",
+						"Turkey",
+						"Turkmenistan",
+						"Turks and Caicos Islands",
+						"Tuvalu",
+						"Uganda",
+						"Ukraine",
+						"United Arab Emirates",
+						"United Kingdom",
+						"United States",
+						"United States Minor Outlying Islands",
+						"Uruguay",
+						"Uzbekistan",
+						"Vanuatu",
+						"Vatican City State",
+						"Venezuela",
+						"Viet Nam",
+						"Virgin Islands U.S.",
+						"Wallis and Futuna",
+						"Western Sahara",
+						"Yemen",
+						"Zambia",
+						"Zimbabwe"
+					],
+					"preferredLanguage": [
+						"Chinese (Simplified)",
+						"Chinese (Traditional)",
+						"Czech",
+						"Danish",
+						"Dutch",
+						"English (Australia)",
+						"English (GB)",
+						"English (India)",
+						"English (Malaysia)",
+						"English (Philippines)",
+						"English (Singapore)",
+						"English (US)",
+						"Finnish",
+						"French",
+						"French (Belgium)",
+						"German",
+						"German (Austria)",
+						"Indonesian",
+						"Italian",
+						"Japanese",
+						"Korean",
+						"Netherlands (Belgium)",
+						"Norwegian",
+						"Polish",
+						"Portuguese (Brazil)",
+						"Russian",
+						"Spanish (Latin America)",
+						"Spanish (Spain)",
+						"Swedish",
+						"Thai",
+						"Turkish",
+						"Vietnamese"
+					],
+					"whyAreYouGetInTouch": [
+						"Try Omniverse Enterprise for 30 days",
+						"Speak to an Omniverse specialist",
+						"Access ‘Get Started’ learning resources",
+						"Get a quote for licenses and/or hardware",
+						"Other"
+					],
+					"involvedEmployeesInProject": ["1-2", "3-9", "10-25", "26+"],
+					"whenToStartProject": [
+						"Don’t know, just researching",
+						"0-3 months",
+						"3-6 Months",
+						"6-12 Months"
+					],
+					"hasNVIDIARTXHardware": ["Yes", "No", "Don’t know"]
+				}
+			}
+		},
+		"ai_req": {
+			"all": "All",
+			"categories": {
+				"aiapp": "Scenario",
+				"airesource": "Resource",
+				"aigpu": "GPU"
+			},
+			"publics": {
+				"all": "All",
+				"supplier": "Supplier",
+				"admin": "Admin"
+			},
+			"statuses": {
+				"open": "Open",
+				"closed": "Closed"
+			},
+			"mine": "Mine",
+			"create": "Create",
+			"back_to_list": "Back to list",
+			"edit": "Edit",
+			"reset": "Reset",
+			"cancel": "Cancel",
+			"post": "Post",
+			"reply": "Reply",
+			"category": "Category",
+			"public": "Public",
+			"status": "Status",
+			"company": "Company",
+			"email": "Email",
+			"phone": "Phone",
+			"content": "Content",
+			"create_supplier": "You do not have supplier permissions. Please create the supplier first and apply to activate the supplier permissions. <hr><a class='btn btn-primary' href='/admin/aisupplier'>Create supplier</a>"
+		},
+		"ai_config": {
+			"key": "Key",
+			"scope": "Scope",
+			"value": "JSON",
+			"scopes": {
+				"public": "Public",
+				"private": "Pirvate",
+				"AI2NV_OP2": "Admin"
+			},
+			"edit_private_warning": "Editing someone else's configuration. If you modify the scope to be private, you will not be able to see and edit the configuration later.",
+			"view_aiconfig_error": "403 Error, you do not have admin permission (AI2NV_OP2) to view aiconfig.",
+			"save": "Save",
+			"list": "Back to list",
+			"create": "Create",
+			"mine": "Mine"
+		},
+		"error": {
+			"gitlab_md": "Your GitLab repository has not been linked yet, or your repository does not contain a 'README.md' file. Please check."
+		}
+	}
+}

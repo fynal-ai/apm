@@ -1,0 +1,9 @@
+clear
+cp /dev/null ~/.pm2/logs/apm_frontend.log
+#Change next line to your own path
+export NODE_EXTRA_CA_CERTS=~/Library/Application\ Support/Caddy/pki/authorities/local/root.crt
+pm2 stop apm_frontend;
+pm2 delete apm_frontend;
+pm2 start pm2.json
+pm2 logs apm_frontend
+

@@ -1,0 +1,4 @@
+{
+	"name": "apm_frontend",
+	"script": "npm run inspect"
+}

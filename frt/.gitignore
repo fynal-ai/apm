@@ -1,0 +1,11 @@
+config.json
+.env
+tests
+run.sh
+support
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+/my-output-directory

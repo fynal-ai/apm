@@ -1,0 +1,65 @@
+#!/bin/bash
+
+LOG_PATH=$HOME/dev/logs
+DEV_HOME="$HOME/dev"
+osascript <<EOF
+tell application "iTerm"
+  set devWindow to (create window with default profile)
+  #set devWindow to current window
+  tell current session of devWindow
+    set name to "Emp Src"
+    write text "cd $DEV_HOME/baystone;"
+    tell application "System Events" to keystroke "d" using command down
+    delay 1
+    write text "cd $DEV_HOME/baystone; npm run dev.tsc"
+    tell application "System Events" to keystroke "d" using {shift down, command down}
+    delay 1
+    write text "cd $DEV_HOME/baystone; ./run.sh;"
+  end tell
+
+  tell devWindow
+    set newTab to (create tab with default profile)
+    tell current session of newTab
+      write text "cd $DEV_HOME/baystone/frt;"
+    end tell
+
+    # split vertically
+    tell application "System Events" to keystroke "d" using command down
+    delay 2
+
+    tell current session of newTab
+      write text "cd $DEV_HOME/baystone/frt; ./run.sh"
+    end tell
+  end tell
+
+  tell devWindow
+    set newTab to (create tab with default profile)
+    delay 1
+
+    tell current session of newTab
+      write text "$HOME/bin/runMongoInDocker;mongosh"
+    end tell
+    #
+    # split vertically
+    tell application "System Events" to keystroke "d" using command down
+    delay 1
+
+    tell current session of newTab
+      write text "$HOME/bin/runRedisInDocker;redis-cli"
+    end tell
+
+    # split vertically
+    tell application "System Events" to keystroke "d" using command down
+    delay 1
+
+    tell current session of newTab
+      write text "cd $DEV_HOME/baystone/caddy; caddy stop >/dev/null 2>&1; caddy run"
+    end tell
+  end tell
+
+end tell
+EOF
+
+#$HOME/bin/startDebug
+
+exit 0;

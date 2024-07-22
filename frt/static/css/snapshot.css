@@ -1,0 +1,20 @@
+@keyframes svgRun {
+	50% {
+		fill: #2726ff;
+	}
+}
+.svgnode {
+	fill: #2726ff;
+	stroke: #2726ff;
+	stroke-width: 5;
+}
+.svgnode.ST_RUN {
+	fill: #00ff00;
+	animation: svgRun 3s infinite;
+}
+.svgnode.ST_DONE {
+	fill: #00ff00;
+}
+.svgnode.ST_IGNORE {
+	fill: #bbbbbb;
+}

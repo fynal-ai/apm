@@ -1,0 +1,12 @@
+{
+	"name": "apm_backend",
+	"script": "./build/index.js",
+	"node_args": ["--inspect=9449"],
+	"watch": ["build"],
+	"ignore_watch": ["test"],
+	"interpreter": "node",
+	"env": {
+		"NODE_ENV": "dev",
+		"NODE_TLS_REJECT_UNAUTHORIZED": "0"
+	}
+}

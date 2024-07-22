@@ -1,0 +1,39 @@
+[
+	{
+		"author": "fynal-ai",
+		"version": "1.0.1",
+		"name": "fynal-ai/flood_control",
+		"label": "防训预测",
+		"description": "选择时间并输入要查询自然水域，为您进行防讯数据查询。",
+		"icon": "https://bonsai.baystoneai.com/favicon.png",
+		"doc": "选择时间并输入要查询自然水域",
+		"config": {
+			"input": {
+				"prompt": "潘家塘最大降雨量多少？",
+				"start_time": 1715961600,
+				"end_time": 1721364926
+			},
+			"output": {
+				"text": "山峡水库在2024-06-18 10:00:00时的上水位最高为167m;这是这时间段内的最高水位。"
+			}
+		}
+	},
+	{
+		"author": "fynal-ai",
+		"version": "1.0.1",
+		"name": "fynal-ai/draw_image",
+		"label": "绘画助理",
+		"description": "描述绘画风格和主题，绘画助理为您绘图。",
+		"icon": "https://bonsai.baystoneai.com/favicon.png",
+		"doc": "描述绘画风格和主题",
+		"config": {
+			"input": {
+				"style": "水墨画",
+				"prompt": "无边落木萧萧下，不尽长江滚滚来。"
+			},
+			"output": {
+				"text": "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)"
+			}
+		}
+	}
+]

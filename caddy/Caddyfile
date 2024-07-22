@@ -1,0 +1,6 @@
+v1.apm.localhost {
+	reverse_proxy http://localhost:12008
+}
+ai.apm.localhost {
+	reverse_proxy http://localhost:13173
+}

@@ -1,0 +1,3205 @@
+{
+	"navmenu": {
+		"home": "首页",
+		"doc": "用户文档",
+		"discuss": "讨论",
+		"template": "规划",
+		"planning": "流程管理",
+		"workflow": "运行监控",
+		"workflow_normal": "列表模式",
+		"workflow_mining": "挖掘模式",
+		"worklist": "我的工作",
+		"kshares": "应用市场",
+		"settings": "系统设置",
+		"teaming": "组队",
+		"messages": "消息",
+		"currentApp": "当前应用",
+		"switch_tenant": "切换组织",
+		"history": "操作历史",
+		"recentbiz": "常用业务",
+		"flexible": "灵活事项"
+	},
+	"discuss": {
+		"category": {
+			"ALL_VISIED": "全部可见",
+			"I_STARTED": "我启动工作的",
+			"I_AM_IN": "我参与工作的",
+			"I_AM_QED": "与我相关的"
+		},
+		"reload": "刷新"
+	},
+	"home": {
+		"topic": "Svelte Localization Tutorial",
+		"subtopic": "Internationalization and Localization",
+		"ifyouhaveaccount": "如果已有账号，请直接登录",
+		"slogan": "<span class='fs-1'>超自动化· BPM</span> <br/><span class='fs-3'>PaaS & SaaS 服务</span>",
+		"introduction": "工作流管理、业务流程管理、超级自动化<br/>SaaS层提供的用户界面可直接用于流程管理、工作协同<br/> PaaS 层提供 API 开发新流程应用、或流程化集成已有应用<br/>免费的流程开发支持服务",
+		"features": {
+			"engine": "Yarknode的核心是一个开放智能的超自动化引擎。开发者可以自由地设计、运行、并监控超自动化引擎的运行状况，通过使用Yarknode超自动化API，开发者能够在手机APP、小程序或H5应用中自由地调用超自动化能力",
+			"hyper": "Yarknode能够用于组织内部任何事物的自动化，不管是z员工还是计算机系统。员工会自动分配工作任务，系统则可以通过API接口调用被自动调用、驱动，或反向调用超自动化能力",
+			"easy": "使用任何现代计算机语言，可以把Yarknode的超自动化耨里集成到任何形式的应用中，不管是基于Web的H5应用，还是iOS或Android移动APP，还是小程序",
+			"secure": "Yarknode承担智能协作者的角色，与其它应用系统独立并隔离，而企业内部应用系统及数据采用已有的独立授权机制。企业关键业务数据得以在既有的安全框架下得到安全保护"
+		},
+		"getstart": {
+			"title": "从这里起步",
+			"content": "无论您是业务流程管理的初学者还是有经验的用户，学习和使用 YarkNode 都非常简单",
+			"link": "从入门指引开始"
+		},
+		"price": {
+			"title": "服务价格",
+			"content": "根据行业和应用场景，从流程中心里选择你需要的业务模板，直接采纳使用。所有流程均支持采纳后根据自身需要，进行修改定制",
+			"link": "访问流程中心",
+			"tiers": {
+				"free": {
+					"title": "免费",
+					"unit": "RMB",
+					"price": "0",
+					"per": "人月",
+					"for": "五个人小团队",
+					"c2f": "每月四次免费流程设计支持, 邮件方式",
+					"btn": "开始使用"
+				},
+				"tier1": {
+					"title": "标准版",
+					"unit": "RMB",
+					"price": "480",
+					"per": "人月",
+					"for": "团队人数100 以下,</br> 按月订阅",
+					"c2f": "免费流程设计支持次数不限, 在线会议方式",
+					"btn": "订阅"
+				},
+				"tier2": {
+					"title": "企业版",
+					"unit": "RMB",
+					"price": "4800",
+					"per": "人年",
+					"for": "团队人数100 以下,</br> 按年订阅",
+					"c2f": "免费流程设计支持次数不限, 在线会议方式",
+					"btn": "订阅"
+				},
+				"tier3": {
+					"title": "旗舰版",
+					"unit": "RMB",
+					"price": "4000",
+					"per": "人年",
+					"for": "团队人数不受限,</br> 按年订阅",
+					"c2f": "免费流程设计支持次数不限, 在线会议方式",
+					"btn": "订阅"
+				}
+			}
+		},
+		"privatedeploy": {
+			"title": "私有化部署",
+			"content": "我们支持为您做私有化部署, 可以在云上, 也可以在您自己的机房里",
+			"btn": "联系我们"
+		},
+		"referral": {
+			"title": "转介绍客户项目",
+			"content": "您可以申请获得专属转介绍链接, 当客户使用你的专属链接注册, 并在第一次支付费用后,"
+		},
+		"hub": {
+			"title": "流程中心",
+			"content": "根据行业和应用场景，从流程中心里选择你需要的业务模板，直接采纳使用。所有流程均支持采纳后根据自身需要，进行修改定制",
+			"link": "访问流程中心"
+		},
+		"doc": {
+			"title": "文档",
+			"content": "业务流程管理者手册、流程设计文档、开发文档者， 及最终用户手册， 都可以在这里找到",
+			"link": "访问在线文档"
+		},
+		"opensource": {
+			"title": "开源",
+			"content": "访问YarkNode API及支撑工具开源代码",
+			"link": "查看开源项目"
+		},
+		"c4f": {
+			"title": "免费的业务流程管理咨询服务",
+			"content": "我们向付费客户提供完全免费的业务流程设计咨询服务，只要把你的业务需求告诉我们，我们经验丰富的咨询师将为你提供免费的流程设计支持",
+			"link": "提交需求"
+		},
+		"faq": {
+			"title": "常见问题"
+		},
+		"search": {
+			"placeholder": "搜索ProcessHub"
+		}
+	},
+	"account": {
+		"signin": "登入",
+		"signup": "注册",
+		"signout": "登出",
+		"logout": "登出",
+		"register": "注册",
+		"nofreereg": "不允许自主注册, 如您是该企业员工，请联系管理员",
+		"needAnAccount": "需要一个新账户?",
+		"yourEmail": "你的邮箱",
+		"yourAccount": "你的账户",
+		"password": "你的密码",
+		"haveAnAccount": "已有账户?",
+		"yourDisplayName": "你的显示名称",
+		"choosePassword": "选择一个密码",
+		"verifyPassword": "验证你的密码",
+		"resetpassword": "重设你的密码",
+		"verificationcode": "请输入你收到的验证码",
+		"sendvrfcode": "发送验证码",
+		"resendvrfcode": "重新发送验证码",
+		"vrfcodesent": "验证码已发送，请查收",
+		"changepassword": "提交密码",
+		"passwordchanged": "密码已修改，转向登录",
+		"resetPassword": {
+			"vrfcode_not_found": "验证码不正确或已过期",
+			"user_not_found": "用户不存在"
+		},
+		"usernotfound": "所输入的用户不存在",
+		"sendvrfcodeerror": "邮件输入有误",
+		"yourFullEmail": "请使用你的完整邮箱地址",
+		"yourEmailOrId": "完整邮箱地址或邮箱前缀",
+		"binding": "绑定",
+		"occupied": "{account} 不可注册"
+	},
+	"register": {
+		"dberror": "注册不成功",
+		"duplicate": "该账号已被注册",
+		"dismiss": "知道了",
+		"emailverifytips": "注册成功以后，平台会发送邮箱地址验证链接给您，你需要查收邮箱验证你的邮箱地址",
+		"upgradeorgtips": "如果您是企业的管理人员，需要注册为企业账号，请联系您在的客户代表。升级企业账号后，您和您的同事可进行工作协作，而您的账号自动成为企业管理员账号",
+		"success": "注册成功",
+		"loginnow": "现在去登录"
+	},
+	"extrafilter": {
+		"template": "模板",
+		"allTemplate": "--全部模板--",
+		"me": "我",
+		"any": "任何人",
+		"mine": "我的",
+		"starter": "发起人",
+		"owner": "负责人",
+		"in": "时间"
+	},
+	"remotetable": {
+		"executeNow": "执行搜索",
+		"rowperpage": "每页个数",
+		"colperrow": "每行个数",
+		"rows-10": "每页10个",
+		"rows-20": "每页20个",
+		"rows-50": "每页50个",
+		"rows-100": "每页100个",
+		"cols-1": "每行最多一个",
+		"cols-2": "每行最多两个",
+		"cols-3": "每行最多三个",
+		"cols-4": "每行最多四个",
+		"totalRows": "总共个数",
+		"pageSize": "每页个数",
+		"pageCount": "页数",
+		"sortBy": "排序",
+		"filter": "过滤",
+		"bywhat": "根据模板名称搜索",
+		"byauthor": "根据作者搜索",
+		"in": "时段",
+		"start_end": "自定",
+		"calendarBegin": "始于",
+		"calendarEnd": "止于",
+		"title": "名称",
+		"name": "名称",
+		"status": "状态",
+		"starter": "启动者",
+		"updatedAt": "更新",
+		"startedAt": "启动",
+		"lastingDays": "持续",
+		"createdAt": "创时",
+		"lasting": "天数",
+		"actions": "操作",
+		"moreActions": "更多操作",
+		"author": "规划者",
+		"belongTo": "所属流程",
+		"multi-select": "选择多个",
+		"multi-select-cancel": "取消多选",
+		"multi-select-all": "选择全部",
+		"multi-select-none": "全部不选",
+		"multi-select-delete": "删除所选",
+		"visifor": "仅这些人可见: ",
+		"tags": "归类标签: ",
+		"desc": "描述说明: ",
+		"template": {
+			"set": {
+				"title": "设置当前模版",
+				"settags": "添加标签，多个标签之间用空格分割",
+				"setauthor": "将作者指定为（输入用户邮箱前缀）",
+				"setdesc": "设置说明描述信息",
+				"setvisito": "对谁可见 (使用PDS格式指定)",
+				"selecttocopyfrom": "选择一个模版拷贝其设计",
+				"tplid": "修改模版名称ID",
+				"autostop": "最新一个活动停滞若干分钟后，中止流程"
+			},
+			"allowdiscuss": {
+				"true": "允许讨论",
+				"false": "不允许讨论"
+			},
+			"musthavepbo": {
+				"true": "启动时必须指定PBO",
+				"false": "启动时允许不指定PBO"
+			}
+		},
+		"me": "我",
+		"any": "任何人",
+		"startIt": "开始这项工作",
+		"startApp": "启动流程",
+		"wfa": {
+			"runningWorks": "进行中的工作任务",
+			"allWorks": "所有工作任务",
+			"pause": "暂停",
+			"resume": "恢复",
+			"stop": "停止",
+			"restart": "重启",
+			"startAnother": "启动另一个",
+			"viewTemplate": "查看相应模版",
+			"viewInstanceTemplate": "查看实例模版",
+			"viewRelatedDiscussion": "参与相关讨论",
+			"deleteThisWorkflow": "删除这个流程",
+			"setpboat": "何时可添加PBO",
+			"setTitle": "设置流程名称",
+			"renameto": "重命名流程为",
+			"setting": "设置",
+			"restartthendeleteThisWorkflow": "重启并删除当前流程"
+		},
+		"tplaction": {
+			"startIt": "启动工作流",
+			"seeWorkflows": "查看相关进程",
+			"seeWorklist": "查看相关工作项",
+			"addDesc": "添加备注",
+			"set": "设置",
+			"setTags": "设置标签",
+			"setVisi": "设置可见性",
+			"setOwner": "设置流程Owner",
+			"deleteThisTempalte": "删除这个模版",
+			"lastUpdate": "上次更新",
+			"exportdata": "流程数据",
+			"editors": "编辑历史",
+			"analysis": "流程挖掘",
+			"scheduler": "执行计划"
+		},
+		"postpone": {
+			"in": "已延后，到期 ",
+			"text": "延后",
+			"single": "{days}天再提醒",
+			"plural": "{days}天再提醒"
+		}
+	},
+	"title": {
+		"template": "应用管理",
+		"workflow": "流程",
+		"worklist": "待办",
+		"mining": "流程挖掘",
+		"share": "分享业务设计"
+	},
+	"adhoc": {
+		"header": "发送一个独立任务",
+		"title": "独立任务名称",
+		"pds": "独立任务承担人, 使用PDS格式",
+		"recent": "最近承担人",
+		"comment": "附加性指引说明",
+		"founduser": "找到{num}个用户"
+	},
+	"button": {
+		"postKShare": "确定上架ProcessHub",
+		"check": "检查",
+		"addcron": "添加这条Crontab定期启动工作流计划",
+		"toggleAdvancedSearch": "高级查询",
+		"footprint": "足迹",
+		"resetQuery": "重置/全部",
+		"refreshtodos": "刷新工作列表",
+		"create": "新建",
+		"import": "导入",
+		"search": "搜索",
+		"recent": "常用",
+		"settings": "系统设置",
+		"me": "我的",
+		"discuss": "我的论坛",
+		"tenant": "组织",
+		"okay": "确定",
+		"cancel": "取消",
+		"clear": "清除",
+		"set": "设置",
+		"closepreview": "关闭",
+		"closeeditlog": "关闭编辑历史",
+		"closecronsetting": "关闭定时计划设置",
+		"closetemplatesetting": "关闭模板设置",
+		"done": "完成",
+		"adhoc": "新建独立任务",
+		"sendback": "打回上一步",
+		"revoke": "撤回",
+		"checkdoer": "检查任务承担人是否正确",
+		"resolve": "解析",
+		"sendadhoc": "送出任务",
+		"sendadhocConfirm": "确定，将任务发送给上述人员",
+		"sendadhocReconsider": "取消，让我再考虑一下",
+		"export": "导出",
+		"copy": "拷贝",
+		"rename": "重命名",
+		"delete": "删除",
+		"startnow": "现在启动",
+		"current_is_searching": "切换到挖掘",
+		"current_is_mining": "切换到搜索",
+		"add": "添加",
+		"upgrade": "升级组织",
+		"reset": "重置",
+		"update": "修改",
+		"changeName": "改名",
+		"addAKey": "添加一个键值",
+		"more": "更多",
+		"less": "更少",
+		"save": "保存",
+		"goback": "返回上一页",
+		"gotobiz": "回业务面板",
+		"next": "下一步",
+		"close": "结束吧",
+		"yana.prompt.guide": "让亚娜为您介绍Yarknode使用方法",
+		"yana.start": "好的，请开始",
+		"preview": "预览",
+		"view": "查看",
+		"openinnewtab": "在新标签页中打开",
+		"download": "下载",
+		"my_work": "我的工作",
+		"moreitems": "更多 >>",
+		"lessitems": "<< 更少",
+		"loadmore": "加载更多",
+		"create_new_template": "新建业务流程"
+	},
+	"template": {
+		"create": {
+			"name": "新流程名称",
+			"tags": "用spaces或;或,分割的标签"
+		},
+		"editlog": {
+			"title": "编辑历史"
+		},
+		"addcron": {
+			"title": "定期自动启动工作流",
+			"cronStarters": "启动时自动设置启动者为",
+			"cronStarters_placeholder": "请使用PDS格式指定单人或多人",
+			"existing": "已添加的定期执行计划",
+			"addnew": "添加新的定期执行计划"
+		},
+		"import": {
+			"name": "新流程名称",
+			"tags": "用spaces或;或,分割的标签",
+			"from_local_disk": "从本地文件导入",
+			"from_process_hub": "转到ProcessHub, 从ProcessHub导入行业专家提供的最佳实践"
+		},
+		"recent": "最近: ",
+		"empty": "没有符合条件的模板"
+	},
+	"attach": {
+		"input_a_url": "输入一个URL",
+		"btn_add_a_url": "添加",
+		"security_warning": "这里上传的文件对所有当前流程参与者可见。如对文件有更加严格的访问权限控制要求，请将文件上传到企业内部有严格权限控制的文件服务器中，或者有访问权限控制的网盘中，在这里仅将文件的链接添加上来，这样，文件的访问将受文件服务器或者网盘的控制"
+	},
+	"work": {
+		"moreActions": "更多操作：",
+		"pbostatus": "状态",
+		"empty": "没有符合条件的待办事项",
+		"freejumping": "跳转中",
+		"quickcomments": "即时讨论",
+		"notfound": "工作项不存在",
+		"more": {
+			"alltodos": "更多待办",
+			"thisbiz": "当前业务",
+			"thisprocess": "当前流程"
+		}
+	},
+	"workflow": {
+		"toggleStatus": "切换状态",
+		"empty": "没有符合条件的流程",
+		"restart": "重启",
+		"reboot": "重载模板",
+		"restart.success": "已成功重启",
+		"reboot.success": "已成功使用最新模板重载",
+		"startat": "开始时间",
+		"pbostatus": "主对象状态",
+		"doneat": "结束时间"
+	},
+	"status": {
+		"All": "全部",
+		"ST_RUN": "待处理",
+		"ST_PAUSE": "已暂停",
+		"ST_DONE": "已完成",
+		"ST_STOP": "已中止",
+		"ST_REVOKED": "已撤回",
+		"ST_RETURNED": "已退回",
+		"ST_IGNORE": "已忽略",
+		"ST_FOOTPRINT": "足迹"
+	},
+	"statusof": {
+		"All": "全部的",
+		"ST_RUN": "待执行的",
+		"ST_PAUSE": "已暂停的",
+		"ST_DONE": "已完成的",
+		"ST_STOP": "已中止的",
+		"ST_REVOKED": "已撤回的",
+		"ST_RETURNED": "已退回的",
+		"ST_IGNORE": "已忽略的",
+		"ST_FOOTPRINT": "足迹"
+	},
+	"start": {
+		"withtemplate": "使用流程模板",
+		"canbefile": "你也可以上传一个文件作为PBO",
+		"startWorkflow": "新启动 {tplid}",
+		"startIt": "正式启动",
+		"rehearsal": "先演练一下",
+		"context": "流程上下文PBO URL(可选)",
+		"context_desc": "流程上下文PBO(可选)。PBO指的是主要业务对象，在流程运行过程中，参与者可以通过这个URL地址访问这个业务对象，比如可以是企业内网里的一份待批文件",
+		"pbo": "粘贴指向PBO的URL",
+		"title": "新业务流程的标题",
+		"title_placeholder": "标题",
+		"teamid": "匹配一个工作小组",
+		"recentTeam": "最近使用的工作小组",
+		"checkitout": "已启动, 去看一下",
+		"monitorit": "监控其运行",
+		"firststep": "直接去到第一个任务项",
+		"startanother": "再次启动这个流程",
+		"OR": "或者,你也可以",
+		"ifnotfamiliar": "一个流程可能会卷入很多的参与人，如果你对当前流程的设计了解不足，建议先做演练，演练时所有工作项将都发送给你自己",
+		"iffamiliar": "或者，你也可以点下面按钮正式启动这个流程",
+		"useflexibleteam": "如果使用灵活组队，可在下面指定",
+		"needtitle": "请提供标题",
+		"pleaseConfirm": "请确认以下信息",
+		"warnNoPbo": "缺失主业务对象",
+		"warnNoTitle": "缺失提供专用标题",
+		"startAnyway": "确认，请直接启动"
+	},
+	"todo": {
+		"completed": "已完成",
+		"status": "任务状态",
+		"Starter": "发起人ID",
+		"StarterOU": "发起人部门",
+		"StarterCN": "发起人姓名",
+		"OUof": "部门",
+		"owner": "任务负责人",
+		"doneat": "完成时间",
+		"decision": "节点决策",
+		"pbo": "主要业务对象",
+		"instruction": "操作指引",
+		"nodeInput": "任务参数",
+		"transferable": "当前任务可被转办",
+		"notTransferable": "当前任务不能被转办",
+		"transferto": "转办给",
+		"transfer": "转办",
+		"rehearsalInformation": "演练信息",
+		"process": "进程信息",
+		"processRehearsal": "进程演练信息",
+		"worklog": "任务历史记录",
+		"worklogof": "流程执行记录",
+		"monitor": "监控",
+		"print": "打印",
+		"showlog": "日志",
+		"startat": "启动于",
+		"startby": "启动者",
+		"nodevars": "数据",
+		"comments": "备注",
+		"freejumpto": "跳转到",
+		"restartrehearsal": "重新演练",
+		"cancelworkflowatfirststep": "放弃流程",
+		"workflowcontext": "流程上下文信息",
+		"rehearsalinformation": "演练相关信息",
+		"track": {
+			"dakai": "展开",
+			"shouqi": "折叠"
+		},
+		"bethefirstcomment": "欢迎前排讨论",
+		"congrat": "暂无待处理"
+	},
+	"tpl": {
+		"create_new": "创建一个新业务",
+		"dropdown": "操作",
+		"kshare": "上架PH",
+		"view": "显示",
+		"prop": "属性",
+		"new": "新建",
+		"export": "导出",
+		"copyto": "复制",
+		"copy_duplicated": "模版{tplid}已存在",
+		"copy_successed": "成功拷贝到{tplid}",
+		"rename": "重命名",
+		"delete": "删除",
+		"editit": "编辑",
+		"viewit": "只读",
+		"startit": "启动",
+		"form": {
+			"newtplname": "新模版名称",
+			"exportto": "导出为",
+			"copyto": "复制为",
+			"renameto": "重命名为",
+			"delete": "删除",
+			"start": "启动"
+		}
+	},
+	"prop": {
+		"label": "任务描述",
+		"bot": "机器人",
+		"bot_wecom": "企微",
+		"action": {
+			"tab": {
+				"ai": "ChatGPT",
+				"participant": "参与人",
+				"instruction": "操作指引",
+				"features": "节点功能",
+				"variables": "节点数据",
+				"code": "节点脚本",
+				"route": "路由",
+				"crontab": "重复执行",
+				"others": "其它",
+				"previewon": "预览 (其中变量不会被解析)",
+				"previewoff": "关闭预览",
+				"whattags": "可使用哪些HTML标签？"
+			},
+			"placeholder": {
+				"instruct": "可以使用简单HTML格式，也可使用Handlebars嵌入流程变量,like {{varname.label}}, {{varname.value}}",
+				"code": "节点脚本，在节点任务完成后将被执行。请参考文档如何使用脚本，脚本错误可能会对流程运行带来不可预知影响，如非必要，保持为空"
+			},
+			"p10t": {
+				"with_features": "该节点提供以下功能",
+				"byall": "如任务执行者映射到多人时，启动投票机制",
+				"transferable": "可转办",
+				"withsb": "可打回",
+				"withrvk": "可撤回",
+				"withadhoc": "可新建独立任务",
+				"withcmt": "即时评论输入",
+				"sr": "循环中出现时，始终当做单一工作项",
+				"pds": "参与者定义",
+				"define_pds": "该任务的执行者是",
+				"define_cc": "该任务的知情者是",
+				"pick": "可参考定义",
+				"try": "测试参与者定义字符串",
+				"tryteam": "使用组队",
+				"tryuser": "使用用户",
+				"tryresult": "结果",
+				"csv": "从CSV文件获取独立任务执行者",
+				"csv_placeholder": "CSV上传文件变量名",
+				"allowpbo": "允许修改PBO",
+				"mustsign": "必须签名",
+				"trykvar": "测试变量",
+				"trywfid": "测试流程",
+				"csvfile_varname": "指定CSV文件变量名为",
+				"useuserincsv": "将使用CSV文件第一列中的文字作为EID来设置用户，这些用户各自独立参与当前节点活动"
+			},
+			"route": {
+				"from": "前置节点",
+				"to": "后续节点",
+				"pickone": "选择一个节点",
+				"option": "路径选择项",
+				"freejump": "当前任务可任意跳转到其他任务",
+				"freejumpable": "匹配到{tot}个节点"
+			},
+			"kvar": {
+				"basic": "基础",
+				"extra": "附加",
+				"name": "参数名称",
+				"tbl_options": "栏位定义",
+				"ou_options": "组织选项",
+				"sel_options": "选项定义",
+				"tbl_placeholder": "栏位间用竖线分割，如：栏位名1|栏位名2|栏位名3",
+				"ou_placeholder": "ou_code;yes/no(是否包含当前级)",
+				"sel_placeholder": "选项间用；分割，如：可选项1;可选项2;可选项3",
+				"value": "缺省值为",
+				"label": "显示名称",
+				"when": "条件显示",
+				"placeholder": "提示信息",
+				"visi": "对谁可见",
+				"breakrow": "是否换行",
+				"ID": "编号(可选）",
+				"number": {
+					"min": "最小值",
+					"max": "最大值",
+					"step": "步幅"
+				},
+				"required": "是否必填"
+			},
+			"button": {
+				"addnewvar": "+ 增加新变量",
+				"tryit": "开始测试"
+			},
+			"cronrun": {
+				"note": "用于控制在特定时间，重复下发当前任务, 使用Crontab标准语法。错误的Crontab设置可能达不到预想效果，请务必查询Crontab表达式的语法",
+				"repeaton1": "如用户决策为",
+				"repeaton2": "则继续，否则停止自动下发",
+				"repeaton3": "则重复，否则停止重复",
+				"norepeat": "不重复下发任务",
+				"nocron": "不重复下发任务",
+				"byrepeaton": "由用户选择决定",
+				"runthencron": "先下发一次，然后依Crontab定义自动下发",
+				"onlycron": "仅依Crontab定义自动下发"
+			}
+		},
+		"script": {
+			"syncmode": "同步模式",
+			"asyncmode": "异步模式",
+			"tryrun": "检查代码"
+		},
+		"timer": {
+			"code": "时间代码",
+			"type": "控制类型",
+			"fromstart": "从流程开始起",
+			"fromnow": "从现在起",
+			"fix": "固定时间"
+		},
+		"inform": {
+			"recipient": "收件人",
+			"content": "内容",
+			"subject": "标题"
+		},
+		"sub": {
+			"SUB": "子流程ID",
+			"standalone": "独立运行"
+		},
+		"connect": {
+			"decision": "用户选择",
+			"decision_placeholder": "决定流程运行路径",
+			"pbostatus": "设置PBO状态为",
+			"setValue": "设置流程参数",
+			"varname": "参数名",
+			"varvalue": "参数值"
+		},
+		"tpl": {
+			"title": "模版属性",
+			"tplid": "模版名称",
+			"readonly": "只读",
+			"freejump": "全流程任务可任意跳转",
+			"callback": {
+				"endpoint": "回调接口地址",
+				"both": "服务端和用户端",
+				"onserver": "服务端回调",
+				"onclient": "用户端回调"
+			}
+		}
+	},
+	"designer": {
+		"AthenB": "A->B, 请点选B节点",
+		"BthenA": "B->A, 请点选A节点",
+		"confirm": {
+			"reload": {
+				"title": "重新加载 ",
+				"body": "模板已被他人或在其它窗口中修改，需要重新加载",
+				"button": {
+					"yes": "重新加载"
+				}
+			}
+		},
+		"showid": "节点ID",
+		"curve": "弧线",
+		"tool": {
+			"POINTER": "<kbd><i class='bi bi-mouse2'>点击</i></kbd> 选中, <kbd><i class='bi bi-mouse2'>按住</i></kbd>拖动, <kbd>Shift-<i class='bi bi-mouse2'>点击</i></kbd>属性, <kbd>Shift-<i class='bi bi-mouse2'>移动</i></kbd>框选，<kbd>数字键</kbd>工具, <kbd>Ctrl-E</kbd>模式",
+			"ACTION": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>空白位置放置一个「工作项」节点, <kbd>Esc</kbd>退出当前模式",
+			"INFORM": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个通知节点，用于发送邮件通知",
+			"SCRIPT": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个脚本节点，用于运行脚本代码",
+			"TIMER": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个定时节点，用于控制运行时间",
+			"SUB": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个子流程节点，用于启动一个子流程或另一个独立流程",
+			"AND": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个「与」节点，前序节点全部完成才会往后运行",
+			"OR": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个「或」节点，前序节点任意一个完成即可往后运行",
+			"GROUND": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个「接地」节点，无后续节点",
+			"CONNECT": "建立路径链接，<kbd><i class='bi bi-mouse2'>点击</i></kbd>两个节点将其链接，按住<kbd>SHIFT</kbd>连续链接, <kbd>Esc</kbd>或 在空白处<kbd>双击鼠标</kbd>退出链接模式",
+			"THROUGH": "<kbd><i class='bi bi-mouse2'>点击</i></kbd>放置一个接续节点，用于接续长路径，对流程运行逻辑无影响"
+		}
+	},
+	"filepond": {
+		"labelIdle": {
+			"pbo": "拖放到此或浏览",
+			"kvar": "拖放到此或浏览"
+		},
+		"anytype": "无限制",
+		"multiple": "允许多文件上传, 最多{maxFiles}个",
+		"single": "单文件上传",
+		"info": "用于{key}, {allowMultiple}, 文件类型{accept}, 单文件大小{maxFileSize}。 上传文件对所有流程参与者可见...",
+		"labelFileProcessingComplete": "文件已成功上传",
+		"labelTapToUndo": "点击x撤回",
+		"labelTapToRetry": "重试",
+		"labelTapToCancel": "取消"
+	},
+	"confirm": {
+		"title": {
+			"areyousure": "你确定吗？",
+			"needReload": "版本更新",
+			"postpone": "延后执行"
+		},
+		"body": {
+			"postpone": "延后{days}天再看",
+			"cancelpostpone": "取消延后",
+			"needReload": "页面需要重新加载",
+			"deletefile": "文件将被永久删除，请确认",
+			"restartthendestroy": "放弃当前预演并重新启动一个",
+			"cancelworkflowatfirststep": "当前是你自己所启动流程的第一步，你有机会取消这个流程。根据每个流程的不同定义，即便是第一个活动，也可能已经卷入了其他人参与，取消一个已经启动的流程会给其他参与者带来困惑甚至懊恼，请确定你要取消当前流程。",
+			"deleteWorkflow": "取消一个已经启动的流程会给其他参与者带来困惑甚至懊恼，请确定你要取消当前流程。"
+		},
+		"button": {
+			"yes": "是",
+			"no": "否",
+			"confirm": "确认",
+			"cancel": "取消",
+			"delete": "删除"
+		},
+		"locale": {
+			"usedefault": {
+				"title": "自动侦测浏览器语言",
+				"body": "当前的语言{browserlang}。您可设置为使用其它语言",
+				"confirm": "知道了"
+			},
+			"langchanged": {
+				"title": "浏览器语言已变更",
+				"body": "浏览器语言已变更 为 {browserlang}，你要把界面语言切换为与浏览器界面语言相同吗？",
+				"button1": "是的，切换",
+				"button2": "继续使用现有语言{currentlang}"
+			}
+		},
+		"delete": {
+			"template": {
+				"title": "删除模版",
+				"body": "删除模版不可撤回，请确认要删除",
+				"yes": "确定删除"
+			},
+			"template-multi": {
+				"title": "删除{count}个模版",
+				"body": "删除{count}个模版，不可撤回，请确认要删除",
+				"yes": "确定删除"
+			},
+			"workflow-multi": {
+				"title": "删除{count}个流程",
+				"body": "删除{count}个流程，不可撤回，请确认要删除",
+				"yes": "确定删除"
+			}
+		}
+	},
+	"inputtable": {
+		"copyto": {
+			"above": "向上复制",
+			"below": "向下复制"
+		},
+		"delete": "删除当前行",
+		"move": {
+			"up": "向上移动",
+			"down": "向下移动",
+			"top": "移到最上",
+			"bottom": "移到最下"
+		}
+	},
+	"vote": {
+		"last": "依最后一人的选择",
+		"most": "依最多人的选择",
+		"least": "依最少人的选择",
+		"allOrFailto": "选择全部一样，否则",
+		"percentOrFailto": "某一选择超过比例，否则",
+		"ifAny": "只要有选，否则依最后",
+		"ifAnyThenMost": "只要有选，否则依最多",
+		"ifAnyThenLeast": "只要有选，否则依最少",
+		"ifAnyThenAllThenMost": "只要有选，否则依统一选择, 或最多",
+		"ifAnyThenFailto": "只要有选，否则"
+	},
+	"tools": {
+		"POINTER": "点选",
+		"ACTION": "活动",
+		"INFORM": "通知",
+		"SCRIPT": "脚本",
+		"TIMER": "定时器",
+		"SUB": "子流程",
+		"AND": "并",
+		"OR": "或",
+		"GROUND": "接地",
+		"CONNECT": "连接",
+		"THROUGH": "过渡"
+	},
+	"setting": {
+		"set": "设置",
+		"adminpwd": "管理员密码",
+		"adminpwd_ph": "本页的操作均需要使用管理员密码已确认",
+		"tab": {
+			"personal": "个人设置",
+			"wecombot": "待办机器人",
+			"delegation": "工作委托",
+			"tenant": "企业租户",
+			"orgset": "组织设置",
+			"orgchart": "组织结构",
+			"members": "组织成员",
+			"smtp": "SMTP",
+			"data": "数据列表",
+			"maintainance": "维护",
+			"resign": "离职处理",
+			"myfiles": "我的文件",
+			"menu": "菜单配置",
+			"list": "数据列表配置"
+		},
+		"personal": {
+			"nav": "个人设置",
+			"title": "设置个人相关的配置",
+			"body": "头像、签名、密码等",
+			"action": "个人设置",
+			"avatar": "头像",
+			"chooseavatar": "选择头像上传",
+			"choosesignature": "选择签名档上传",
+			"signature": "签名档",
+			"cn": "账户名称",
+			"nickname": "组织内员工名称",
+			"currentTenant": "当前组织为: {tenant}",
+			"currentMenuGroup": "当前菜单组为: {mg}",
+			"currentpassword": "当前密码",
+			"newpassword": "新密码",
+			"sendmail": "有新任务时通知我",
+			"joincode": "使用joincode加入一个组织",
+			"passwordhint": "长度6-20,必须同时包含大小写字母、数字和特殊字符；特殊字符仅限!@#$%^&*",
+			"passwordtooshort": "密码过短",
+			"passwordtoolong": "密码过长",
+			"old_password_wrong": "旧密码输入错误",
+			"newpassword_wrong": "新密码格式有误，请检查",
+			"password2notsame": "密码不一致",
+			"accountFormatError": "账户格式有误",
+			"usernameFormatError": "名称格式有误",
+			"nicknameFormatError": "名称格式有误",
+			"accountFormatTip": "4-20个英文字符，字母开头，字母或数字结尾，中间允许带下划线",
+			"usernameFormatTip": "2-20个字符。开头必须是中文或英文字符，结尾可以是中文或英文字符，中间可以用英文句号、空格、减号、下划线",
+			"nicknameFormatTip": "2-20个字符。开头必须是中文或英文字符，结尾可以是中文或英文字符，中间可以用英文句号、空格、减号、下划线",
+			"email": "邮箱",
+			"sms": "短信",
+			"wecom": "企业微信",
+			"upload": "上传"
+		},
+		"delegation": {
+			"delegated_by": "委托人 {delegator}",
+			"nav": "委托设置",
+			"title": "设置委托及管理被委托",
+			"body": "在起止时间内把工作项委托给他人",
+			"action": "委托设置",
+			"delegation": "委托",
+			"delegateto": "把我的工作委托给别人",
+			"delegatee_eid": "被委托者EID",
+			"BeginDate": "开始日期",
+			"EndDate": "最后日期",
+			"BeforeDate": "在此之前",
+			"towhom": "委托给谁",
+			"Delegate": "开始委托",
+			"and": "以及",
+			"tome": "别人委托给我的",
+			"fromme": "我委托出去的",
+			"Between": "之间",
+			"Delegator": "委托人",
+			"Delegatee": "被委托人",
+			"removeSelected": "中止委托"
+		},
+		"maintainance": {
+			"nav": "系统维护",
+			"title": "维护系统业务数据",
+			"body": "对流程数据进行管理",
+			"action": "系统维护",
+			"select_status": "按状态筛选",
+			"deletebizobj": "删除业务对象",
+			"bywfid": "按流程编号",
+			"bywftitle": "按流程标题",
+			"bytplid": "按模版标题"
+		},
+		"list": {
+			"nav": "数据列表",
+			"title": "管理数据列表",
+			"body": "定义命名的数据列表",
+			"action": "数据列表",
+			"new": {
+				"label": "创建新数据列表",
+				"name": "列表名称",
+				"items": "缺省值"
+			},
+			"author": "作者",
+			"keyHead": "键值 {name} ({index}/{total}): ",
+			"changeNameForm": {
+				"label": "修改列表名字",
+				"newName": "新名字"
+			},
+			"error": {
+				"authorNotYou": "只有原作者可以修改"
+			},
+			"addKeyForm": {
+				"label": "添加一个键值",
+				"newKeyName": "新键值名称",
+				"listItems": "数据元素定义"
+			}
+		},
+		"team": {
+			"nav": "敏捷团队",
+			"title": "机动组定义管理",
+			"body": "机动组用于定义用户到角色的映射关系",
+			"action": "敏捷团队",
+			"list": "敏捷团队列表",
+			"create": "创建新团队",
+			"import": "导入团队",
+			"deletethisteam": "删除这个团队",
+			"tabs": {
+				"team": {
+					"label": "角色-成员",
+					"currentteamis": "当前团队：{teamid}",
+					"addNewRole": "添加一个新角色",
+					"Roles": "团队{teamid}中的角色",
+					"noRole": "尚未定义角色"
+				},
+				"export": {
+					"label": "导出",
+					"exportTo": "将当前团队{teamid}导出到"
+				},
+				"rename": {
+					"label": "重命名",
+					"renameTo": "将当前团队{teamid}重命名为"
+				},
+				"copyto": {
+					"label": "拷贝",
+					"copyTo": "拷贝{teamid}为"
+				},
+				"delete": {
+					"label": "删除",
+					"areYouSure": "确定要删除当前团队{teamid}?"
+				}
+			}
+		},
+		"tenant": {
+			"nav": "组织账号",
+			"title": "管理你的组织账号",
+			"messagefornoadmin": "您不是管理员，如有调整组织配置需求，请联系管理员",
+			"body": "设置组织配置信息及管理组织成员",
+			"action": "组织账号",
+			"administrator": "组织管理员",
+			"myrole": "我的角色",
+			"adminpwd": "管理员密码",
+			"adminpwd_ph": "本页的操作均需要使用管理员密码已确认",
+			"name": "设置组织名称",
+			"name_ph": "新的组织名称",
+			"theme": "自定义组织级别界面皮肤",
+			"theme_ph": "自定义组织级别界面皮肤CSS的URL地址",
+			"timezone": "设置工作时区为",
+			"openaiapikey": "OpenAI API Key",
+			"orgtags": "组织级业务标签(;分割)",
+			"ocadmins": "组织结构管理员",
+			"ocadmins_ph": "谁能管理组织结构（单个用户ID）",
+			"myorg": "我的组织",
+			"myorgname": "我的组织名称",
+			"myorgtimezone": "时区",
+			"joincode": "加入组织的申请代码",
+			"currentcode": "当前申请代码",
+			"genjoincode": "生成申请代码",
+			"selfjoincode": "自定义申请代码",
+			"invite": "邀请他人加入组织",
+			"invite_with_email": "通过发送邮件方式",
+			"invite_with_qrcode": "通过发送二维码方式，请将二维码图片发送给被邀请人",
+			"invite_ph": "用空格、逗号、分号分割的多个账号",
+			"joinapplication": "加入申请",
+			"refresh": "刷新",
+			"noapplication": "当前没有加入申请",
+			"regfree": "允许/禁止",
+			"allow_regfree": "允许用户使用企业邮箱自主注册到企业",
+			"allowemptypbo": "启动工作流程时允许不指定主要业务对象",
+			"allowemptypbo_true": "已设置为：允许不指定",
+			"allowemptypbo_false": "已设置为：必须指定",
+			"regfree_true": "当前已允许员工使用企业邮箱自主注册",
+			"regfree_false": "当前已禁止员工使用企业邮箱自主注册，管理员可通过导入组织结构来添加员工",
+			"set_regfree_true": "确认后，将允许员工使用企业邮箱自主注册",
+			"set_regfree_false": "确认后，将禁止员工使用企业邮箱自主注册",
+			"apply_to_join": "申请加入"
+		},
+		"menu": {
+			"nav": "用户菜单",
+			"title": "管理用户菜单",
+			"messagefornoadmin": "您不是管理员，如有调整用户菜单需求，请联系管理员",
+			"body": "设置不同用户菜单组的菜单项定义",
+			"action": "设置菜单",
+			"onlySelfIsUseful": "只有self将被使用, 但其它定义会被保存",
+			"pickone": "请选择菜单定义组",
+			"groupmenu": "组织级菜单组设置",
+			"personalmenu": "个人菜单设置"
+		},
+		"orgchart": {
+			"nav": "组织结构",
+			"title": "管理你的组织结构树",
+			"body": "对组织结构树进行配置",
+			"action": "组织结构",
+			"query": "角色查询",
+			"withextra": "使用额外测试数据",
+			"comment": "关系类查询总是基于当前用户",
+			"adminpwd": "组织管理员密码需再次提供",
+			"ou_id": "部门编号",
+			"ou_name": "部门名称",
+			"emp_name": "员工姓名",
+			"emp_email": "员工邮箱",
+			"emp_eid": "员工账号",
+			"account": "Mtc账号",
+			"emp_pwd": "新员工缺省密码",
+			"exportcsv": "导出组织结构到CSV文件",
+			"exportxlsx": "导出组织结构到Excel XLSX文件",
+			"importcsv": "从.csv文件导入组织结构",
+			"importxlsx": "从Excel XLSX文件导入组织结构",
+			"btn": {
+				"refresh": "刷新",
+				"emp_entry_create": "在组织结构中添加这条员工记录",
+				"emp_entry_update": "修改员工记录",
+				"emp_entries_remove": "从组织结构中移走员工账号下所有记录",
+				"ou_create": "新建或修改部门",
+				"ou_delete": "删除部门",
+				"export": "导出",
+				"import": "导入",
+				"copyto": "拷贝到",
+				"moveto": "移动到",
+				"removeentry": "移除该条员工记录",
+				"removeallentries": "移除该员工全部记录"
+			},
+			"resolver_label": "组织内角色查询",
+			"copyormovestaffto": "将{eid}从{from}拷贝或移动到：",
+			"confirmRemoveOu": {
+				"title": "请确认",
+				"body": "该部门下所有子部门和用户记录将从组织结构中移除",
+				"button": {
+					"yes": "确定"
+				}
+			},
+			"cleanEmployeesNotInOrgchart": "找出没有出现在组织架构中的员工"
+		},
+		"members": {
+			"nav": "组织成员",
+			"title": "管理组织账号下的成员",
+			"onlyyou": "当前为个人组织,尚未升级为企业组织,您是个人组织里的唯一成员",
+			"body": "增加删除成员，设置成员组",
+			"action": "组织成员",
+			"members": "团队成员管理",
+			"email": "邮箱",
+			"account": "账号",
+			"name": "姓名",
+			"group": "授权组",
+			"menugroup": "菜单组",
+			"select": "选定",
+			"removeselected": "删除所选{number}个员工",
+			"remove": "从组织中删除已选择的{number}个员工",
+			"setgroup": "为所选定的{number}个员工设定授权组",
+			"setpwd": "为所选定的{number}个员工设定密码",
+			"setmenugroup": "为所选定的{number}个员工设定菜单组"
+		},
+		"data": {
+			"list": "列表定义",
+			"team": "机动组定义"
+		},
+		"smtp": {
+			"nav": "SMTP",
+			"title": "邮件服务器设置",
+			"body": "设置用于发送邮件的服务器信息",
+			"action": "邮件设置",
+			"onlyadmin": "只有管理员有权限设置SMTP",
+			"server": "SMTP服务器地址",
+			"port": "SMTP服务器端口",
+			"secure": "安全连接",
+			"user": "SMTP发件账号",
+			"user_ph": "用来发送邮件的账号",
+			"pwd": "SMTP发件账号密码",
+			"pwd_ph": "用来发送邮件的账号密码",
+			"from": "发送者邮箱地址",
+			"from_ph": "发送着的显示名称"
+		},
+		"wecombot": {
+			"nav": "企业微信机器人",
+			"title": "配置企业微信机器人",
+			"body": "可用于将流程信息发送到企业微信",
+			"action": "企业微信",
+			"tplid": "模版名称",
+			"key": "机器人Key",
+			"addone": "现有{number} 个, 再添加一个",
+			"keyformaterror": "机器人KEY格式错误，请参考企业微信机器人文档"
+		},
+		"myfiles": {
+			"nav": "我的文件",
+			"title": "管理我所上传的文件",
+			"body": "查看、检查使用情况、及删除未被使用文件",
+			"action": "我的文件",
+			"view": "查看",
+			"download": "下载",
+			"delete": "删除",
+			"filter": "只看该流程"
+		},
+		"resign": {
+			"nav": "用户替换",
+			"desc": "将一个用户替换为另一个用户, 例如, 将'张三'替换为'李四', 张三没有完成的工作项,将交给李四去执行; 工作流模板中出现张三的地方,也会替换为李四。在'离职处理'模式下, 除了前述操作以外,张三还会被标识为已从当前组织离职",
+			"replaceuser": "用户替换及离职处理",
+			"selectall": "全选",
+			"execute": "离职处理",
+			"replace": "仅替换用户",
+			"from": "替换谁",
+			"to": "替换为",
+			"prepare": "检查相关业务数据",
+			"result": {
+				"todo": "相关工作项",
+				"tpl": "相关流程模版"
+			},
+			"placeholder": {
+				"from": "离职人员ID或邮箱地址",
+				"to": "接手人ID或邮箱地址"
+			},
+			"confirm": {
+				"title": "危险操作",
+				"body": "{from}的账号将被做离职冻结，不再可用",
+				"doit": "确认离职冻结"
+			}
+		},
+		"tenant_others": {
+			"nav": "其它"
+		}
+	},
+	"pds": {
+		"withextra": "使用附加信息",
+		"noextra": "不使用附加信息"
+	},
+	"authgroup": {
+		"ADMIN": "管理员",
+		"OBSERVER": "观察者",
+		"DOER": "执行者"
+	},
+	"footer": {
+		"ai_public_service_platform": "英智人工智能公共服务平台",
+		"neural": "组织的数字化中枢神经系统",
+		"PLATFORM": "业务入口",
+		"developer": "AI科技创新",
+		"need": "需求对接",
+		"blogs": "博客",
+		"admincenter": "管理中心",
+		"usecases": "使用场景",
+		"signup": "注册",
+		"signin": "登录",
+		"DEVELOPER": "开发者",
+		"dev_models": "模型开发",
+		"dev_datasets": "数据开发",
+		"SOLUTION": "解决方案",
+		"ind_manufacture": "制造业",
+		"DEPLOYMENT": "部署方式",
+		"paas": "Paas服务",
+		"privateinstall": "独立部署",
+		"PARTNERS": "合作伙伴",
+		"partner_nvidia": "英伟达",
+		"partner_tencent_cloud": "腾讯云"
+	},
+	"changeid": {
+		"current": "当前节点ID: ",
+		"changeto": "修改节点ID为",
+		"set": "修改",
+		"tooshort": "节点ID太短",
+		"exist": "already exists",
+		"meaningful": "缺省ID是自动生成的，你可能需要给它一个更加有意义的ID",
+		"idformat": "这个节点ID是不合法字符串"
+	},
+	"csv": {
+		"uidnotfound": "错误: 以下用户ID不存在"
+	},
+	"login": {
+		"reset_password": "忘记密码吗？如需重置密码点这里",
+		"needfullemail": "重置密码须使用完整邮箱地址",
+		"resetpasswordresult": "重置密码的指引已发送到你的邮箱，请查收",
+		"resendverificationemail": "再次发送验证信息邮件",
+		"verificationEmailSent": "包含验证信息的邮件已发送，请查收",
+		"resendVerificationEmailLater": "秒后可再次发送",
+		"verify": {
+			"error": {
+				"ACCOUNT_ALREADY_VERIFIED": "该账户已经验证过了",
+				"ACCOUNT_USER_NOT_FOUND": "该账户不存在，无法验证",
+				"VERIFICATION_CODE_EXPIRED": "超过15分钟已过期"
+			},
+			"message": {
+				"EMAIL_VERIFIED": "验证成功",
+				"YOU_ARE_VERIFYING": "正在验证"
+			},
+			"needRelogin": "请重新登录"
+		}
+	},
+	"comment": {
+		"hide": "公共讨论区 收起",
+		"show": "公共讨论区 展开",
+		"zone": "公共讨论区",
+		"fortodo": "评论：",
+		"forcomment": "回复：",
+		"markdown_enabled": "支持Markdown"
+	},
+	"userSession": {
+		"kickout": "过多非正常操作刷新-你的登录被退出",
+		"forcetohome": "过多非正常操作刷新-退回首页",
+		"relogin": "您需要重新登录"
+	},
+	"error": {
+		"NO_BRUTE": "请勿频繁操作",
+		"LOGIN_EMAILVERIFIED_FALSE": "邮箱地址尚未验证",
+		"login_no_account": "账户不存在",
+		"duplicated_object": "重复对象已存在",
+		"password_format": "密码长度必须在6-12之间，包含大小写字母数字及特殊字符",
+		"username_format": "用户名长度必须在4-12之间，且只包含大小写字母和数字",
+		"email_exist": "Email已被占用",
+		"wfid_exist": "wfid已存在",
+		"login_failed": "登录失败，请检查ID或密码是否正确",
+		"ORGCHART_ENTRY_KEEP_LAST_ONE": "这是 该用户最后一条落位，彻底删除用户请使用删除邮箱功能",
+		"couldnotdisplayfile": "你的浏览器不支持直接显示此文件，请下载后查看",
+		"wnf": {
+			"title": "遇到了错误",
+			"subtitle": "未能找到流程",
+			"info": "流程{wfid}不存在或者无权查看",
+			"btntitle": "返回"
+		},
+		"notfound": "不存在或无权访问",
+		"notyourwork": "这是别人的工作"
+	},
+	"searchlet": {
+		"new": "存为",
+		"save": "保存",
+		"cancel": "取消",
+		"existing": "已存",
+		"nameit": "给它一个名字, 同名将被替换",
+		"pick": "请选择",
+		"reset": "重置搜索"
+	},
+	"pagination": {
+		"first": "第一页",
+		"prev": "前一页",
+		"next": "后一页",
+		"last": "最后页"
+	},
+	"notify": {
+		"create_template_success": "模版{tplid}创建成功",
+		"create_adhoc_success": "独立任务发送成功",
+		"auto_refresh_work": "在{minutes}分钟内自动更新",
+		"stop_refresh_work": "自动更新已停止，点【重置/全部】按钮手动获得新任务",
+		"set_password_success": "设置密码成功",
+		"employee_account_selected": "已选定 {number} 个员工",
+		"only_admin": "只有管理员可以操作本区功能",
+		"title": "通知",
+		"welcome": "欢迎您"
+	},
+	"flexible": {
+		"title": "灵活事项",
+		"subtitle": "向某人安排一项工作，无须预先设计复杂流程，只许依次安排工作即可，每项工作均可单独指定承担着，各项工作按顺序执行。 在每项工作的执行过程中，均可随时发起新的工作任务。所有工作自动向执行者发送，整个工作过程得以规范化跟进",
+		"placeholder": "请输入事项（项目）的名称",
+		"btn_goto_template": "开始新的工作",
+		"btn_showform": "发起新的灵活事项",
+		"menu": "新建灵活事项",
+		"btn_create": "开始",
+		"res_success": "已启动，请在【我的任务】中查看",
+		"pickeid": "最近使用",
+		"forWhom": "该事项承担者为"
+	},
+	"homecard": {
+		"menu": {
+			"todos": {
+				"ST_RUN": "待处理",
+				"ST_DONE": "已处理",
+				"ST_FOOTPRINT": "我的足迹",
+				"startWorkflow": "启动流程"
+			}
+		},
+		"template": {
+			"title": "工作模版",
+			"body": "按标准流程方式安排工作"
+		},
+		"flexible": {
+			"title": "灵活事项",
+			"body": "按灵活机动方式安排工作"
+		},
+		"workflow": {
+			"title": "运行监控",
+			"body": "监控各项工作任务进展情况 "
+		},
+		"work": {
+			"title": "工作任务 ",
+			"body": "查看工作任务列表"
+		},
+		"discuss": {
+			"title": "工作讨论",
+			"body": "参与、查看行动任务的讨论"
+		},
+		"setting": {
+			"title": "系统设置",
+			"body": "按需定制使用环境"
+		},
+		"help": {
+			"title": "帮助信息",
+			"body": "查看用户使用帮助"
+		},
+		"myfile": {
+			"title": "我的文件",
+			"body": "我上传的文件"
+		}
+	},
+	"tips": {
+		"orgtag": {
+			"title": "组织级分类标签",
+			"content": "组织管理员可根据需要设定，点击进入设置"
+		},
+		"flexible": {
+			"title": "创建灵活事项",
+			"content": "无须规划模版，灵活发布工作任务"
+		},
+		"newwork": {
+			"title": "开始一件规划好的工作",
+			"content": "去工作规划中找到要启动的工作来启动"
+		},
+		"check_email_please": "请查收邮件",
+		"designer": {
+			"action": {
+				"allowpbo": {
+					"title": "是否允许",
+					"content": "用户在此步可修改主要业务对象"
+				}
+			},
+			"kvar": {
+				"btn": {
+					"dash": {
+						"title": "删除",
+						"content": "点击删除本参数"
+					},
+					"plus": {
+						"title": "添加",
+						"content": "点击添加一个新参数"
+					},
+					"up": {
+						"title": "单点向上移动",
+						"content": "Shift-单点向上拷贝"
+					},
+					"down": {
+						"title": "单点向下移动",
+						"content": "Shift-单点向下拷贝"
+					},
+					"double-up": {
+						"title": "单点移动到顶部",
+						"content": "Shift-单点拷贝到顶部"
+					},
+					"double-down": {
+						"title": "单点移动到底部",
+						"content": "Shift-单点拷贝到底部"
+					}
+				}
+			}
+		}
+	},
+	"search": {
+		"condition": {
+			"all": "全部",
+			"template": "当前搜索 {pattern}, 作者: {author}"
+		}
+	},
+	"unit": {
+		"days": "天",
+		"hours": "小时",
+		"tasks": "个任务",
+		"nodes": "个步骤"
+	},
+	"mining": {
+		"total": "共{total}项, 满足挖掘条件{number}项",
+		"work_redlight_threshold": "任务红灯",
+		"process_redlight_threshold": "流程红灯",
+		"OR": "或者",
+		"AND": "并且",
+		"process_threshold": "流程运行超过",
+		"redlight_threshold": "任务运行超过",
+		"show": {
+			"show": "显示",
+			"works": "任务节点",
+			"todos": "任务单项",
+			"only_above_threshold": "仅显示亮灯项",
+			"with_process": "包括：",
+			"with_todos": "包括："
+		},
+		"nav": {
+			"time": "时间维度",
+			"people": "人员维度"
+		},
+		"task": {
+			"number": "按任务数量",
+			"longest": "单任务最长时长",
+			"average": "任务平均时长",
+			"total": "任务总时长",
+			"processes": "发起流程数量"
+		}
+	},
+	"kshare": {
+		"title": "ProcessHub 可导入的模版",
+		"description": "由行业专家提供的基于行业最佳实践的管理模版，可直接导入到本企业内使用",
+		"all_scenarios": "全场景",
+		"all_industries": "全行业",
+		"topmenu": {
+			"All": "全部",
+			"Scenarios": "分场景",
+			"Industries": "分行业",
+			"Tags": "过滤标签",
+			"pickedtags": "已选标签"
+		},
+		"label": {
+			"All": "全部",
+			"Close": "关闭",
+			"Preview": "预览",
+			"Pick": "采纳",
+			"Confirm": "确定",
+			"Cancel": "取消",
+			"only12": "在此处，每一类只随机显示最多12个，点这里查看全部"
+		},
+		"search": {
+			"byname": "按名称",
+			"byauthor": "按作者",
+			"q": {
+				"placeholder": "搜名字或描述"
+			},
+			"author": {
+				"placeholder": "搜作者"
+			}
+		},
+		"pickit": {
+			"placeholder": "请输入要写入的业务模版的名称",
+			"pickas": "采纳为: ",
+			"error": {
+				"no_user": "请登录后导入",
+				"exists": {
+					"title": "该名称的模版已存在",
+					"body": "请修改名称后重试"
+				}
+			},
+			"result": {
+				"success": "导入成功，请到业务规划菜单中查看"
+			}
+		},
+		"shareform": {
+			"name": "分享名称",
+			"desc": "分享描述",
+			"price": "价格",
+			"scenario": "选择场景标签",
+			"add": "添加"
+		}
+	},
+	"cron": {
+		"title": {
+			"expr": "表达式",
+			"month": "月度",
+			"date": "日期",
+			"weekday": "星期",
+			"hour": "小时",
+			"result": "解析结果",
+			"notset": "不指定",
+			"single": "单项",
+			"range": "区间",
+			"every": "间隔",
+			"from": "从",
+			"to": "到",
+			"and": "以及"
+		},
+		"month": {
+			"0": "不指定",
+			"1": "一月",
+			"2": "二月",
+			"3": "三月",
+			"4": "四月",
+			"5": "五月",
+			"6": "六月",
+			"7": "七月",
+			"8": "八月",
+			"9": "九月",
+			"10": "十月",
+			"11": "十一月",
+			"12": "十二月"
+		},
+		"weekday": {
+			"0": "不指定",
+			"1": "星期一",
+			"2": "星期二",
+			"3": "星期三",
+			"4": "星期四",
+			"5": "星期五",
+			"6": "星期六",
+			"7": "星期日"
+		},
+		"date": {
+			"unit": "号"
+		},
+		"hour": {
+			"unit": "点"
+		},
+		"miniute": {
+			"unit": "分"
+		}
+	},
+	"popover": {
+		"postpone": {
+			"title": "延后再现",
+			"content": "延后若干天后再看到"
+		}
+	},
+	"server": {
+		"DELEGATE_FAILED_SAME_USER": "不能委托给自己",
+		"DELEGATE_FAILED_NOT_SAME_ORG": "只能委托给相同组织的账号",
+		"DELEGATE_FAILED_OVERLAP": "时间窗口存在重叠",
+		"FETCH_FAILED": "网络开小差了，等会再试吧"
+	},
+	"message": {
+		"success": "成功",
+		"switch_tenant_success": "切换成功",
+		"saved": "以保存",
+		"personal_menuitem_saved": "个人菜单项已保存"
+	},
+	"tag": {
+		"all": "全部"
+	},
+	"MyPersonal": "个人菜单",
+	"biz": {
+		"todos": "待办事项",
+		"recentDone": "近期完成的工作项",
+		"recentProcess": "近期参与过的流程",
+		"basic_op": "基本操作",
+		"advanced_op": "更多操作",
+		"op": {
+			"startProcess": "启动新业务流程",
+			"seeDesign": "查看流程设计",
+			"editDesign": "编辑流程设计",
+			"allbiz": "全部业务",
+			"export": "导出业务设计",
+			"snapshot": "导出快照",
+			"mining": "流程挖掘"
+		},
+		"adv": {
+			"all_todos": "全部待办",
+			"all_biz": "全部业务",
+			"discuss": "参与相关讨论",
+			"share": "公开分享"
+		}
+	},
+	"quote": {
+		"subject": {
+			"1": "运营自动化",
+			"2": "工业自动化",
+			"3": "销售自动化"
+		},
+		"name": {
+			"1": "袁女士 · 普吉岛",
+			"2": "张总 · 莫纳生物",
+			"3": "刘先生 · 亚马逊"
+		},
+		"quote": {
+			"1": "门店的运营效率提升了30%，<br/>让我们能够更加专注于顾客的服务",
+			"2": "生产效率提升了20%，<br/>让我们能够更加专注于产品的研发",
+			"3": "销售知识通过流程得以沉淀，<br/>让我们能够高效跟进每一个订单"
+		}
+	},
+	"solutions": {
+		"manufacture": "数字化制造",
+		"realestate": "房地产",
+		"education": "教育",
+		"health": "大健康卫生医疗",
+		"manager": "数字经理人"
+	},
+	"evaluate": {
+		"youwill": "您将体验下面的流程",
+		"account": {
+			"prompt": "看起来您还没有登录，请问您将选择哪一种方式来体验本流程？",
+			"login": "使用已有用户账户，点此登录",
+			"register": "需要注册一个正式账户，点此注册",
+			"demo": "不想注册，通过临时账号来体验（临时账号一旦退出无法继续使用，建议注册新的正式账号或登录已有账号）"
+		},
+		"start": "使用账号 ({account}) 来开始体验",
+		"waitForFirstTodo": "工作流程 {wftitle} 已启动. 请稍后, 即将进入第一步({countdown})..."
+	},
+	"addCurrent": "➕添加当前页",
+	"boolean": {
+		"true": "是",
+		"false": "否"
+	},
+	"bizpicker": {
+		"pickone": "请选择一个业务",
+		"picknone": "不指定业务",
+		"desc": "请从下方列表中选择一个业务, 或者",
+		"button": "按业务过滤, 当前：",
+		"none": "未指定"
+	},
+	"uisection": {
+		"tag": "分类",
+		"search": "搜索",
+		"sort": "排序",
+		"layout": "布局"
+	},
+	"sign": {
+		"title": "签名区",
+		"reset": "重签",
+		"uselast": "使用上次的签名",
+		"waitforsignature": "(待签名)"
+	},
+	"input": {
+		"should_have_value": "{key} 必须输入",
+		"should_have_value_number": "{key} 必须输入数字",
+		"should_have_value_file": "{key} 必须提供文件",
+		"empty": "此为必填字段",
+		"email": "请输入合法的邮箱地址",
+		"phone": "请输入合法的电话号码",
+		"payPassword": "请输入6位数字的支付密码",
+		"json": "请输入合法的JSON对象",
+		"string": {
+			"min": "至少有 {min} 个字符",
+			"max": "最多不超过 {max} 个字符",
+			"uri": "不是有效网址"
+		},
+		"number": {
+			"min": "不小于 {min}",
+			"max": "不超过 {max}",
+			"unsafe": "数值过大"
+		},
+		"datetime": "请输入合法的时间"
+	},
+	"dit": {
+		"project": {
+			"status": {
+				"all": "所有项目",
+				"notstart": "未开始的项目",
+				"underway": "进行中的项目",
+				"finished": "已完成的项目"
+			}
+		},
+		"phase": {
+			"operation": {
+				"add": "添加",
+				"clone": "克隆",
+				"move": "移动"
+			},
+			"direction": {
+				"front": "前面",
+				"back": "后面 "
+			}
+		},
+		"matter": {
+			"status": {
+				"notstart": "未开始",
+				"underway": "进行中",
+				"finished": "已完成"
+			}
+		}
+	},
+	"airender": {
+		"task": {
+			"status": {
+				"notstart": "未开始",
+				"pending": "准备中",
+				"underway": "进行中",
+				"finished": "已完成",
+				"failure": "失败",
+				"stopped": "已停止",
+				"offline": "已离线"
+			}
+		}
+	},
+	"cognihub": {
+		"app": {
+			"status": {
+				"developing": "开发中",
+				"testing": "测试中",
+				"deployed": "已部署",
+				"maintenance": "维护中",
+				"paused": "已暂停",
+				"offline": "已下线",
+				"faulty": "故障",
+				"overdue": "欠费"
+			},
+			"service": {
+				"status": {
+					"activated": "已激活",
+					"in_use": "使用中",
+					"expired": "到期",
+					"suspended": "已暂停",
+					"cancelled": "已取消",
+					"exhausted": "已用完",
+					"refunded": "已退款"
+				}
+			}
+		},
+		"user": {
+			"role": {
+				"admin": "管理员",
+				"user": "普通用户"
+			}
+		},
+		"package": {
+			"status": {
+				"activated": "已激活",
+				"in_use": "使用中",
+				"expired": "到期",
+				"suspended": "已暂停",
+				"cancelled": "已取消",
+				"overdue": "欠费"
+			},
+			"type": {
+				"trial": "免费版",
+				"prepaid": "付费版"
+			},
+			"type.bak": {
+				"trial": "免费试用",
+				"subscription": "订阅制",
+				"prepaid": "预付费",
+				"pay_as_you_go": "按需计费",
+				"group_family": "团体套餐/家庭套餐",
+				"enterprise": "企业套餐",
+				"educational": "教育套餐",
+				"long_term": "长期优惠",
+				"limited_time": "限时优惠",
+				"customized": "定制套餐",
+				"gift": "赠品套餐"
+			},
+			"validity": {
+				"validityType": {
+					"forever": "永久",
+					"limited": "限定期限"
+				},
+				"unit": {
+					"hour": "小时",
+					"day": "天",
+					"week": "周",
+					"month": "月",
+					"year": "年"
+				}
+			},
+			"service": {
+				"costType": {
+					"time": "调用量（次数）",
+					"data": "数据量（大小、类型）",
+					"subscription": "订阅制（订阅期内无限使用）"
+				},
+				"dataSizeUnit": {
+					"byte": "Byte(字节)",
+					"kb": "KB",
+					"mb": "MB",
+					"gb": "GB",
+					"tokens": "Tokens"
+				}
+			}
+		},
+		"service": {
+			"status": {
+				"design": "设计阶段",
+				"development": "开发阶段",
+				"testing": "测试阶段",
+				"deployment": "部署阶段",
+				"maintenance": "维护阶段",
+				"retirement": "退役阶段",
+				"online": "在线",
+				"offline": "离线",
+				"running": "运行中",
+				"stopped": "已停止",
+				"enabled": "已启用",
+				"disabled": "已禁用",
+				"overdue": "已欠费"
+			},
+			"type": {
+				"web": "Web",
+				"web_api": "Web API"
+			},
+			"cost": {
+				"costType": {
+					"time": "调用量（次数）",
+					"data": "数据量（大小、类型）",
+					"subscription": "订阅制（订阅期内无限使用）"
+				},
+				"dataSizeUnit": {
+					"byte": "字节",
+					"kb": "KB",
+					"mb": "MB",
+					"gb": "GB",
+					"tokens": "Tokens"
+				},
+				"dataType": {
+					"json": "JSON",
+					"xml": "XML",
+					"text": "Text"
+				},
+				"costPriceUnit": {
+					"yuan": "元",
+					"wan": "万元"
+				}
+			}
+		},
+		"trade": {
+			"status": {
+				"pending_payment": "待支付",
+				"in_progress": "进行中",
+				"completed": "交易成功",
+				"cancelled": "已取消",
+				"awaiting_renewal": "待续费",
+				"expired": "已过期",
+				"refunding": "退款中",
+				"dispute": "争议中",
+				"refunded": "已退款"
+			},
+			"type": {
+				"recharge": "余额充值",
+				"package_purchase": "套餐购买",
+				"resource_expansion": "资源扩充",
+				"service_upgrade": "升级服务",
+				"technical_support": "技术支持",
+				"custom_development": "定制开发"
+			},
+			"payway": {
+				"system": "系统充值",
+				"balance": "余额",
+				"alipay": "支付宝",
+				"wechat_pay": "微信",
+				"bank_transfer": "银联"
+			}
+		},
+		"balance": {
+			"status": {
+				"enabled": "正常",
+				"disabled": "冻结",
+				"overdue": "逾期",
+				"due": "欠费",
+				"cancelled": "注销"
+			}
+		}
+	},
+	"baystone": {
+		"nav": {
+			"AboutUs": "关于我们",
+			"Operations": "运营中心",
+			"all_search": "搜索AI应用场景...",
+			"scenarios": "场景应用",
+			"market": "供需市场",
+			"rent_resource": "算力租赁",
+			"ai_server": "AI 服务",
+			"ai_models": "模型开发",
+			"console": "控制台",
+			"datasets": "数据集",
+			"my": "我的",
+			"gpu_ladder": "GPU中心",
+			"ai_blog": "AI 博客",
+			"ov": "NVIDIA Omniverse",
+			"ai_req": "AI 需求",
+			"ai_config": "AI 配置",
+			"another_action": "其他操作",
+			"add_scenario": "添加场景",
+			"add_application": "添加应用",
+			"add_supplier": "添加供应商",
+			"add_resource": "添加资源",
+			"add_model": "添加模型",
+			"add_image": "添加镜像",
+			"logout": "登出",
+			"login": "登录",
+			"sign_up": "去注册",
+			"add_dataset": "添加数据集"
+		},
+		"homepage": {
+			"roll_card": {
+				"greeting": {
+					"time": {
+						"morning": "早上好",
+						"midday": "中午好",
+						"afternoon": "下午好",
+						"evening": "晚上好"
+					},
+					"message": "，今天您需要些什么？"
+				},
+				"airesource": "高配GPU算力 现在开通 马上拥有",
+				"developer": {
+					"title": "我是开发者",
+					"subtitle": "我需要",
+					"needs": {
+						"models": "开发大模型",
+						"apps": "开发大模型应用",
+						"datasets": "寻找行业数据",
+						"gpus": "租用GPU服务器"
+					}
+				},
+				"app_demand_side": {
+					"title": "应用需求方",
+					"subtitle": "我寻找",
+					"needs": {
+						"ai_industry_solutions": "人工智能行业解决方案",
+						"scenario_apps": "场景化应用",
+						"omniverse_software": "Omniverse相关软件",
+						"ai_software_training_courses": "AI相关软件及培训课程"
+					}
+				},
+				"industry_data_practitioners": {
+					"title": "行业数据从业者",
+					"subtitle": "我正在",
+					"needs": {
+						"provide_industry_data": "提供行业数据",
+						"look_for_industry_data": "寻找行业数据"
+					}
+				},
+				"supply_demand_computing_equipment": {
+					"title": "算力服务及设备供需",
+					"subtitle": "我想",
+					"needs": {
+						"renting_computing": "租用远程算力资源",
+						"supply_computing": "供应自有算力",
+						"sell_cards_servers": "销售算力卡、服务器",
+						"purchasing_cards_servers": "采购算力卡、服务器"
+					}
+				}
+			},
+			"statistics": {
+				"airesources": "智算算力",
+				"models": "大模型",
+				"datasets": "数据集",
+				"apps": "行业应用",
+				"ecopartners": "生态伙伴"
+			},
+			"news": {
+				"top_ai_scenario": "热门AI应用场景",
+				"computing_support_demand": "算力供需对对碰",
+				"ai_industry_policy": "人工智能产业政策"
+			}
+		},
+		"scenarios": {
+			"create_ai": "创建人工智能行业场景",
+			"modify_ai": "修改人工智能行业场景",
+			"industry": "行业",
+			"tags": "标签",
+			"filter_name": "按行业名称筛选...",
+			"filter_tag": "按标签名称筛选...",
+			"ai_industry": "AI行业场景",
+			"create": "创建AI行业场景",
+			"unique_id": "唯一标识",
+			"name": "请输入名称",
+			"description": "描述",
+			"icon": "图标",
+			"add_tag": "添加标签:用空格分割, 按回车添加",
+			"pick": "选择一个行业",
+			"open_this": "打开选择菜单",
+			"create_message": "创建成功",
+			"create_error_message": "创建失败",
+			"find_ai_is_null": "没有找到属于该分类的大模型应用"
+		},
+		"aiinstance": {
+			"instance": "部署的应用名称",
+			"Applications": "添加应用",
+			"AI_Applications": "人工智能应用",
+			"gpu_num": "选择GPU数量 (个)",
+			"gpu_model": "GPU型号",
+			"gpu_memory": "选择内存数量 (GB)",
+			"gpu_storage": "存储",
+			"gpu_info": "默认模板服务只能保留一天",
+			"gpu_vcpu": "选择CPU核数 (个)",
+			"gpu_hours": "选择小时数量 (小时)",
+			"description": "请输入服务介绍",
+			"Cost_details": "产生的费用明细"
+		},
+		"inputs": {
+			"label": "添加标签：按空格分隔，按enter键添加"
+		},
+		"application": {
+			"add_aiapp": "创建人工智能应用程序",
+			"name": "名称",
+			"Description": "描述",
+			"icon": "图标",
+			"Docker": "Docker 镜像",
+			"Scenario": "设置场景"
+		},
+		"aiscenario": {
+			"big_model": "大模型应用",
+			"app_aLL": "全部应用",
+			"top_app": "热门应用",
+			"not_used": "未使用",
+			"being_used": "使用中",
+			"loading": "加载中...",
+			"Manage": "管理现有的应用服务",
+			"Manages": "使用现有的应用服务",
+			"Run_now": "部署实例"
+		},
+		"ai_resource": {
+			"price_unit": "万",
+			"supplier_filter_placeholder": "请输入供应商过滤条件",
+			"airesource_list_error": "暂时无法获取可用资源数据",
+			"expert_contact_info": "算力调度专家协助",
+			"order_now": "立即下单",
+			"view_detail": "详细信息",
+			"status": "状态",
+			"active": "激活",
+			"deactive": "不激活",
+			"spec": "规格：",
+			"renting_resources": "租赁智算算力",
+			"purchase_equipments": "采购算力设备",
+			"category": "类别",
+			"city": "城市",
+			"gpu": "GPU型号",
+			"charge": "费用",
+			"available_resources": "可用资源数量",
+			"available": "剩余",
+			"inventory_unit": "组",
+			"everyDesc": {
+				"hour": "按小时租赁",
+				"day": "按天租",
+				"month": "按月租",
+				"year": "按年租",
+				"sale": "按合同"
+			},
+			"everyUnit": {
+				"hour": "/小时",
+				"day": "/天",
+				"month": "/月",
+				"year": "/年"
+			},
+			"theUnit": {
+				"hour": "小时",
+				"day": "天",
+				"month": "月",
+				"year": "年"
+			},
+			"all": "全部",
+			"active_confirm": {
+				"title": "更改激活状态",
+				"body": "确认{status}吗？"
+			},
+			"list": {
+				"edit": "修改",
+				"delete": "删除"
+			},
+			"create": {
+				"create_ai_resource": "创建智算算力资源",
+				"browse_resource_list": "浏览已有资源列表",
+				"submit": "提交资源",
+				"package_type": "填写套餐类型",
+				"create_pacakge_type": "添加存储类型",
+				"maximum_package_limit": "最多只支持 {limit} 个套餐",
+				"create_info": "添加资源后，须经过平台运营审核后即可开通",
+				"formItems": {
+					"supplier": "供应商",
+					"bizmodel": "资源供应方式",
+					"name": "资源名称",
+					"abstract": "服务器介绍",
+					"gpu": "GPU型号",
+					"city": {
+						"default": "城市",
+						"service": "数据中心所在城市",
+						"sale": "交货城市"
+					},
+					"category": "资源类型",
+					"amount": "总库存",
+					"image": "展示图片",
+					"agreement": "服务协议"
+				},
+				"options": {
+					"bizmodel": {
+						"service": "出租算力",
+						"sale": "销售设备"
+					},
+					"category": {
+						"service": {
+							"baremetal": "裸金属",
+							"airdrop": "空投",
+							"cloud": "云"
+						},
+						"sale": {
+							"server": "GPU 服务器",
+							"gpu": "GPU卡",
+							"network": "IB 网络",
+							"storage": "存储设备"
+						}
+					}
+				},
+				"packages": {
+					"unit": "单位",
+					"unit_price": "单价",
+					"delete_confirm": {
+						"title": "确认删除套餐吗？",
+						"body": "删除后无法恢复，请确认此操作。",
+						"ok": "确认"
+					},
+					"clone_package": "克隆套餐",
+					"purchase_type": "购买方式",
+					"contract": "按合同",
+					"formItems": {
+						"name": "名称",
+						"gpu": "GPU",
+						"link": "连接",
+						"cpu": "CPU",
+						"memory": "内存",
+						"disk": "硬盘",
+						"storage": "存储",
+						"duration": "租赁时长",
+						"amount": {
+							"default": "数量",
+							"service": "租赁数量",
+							"sale": "购买数量"
+						},
+						"totalPrice": "预计价格"
+					},
+					"prices": {
+						"gpu": "GPU单价",
+						"link": "连接单价",
+						"cpu": "CPU单价",
+						"storage": "存储单价"
+					},
+					"units": {
+						"yuan": "元",
+						"ten_thousands_yuan": "万元",
+						"t": "T",
+						"gb": "GB",
+						"yuan_10t": "元 / 10T",
+						"month": "月",
+						"set": "台",
+						"hour": "小时",
+						"day": "天",
+						"year": "年"
+					},
+					"options": {
+						"duration": {
+							"unit": {
+								"hour": "小时",
+								"day": "天",
+								"month": "月",
+								"year": "年"
+							}
+						},
+						"totalPrice": {
+							"unit": {
+								"yuan": "元",
+								"ten_thousands_yuan": "万元"
+							}
+						}
+					}
+				},
+				"success": {
+					"submit_success": "已成功提交资源",
+					"need_audit": "您所提交的资源仍需经过平台运营审核才可开通",
+					"audited": "您所提交的资源已开通",
+					"continue": "继续",
+					"view_detail": "前往查看本资源详情",
+					"create_next": "添加下一个资源",
+					"edit": "重新编辑本资源"
+				}
+			},
+			"edit": {
+				"edit": "编辑",
+				"edit_ai_resource": "编辑智算算力资源",
+				"edit_info": "编辑资源后，仍须经过平台运营审核后才可开通",
+				"not_support_edit": "本资源不支持修改"
+			},
+			"back_to_list": "返回列表",
+			"custom_package": "自选存储类型"
+		},
+		"order": {
+			"browse_my_orders": "浏览我的已有订单",
+			"resource_service_name": "算力服务名称",
+			"new_order_audit_info": "新订单下单后，须经过平台运营审核后即可开通",
+			"confirm_rental": "请确定租用数量",
+			"confirm_purchase": "请确定购买数量",
+			"renting": "租用",
+			"purchasing": "购买",
+			"set": "台/套",
+			"total_rent": "总租金为",
+			"total_cost": "总费用为",
+			"place_order": "下单",
+			"spec": "服务规格",
+			"ask_before_order": "下单前问一问",
+			"agreement": "服务协议",
+			"cancel": "取消",
+			"ok": "确认",
+			"planstart": "我打算什么时候开始我的项目？",
+			"planFor": "我计划将服务器用于",
+			"planOtherGPU": "我预计需要使用的其他GPU服务器类型和数量？",
+			"otherMemo": "其他说明",
+			"agreeAgreement": "我已认真阅读《GPU资源租赁服务使用协议》，同意遵守本协议的所有约定。",
+			"contact_later": "我们的算力专家将在3个工作日内与您联系。",
+			"order_now": "立即预定",
+			"confirm_order": "确认订单",
+			"base_info": "基本信息",
+			"contact_info": "联系信息",
+			"placed_order": "下单成功",
+			"view_current_order": "查看当前订单信息",
+			"order_info": "订单信息",
+			"demand_description": "需求说明",
+			"start_end_time": "起止时间",
+			"instances_status": "实例状态",
+			"back_to_view_detail": "返回详细信息",
+			"storageTypeLabel": "存储类型",
+			"storageType": {
+				"gpu": "GPU",
+				"link": "连接",
+				"cpu": "CPU",
+				"memory": "内存",
+				"disk": "硬盘",
+				"storage": "存储",
+				"duration": "租赁时长",
+				"number": {
+					"resource": "租赁数量",
+					"sale": "购买数量"
+				},
+				"price": "预计价格"
+			},
+			"packageTypeLabel": "存储类型",
+			"packageType": {
+				"gpu": "GPU",
+				"link": "连接",
+				"cpu": "CPU",
+				"memory": "内存",
+				"disk": "硬盘",
+				"storage": "存储",
+				"duration": "租赁时长",
+				"amount": {
+					"service": "租赁数量",
+					"sale": "购买数量"
+				},
+				"toalPrice": "预计价格"
+			},
+			"cost_measurement": "费用测算",
+			"company": "公司名称",
+			"businessLicense": "营业执照",
+			"legalRepresentative": "法人代表",
+			"phone": "电话",
+			"email": "邮箱",
+			"contactName": "联系人姓名",
+			"expert_confirm_info": "下单成功，算力调度专家将尽快与您联系，请注意接听话，谢谢！",
+			"startTime": "开始时间",
+			"endTime": "结束时间",
+			"customerInfo": "客户信息",
+			"setInstanceTimeConfirm": {
+				"title": "设置实例",
+				"body": "所设置的时间与订单的时长({total} {unit})不相等，是否继续设置实例？时间差异为：{diff} {unit}"
+			}
+		},
+		"appservice": {
+			"console": "服务控制台",
+			"name": "服务名字",
+			"space": "服务所在空间",
+			"type": "服务类型",
+			"status": "服务状态",
+			"delete": "删除服务",
+			"deletes": "删除应用",
+			"access": "点击即可使用该服务",
+			"try": "立即试用",
+			"refer": "适用于",
+			"success": "成功",
+			"fail": "失败",
+			"reason": "服务创建失败，请重新创建",
+			"suspend": "暂停服务",
+			"suspends": "已暂停服务，恢复服务后可继续使用",
+			"restore": "恢复服务"
+		},
+		"cognihub": {
+			"page_title": "智算算力开放测试计划",
+			"train": "英智Al私有大模型训练",
+			"browse_my_orders": "浏览我的已有订单",
+			"resource_service_name": "算力服务名称",
+			"new_order_audit_info": "新订单下单后，须经过平台运营审核后即可开通",
+			"confirm_rental": "请确定租用数量",
+			"confirm_purchase": "请确定购买数量",
+			"renting": "租用",
+			"purchasing": "购买",
+			"set": "台/套",
+			"total_rent": "总租金为",
+			"total_cost": "总费用为",
+			"place_order": "下单",
+			"spec": "服务规格",
+			"ask_before_order": "下单前问一问",
+			"agreement": "服务协议",
+			"cancel": "取消",
+			"ok": "确认",
+			"planstart": "我打算什么时候开始测试？",
+			"planstarts": "我打算什么时候开始训练？",
+			"planend": "我打算什么时候结束测试？",
+			"planFor": "我计划将服务器用于",
+			"planGPU": "计划用于测试的GPU服务器类型",
+			"ScaleSize": "计划用于训练的数据规模大小",
+			"disseminate": "是否需要英智准备宣传文案",
+			"planGPUAmount": "计划用于测试的GPU服务器数量",
+			"DataType": "计划用于训练的数据类型",
+			"planOtherGPU": "我预计还需要使用的其他GPU服务器类型和数量？",
+			"otherMemo": "您正在构建的内容以及您想要讨论的内容",
+			"agreeAgreement": "我已认真阅读《GPU资源租赁服务使用协议》，同意遵守本协议的所有约定。",
+			"contact_later": "我们的算力专家将在3个工作日内与您联系。",
+			"contact_laters": "申请提交后，我们的算力专家将在 3 个工作日内与您联系。",
+			"Training_experts": "申请提交后，我们的AI训l练专家将在3个工作日内与您联系。",
+			"order_now": "立即预定",
+			"confirm_order": "确认订单",
+			"base_info": "基本信息",
+			"contact_info": "联系信息",
+			"placed_order": "下单成功",
+			"view_current_order": "查看当前订单信息",
+			"order_info": "订单信息",
+			"demand_description": "需求说明",
+			"start_end_time": "起止时间",
+			"instances_status": "实例状态",
+			"back_to_view_detail": "返回详细信息",
+			"storageTypeLabel": "存储类型",
+			"storageType": {
+				"gpu": "GPU",
+				"link": "连接",
+				"cpu": "CPU",
+				"memory": "内存",
+				"disk": "硬盘",
+				"storage": "存储",
+				"duration": "租赁时长",
+				"number": {
+					"resource": "租赁数量",
+					"sale": "购买数量"
+				},
+				"price": "预计价格"
+			},
+			"packageTypeLabel": "参数规格",
+			"packageType": {
+				"placeholder": "请输入",
+				"gpu": "GPU",
+				"link": "连接",
+				"cpu": "CPU",
+				"memory": "内存",
+				"disk": "硬盘",
+				"card": "网卡",
+				"power": "电源",
+				"storage": "存储",
+				"thousand": "万元",
+				"Yuan": "元 / 小时",
+				"ThousandYuan": "万元 / 小时",
+				"Year": "元 / 年",
+				"ThousandYear": "万元 / 年",
+				"Month": "元 / 月",
+				"ThousandMonth": "万元 / 月",
+				"Day": "元 / 天",
+				"ThousandDay": "万元 / 天",
+				"custom": "自定义配置参数",
+				"amount": {
+					"service": "租赁数量",
+					"sale": "购买数量"
+				},
+				"duration": {
+					"service": "租赁时长",
+					"sale": "购买时长"
+				},
+				"toalPrice": "预计价格"
+			},
+
+			"cost_measurement": "费用测算",
+			"company": "公司名称",
+			"businessLicense": "营业执照",
+			"legalRepresentative": "法人代表",
+			"name": "姓名",
+			"jobTitle": "职位名称",
+			"phone": "手机号",
+			"email": "邮箱",
+			"companyScale": "公司规模",
+			"Arrears": "是否欠费",
+			"contactName": "联系人姓名",
+			"expert_confirm_info": "下单成功，算力调度专家将尽快与您联系，请注意接听话，谢谢！",
+			"startTime": "开始时间",
+			"endTime": "结束时间",
+			"customerInfo": "客户信息",
+			"setInstanceTimeConfirm": {
+				"title": "设置实例",
+				"body": "所设置的时间与订单的时长({total} {unit})不相等，是否继续设置实例？所选择的是时间为：{diff} {unit}"
+			}
+		},
+		"image": {
+			"add_image": "创建镜像",
+			"image_name": "镜像名字",
+			"image_scene": "镜像场景",
+			"image_status": "镜像状态",
+			"operate": "操作",
+			"Approved": "审核通过",
+			"in_review": "审核中",
+			"to_examine": "审核",
+			"Deleted": "已删除",
+			"deactivated": "已停用",
+			"Enable": "启用",
+			"Deactivate": "停用",
+			"delete_image": "删除",
+			"creator": "创建者",
+			"Submit": "提交修改"
+		},
+		"gpu": {
+			"gpu_label": "GPU型号",
+			"gpu_architecture": "GPU架构",
+			"gpu_fb64": "FP64TensorCore",
+			"gpu_tf64": "TF64TensorCore",
+			"gpu_fp32": "FP32TensorCore",
+			"gpu_tf32": "TF32TensorCore",
+			"gpu_fp16": "FP16TensorCore",
+			"gpu_int18": "INT18TensorCore",
+			"gpu_rtcoretype": "RTCore类型",
+			"gpu_rtcorenumber": "RTCore个数",
+			"gpu_rtcorefp16": "RTCore性能",
+			"gpu_gmemtype": "显存类型",
+			"gpu_gmemsize": "GPU显存",
+			"gpu_gmembw": "GPU显存宽带",
+			"gpu_power": "功率",
+			"gpu_linktype": "互联类型",
+			"gpu_linkspeed": "网连速度",
+			"gpu_operate": "操作",
+			"gpu_delete": "删除",
+			"gpu_add": "新增GPU",
+			"gpu_adds": "新增GPU信息",
+			"gpu_list": "GPU列表",
+			"gpu_contrast": "对比GPU",
+			"gpu_contrasts": "GPU对比",
+			"gpu_modify": "修改GPU信息",
+			"gpu_detailed": "GPU详细信息",
+			"gpu_contrast_item": "对比项"
+		},
+		"supplier": {
+			"add_ai": "创建供应商",
+			"identifying": "唯一标识",
+			"Company": "公司名称",
+			"Contact": "联系人姓名",
+			"Telephone": "固定电话",
+			"mobile": "手机号码",
+			"QQ": "QQ号码",
+			"weixin": "微信号",
+			"Facebook": "脸书",
+			"weibo": "微博",
+			"Detail": "展开详情",
+			"Details": "详情",
+			"Close": "关闭详情",
+			"Toggle": "管理状态",
+			"Update": "提交修改"
+		},
+		"ai_server": {
+			"bare_metal": "裸金属",
+			"airdrop": "空投",
+			"cloud": "云",
+			"server": "GPU 服务器",
+			"gpu": "GPU卡",
+			"network": "IB 网络",
+			"storage": "存储设备"
+		},
+		"ai_blog": {
+			"reading_more": "阅读更多...",
+			"all": "所有",
+			"categories": {
+				"howto": "操作指南",
+				"casestudy": "案例",
+				"solution": "方案",
+				"policy": "政策"
+			},
+			"header": "博客",
+			"create": "创建",
+			"back_to_list": "返回列表",
+			"edit": "编辑",
+			"delete": "删除",
+			"reset": "重置",
+			"cancel": "取消",
+			"save": "保存",
+			"category": "类别",
+			"title": "标题",
+			"tags_add": "添加标签：用空格分隔，按回车添加",
+			"icon": "图标",
+			"image": "图片",
+			"abstract": "摘要",
+			"content": "正文",
+			"tags": "标签",
+			"reading_time": "阅读时间",
+			"minutes": "分钟",
+			"editor_mismatch_error": "403错误，您不是该文章的作者，无权编辑。",
+			"editor_need-audit_warning": "您的内容需要审核后才能发布成功",
+			"register_no_audit_editor": "申请免审核权限",
+			"notpublish": "不发布",
+			"publish": "发布",
+			"notpublished": "已更改为不发布",
+			"draft": "待审核",
+			"published": "已发布",
+			"deleted": "已删除",
+			"restore_to_draft": "恢复",
+			"restored_to_draft": "已恢复到待审核状态",
+			"editor_save_success_info": "保存成功，您的内容仍需要审核后才能展示。",
+			"editor_deleted_warning": "当前内容已删除",
+			"editor_auditing_warning": "当前内容正在审核中",
+			"editor_not_found_warning": "当前内容不存在",
+			"delete_confirm": {
+				"title": "删除",
+				"body": "确认删除当前内容吗？删除后将不可查看不可编辑。"
+			},
+			"ok": "确认",
+			"contact": {
+				"title": "联系英智未来",
+				"subtitle": "感谢您对 英智未来BayStone 的关注。我们很乐意帮助您进行高规GPU算力服务器的租赁或采购。请填写表格，专家将很快与您联系。",
+				"formItems": {
+					"name": "您怎么称呼？",
+					"company": "企业名称",
+					"email": "电子邮件",
+					"phone": "电话号码",
+					"gpu": "您需要的GPU算力服务器？",
+					"amount": "您需要的数量？"
+				},
+				"submit": "提交",
+				"submit_success": "提交成功。我们将很快与您联系。"
+			}
+		},
+		"ai_model": {
+			"my_branches": "我的分支",
+			"tasks": "任务",
+			"libraries": "依赖",
+			"datasets": "数据集",
+			"language": "语言",
+			"licences": "许可证",
+			"filter_name": "按名称过滤...",
+			"filter_task": "按任务名称过滤...",
+			"filter_libraries": "按依赖名称过滤...",
+			"filter_dataset": "按数据集名称过滤...",
+			"filter_language": "按语言名称过滤...",
+			"filter_licence": "按许可证名称过滤...",
+			"ai_models": "AI 模型",
+			"model_card": "模型介绍",
+			"files_and_versions": "文件和版本",
+			"community": "反馈",
+			"create_model": "创建AI模型",
+			"unique_id": "唯一标识",
+			"model_name": "模型名称",
+			"base_model": "基础模型",
+			"description": "描述",
+			"icon": "图标",
+			"picture": "选择服务展示的图片",
+			"to_gitlab": "我还没有gitlab库?",
+			"gitlab_token": "gitlab的令牌",
+			"gitlab_url": "克隆地址",
+			"public": "公有",
+			"private": "私有",
+			"find_model_is_null": "没有找到属于该分类的大模型.",
+			"edit_card": "编辑模型介绍",
+			"push": "保存修改",
+			"my_project": "我的项目",
+			"reset": "重置"
+		},
+		"ai_model_task": {
+			"multimodal": "多模态",
+			"feature_extraction": "特征提取",
+			"text_to_image": "文本到图像",
+			"image_to_text": "图像到文本",
+			"text_to_video": "文本到视频",
+			"visual_question_answering": "视觉问题回答",
+			"document_question_answering": "文档问题回答",
+			"graph_machine_learning": "图机器学习",
+			"computer_vision": "计算机视觉",
+			"depth_estimation": "深度估计",
+			"image_classification": "图像分类",
+			"object_detection": "对象检测",
+			"image_segmentation": "图像分割",
+			"image_to_image": "图像到图像",
+			"unconditional_image_generation": "无条件图像生成",
+			"video_classification": "视频分类",
+			"zero_shot_image_classification": "零次图像分类",
+			"natural_language_processing": "自然语言处理",
+			"text_classification": "文本分类",
+			"token_classification": "令牌分类",
+			"table_question_answering": "表格问题回答",
+			"question_answering": "问题回答",
+			"zero_shot_classification": "零次分类",
+			"translation": "翻译",
+			"summarization": "总结",
+			"conversational": "会话",
+			"text_generation": "文本生成",
+			"text2text_generation": "文本到文本生成",
+			"fill_mask": "填充掩码",
+			"sentence_similarity": "句子相似度",
+			"audio": "音频",
+			"text_to_speech": "文本到语音",
+			"text_to_audio": "文本到音频",
+			"automatic_speech_recognition": "自动语音识别",
+			"audio_to_audio": "音频到音频",
+			"audio_classification": "音频分类",
+			"voice_activity_detection": "语音活动检测",
+			"tabular": "表格",
+			"tabular_classification": "表格分类",
+			"tabular_regression": "表格回归",
+			"reinforcement_learning": "强化学习",
+			"robotics": "机器学习"
+		},
+		"datasets": {
+			"dataset": "数据集",
+			"create_dataset": "创建数据集",
+			"dataset_name": "数据集名称"
+		},
+		"console": {
+			"app": {
+				"my_application": "我的服务"
+			},
+			"repo": {
+				"my_dev_repository": "我的仓库"
+			},
+			"order": {
+				"my_gpu_servers": "我的GPU服务器",
+				"my_gpu_servers_subscribe": "我的GPU服务器订阅",
+				"orderStatusDesc": {
+					"order": "新订单",
+					"run": "运行中",
+					"stop": "已停止",
+					"ofm": "欠费",
+					"aiinstance": "场景订单",
+					"deleted": "已删除"
+				},
+				"ip": "IP",
+				"url": "URL",
+				"renew": "续费",
+				"one_more": "再买一单",
+				"all": "所有"
+			},
+			"dataset": {
+				"my_dataset": "我的数据集"
+			}
+		},
+		"comment": {
+			"back": "返回列表",
+			"goto": "提交后前往列表",
+			"create_another": "提交后创建新的",
+			"purchase_reation": "购买资源并运行模型",
+			"create": "创建",
+			"edit": "编辑",
+			"preview": "预览",
+			"cenel": "取消",
+			"access_token": "访问令牌",
+			"my_model": "我的模型",
+			"my_app": "我的应用",
+			"my_scene": "我的场景",
+			"notebook": "我的NoteBook"
+		},
+		"ov": {
+			"homepage": {
+				"banner": {
+					"title": "NVIDIA Omniverse",
+					"subtitle": "创建和操作元宇宙应用程序的平台",
+					"contact": "立即体验"
+				},
+				"introduction": {
+					"title": "由NVIDIA RTX提供支持的实时协作平台",
+					"abstract": "NVIDIA Omniverse™ 是一个计算平台，使个人和团队能够基于 Universal Scene Description (OpenUSD) 发 3D 工作流和应用程序。<br><br>得益于 NVIDIA RTX™ 技术和 USD 的结合，Omniverse 具有可扩展性。Omniverse 从根本上改变了复杂的 3D 工作流，允许个人和团队连接和自定义 3D 流程，并针对工业和科学案例模拟物理精准的大规模虚拟世界。",
+					"details": {
+						"visualization": {
+							"title": "可扩展的可视化和仿真",
+							"abstract": "为产品和环境创建物理精准的可视化和仿真，减少物理测试的时间和成本。"
+						},
+						"developer": {
+							"title": "易于使用的开发者工具套件",
+							"abstract": "快速创建和部署自定义工作流程和应用，而无需丰富的编程知识。基础应用为起步阶段提供了参考，而且有助于将工作重点集中到设计和构建上。"
+						},
+						"ecosystem": {
+							"title": "应用基础模组的生态系统",
+							"abstract": "Omniverse 行业领先且内容丰富的第三方扩展程序目录可确保开发团队的工具能够与经过验证的应用和连接器无缝集成。"
+						},
+						"ai": {
+							"title": "内置 AI",
+							"abstract": "将 AI 嵌入工作流程，从而利用预测功能和自然语言处理自动执行重复性任务。"
+						}
+					}
+				},
+				"scenario": {
+					"architecture": {
+						"title": "建筑、工程、施工与运营",
+						"abstract": "建筑与基础设施的设计、施工和运营带来了复杂的挑战。为了克服这些挑战，世界各地的建筑、工程、施工和运营(AECO) 公司使用 NVIDIA 技术来优化设计、减少危险和提高协作成效，即使在远程工作时也是如此。随着AI、3D 图形虚拟化、虚拟现实 (VR) 和 NVIDIA Omniverse™ 等协作解决方案取得突破，许多公司正在改变工作流，以重塑我们这个世界的未来。",
+						"details": [
+							{
+								"title": "加快设计工作流",
+								"content": "加快设计工作流先进的技术（如沉浸式 VR、实时光线追踪和 3D 图形虚拟化）极大地改进了 BIM 模型的设计和可视化，同时提高了工作效率和创新水准。"
+							},
+							{
+								"title": "实现数据驱动的决策",
+								"content": "借助 GPU 助力的数据科学和 AI，AECO 团队可以利用大量数据（包括设计、环境、模拟和结构）深入了解从交通流量到天气条件的各种情况。"
+							},
+							{
+								"title": "确保安全，更大限度地节省成本",
+								"content": "GPU 助力的 AI 和机器人技术为施工现场的自动驾驶车辆提供支持，实现施工现场安全合规情况的实时监控，并自动进行更准确的基础设施检查流程。"
+							}
+						]
+					},
+					"entertainment": {
+						"title": "媒体与娱乐",
+						"abstract": "影视行业正在不断创新和重塑其制作流程，满足观众对高质量内容日益增长的需求，同时在世界范围内的员工队伍中保持紧凑的工作节奏。此外，串流服务对持续发布和刷新的需求日益增长，以满足日渐扩大的订阅者群体。因此，各工作室纷纷开始转向 AI、虚拟制片、实时渲染和内容协作，无论是桌面端或数据中心抑或是云端，从而显著加快制作速度。",
+						"details": [
+							{
+								"title": "加速您的 3D 工作流",
+								"content": "Omniverse 作为一个协作中心，能够互联现有 3D 工作流，将线性流程升级为实时同步创作，使您能够借助通用场景描述 (OpenUSD) 格式，以前所未有的方式和速度进行创作。"
+							}
+						]
+					},
+					"automotive": {
+						"title": "自动驾驶",
+						"abstract": "NVIDIA 的汽车解决方案为设计、可视化和模拟未来的驾驶提供出色的性能和可扩展性。打造虚拟展厅和汽车配置器，开发车载 AI 助手，并验证自动驾驶技术 – 所有这些都借助 NVIDIA AI Omniverse 和加速计算平台。",
+						"details": [
+							{
+								"title": "设计可视化",
+								"content": "从概念到协作，再到最终设计，重塑汽车行业未来发展趋势。"
+							},
+							{
+								"title": "工程仿真",
+								"content": "借助先进的计算能力、可扩展性和可靠性提升性能。"
+							},
+							{
+								"title": "工业数字孪生",
+								"content": "创建由 Omniverse Enterprise 提供支持的精准虚拟表征。"
+							},
+							{
+								"title": "虚拟展厅和汽车配置器",
+								"content": "使用虚拟现实和增强现实打造沉浸式零售体验。"
+							},
+							{
+								"title": "智能助手",
+								"content": "构建智能车载服务。"
+							},
+							{
+								"title": "自动驾驶和泊车",
+								"content": "大规模实现更智能的软件定义自动驾驶汽车。"
+							}
+						]
+					},
+					"manufacturing": {
+						"title": "制造业",
+						"abstract": "利用设计、渲染、仿真、生产、远程协作和可视化方面的突破性成果，彻底改变产品开发、转变工程，并为未来的工厂提供动力。",
+						"details": [
+							{
+								"title": "产品开发",
+								"content": "转变产品开发工作流程。"
+							},
+							{
+								"title": "工程模拟",
+								"content": "加速计算机辅助工程工作流程。"
+							},
+							{
+								"title": "AI赋能的工厂",
+								"content": "提升工厂敏捷性、效率和生产力。"
+							}
+						]
+					},
+					"visualization": {
+						"title": "科学与可视化",
+						"abstract": "NVIDIA Omniverse™ 为研究人员提供一个共享的虚拟空间，以便他们能通过实时协作和简化工作流程更快地查看、分析、发现和发布科研突破成果。",
+						"details": [
+							{
+								"title": "实时协作",
+								"content": "通过使用 Omniverse，遍布各地的研究人员能够可视化、分析和修改同一数据，并开展实时协作，从而提高工作效率。"
+							},
+							{
+								"title": "大规模交互式可视化",
+								"content": "Omniverse 可根据数据进行扩展，提供大容量 2D 数据的实时交互式可视化效果，助力研究人员快速直观地浏览整个数据集，从而更快地获得发现。"
+							},
+							{
+								"title": "逼真的视觉效果",
+								"content": "Omniverse 支持 3D 几何图形和高级光线追踪，不仅可打造逼真的视觉效果，还能突出显示在 2D 数据中可能会丢失的见解。"
+							}
+						]
+					}
+				}
+			},
+			"contact": {
+				"title": "联系英智未来",
+				"subtitle": "感谢您对 NVIDIA Omniverse的关注。我们很乐意帮助您入门。请填写表格，专家将很快与您联系。",
+				"formItems": {
+					"firstName": "名字",
+					"lastName": "姓氏",
+					"businessEmailAddress": "工作电子邮件",
+					"businessPhoneNumber": "工作电话号码",
+					"organizationUniversityName": "组织/大学名称",
+					"industry": "行业",
+					"jobTitle": "职务",
+					"location": "地点",
+					"preferredLanguage": "首选语言",
+					"whyAreYouGetInTouch": "为什么要联系我们",
+					"yourProjectAndToDo": "告诉我们您的项目以及您想做什么",
+					"involvedEmployeesInProject": "项目中有多少员工参与",
+					"whenToStartProject": "您打算何时启动项目",
+					"hasNVIDIARTXHardware": "您是否有 NVIDIA RTX 硬件"
+				},
+				"privacyItems": {
+					"privacyDataCollect": "本人知悉且同意 英智未来 基于调研、活动组织的目的对本人的上述信息的收集和处理，并已经阅读并同意 <a href='/ov/privacy' target='_blank'>英智未来隐私政策</a>。",
+					"privacyDataStore": "本人知悉且同意，因调研、活动组织的必须，以及相对应的 英智未来 内部管理和系统操作的需要，上述信息会被传输到 英智未来 按照符合 <a href='/ov/privacy' target='_blank'>英智未来隐私政策</a> 的方式进行存储，您可以通过发送邮件至 <a href='mailto:privacy@ai2nv.com'>privacy@ai2nv.com</a> 进行联系以解决相关问题，实现可适用的数据保护法所规定的权利。"
+				},
+				"validation": {
+					"empty": "此为必填字段",
+					"email": "请输入合法的邮箱地址",
+					"phone": "请输入合法的电话号码"
+				},
+				"submit": "提交",
+				"submit_success": "提交成功。我们将很快与您联系。",
+				"options": {
+					"industry": [
+						"云服务",
+						"公共部门",
+						"农业",
+						"制造业",
+						"医疗健康和生命科学",
+						"媒体与娱乐",
+						"建筑 / 工程 / 房地产",
+						"智慧城市 / 空间",
+						"汽车 / 物流 / 交通运输",
+						"消费互联网",
+						"游戏业",
+						"电信",
+						"硬件 / 半导体",
+						"科研 / 教育",
+						"能源",
+						"航空",
+						"金融服务",
+						"零售 / 批发",
+						"餐饮 / 酒店",
+						"高性能计算 / 科学计算",
+						"其他"
+					],
+					"jobTitle": [
+						"IT 专家",
+						"创始人 / 联合创始人",
+						"咨询",
+						"媒体工作者",
+						"学生：其他",
+						"学生：本科生",
+						"学生：研究生",
+						"安全运营",
+						"工业设计师 / 产品设计师",
+						"平面设计师 / 动画师",
+						"开发人员 / 工程师",
+						"总裁 / 副总裁",
+						"教授 / 讲师",
+						"数据分析师",
+						"数据科学家",
+						"游戏玩家",
+						"电影 / 视频编辑",
+						"研究员：学术",
+						"研究员：非学术",
+						"系统管理员",
+						"营销专业人员",
+						"行业分析师",
+						"解决方案架构师",
+						"金融分析师",
+						"销售代表 / 经理",
+						"项目经理",
+						"风险投资家",
+						"首席信息安全官（CISO）",
+						"首席信息官（CIO）",
+						"首席执行官",
+						"首席技术官",
+						"首席财务官",
+						"其他"
+					],
+					"location": [
+						"阿富汗",
+						"Aland Islands",
+						"阿尔巴尼亚",
+						"阿尔及利亚",
+						"美属萨摩亚",
+						"安道尔",
+						"安哥拉",
+						"安圭拉",
+						"南极洲",
+						"Antigua and Barbuda",
+						"阿根廷",
+						"亚美尼亚",
+						"阿鲁巴",
+						"澳大利亚",
+						"奥地利",
+						"阿塞拜疆",
+						"巴哈马",
+						"巴林",
+						"孟加拉国",
+						"巴巴多斯",
+						"白俄罗斯",
+						"比利时",
+						"伯利兹",
+						"贝宁",
+						"百慕大",
+						"不丹",
+						"玻利维亚",
+						"Bonaire, Sint Eustatius and Saba",
+						"Bosnia and Herzegovina",
+						"博茨瓦纳",
+						"布维岛",
+						"巴西",
+						"British Indian Ocean Territory",
+						"British Virgin Islands",
+						"Brunei Darussalam",
+						"保加利亚",
+						"Burkina Faso",
+						"布隆迪",
+						"柬埔寨",
+						"喀麦隆",
+						"加拿大",
+						"佛得角",
+						"开曼群岛",
+						"中非共和国",
+						"乍得",
+						"智利",
+						"中国",
+						"圣诞岛",
+						"科科斯（基林）群岛",
+						"哥伦比亚",
+						"科摩罗",
+						"Congo",
+						"Congo, Democratic Republic of the",
+						"Cook Islands",
+						"哥斯达黎加",
+						"Cote D'Ivoire",
+						"克罗地亚",
+						"古巴",
+						"库拉索",
+						"塞浦路斯",
+						"捷克共和国",
+						"丹麦",
+						"吉布提",
+						"多米尼克",
+						"Dominican Republic",
+						"厄瓜多尔",
+						"埃及",
+						"萨尔瓦多",
+						"赤道几内亚",
+						"厄立特里亚",
+						"爱沙尼亚",
+						"Eswatini",
+						"埃塞俄比亚",
+						"Falkland Islands (Malvinas)",
+						"法罗群岛",
+						"斐济",
+						"芬兰",
+						"法国",
+						"French Guiana",
+						"French Polynesia",
+						"法属南部领地",
+						"加蓬",
+						"冈比亚",
+						"格鲁吉亚",
+						"德国",
+						"加纳",
+						"直布罗陀",
+						"希腊",
+						"格陵兰",
+						"格林纳达",
+						"瓜德罗普",
+						"关岛",
+						"危地马拉",
+						"根西岛",
+						"几内亚",
+						"Guinea-Bissau",
+						"圭亚那",
+						"海地",
+						"Heard Island and Mcdonald Islands",
+						"洪都拉斯",
+						"中国香港",
+						"匈牙利",
+						"冰岛",
+						"印度",
+						"印度尼西亚",
+						"伊朗",
+						"伊拉克",
+						"爱尔兰",
+						"Isle of Man",
+						"以色列",
+						"意大利",
+						"牙买加",
+						"日本",
+						"泽西岛",
+						"约旦",
+						"哈萨克斯坦",
+						"肯尼亚",
+						"基里巴斯",
+						"Korea Democratic People's Republic of",
+						"Korea Republic of",
+						"科威特",
+						"吉尔吉斯斯坦",
+						"Lao People's Democratic Republic",
+						"拉脱维亚",
+						"黎巴嫩",
+						"莱索托",
+						"利比里亚",
+						"利比亚",
+						"Liechtenstein",
+						"立陶宛",
+						"卢森堡",
+						"Macao",
+						"马达加斯加",
+						"马拉维",
+						"马来西亚",
+						"马尔代夫",
+						"马里",
+						"马耳他",
+						"Marshall Islands",
+						"马提尼克",
+						"毛里塔尼亚",
+						"毛里求斯",
+						"马约特",
+						"墨西哥",
+						"Micronesia, Federated States of",
+						"Moldova, Republic of",
+						"摩纳哥",
+						"蒙古",
+						"黑山",
+						"蒙特塞拉特",
+						"摩洛哥",
+						"莫桑比克",
+						"缅甸",
+						"纳米比亚",
+						"瑙鲁",
+						"尼泊尔",
+						"New Caledonia",
+						"新西兰",
+						"尼加拉瓜",
+						"尼日尔",
+						"尼日利亚",
+						"纽埃",
+						"诺福克岛",
+						"North Macedonia",
+						"Northern Mariana Islands",
+						"挪威",
+						"阿曼",
+						"巴基斯坦",
+						"帕劳",
+						"Palestine, State of",
+						"巴拿马",
+						"Papua New Guinea",
+						"巴拉圭",
+						"秘鲁",
+						"菲律宾",
+						"Pitcairn",
+						"波兰",
+						"葡萄牙",
+						"Puerto Rico",
+						"卡塔尔",
+						"留尼汪",
+						"罗马尼亚",
+						"Russian Federation",
+						"卢旺达",
+						"Saint Helena",
+						"Saint Kitts and Nevis",
+						"Saint Lucia",
+						"Saint Pierre and Miquelon",
+						"Saint Vincent and the Grenadines",
+						"Saint-Barthélemy",
+						"Saint-Martin (French part)",
+						"萨摩亚",
+						"圣马力诺",
+						"Sao Tome and Principe",
+						"沙特阿拉伯",
+						"塞内加尔",
+						"塞尔维亚",
+						"塞舌尔",
+						"Sierra Leone",
+						"新加坡",
+						"荷属圣马丁",
+						"斯洛伐克",
+						"斯洛文尼亚",
+						"所罗门群岛",
+						"索马里",
+						"South Africa",
+						"South Georgia and the South Sandwich Islands",
+						"南苏丹",
+						"西班牙",
+						"斯里兰卡",
+						"苏丹",
+						"苏里南",
+						"Svalbard and Jan Mayen",
+						"瑞典",
+						"Switzerland",
+						"叙利亚",
+						"中国台湾",
+						"塔吉克斯坦",
+						"坦桑尼亚",
+						"泰国",
+						"The Netherlands",
+						"Timor-Leste",
+						"多哥",
+						"托克劳",
+						"汤加",
+						"Trinidad and Tobago",
+						"突尼斯",
+						"土耳其",
+						"Turkmenistan",
+						"Turks and Caicos Islands",
+						"图瓦卢",
+						"乌干达",
+						"乌克兰",
+						"阿拉伯联合酋长国",
+						"United Kingdom",
+						"美国",
+						"United States Minor Outlying Islands",
+						"乌拉圭",
+						"乌兹别克斯坦",
+						"瓦努阿图",
+						"Vatican City State",
+						"委内瑞拉",
+						"Viet Nam",
+						"Virgin Islands U.S.",
+						"Wallis and Futuna",
+						"Western Sahara",
+						"也门",
+						"赞比亚",
+						"津巴布韦"
+					],
+					"preferredLanguage": [
+						"中文（简体）",
+						"中文（繁体）",
+						"捷克语",
+						"丹麦语",
+						"荷兰语",
+						"English (Australia)",
+						"英语（英国）",
+						"English (India)",
+						"English (Malaysia)",
+						"English (Philippines)",
+						"英语（新加坡）",
+						"英语（美国）",
+						"芬兰语",
+						"法语",
+						"French (Belgium)",
+						"德语",
+						"German (Austria)",
+						"印尼语",
+						"意大利语",
+						"日语",
+						"韩语",
+						"Netherlands (Belgium)",
+						"挪威语",
+						"波兰语",
+						"葡萄牙语（巴西）",
+						"俄语",
+						"Spanish (Latin America)",
+						"Spanish (Spain)",
+						"瑞典语",
+						"泰语",
+						"土耳其语",
+						"越南语"
+					],
+					"whyAreYouGetInTouch": [
+						"试用 Omniverse Enterprise 30 天",
+						"与 Omniverse 专家交流",
+						"讨论部署选项",
+						"获取许可和/或硬件的报价",
+						"其他"
+					],
+					"involvedEmployeesInProject": ["1-2 个", "3-9 个", "10-25 个", "26 个"],
+					"whenToStartProject": ["不知道，只是研究", "0-3 个月", "3-6 个月", "6-12 个月"],
+					"hasNVIDIARTXHardware": ["有", "没有", "不知道"]
+				}
+			}
+		},
+		"ai_req": {
+			"all": "所有需求",
+			"categories": {
+				"aiapp": "场景应用",
+				"airesource": "智算算力",
+				"aigpu": "算力设备"
+			},
+			"publics": {
+				"all": "公开",
+				"supplier": "供应商",
+				"admin": "管理员"
+			},
+			"statuses": {
+				"open": "开启",
+				"closed": "关闭"
+			},
+			"mine": "我的需求",
+			"create": "提出需求",
+			"back_to_list": "返回列表",
+			"edit": "编辑",
+			"reset": "重置",
+			"cancel": "取消",
+			"post": "发布",
+			"reply": "应答",
+			"category": "类别",
+			"public": "权限",
+			"status": "状态",
+			"company": "公司信息",
+			"email": "邮箱",
+			"phone": "电话",
+			"content": "正文",
+			"create_supplier": "没有供应商权限，请先创建供应商并申请激活该供应商权限。<hr><a class='btn btn-primary' href='/admin/aisupplier'>创建供应商</a>"
+		},
+		"ai_config": {
+			"key": "Key",
+			"scope": "权限",
+			"value": "JSON",
+			"scopes": {
+				"public": "公开",
+				"private": "私有",
+				"AI2NV_OP2": "运营管理员"
+			},
+			"edit_private_warning": "正在编辑其他人的配置，如果修改权限为私有，您后续将不能看到和编辑该配置。",
+			"view_aiconfig_error": "403 错误，您没有运营管理员权限（AI2NV_OP2）查看AI 配置。",
+			"save": "保存",
+			"list": "回到列表",
+			"create": "创建",
+			"mine": "我的"
+		},
+		"error": {
+			"gitlab_md": "你还未关联到gitlab仓库或你的仓库中没有‘README.md’文件请检查。"
+		}
+	}
+}

@@ -44,7 +44,18 @@ class Agent {
 	async publish(payload) {
 		const { file } = payload;
 
-		await AGENT_STORE.publish(file);
+		const md5 = await AGENT_STORE.upload(file);
+		await AGENT_STORE.create({
+			name: payload.name,
+			version: payload.version,
+			label: payload.label,
+			description: payload.description,
+			icon: payload.icon,
+			doc: payload.doc,
+			config: payload.config,
+			executor: payload.executor,
+			md5,
+		});
 	}
 }
 

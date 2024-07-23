@@ -87,6 +87,30 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/publish',
+			handler: Handlers.APM.Agent.Publish,
+			config: {
+				tags: ['api'],
+				description: 'Publish agent package to agent store',
+				notes: 'Provide agent package .tar.gz',
+				auth: 'token',
+				validate: {
+					payload: {
+						file: Joi.object().required().description('文件'),
+					},
+					validator: Joi,
+				},
+
+				payload: {
+					maxBytes: 1024 * 1024 * 100, // 100MB
+					output: 'stream',
+					allow: 'multipart/form-data', // important
+					multipart: true, // important
+				},
+			},
+		},
 
 		{
 			method: 'POST',

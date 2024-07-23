@@ -38,6 +38,14 @@ class Agent {
 	async isInstalled(spec) {
 		return true;
 	}
+	async login(payload) {
+		await AGENT_STORE.login(payload.username, payload.password);
+	}
+	async publish(payload) {
+		const { file } = payload;
+
+		await AGENT_STORE.publish(file);
+	}
 }
 
 const AGENT = new Agent();

@@ -40,6 +40,21 @@ class AgentStore {
 
 		return false;
 	}
+	async login(username, password) {
+		const response = await this.axios({
+			method: 'POST',
+			url: '/agentstore/agent/login',
+			data: { username, password },
+		});
+		this.setApiKey(response.data.sessionToken);
+	}
+	async publish(file) {
+		const response = await this.axios({
+			method: 'POST',
+			url: '/agentstore/agent/publish',
+			data: { file },
+		});
+	}
 }
 
 const AGENT_STORE = new AgentStore();

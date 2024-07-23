@@ -66,7 +66,7 @@ dependencies:
     specifier: ^7.0.0
     version: 7.0.1
   axios:
-    specifier: ^1.5.1
+    specifier: ^1.7.2
     version: 1.7.2
   axios-better-stacktrace:
     specifier: ^2.1.5

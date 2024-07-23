@@ -70,6 +70,23 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/install',
+			handler: Handlers.APM.Agent.Install,
+			config: {
+				tags: ['api'],
+				description: 'Install Agent from Agent Store to APM',
+				notes: 'Provide agent specification',
+				auth: 'token',
+				validate: {
+					payload: {
+						spec: Joi.string().description('Agent install specification'),
+					},
+					validator: Joi,
+				},
+			},
+		},
 
 		{
 			method: 'POST',

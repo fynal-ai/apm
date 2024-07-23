@@ -77,6 +77,11 @@ export default {
 					return await apmAgent.save();
 				});
 			},
+			Install: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT.install(PLD);
+				});
+			},
 		},
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {

@@ -1,0 +1,21 @@
+# 引入GitLab提供的SAST模板
+include:
+  - template: SAST.gitlab-ci.yml
+
+# 定义stages
+stages:
+  - sast
+
+# SAST作业配置
+sast:
+  stage: sast
+  # 在这里可以添加SAST的自定义配置，例如环境变量等
+  # variables:
+  #   CUSTOM_ENV_VAR: "value"
+
+  # 通常不需要在这里添加额外的脚本，因为SAST模板已经包含所需的脚本
+  script:
+    - echo "Running SAST"
+
+  tags:
+    - security-scans

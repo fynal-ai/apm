@@ -91,7 +91,8 @@ export default {
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT_SERVICE.run(PLD);
+					console.log('CRED', CRED);
+					return await AGENT_SERVICE.run(PLD, CRED);
 				});
 			},
 			Result: {
@@ -103,6 +104,11 @@ export default {
 				Clean: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return await AGENT_SERVICE.cleanResult(PLD);
+					});
+				},
+				Save: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},
 			},

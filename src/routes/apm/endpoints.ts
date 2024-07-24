@@ -179,6 +179,31 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/save',
+			handler: Handlers.APM.AgentService.Result.Save,
+			config: {
+				tags: ['api'],
+				description: '保存智能体运行结果',
+				notes: 'save',
+				auth: 'token',
+				validate: {
+					payload: {
+						wfId: Joi.string().required().description('流程的编号'),
+						nodeId: Joi.string().required().description('节点的编号'),
+						roundId: Joi.string().allow('').description('轮次的编号'),
+						name: Joi.string().description('智能体名称'),
+						version: Joi.string().allow('').description('智能体版本'),
+						tenant: Joi.string().description('用户'),
+						input: Joi.object().description('智能体的输入'),
+						output: Joi.object().description('智能体的输出'),
+						status: Joi.object().description('智能体当前的状态'),
+					},
+					validator: Joi,
+				},
+			},
+		},
 	],
 };
 

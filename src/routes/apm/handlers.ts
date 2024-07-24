@@ -100,7 +100,6 @@ export default {
 			},
 			Result: {
 				Get: async (req: Request, h: ResponseToolkit) => {
-					console.log(req.auth);
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return await AGENT_SERVICE.getResult(PLD);
 					});

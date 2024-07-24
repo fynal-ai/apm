@@ -72,11 +72,6 @@ if [ ! -d ${agentName} ]; then
   symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
-OUTPUT_DIR=output
-if [ -d $OUTPUT_DIR ]; then
-  rm -r $OUTPUT_DIR/*
-fi
-
 INIT_FILE=${agentName}/__init__.py
 if [ ! -f $INIT_FILE ]; then
   tee ${agentName}/__init__.py <<END

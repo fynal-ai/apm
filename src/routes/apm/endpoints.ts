@@ -70,6 +70,47 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/install',
+			handler: Handlers.APM.Agent.Install,
+			config: {
+				tags: ['api'],
+				description: 'Install Agent from Agent Store to APM',
+				notes: 'Provide agent specification',
+				auth: 'token',
+				validate: {
+					payload: {
+						spec: Joi.string().description('Agent install specification'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agent/publish',
+			handler: Handlers.APM.Agent.Publish,
+			config: {
+				tags: ['api'],
+				description: 'Publish agent package to agent store',
+				notes: 'Provide agent package .tar.gz',
+				auth: 'token',
+				validate: {
+					payload: {
+						file: Joi.object().required().description('文件'),
+					},
+					validator: Joi,
+				},
+
+				payload: {
+					maxBytes: 1024 * 1024 * 100, // 100MB
+					output: 'stream',
+					allow: 'multipart/form-data', // important
+					multipart: true, // important
+				},
+			},
+		},
 
 		{
 			method: 'POST',
@@ -133,6 +174,31 @@ const internals = {
 						nodeId: Joi.string().allow('').description('节点的编号'),
 						roundId: Joi.string().allow('').description('轮次的编号'),
 						tenant: Joi.string().description('用户'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/save',
+			handler: Handlers.APM.AgentService.Result.Save,
+			config: {
+				tags: ['api'],
+				description: '保存智能体运行结果',
+				notes: 'save',
+				auth: 'token',
+				validate: {
+					payload: {
+						wfId: Joi.string().required().description('流程的编号'),
+						nodeId: Joi.string().required().description('节点的编号'),
+						roundId: Joi.string().allow('').description('轮次的编号'),
+						name: Joi.string().description('智能体名称'),
+						version: Joi.string().allow('').description('智能体版本'),
+						tenant: Joi.string().description('用户'),
+						input: Joi.object().description('智能体的输入'),
+						output: Joi.object().description('智能体的输出'),
+						status: Joi.object().description('智能体当前的状态'),
 					},
 					validator: Joi,
 				},

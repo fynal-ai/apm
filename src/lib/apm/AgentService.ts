@@ -16,26 +16,45 @@ class AgentService {
 		apmAgent.config.input = payload.input;
 
 		// 执行代码
-		const output = await this.executeAgentCode(
+		this.executeAgentCode(
 			{
 				wfId: payload.wfId,
 				nodeId: payload.nodeId,
 				roundId: payload.roundId,
 				tenant: payload.tenant,
 			},
-			apmAgent
+			apmAgent,
+			payload.token
 		);
-		console.log('output', output);
 
-		return output;
+		return {};
 	}
-	async executeAgentCode(workflow, apmAgent: APMAgentType) {
+	async executeAgentCode(workflow, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
 
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
 		const workdir = `${localRepositoryDir}/run/${workflow.wfId}/${workflow.nodeId}/${workflow.roundId}`;
+
+		const saveconfig = {
+			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			data: {
+				tenant: workflow.tenant,
+				wfId: workflow.wfId,
+				nodeId: workflow.nodeId,
+				roundId: workflow.roundId,
+				name: apmAgent.name,
+				version: apmAgent.version,
+				input: apmAgent.config.input,
+				output: {},
+				status: {},
+			},
+		};
 
 		// Generate sh
 		{
@@ -53,34 +72,22 @@ if [ ! -d ${agentName} ]; then
   symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
-OUTPUT_DIR=output
-if [ -d $OUTPUT_DIR ]; then
-  rm -r $OUTPUT_DIR/*
-fi
-
 INIT_FILE=${agentName}/__init__.py
-if [ -f $INIT_FILE ]; then
+if [ ! -f $INIT_FILE ]; then
   tee ${agentName}/__init__.py <<END
 END
 fi
 
 tee main.py <<END
-import json
-import os
-
 from ${agentName}.Agent import Agent
 
 params = ${JSON.stringify(apmAgent.config.input)}
 
+saveconfig = ${JSON.stringify(saveconfig)}
+
 agent = Agent()
 
-result = agent.run(params=params)
-
-# 保存到output/result.json
-os.makedirs("output", exist_ok=True)
-with open("output/result.json", "w", encoding="utf-8") as f:
-    f.write(json.dumps(result, ensure_ascii=False, indent=4))
-
+agent.run(params=params, saveconfig=saveconfig)
 END
 
 REQUIREMENTS_FILE=${agentName}/requirements.txt
@@ -127,29 +134,7 @@ ${pythonProgram} main.py
 			});
 		}
 
-		// 读取output
-		let output: any = {};
-		{
-			const resultFilePath = `${workdir}/output/result.json`;
-			if (await fs.pathExists(resultFilePath)) {
-				output = await fs.readFile(`${workdir}/output/result.json`, 'utf-8');
-				output = JSON.parse(output);
-
-				// 保存到数据库
-				await APMAgentServiceRun.create({
-					wfId: workflow.wfId,
-					nodeId: workflow.nodeId,
-					roundId: workflow.roundId,
-					tenant: workflow.tenant,
-					name: apmAgent.name,
-					version: apmAgent.version,
-					input: apmAgent.config.input,
-					output,
-				});
-			}
-		}
-
-		return output;
+		return {};
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
 		const filters = {
@@ -180,9 +165,7 @@ ${pythonProgram} main.py
 		if (payload.deleteAfter === false) {
 			task = APMAgentServiceRun.findOne(filters);
 
-			if (!payload.roundId) {
-				task = task.sort({ createdAt: -1 });
-			}
+			task = task.sort({ createdAt: -1 });
 
 			return await task;
 		}
@@ -190,9 +173,7 @@ ${pythonProgram} main.py
 		{
 			task = APMAgentServiceRun.findOneAndDelete(filters);
 
-			if (!payload.roundId) {
-				task = task.sort({ createdAt: -1 });
-			}
+			task = task.sort({ createdAt: -1 });
 
 			return await task;
 		}
@@ -225,6 +206,13 @@ ${pythonProgram} main.py
 		task = APMAgentServiceRun.deleteMany(filters);
 
 		return await task;
+	}
+	async saveResult(payload) {
+		const apmAgentServiceRun = await APMAgentServiceRun.create({
+			...payload,
+		});
+
+		return await apmAgentServiceRun.save();
 	}
 }
 

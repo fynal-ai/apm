@@ -66,7 +66,7 @@ dependencies:
     specifier: ^7.0.0
     version: 7.0.1
   axios:
-    specifier: ^1.5.1
+    specifier: ^1.7.2
     version: 1.7.2
   axios-better-stacktrace:
     specifier: ^2.1.5
@@ -137,9 +137,6 @@ dependencies:
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
-  lodash:
-    specifier: ^4.17.21
-    version: 4.17.21
   lru-cache:
     specifier: ^10.0.1
     version: 10.4.3
@@ -286,6 +283,9 @@ devDependencies:
   hapi-geo-locate:
     specifier: ^4.1.1
     version: 4.1.1
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   prettier:
     specifier: ^3.0.3
     version: 3.3.3
@@ -4570,7 +4570,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
 
   /lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}

@@ -77,11 +77,25 @@ export default {
 					return await apmAgent.save();
 				});
 			},
+			Install: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT.install(PLD);
+				});
+			},
+			Publish: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT.publish(PLD);
+				});
+			},
 		},
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT_SERVICE.run(PLD);
+					return await AGENT_SERVICE.run({
+						...PLD,
+
+						token: req.auth.artifacts.token,
+					});
 				});
 			},
 			Result: {
@@ -93,6 +107,11 @@ export default {
 				Clean: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return await AGENT_SERVICE.cleanResult(PLD);
+					});
+				},
+				Save: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},
 			},

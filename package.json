@@ -46,7 +46,7 @@
 		"@svgdotjs/svg.js": "^3.2.0",
 		"alipay-sdk": "^3.6.1",
 		"archiver": "^7.0.0",
-		"axios": "^1.5.1",
+		"axios": "^1.7.2",
 		"axios-better-stacktrace": "^2.1.5",
 		"bufferutil": "^4.0.7",
 		"chatgpt": "^5.2.5",
@@ -70,7 +70,6 @@
 		"joi": "^17.11.0",
 		"jsdom": "^22.1.0",
 		"jsonwebtoken": "^9.0.2",
-		"lodash": "^4.17.21",
 		"lru-cache": "^10.0.1",
 		"marked": "^9.1.0",
 		"metaflow": "^1.0.1",
@@ -124,6 +123,7 @@
 		"@types/sprintf-js": "^1.1.2",
 		"@zerollup/ts-transform-paths": "^1.7.18",
 		"hapi-geo-locate": "^4.1.1",
+		"lodash": "^4.17.21",
 		"prettier": "^3.0.3",
 		"typescript": "^5.2.2"
 	}

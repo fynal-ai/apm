@@ -9,7 +9,7 @@ import {
 import { AGENT } from './Agent.js';
 
 class AgentService {
-	async run(payload, CRED) {
+	async run(payload) {
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 
 		// 读取input
@@ -24,12 +24,12 @@ class AgentService {
 				tenant: payload.tenant,
 			},
 			apmAgent,
-			CRED
+			payload.token
 		);
 
 		return {};
 	}
-	async executeAgentCode(workflow, apmAgent: APMAgentType, CRED) {
+	async executeAgentCode(workflow, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -37,8 +37,6 @@ class AgentService {
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
 		const workdir = `${localRepositoryDir}/run/${workflow.wfId}/${workflow.nodeId}/${workflow.roundId}`;
 
-		// console.log('CRED', CRED);
-		const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTlmODkzMThlNjI2YTEwNWQ1NDUzZiIsImlhdCI6MTcyMTgwMTMxNX0.0JlOvoihh70nchouIa9yLFj4U04x5ppQ3qDIHewXWFA`;
 		const saveconfig = {
 			url: 'http://127.0.0.1:12008/apm/agentservice/result/save',
 			headers: {
@@ -104,7 +102,7 @@ class APMAgent:
         data["output"] = output
         data["status"] = status
 
-        print("data", data)
+        # print("data", data)
 
         try:
             response = requests.post(url=url, headers=headers, json=data)
@@ -161,7 +159,7 @@ ${pythonProgram} main.py
 						cwd: workdir,
 					});
 					childProcess.stdout.on('data', (data) => {
-						console.log(data);
+						// console.log(data);
 					});
 					childProcess.stderr.on('data', (data) => {
 						console.log(data);
@@ -206,9 +204,7 @@ ${pythonProgram} main.py
 		if (payload.deleteAfter === false) {
 			task = APMAgentServiceRun.findOne(filters);
 
-			if (!payload.roundId) {
-				task = task.sort({ createdAt: -1 });
-			}
+			task = task.sort({ createdAt: -1 });
 
 			return await task;
 		}
@@ -216,9 +212,7 @@ ${pythonProgram} main.py
 		{
 			task = APMAgentServiceRun.findOneAndDelete(filters);
 
-			if (!payload.roundId) {
-				task = task.sort({ createdAt: -1 });
-			}
+			task = task.sort({ createdAt: -1 });
 
 			return await task;
 		}

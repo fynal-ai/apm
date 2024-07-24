@@ -20,3 +20,18 @@ class Agent:
 
         return output
 ```
+
+## Dev
+
+https://developer.aliyun.com/article/1337727
+
+1. change code in `apm` directory
+2. change version in `setup.py`
+3. build `dist`
+   ```sh
+   python3.10 -m setup.py sdist
+   ```
+4. publish to pypi
+   ```sh
+   python3.10 -m twine upload dist/\*
+   ```

@@ -38,7 +38,7 @@ class AgentService {
 		const workdir = `${localRepositoryDir}/run/${workflow.wfId}/${workflow.nodeId}/${workflow.roundId}`;
 
 		const saveconfig = {
-			url: 'http://127.0.0.1:12008/apm/agentservice/result/save',
+			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,

@@ -8,7 +8,7 @@ setuptools.setup(
     name="jobsimi-apm-python",
     install_requires=["requests>=2.16.0"],
      # 版本号, 版本号规范：https://www.python.org/dev/peps/pep-0440/
-    version="0.0.2",
+    version="0.0.3",
     # 作者名
     author="jobsimi",
      # 作者邮箱

@@ -12,6 +12,7 @@ import { AGENT } from './Agent.js';
 class AgentService {
 	async run(payload) {
 		const runId = await this.generateRunId();
+		console.log('runId', runId);
 
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 
@@ -86,11 +87,15 @@ class AgentService {
 					const childProcess = await child_process.exec('bash ./run.sh', {
 						cwd: workdir,
 					});
-					childProcess.stdout.on('data', (data) => {
+					childProcess.stdout.on('data', async (data) => {
 						// console.log(data);
+
+						this.saveLog(workdir, data);
 					});
-					childProcess.stderr.on('data', (data) => {
-						console.log(data);
+					childProcess.stderr.on('data', async (data) => {
+						console.log('error', data);
+
+						this.saveLog(workdir, data);
 					});
 					childProcess.stdout.on('close', () => {
 						console.log('child process exited');
@@ -101,7 +106,7 @@ class AgentService {
 			});
 		}
 
-		return { runId };
+		return {};
 	}
 	async generateRunId() {
 		return shortuuid.generate();
@@ -235,6 +240,17 @@ fi
 ${pythonProgram} main.py
 `;
 		return sh;
+	}
+	/**
+	 * 日志保存
+	 * @param workdir 日志目录
+	 * @param data 日志
+	 */
+	async saveLog(workdir, data) {
+		{
+			data = `${new Date().toISOString()} ${data}`;
+			await fs.writeFile(`${workdir}/log.txt`, data, { flag: 'a' });
+		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
 		const filters = {

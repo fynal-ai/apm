@@ -54,17 +54,19 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: {
-						author: Joi.string().description('作者'),
-						version: Joi.string().description('版本'),
-						name: Joi.string().description('名称'),
-						label: Joi.string().description('标签'),
+						author: Joi.string().required().description('作者'),
+						version: Joi.string().required().description('版本'),
+						name: Joi.string().required().description('名称'),
+						label: Joi.string().required().description('标签'),
 						description: Joi.string().description('描述'),
 						icon: Joi.string().description('图标'),
 						doc: Joi.string().description('文档'),
 						config: {
-							input: Joi.object().description('输入参数'),
-							output: Joi.object().description('输出参数'),
+							input: Joi.object().required().description('输入参数'),
+							output: Joi.object().required().description('输出参数'),
 						},
+						executor: Joi.string().description('执行器'),
+						md5: Joi.string().description('md5'),
 					},
 					validator: Joi,
 				},
@@ -119,19 +121,40 @@ const internals = {
 			config: {
 				tags: ['api'],
 				description: '运行智能体',
-				notes: '运行智能体',
+				notes: '运行智能体，并返回运行编号 runId，运行中的中间结果使用接口查询获取。',
 				auth: 'token',
 				validate: {
-					payload: {
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().required().description('轮次的编号'),
-						name: Joi.string().required().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
-						input: Joi.object().required().description('输入参数'),
-						tenant: Joi.string().description('用户'),
-					},
+					payload: Joi.object({
+						tenant: Joi.string().description('用户').example('669b97fd461a7529116826a7'),
+						wfId: Joi.string()
+							.required()
+							.description('流程的编号')
+							.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
+						nodeId: Joi.string().required().description('节点的编号').example('agent3'),
+						roundId: Joi.string().required().description('轮次的编号').example('0'),
+						name: Joi.string()
+							.required()
+							.description('智能体名称')
+							.example('fynal-ai/flood_control'),
+						version: Joi.string().allow('').description('智能体版本').example('1.0.1'),
+						input: Joi.object().required().description('输入参数').example({
+							prompt: '潘家塘最大降雨量多少？',
+							start_time: 1715961600,
+							end_time: 1721364927,
+						}),
+					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									runId: Joi.string().description('运行编号').example('2HVYnYiCp9KQ792MMSUoE6'),
+								}).label('APMAgentServiceRunResponse'),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -190,6 +213,7 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: {
+						runId: Joi.string().required().description('运行编号'),
 						wfId: Joi.string().required().description('流程的编号'),
 						nodeId: Joi.string().required().description('节点的编号'),
 						roundId: Joi.string().allow('').description('轮次的编号'),

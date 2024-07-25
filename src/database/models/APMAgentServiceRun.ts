@@ -3,6 +3,7 @@ import { HydratedDocument, InferSchemaType, Schema, model } from 'mongoose';
 //Same fields as Parse.com
 const schema = new Schema(
 	{
+		runId: { type: String },
 		tenant: { type: String },
 		wfId: { type: String },
 		nodeId: { type: String },

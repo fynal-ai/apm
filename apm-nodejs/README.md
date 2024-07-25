@@ -1,0 +1,32 @@
+## Usage
+
+```js
+import { APMAgent } from '@jobsimi/apm';
+
+class Agent {
+	constructor() {
+		this.apmAgent = new APMAgent();
+	}
+	async run(params, saveconfig) {
+		const output = {
+			text: 'text',
+		};
+		const status = {
+			done: True,
+		};
+
+		this.apmAgent.save_output(saveconfig, status, output); // save output
+
+		return output;
+	}
+}
+```
+
+## Dev
+
+1. change code in `src` directory
+2. change version in `package.json`
+3. publish to npm
+   ```sh
+   pnpm run pub
+   ```

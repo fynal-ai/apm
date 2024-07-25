@@ -14,6 +14,8 @@ const schema = new Schema(
 			input: { type: Object },
 			output: { type: Object },
 		},
+		executor: { type: String },
+		md5: { type: String },
 	},
 
 	{ timestamps: true }

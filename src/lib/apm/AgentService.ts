@@ -1,5 +1,6 @@
 import child_process from 'child_process';
 import fs from 'fs-extra';
+import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
 import { APMAgentType } from '../../database/models/APMAgent.js';
 import {
@@ -10,6 +11,9 @@ import { AGENT } from './Agent.js';
 
 class AgentService {
 	async run(payload) {
+		const runId = await this.generateRunId();
+		console.log('runId', runId);
+
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 
 		// 读取input
@@ -17,6 +21,7 @@ class AgentService {
 
 		// 执行代码
 		this.executeAgentCode(
+			runId,
 			{
 				wfId: payload.wfId,
 				nodeId: payload.nodeId,
@@ -27,15 +32,35 @@ class AgentService {
 			payload.token
 		);
 
-		return {};
+		return { runId };
 	}
-	async executeAgentCode(workflow, apmAgent: APMAgentType, token) {
+	async executeAgentCode(runId, workflow, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
 
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
-		const workdir = `${localRepositoryDir}/run/${workflow.wfId}/${workflow.nodeId}/${workflow.roundId}`;
+		const workdir = `${localRepositoryDir}/run/${runId}`;
+
+		const saveconfig = {
+			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			data: {
+				runId: runId,
+				tenant: workflow.tenant,
+				wfId: workflow.wfId,
+				nodeId: workflow.nodeId,
+				roundId: workflow.roundId,
+				name: apmAgent.name,
+				version: apmAgent.version,
+				input: apmAgent.config.input,
+				output: {},
+				status: {},
+			},
+		};
 
 		const saveconfig = {
 			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
@@ -58,14 +83,141 @@ class AgentService {
 
 		// Generate sh
 		{
-			const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
+			const sh = await this.generateShellScript({
+				workflow,
+				apmAgent,
+				token,
+				author,
+				agentName,
+				version,
+				localRepositoryDir,
+				workdir,
+				saveconfig,
+			});
 
-			const sh = `#!/bin/bash
+			await fs.ensureDir(workdir);
+			await fs.writeFile(`${workdir}/run.sh`, sh);
+		}
+
+		// 执行sh
+		{
+			await new Promise(async (resolve) => {
+				{
+					const childProcess = await child_process.exec('bash ./run.sh', {
+						cwd: workdir,
+					});
+					childProcess.stdout.on('data', async (data) => {
+						// console.log(data);
+
+						this.saveLog(workdir, data);
+					});
+					childProcess.stderr.on('data', async (data) => {
+						console.log('error', data);
+
+						this.saveLog(workdir, data);
+					});
+					childProcess.stdout.on('close', () => {
+						console.log('child process exited');
+
+						resolve('close');
+					});
+				}
+			});
+		}
+
+		return {};
+	}
+	async generateRunId() {
+		return shortuuid.generate();
+	}
+	async generateShellScript(payload) {
+		const { executor } = payload;
+		if (!executor || executor === 'python') {
+			return await this.generatePythonShellScript(payload);
+		}
+
+		if (executor === 'nodejs') {
+			return await this.generateNodeJSShellScript(payload);
+		}
+	}
+	async generatePythonShellScript({
+		workflow,
+		apmAgent,
+		token,
+		author,
+		agentName,
+		version,
+		localRepositoryDir,
+		workdir,
+		saveconfig,
+	}) {
+		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
 WORKDIR=${workdir}
 
-mkdir -p $WORKDIR  # [runid]
+mkdir -p $WORKDIR
+cd $WORKDIR
+
+if [ ! -d ${agentName} ]; then
+  symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+fi
+
+PACKAGE_JSON_FILE=package.json
+if [ ! -f $PACKAGE_JSON_FILE ]; then
+  tee $PACKAGE_JSON_FILE <<END
+{
+  "type": "module"
+}
+END
+  pnpm add ./${agentName};
+fi
+
+tee main.js <<END
+import { Agent } from "${agentName}";
+
+const params = ${JSON.stringify(apmAgent.config.input)}
+
+const saveconfig = ${JSON.stringify(saveconfig)}
+
+const agent = new Agent();
+
+agent.run(params, saveconfig)
+END
+
+REQUIREMENTS_FILE=${agentName}/package.json
+if [ -f $REQUIREMENTS_FILE ]; then
+  source ~/.nvm/nvm.sh
+  nvm use 20
+  NODE_MODULES_DIR=${agentName}/node_modules
+  if [ ! -d $NODE_MODULES_DIR ]; then
+    pnpm install --dir ${agentName} --registry https://registry.npmmirror.com;
+  fi
+fi
+
+node main.js
+`;
+		return sh;
+	}
+	async generateNodeJSShellScript({
+		workflow,
+		apmAgent,
+		token,
+		author,
+		agentName,
+		version,
+		localRepositoryDir,
+		workdir,
+		saveconfig,
+	}) {
+		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
+
+		const sh = `#!/bin/bash
+
+APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
+WORKDIR=${workdir}
+
+mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
@@ -106,35 +258,18 @@ fi
 
 ${pythonProgram} main.py
 `;
-			await fs.ensureDir(workdir);
-			await fs.writeFile(`${workdir}/run.sh`, sh);
-		}
-
-		// 创建虚拟环境
-
-		// 执行sh
+		return sh;
+	}
+	/**
+	 * 日志保存
+	 * @param workdir 日志目录
+	 * @param data 日志
+	 */
+	async saveLog(workdir, data) {
 		{
-			await new Promise(async (resolve) => {
-				{
-					const childProcess = await child_process.exec('bash ./run.sh', {
-						cwd: workdir,
-					});
-					childProcess.stdout.on('data', (data) => {
-						// console.log(data);
-					});
-					childProcess.stderr.on('data', (data) => {
-						console.log(data);
-					});
-					childProcess.stdout.on('close', () => {
-						console.log('child process exited');
-
-						resolve('close');
-					});
-				}
-			});
+			data = `${new Date().toISOString()} ${data}`;
+			await fs.writeFile(`${workdir}/log.txt`, data, { flag: 'a' });
 		}
-
-		return {};
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
 		const filters = {

@@ -1,0 +1,14 @@
+{
+	"name": "@jobsimi/apm",
+	"version": "0.0.3",
+	"type": "module",
+	"main": "src/index.js",
+	"scripts": {
+		"pub": "npm publish --access public --registry https://registry.npmjs.org/"
+	},
+	"author": "jobsimi",
+	"license": "MIT",
+	"dependencies": {
+		"axios": "^1.7.2"
+	}
+}

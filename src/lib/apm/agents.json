@@ -16,7 +16,9 @@
 			"output": {
 				"text": "山峡水库在2024-06-18 10:00:00时的上水位最高为167m;这是这时间段内的最高水位。"
 			}
-		}
+		},
+		"executor": "python",
+		"md5": "5700ef530cee653e81af5d8b1c325cc8"
 	},
 	{
 		"author": "fynal-ai",
@@ -34,6 +36,22 @@
 			"output": {
 				"text": "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)"
 			}
-		}
+		},
+		"executor": "python",
+		"md5": "5c712bd51cf7a9a8a41fa70059c417e6"
+	},
+	{
+		"private": true,
+		"version": "1.0.1",
+		"name": "data_analysis",
+		"config": {
+			"input": {
+				"prompt": "销量趋势"
+			},
+			"output": {
+				"text": "1"
+			}
+		},
+		"executor": "nodejs"
 	}
 ]

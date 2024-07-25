@@ -125,24 +125,33 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: Joi.object({
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().required().description('轮次的编号'),
-						name: Joi.string().required().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
-						input: Joi.object().required().description('输入参数'),
-						tenant: Joi.string().description('用户'),
-					}),
+						tenant: Joi.string().description('用户').example('669b97fd461a7529116826a7'),
+						wfId: Joi.string()
+							.required()
+							.description('流程的编号')
+							.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
+						nodeId: Joi.string().required().description('节点的编号').example('agent3'),
+						roundId: Joi.string().required().description('轮次的编号').example('0'),
+						name: Joi.string()
+							.required()
+							.description('智能体名称')
+							.example('fynal-ai/flood_control'),
+						version: Joi.string().allow('').description('智能体版本').example('1.0.1'),
+						input: Joi.object().required().description('输入参数').example({
+							prompt: '潘家塘最大降雨量多少？',
+							start_time: 1715961600,
+							end_time: 1721364927,
+						}),
+					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},
 				plugins: {
 					'hapi-swagger': {
 						responses: {
 							200: {
-								description: 'success result',
 								schema: Joi.object({
 									runId: Joi.string().description('运行编号').example('2HVYnYiCp9KQ792MMSUoE6'),
-								}).label('APMAgentServiceRunResult'),
+								}).label('APMAgentServiceRunResponse'),
 							},
 						},
 					},

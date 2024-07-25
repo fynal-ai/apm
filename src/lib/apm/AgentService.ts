@@ -58,9 +58,70 @@ class AgentService {
 
 		// Generate sh
 		{
-			const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
+			const sh = await this.generateShellScript({
+				workflow,
+				apmAgent,
+				token,
+				author,
+				agentName,
+				version,
+				localRepositoryDir,
+				workdir,
+				saveconfig,
+			});
 
-			const sh = `#!/bin/bash
+			await fs.ensureDir(workdir);
+			await fs.writeFile(`${workdir}/run.sh`, sh);
+		}
+
+		// 执行sh
+		{
+			await new Promise(async (resolve) => {
+				{
+					const childProcess = await child_process.exec('bash ./run.sh', {
+						cwd: workdir,
+					});
+					childProcess.stdout.on('data', (data) => {
+						// console.log(data);
+					});
+					childProcess.stderr.on('data', (data) => {
+						console.log(data);
+					});
+					childProcess.stdout.on('close', () => {
+						console.log('child process exited');
+
+						resolve('close');
+					});
+				}
+			});
+		}
+
+		return {};
+	}
+	async generateShellScript(payload) {
+		const { executor } = payload;
+		if (!executor || executor === 'python') {
+			return await this.generatePythonShellScript(payload);
+		}
+
+		if (executor === 'nodejs') {
+			return await this.generateNodeJSShellScript(payload);
+		}
+	}
+	async generatePythonShellScript({
+		workflow,
+		apmAgent,
+		token,
+		author,
+		agentName,
+		version,
+		localRepositoryDir,
+		workdir,
+		saveconfig,
+	}) {
+		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
+
+		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
 WORKDIR=${workdir}
@@ -106,35 +167,68 @@ fi
 
 ${pythonProgram} main.py
 `;
-			await fs.ensureDir(workdir);
-			await fs.writeFile(`${workdir}/run.sh`, sh);
-		}
+		return sh;
+	}
+	async generateNodeJSShellScript({
+		workflow,
+		apmAgent,
+		token,
+		author,
+		agentName,
+		version,
+		localRepositoryDir,
+		workdir,
+		saveconfig,
+	}) {
+		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
 
-		// 创建虚拟环境
+		const sh = `#!/bin/bash
 
-		// 执行sh
-		{
-			await new Promise(async (resolve) => {
-				{
-					const childProcess = await child_process.exec('bash ./run.sh', {
-						cwd: workdir,
-					});
-					childProcess.stdout.on('data', (data) => {
-						// console.log(data);
-					});
-					childProcess.stderr.on('data', (data) => {
-						console.log(data);
-					});
-					childProcess.stdout.on('close', () => {
-						console.log('child process exited');
+APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
+WORKDIR=${workdir}
 
-						resolve('close');
-					});
-				}
-			});
-		}
+mkdir -p $WORKDIR  # [runid]
+cd $WORKDIR
 
-		return {};
+if [ ! -d ${agentName} ]; then
+  symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+fi
+
+INIT_FILE=${agentName}/__init__.py
+if [ ! -f $INIT_FILE ]; then
+  tee ${agentName}/__init__.py <<END
+END
+fi
+
+tee main.py <<END
+from ${agentName}.Agent import Agent
+
+params = ${JSON.stringify(apmAgent.config.input)}
+
+saveconfig = ${JSON.stringify(saveconfig)}
+
+agent = Agent()
+
+agent.run(params=params, saveconfig=saveconfig)
+END
+
+REQUIREMENTS_FILE=${agentName}/requirements.txt
+if [ -f $REQUIREMENTS_FILE ]; then
+  VENV_DIR=${agentName}/.venv
+  if [ ! -d $VENV_DIR ]; then
+    ${pythonProgram} -m venv $VENV_DIR --symlinks;
+  fi
+  source $VENV_DIR/bin/activate
+  INSTALLED_FILE=$VENV_DIR/installed.txt
+  if [ ! -f $INSTALLED_FILE ]; then
+    ${pythonProgram} -m pip install -r $REQUIREMENTS_FILE -i https://pypi.tuna.tsinghua.edu.cn/simple/
+    echo "1" > $INSTALLED_FILE
+  fi
+fi
+
+${pythonProgram} main.py
+`;
+		return sh;
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
 		const filters = {

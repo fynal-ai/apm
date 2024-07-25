@@ -121,10 +121,10 @@ const internals = {
 			config: {
 				tags: ['api'],
 				description: '运行智能体',
-				notes: '运行智能体，并返回运行编号 runId，运行结果使用接口查询获取。',
+				notes: '运行智能体，并返回运行编号 runId，运行中的中间结果使用接口查询获取。',
 				auth: 'token',
 				validate: {
-					payload: {
+					payload: Joi.object({
 						wfId: Joi.string().required().description('流程的编号'),
 						nodeId: Joi.string().required().description('节点的编号'),
 						roundId: Joi.string().required().description('轮次的编号'),
@@ -132,8 +132,20 @@ const internals = {
 						version: Joi.string().allow('').description('智能体版本'),
 						input: Joi.object().required().description('输入参数'),
 						tenant: Joi.string().description('用户'),
-					},
+					}),
 					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								description: 'success result',
+								schema: Joi.object({
+									runId: Joi.string().description('运行编号').example('2HVYnYiCp9KQ792MMSUoE6'),
+								}).label('APMAgentServiceRunResult'),
+							},
+						},
+					},
 				},
 			},
 		},

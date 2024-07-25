@@ -121,7 +121,7 @@ const internals = {
 			config: {
 				tags: ['api'],
 				description: '运行智能体',
-				notes: '运行智能体',
+				notes: '运行智能体，并返回运行编号 runId，运行结果使用接口查询获取。',
 				auth: 'token',
 				validate: {
 					payload: {
@@ -192,6 +192,7 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: {
+						runId: Joi.string().required().description('运行编号'),
 						wfId: Joi.string().required().description('流程的编号'),
 						nodeId: Joi.string().required().description('节点的编号'),
 						roundId: Joi.string().allow('').description('轮次的编号'),

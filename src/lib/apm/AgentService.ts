@@ -1,5 +1,6 @@
 import child_process from 'child_process';
 import fs from 'fs-extra';
+import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
 import { APMAgentType } from '../../database/models/APMAgent.js';
 import {
@@ -10,6 +11,8 @@ import { AGENT } from './Agent.js';
 
 class AgentService {
 	async run(payload) {
+		const runId = await this.generateRunId();
+
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 
 		// 读取input
@@ -17,6 +20,7 @@ class AgentService {
 
 		// 执行代码
 		this.executeAgentCode(
+			runId,
 			{
 				wfId: payload.wfId,
 				nodeId: payload.nodeId,
@@ -27,15 +31,15 @@ class AgentService {
 			payload.token
 		);
 
-		return {};
+		return { runId };
 	}
-	async executeAgentCode(workflow, apmAgent: APMAgentType, token) {
+	async executeAgentCode(runId, workflow, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
 
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
-		const workdir = `${localRepositoryDir}/run/${workflow.wfId}/${workflow.nodeId}/${workflow.roundId}`;
+		const workdir = `${localRepositoryDir}/run/${runId}`;
 
 		const saveconfig = {
 			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
@@ -44,6 +48,7 @@ class AgentService {
 				Authorization: `Bearer ${token}`,
 			},
 			data: {
+				runId: runId,
 				tenant: workflow.tenant,
 				wfId: workflow.wfId,
 				nodeId: workflow.nodeId,
@@ -96,7 +101,10 @@ class AgentService {
 			});
 		}
 
-		return {};
+		return { runId };
+	}
+	async generateRunId() {
+		return shortuuid.generate();
 	}
 	async generateShellScript(payload) {
 		const { executor } = payload;
@@ -124,7 +132,7 @@ class AgentService {
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
 WORKDIR=${workdir}
 
-mkdir -p $WORKDIR  # [runid]
+mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
@@ -163,8 +171,6 @@ if [ -f $REQUIREMENTS_FILE ]; then
   fi
 fi
 
-cd $WORKDIR
-
 node main.js
 `;
 		return sh;
@@ -187,7 +193,7 @@ node main.js
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
 WORKDIR=${workdir}
 
-mkdir -p $WORKDIR  # [runid]
+mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then

@@ -19,15 +19,20 @@ class Agent {
 			throw new Error('spec is required');
 		}
 
-		{
-			const isInstalled = await this.isInstalled(spec);
+		const parsedAgentSpec = this.parseAgentSpec(spec) as APMAgentType;
 
-			if (isInstalled === true) {
+		{
+			const apmAgent = await this.getDetail({
+				name: parsedAgentSpec.name,
+				version: parsedAgentSpec.version,
+			});
+
+			if (apmAgent) {
 				return;
 			}
 
 			{
-				const isExistInAgentStore = await AGENT_STORE.isExist(spec);
+				const isExistInAgentStore = await AGENT_STORE.isExist(apmAgent);
 
 				if (isExistInAgentStore === false) {
 					return;
@@ -35,7 +40,7 @@ class Agent {
 			}
 		}
 	}
-	async isInstalled(spec) {
+	async isInstalled(apmAgent: APMAgentType) {
 		return true;
 	}
 	async login(payload) {
@@ -56,6 +61,17 @@ class Agent {
 			executor: payload.executor,
 			md5,
 		});
+	}
+	parseAgentSpec(agentSpec) {
+		// jobsimi/draw-image:1.0.1
+		const name = agentSpec.split(':')[0];
+		const version = agentSpec.split(':')[1] || '';
+		const author = name.split('/')[0];
+		return {
+			author,
+			name,
+			version,
+		};
 	}
 }
 

@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
+import ServerConfig from '../../config/server.js';
 
 class AgentStore {
 	axios: AxiosInstance;
-	baseURL: string = 'https://agentstoreemp.baystoneai.com';
+	baseURL: string = ServerConfig.apm.agentStore.baseURL;
 	apiKey: string;
 
 	constructor(baseURL?, apiKey?) {
@@ -72,26 +73,29 @@ class AgentStore {
 	}
 
 	setApiKey(apiKey: string) {
-		if (!apiKey) {
-			return;
+		if (apiKey) {
+			this.apiKey = apiKey;
 		}
 
-		this.apiKey = apiKey;
-		this.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`;
+		if (this.apiKey) {
+			this.axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiKey}`;
+		}
 	}
 	setBaseURL(baseURL: string) {
-		if (!baseURL) {
-			return;
+		if (baseURL) {
+			this.baseURL = baseURL;
 		}
 
-		this.baseURL = baseURL;
-		this.axios.defaults.baseURL = baseURL;
+		if (this.baseURL) {
+			this.axios.defaults.baseURL = this.baseURL;
+		}
 	}
-	async isExist(spec) {
+	async isExist(apmAgent) {
+		// console.log('POST /agentstore/agent/detail', this.axios.defaults.baseURL);
 		const response = await this.axios({
 			method: 'POST',
-			url: '/agentstore/agent/is/exist',
-			data: { spec },
+			url: '/agentstore/agent/detail',
+			data: apmAgent,
 		});
 
 		if (response.data) {

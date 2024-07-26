@@ -83,7 +83,10 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: {
-						spec: Joi.string().description('Agent install specification'),
+						spec: Joi.string()
+							.required()
+							.description('Agent install specification')
+							.example('fynalai/flood_control:1.0.1'),
 					},
 					validator: Joi,
 				},

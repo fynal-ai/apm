@@ -46,7 +46,7 @@ class Agent {
 		}
 	}
 	async login(payload) {
-		await AGENT_STORE.login(payload.username, payload.password);
+		return await AGENT_STORE.login(payload.username, payload.password);
 	}
 	async publish(payload) {
 		const { file } = payload;

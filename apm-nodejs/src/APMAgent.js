@@ -33,7 +33,7 @@ class APMAgent {
 			});
 
 			const responseJSON = response.data;
-			console.log('responseJSON', responseJSON);
+			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
 			console.log('Error while installing apm agent: ', error);

@@ -19,6 +19,8 @@ Examples:
     apm publish
   - install from Agent Store
     apm install <name>[:<version>]
+  - uninstall agent
+    apm uninstall <name>[:<version>]
         `);
 		return;
 	}

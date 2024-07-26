@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import minimist from 'minimist';
-function main() {
+import { APM_AGENT } from './APMAgent.js';
+async function main() {
 	const options = minimist(process.argv.slice(2));
 	console.log('options', options);
 
@@ -20,6 +21,18 @@ Examples:
     apm install <name>[:<version>]
         `);
 		return;
+	}
+
+	const { _ } = options;
+
+	// install
+	if (_[0] === 'install') {
+		const agentSpec = _[1];
+		const apmAgent = APM_AGENT.parseAgentSpec(agentSpec);
+		if (!apmAgent) {
+			throw new Error('Invalid agent spec');
+		}
+		await APM_AGENT.install(apmAgent);
 	}
 }
 main();

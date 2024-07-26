@@ -1,12 +1,13 @@
 {
 	"name": "@jobsimi/apm",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"type": "module",
 	"main": "src/index.js",
 	"bin": {
 		"apm": "src/cli.js"
 	},
 	"scripts": {
+		"install-cli": "pnpm link -g",
 		"pub": "npm publish --access public --registry https://registry.npmjs.org/"
 	},
 	"author": "jobsimi",

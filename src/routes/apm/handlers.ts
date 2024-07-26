@@ -87,6 +87,11 @@ export default {
 					return await AGENT.install(PLD);
 				});
 			},
+			Uninstall: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT.uninstall(PLD);
+				});
+			},
 			Publish: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
 					return await AGENT.publish(PLD);

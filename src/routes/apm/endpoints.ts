@@ -132,6 +132,26 @@ const internals = {
 		},
 		{
 			method: 'POST',
+			path: '/apm/agent/uninstall',
+			handler: Handlers.APM.Agent.Uninstall,
+			config: {
+				// tags: ['api'],
+				description: 'Uninstall APM Agent',
+				notes: 'Provide agent specification',
+				// auth: 'token',
+				validate: {
+					payload: {
+						spec: Joi.string()
+							.required()
+							.description('Agent uninstall specification')
+							.example('fynalai/flood_control:1.0.1'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
 			path: '/apm/agent/publish',
 			handler: Handlers.APM.Agent.Publish,
 			config: {

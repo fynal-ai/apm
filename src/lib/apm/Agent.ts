@@ -1,3 +1,6 @@
+import fs from 'fs-extra';
+import path from 'path';
+import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import EmpError from '../EmpError.js';
 import { AGENT_STORE } from './AgentStore.js';
@@ -72,6 +75,50 @@ class Agent {
 
 				return apmAgent;
 			}
+		}
+	}
+	async uninstall(payload) {
+		const { spec } = payload;
+
+		if (!spec) {
+			throw new EmpError('MISSING_AGENT_INSTALL_SPEC', 'spec is required');
+		}
+
+		const parsedAgentSpec = this.parseAgentSpec(spec);
+
+		// Local APM Repository already has this agent
+		{
+			const apmAgent = await this.getDetail({
+				name: parsedAgentSpec.name,
+				version: parsedAgentSpec.version,
+			});
+
+			if (!apmAgent) {
+				console.log('Agent has been uninstalled');
+				return parsedAgentSpec;
+			}
+
+			// delete folder
+			{
+				const agentVersionDir = path.resolve(
+					ServerConfig.apm.localRepositoryDir,
+					'agents',
+					apmAgent.name,
+					apmAgent.version
+				);
+				await fs.remove(agentVersionDir);
+				console.log('Deleted agent from local repository');
+			}
+
+			// delete database
+			{
+				await APMAgent.deleteOne({ _id: apmAgent._id });
+				console.log('Deleted agent from database');
+			}
+
+			console.log('Agent has been uninstalled');
+
+			return apmAgent;
 		}
 	}
 

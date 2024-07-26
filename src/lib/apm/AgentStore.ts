@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
+import fs from 'fs-extra';
+import path from 'path';
 import ServerConfig from '../../config/server.js';
 
 class AgentStore {
@@ -11,6 +13,9 @@ class AgentStore {
 
 		this.setBaseURL(baseURL);
 		this.setApiKey(apiKey);
+		if (!this.apiKey) {
+			this.readCachedAuthFile();
+		}
 	}
 
 	// Agent Store's agent CRUD API:
@@ -28,6 +33,8 @@ class AgentStore {
 			data: { username, password },
 		});
 		this.setApiKey(response.data.sessionToken);
+		await this.saveToCachedAuthFile();
+		return response.data;
 	}
 	async create(payload) {
 		const response = await this.axios({
@@ -90,7 +97,7 @@ class AgentStore {
 			this.axios.defaults.baseURL = this.baseURL;
 		}
 	}
-	async isExist(apmAgent) {
+	async getDetail(apmAgent) {
 		// console.log('POST /agentstore/agent/detail', this.axios.defaults.baseURL);
 		const response = await this.axios({
 			method: 'POST',
@@ -103,6 +110,25 @@ class AgentStore {
 		}
 
 		return false;
+	}
+	async readCachedAuthFile() {
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+
+		// 文件不存在
+		if ((await fs.exists(filepath)) === false) {
+			return;
+		}
+
+		const auth = await fs.readJson(filepath);
+
+		this.setApiKey(auth.apiKey);
+	}
+	async saveToCachedAuthFile() {
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+
+		await fs.ensureDir(path.dirname(filepath));
+
+		await fs.writeJson(filepath, { apiKey: this.apiKey });
 	}
 }
 

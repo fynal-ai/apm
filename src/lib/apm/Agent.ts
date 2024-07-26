@@ -1,4 +1,5 @@
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
+import EmpError from '../EmpError.js';
 import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
@@ -16,10 +17,10 @@ class Agent {
 		const { spec } = payload;
 
 		if (!spec) {
-			throw new Error('spec is required');
+			throw new EmpError('MISSING_AGENT_INSTALL_SPEC', 'spec is required');
 		}
 
-		const parsedAgentSpec = this.parseAgentSpec(spec) as APMAgentType;
+		const parsedAgentSpec = this.parseAgentSpec(spec);
 
 		{
 			const apmAgent = await this.getDetail({
@@ -31,17 +32,18 @@ class Agent {
 				return;
 			}
 
+			// read cached auth
 			{
-				const isExistInAgentStore = await AGENT_STORE.isExist(apmAgent);
+			}
 
-				if (isExistInAgentStore === false) {
-					return;
+			{
+				const agentStoreAgent = await AGENT_STORE.getDetail(apmAgent);
+
+				if (!agentStoreAgent) {
+					throw new EmpError('AGENT_NOT_EXIST_IN_AGENT_STORE', 'agent not found in Agent Store');
 				}
 			}
 		}
-	}
-	async isInstalled(apmAgent: APMAgentType) {
-		return true;
 	}
 	async login(payload) {
 		await AGENT_STORE.login(payload.username, payload.password);

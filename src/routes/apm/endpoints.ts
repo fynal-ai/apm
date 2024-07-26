@@ -116,6 +116,44 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/login',
+			handler: Handlers.APM.Agent.Login,
+			config: {
+				tags: ['api'],
+				description: 'login',
+				notes: 'Auto register to login to Agent Store.',
+				validate: {
+					payload: Joi.object({
+						username: Joi.string()
+							.required()
+							.description(
+								'The username: 4-20 English characters, beginning with a letter, ending with a letter or number, with an underscore allowed'
+							),
+						password: Joi.string()
+							.required()
+							.description(
+								'The password: Length 6-20, must contain both uppercase and lowercase letters, numbers and special characters; special characters only !@#$%^&*'
+							),
+					}).label('AgentLoginPayload'),
+					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									sessionToken: Joi.string()
+										.description('sessionToken')
+										.example('eyJhbGci.eyJpZCI6I.j1nqU4ZkYIXwH3loinfiZkYvm9YO'),
+								}).label('LoginResponse'),
+							},
+						},
+					},
+				},
+			},
+		},
 
 		{
 			method: 'POST',

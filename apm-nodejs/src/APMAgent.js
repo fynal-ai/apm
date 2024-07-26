@@ -39,6 +39,20 @@ class APMAgent {
 			console.log('Error while installing apm agent: ', error);
 		}
 	}
+	async uninstall(spec) {
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: 'http://127.0.0.1:12008/apm/agent/uninstall',
+				data: { spec },
+			});
+			const responseJSON = response.data;
+			console.log(`Succeed uninstalled ${responseJSON.name}:${responseJSON.version}`);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while uninstalling apm agent: ', error);
+		}
+	}
 	parseAgentSpec(agentSpec) {
 		// jobsimi/draw-image:1.0.1
 		const name = agentSpec.split(':')[0];

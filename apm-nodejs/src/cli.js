@@ -33,5 +33,14 @@ Examples:
 		}
 		await APM_AGENT.install(agentSpec);
 	}
+
+	// uninstall
+	if (_[0] === 'uninstall') {
+		const agentSpec = _[1];
+		if (!agentSpec) {
+			throw new Error('Invalid agent spec');
+		}
+		await APM_AGENT.uninstall(agentSpec);
+	}
 }
 main();

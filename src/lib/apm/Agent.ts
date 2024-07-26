@@ -48,7 +48,13 @@ class Agent {
 				throw new EmpError('AGENT_NOT_EXIST_IN_AGENT_STORE', 'agent not found in Agent Store');
 			}
 
-			console.log('Found agent in Agent Store', agentStoreAgent);
+			// console.log('Found agent in Agent Store', agentStoreAgent);
+			console.log('Found agent in Agent Store', agentStoreAgent.name, agentStoreAgent.version);
+
+			// download to agents/author/name/version
+			{
+				await AGENT_STORE.download(agentStoreAgent);
+			}
 		}
 	}
 

@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import ServerConfig from '../../config/server.js';
@@ -133,6 +134,47 @@ class AgentStore {
 		await fs.ensureDir(path.dirname(filepath));
 
 		await fs.writeJson(filepath, { apiKey: this.apiKey });
+	}
+	async download(agentStoreAgent) {
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+		const { md5 } = agentStoreAgent;
+		const tmp_dir = path.resolve(localRepositoryDir, 'tmp');
+		const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
+		await fs.ensureDir(path.dirname(tmp_filepath));
+
+		const response = await this.axios({
+			method: 'POST',
+			url: '/agentstore/agent/download',
+			data: {
+				name: agentStoreAgent.name,
+				version: agentStoreAgent.version,
+			},
+			responseType: 'stream',
+		});
+
+		await response.data.pipe(fs.createWriteStream(tmp_filepath));
+
+		// untar
+		const untarDir = path.resolve(tmp_dir, md5);
+		await this.untar(tmp_filepath, untarDir);
+
+		// mv to author/name/version
+		const agentName = agentStoreAgent.name.split('/').at(-1);
+		const agentNameDir = path.resolve(
+			localRepositoryDir,
+			'agents',
+			agentStoreAgent.author,
+			agentName
+		);
+		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
+		await fs.ensureDir(path.dirname(agentNameDir));
+		await fs.move(untarDir, agentVersionDir);
+	}
+	async untar(filepath, outputDir) {
+		await fs.ensureDir(outputDir);
+		await child_process.exec(`tar zxvf ${filepath}`, {
+			cwd: outputDir,
+		});
 	}
 }
 

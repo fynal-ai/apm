@@ -24,12 +24,12 @@ class APMAgent {
 			console.log('Error while saving output to apm servier: ', error);
 		}
 	}
-	async install(apmAgent) {
+	async install(spec) {
 		try {
 			const response = await axios({
 				method: 'POST',
 				url: 'http://127.0.0.1:12008/apm/agent/install',
-				data: apmAgent,
+				data: spec,
 			});
 
 			const responseJSON = response.data;

@@ -33,7 +33,8 @@ class Agent {
 			});
 
 			if (apmAgent) {
-				return;
+				console.log('Agent already exists');
+				return apmAgent;
 			}
 		}
 
@@ -68,6 +69,8 @@ class Agent {
 				let apmAgent = new APMAgent(toSavedAgent);
 				await apmAgent.save();
 				console.log('Saved agent to database');
+
+				return apmAgent;
 			}
 		}
 	}

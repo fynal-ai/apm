@@ -98,7 +98,11 @@ class AgentStore {
 		}
 	}
 	async getDetail(apmAgent) {
-		// console.log('POST /agentstore/agent/detail', this.axios.defaults.baseURL);
+		// console.log(
+		// 	'POST /agentstore/agent/detail',
+		// 	this.axios.defaults.baseURL,
+		// 	this.axios.defaults.headers
+		// );
 		const response = await this.axios({
 			method: 'POST',
 			url: '/agentstore/agent/detail',

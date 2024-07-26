@@ -13,6 +13,9 @@ class Agent {
 
 		return await APMAgent.findOne(filters).sort({ version: -1 }).lean();
 	}
+	async login(payload) {
+		return await AGENT_STORE.login(payload.username, payload.password);
+	}
 	async install(payload) {
 		const { spec } = payload;
 
@@ -22,6 +25,7 @@ class Agent {
 
 		const parsedAgentSpec = this.parseAgentSpec(spec);
 
+		// Local APM Repository already has this agent
 		{
 			const apmAgent = await this.getDetail({
 				name: parsedAgentSpec.name,
@@ -31,23 +35,23 @@ class Agent {
 			if (apmAgent) {
 				return;
 			}
+		}
 
-			// read cached auth
-			{
+		// Retrive agent from Agent Store
+		{
+			const agentStoreAgent = await AGENT_STORE.getDetail({
+				name: parsedAgentSpec.name,
+				version: parsedAgentSpec.version,
+			});
+
+			if (!agentStoreAgent) {
+				throw new EmpError('AGENT_NOT_EXIST_IN_AGENT_STORE', 'agent not found in Agent Store');
 			}
 
-			{
-				const agentStoreAgent = await AGENT_STORE.getDetail(apmAgent);
-
-				if (!agentStoreAgent) {
-					throw new EmpError('AGENT_NOT_EXIST_IN_AGENT_STORE', 'agent not found in Agent Store');
-				}
-			}
+			console.log('Found agent in Agent Store', agentStoreAgent);
 		}
 	}
-	async login(payload) {
-		return await AGENT_STORE.login(payload.username, payload.password);
-	}
+
 	async publish(payload) {
 		const { file } = payload;
 

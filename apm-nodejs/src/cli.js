@@ -28,11 +28,10 @@ Examples:
 	// install
 	if (_[0] === 'install') {
 		const agentSpec = _[1];
-		const apmAgent = APM_AGENT.parseAgentSpec(agentSpec);
-		if (!apmAgent) {
+		if (!agentSpec) {
 			throw new Error('Invalid agent spec');
 		}
-		await APM_AGENT.install(apmAgent);
+		await APM_AGENT.install(agentSpec);
 	}
 }
 main();

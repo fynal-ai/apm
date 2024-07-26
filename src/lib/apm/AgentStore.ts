@@ -1,8 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
+import child_process from 'child_process';
+import fs from 'fs-extra';
+import path from 'path';
+import ServerConfig from '../../config/server.js';
 
 class AgentStore {
 	axios: AxiosInstance;
-	baseURL: string = 'https://agentstoreemp.baystoneai.com';
+	baseURL: string = ServerConfig.apm.agentStore.baseURL;
 	apiKey: string;
 
 	constructor(baseURL?, apiKey?) {
@@ -10,6 +14,9 @@ class AgentStore {
 
 		this.setBaseURL(baseURL);
 		this.setApiKey(apiKey);
+		if (!this.apiKey) {
+			this.readCachedAuthFile();
+		}
 	}
 
 	// Agent Store's agent CRUD API:
@@ -27,6 +34,8 @@ class AgentStore {
 			data: { username, password },
 		});
 		this.setApiKey(response.data.sessionToken);
+		await this.saveToCachedAuthFile();
+		return response.data;
 	}
 	async create(payload) {
 		const response = await this.axios({
@@ -72,26 +81,33 @@ class AgentStore {
 	}
 
 	setApiKey(apiKey: string) {
-		if (!apiKey) {
-			return;
+		if (apiKey) {
+			this.apiKey = apiKey;
 		}
 
-		this.apiKey = apiKey;
-		this.axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`;
+		if (this.apiKey) {
+			this.axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiKey}`;
+		}
 	}
 	setBaseURL(baseURL: string) {
-		if (!baseURL) {
-			return;
+		if (baseURL) {
+			this.baseURL = baseURL;
 		}
 
-		this.baseURL = baseURL;
-		this.axios.defaults.baseURL = baseURL;
+		if (this.baseURL) {
+			this.axios.defaults.baseURL = this.baseURL;
+		}
 	}
-	async isExist(spec) {
+	async getDetail(apmAgent) {
+		// console.log(
+		// 	'POST /agentstore/agent/detail',
+		// 	this.axios.defaults.baseURL,
+		// 	this.axios.defaults.headers
+		// );
 		const response = await this.axios({
 			method: 'POST',
-			url: '/agentstore/agent/is/exist',
-			data: { spec },
+			url: '/agentstore/agent/detail',
+			data: apmAgent,
 		});
 
 		if (response.data) {
@@ -99,6 +115,71 @@ class AgentStore {
 		}
 
 		return false;
+	}
+	async readCachedAuthFile() {
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+
+		// 文件不存在
+		if ((await fs.exists(filepath)) === false) {
+			return;
+		}
+
+		const auth = await fs.readJson(filepath);
+
+		this.setApiKey(auth.apiKey);
+	}
+	async saveToCachedAuthFile() {
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+
+		await fs.ensureDir(path.dirname(filepath));
+
+		await fs.writeJson(filepath, { apiKey: this.apiKey });
+	}
+	async download(agentStoreAgent) {
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+		const { md5 } = agentStoreAgent;
+		const tmp_dir = path.resolve(localRepositoryDir, 'tmp');
+		const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
+		await fs.ensureDir(path.dirname(tmp_filepath));
+
+		const response = await this.axios({
+			method: 'POST',
+			url: '/agentstore/agent/download',
+			data: {
+				name: agentStoreAgent.name,
+				version: agentStoreAgent.version,
+			},
+			responseType: 'stream',
+		});
+
+		await response.data.pipe(fs.createWriteStream(tmp_filepath));
+
+		console.log('Retrived agent data from Agent Store', tmp_filepath);
+
+		// untar
+		const untarDir = path.resolve(tmp_dir, md5);
+		await this.untar(tmp_filepath, untarDir);
+
+		// mv to author/name/version
+		const agentName = agentStoreAgent.name.split('/').at(-1);
+		const agentNameDir = path.resolve(
+			localRepositoryDir,
+			'agents',
+			agentStoreAgent.author,
+			agentName
+		);
+		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
+		await fs.ensureDir(path.dirname(agentNameDir));
+		await fs.move(untarDir, agentVersionDir);
+
+		return agentVersionDir;
+	}
+	async untar(filepath, outputDir) {
+		await fs.ensureDir(outputDir);
+		console.log('untar', filepath, '=>', outputDir);
+		await child_process.exec(`tar zxvf ${filepath}`, {
+			cwd: outputDir,
+		});
 	}
 }
 

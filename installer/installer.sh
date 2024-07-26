@@ -33,7 +33,8 @@ export ZEROMQ_PORT=3000
 export NODE_TLS_REJECT_UNAUTHORIZED=1;
 export NODE_ARGS=""
 
-export APM_LOCAL_REPOSITORY_DIR=${INSTALLER_DIR}/../.apm
+export APM_LOCAL_REPOSITORY_DIR=~/.apm
+export APM_AGENT_STORE_BASE_URL="https://agentstoreemp.baystoneai.com"
 
 EOF
 

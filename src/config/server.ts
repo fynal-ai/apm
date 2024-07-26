@@ -1,3 +1,5 @@
+import path from 'path';
+
 export default {
 	hapi: {
 		port: process.env.HAPI_PORT,
@@ -40,6 +42,10 @@ export default {
 	},
 	apm: {
 		pythonProgram: process.env.APM_PYTHON_PROGRAM,
-		localRepositoryDir: process.env.APM_LOCAL_REPOSITORY_DIR,
+		localRepositoryDir:
+			process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm'),
+		agentStore: {
+			baseURL: process.env.APM_AGENT_STORE_BASE_URL || 'https://agentstoreemp.baystoneai.com',
+		},
 	},
 };

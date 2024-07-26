@@ -74,16 +74,77 @@ const internals = {
 		},
 		{
 			method: 'POST',
+			path: '/apm/agent/login',
+			handler: Handlers.APM.Agent.Login,
+			config: {
+				// tags: ['api'],
+				description: 'login',
+				notes: 'Auto register to login to Agent Store.',
+				validate: {
+					payload: Joi.object({
+						username: Joi.string()
+							.required()
+							.description(
+								'The username: 4-20 English characters, beginning with a letter, ending with a letter or number, with an underscore allowed'
+							),
+						password: Joi.string()
+							.required()
+							.description(
+								'The password: Length 6-20, must contain both uppercase and lowercase letters, numbers and special characters; special characters only !@#$%^&*'
+							),
+					}).label('AgentLoginPayload'),
+					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									sessionToken: Joi.string()
+										.description('sessionToken')
+										.example('eyJhbGci.eyJpZCI6I.j1nqU4ZkYIXwH3loinfiZkYvm9YO'),
+								}).label('LoginResponse'),
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			method: 'POST',
 			path: '/apm/agent/install',
 			handler: Handlers.APM.Agent.Install,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Install Agent from Agent Store to APM',
 				notes: 'Provide agent specification',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
-						spec: Joi.string().description('Agent install specification'),
+						spec: Joi.string()
+							.required()
+							.description('Agent install specification')
+							.example('fynalai/flood_control:1.0.1'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agent/uninstall',
+			handler: Handlers.APM.Agent.Uninstall,
+			config: {
+				// tags: ['api'],
+				description: 'Uninstall APM Agent',
+				notes: 'Provide agent specification',
+				// auth: 'token',
+				validate: {
+					payload: {
+						spec: Joi.string()
+							.required()
+							.description('Agent uninstall specification')
+							.example('fynalai/flood_control:1.0.1'),
 					},
 					validator: Joi,
 				},

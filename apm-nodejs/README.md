@@ -1,4 +1,4 @@
-## Usage
+## Program Usage
 
 ```js
 import { APMAgent } from '@jobsimi/apm';
@@ -20,6 +20,16 @@ class Agent {
 		return output;
 	}
 }
+```
+
+## Install as CLI
+
+```sh
+pnpm add -g @jobsimi/apm
+```
+
+```sh
+apm --help
 ```
 
 ## Dev

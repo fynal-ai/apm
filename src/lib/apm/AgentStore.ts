@@ -154,6 +154,8 @@ class AgentStore {
 
 		await response.data.pipe(fs.createWriteStream(tmp_filepath));
 
+		console.log('Retrived agent data from Agent Store', tmp_filepath);
+
 		// untar
 		const untarDir = path.resolve(tmp_dir, md5);
 		await this.untar(tmp_filepath, untarDir);
@@ -169,9 +171,12 @@ class AgentStore {
 		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
 		await fs.ensureDir(path.dirname(agentNameDir));
 		await fs.move(untarDir, agentVersionDir);
+
+		return agentVersionDir;
 	}
 	async untar(filepath, outputDir) {
 		await fs.ensureDir(outputDir);
+		console.log('untar', filepath, '=>', outputDir);
 		await child_process.exec(`tar zxvf ${filepath}`, {
 			cwd: outputDir,
 		});

@@ -53,7 +53,21 @@ class Agent {
 
 			// download to agents/author/name/version
 			{
-				await AGENT_STORE.download(agentStoreAgent);
+				const outputDir = await AGENT_STORE.download(agentStoreAgent);
+
+				console.log('Downloaded agent to', outputDir);
+			}
+
+			// save a APMAgent in database
+			{
+				const toSavedAgent = { ...agentStoreAgent };
+				['_id', '__v', 'createdAt', 'updatedAt'].forEach((k) => {
+					delete toSavedAgent[k];
+				});
+
+				let apmAgent = new APMAgent(toSavedAgent);
+				await apmAgent.save();
+				console.log('Saved agent to database');
 			}
 		}
 	}

@@ -18,7 +18,7 @@ const internals = {
 					payload: {
 						...PAGING_PAYLOAD,
 
-						q: Joi.string().description('query'),
+						q: Joi.string().allow('').description('query'),
 					},
 					validator: Joi,
 				},

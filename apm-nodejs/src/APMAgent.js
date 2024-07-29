@@ -74,26 +74,12 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
-	async init() {
-		await this.loadConfig();
-
+	async init(executor = 'nodejs') {
 		try {
-			const response = await axios({
-				method: 'POST',
-				url: '/apm/agent/init',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: this.apmApiKey,
-				},
-				data: { spec },
-				baseURL: this.apmBaseURL,
-			});
-			const responseJSON = response.data;
-			console.log(
-				`Succeed uninstalled ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
-			);
-			return responseJSON;
+			const localRepositoryDir = this.getLocalRepositoryDir();
+			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
+			const agentdir = path.resolve(process.cwd(), 'apm-agent-' + executor);
+			await fs.copy(tmpdir, agentdir);
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);
 		}
@@ -102,8 +88,7 @@ class APMAgent {
 	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
 	 */
 	async loadConfig() {
-		const localRepositoryDir =
-			process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm');
+		const localRepositoryDir = this.getLocalRepositoryDir();
 		const filepath = path.resolve(localRepositoryDir, 'apm.json');
 
 		await fs.ensureDir(path.dirname(filepath));
@@ -114,6 +99,9 @@ class APMAgent {
 			this.apmApiKey = config?.auth?.apm?.apiKey;
 			this.apmBaseURL = config?.baseURL;
 		}
+	}
+	getLocalRepositoryDir() {
+		return process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm');
 	}
 }
 

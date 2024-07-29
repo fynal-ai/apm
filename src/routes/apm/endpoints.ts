@@ -167,7 +167,7 @@ const internals = {
 			path: '/apm/agentservice/result/save',
 			handler: Handlers.APM.AgentService.Result.Save,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Create a run result and save',
 				notes: 'save',
 				auth: 'token',
@@ -196,7 +196,7 @@ const internals = {
 			path: '/apm/agentstore/agent/login',
 			handler: Handlers.APM.AgentStore.Agent.Login,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Login',
 				notes: 'Auto register to login to Agent Store.',
 				validate: {
@@ -234,7 +234,7 @@ const internals = {
 			path: '/apm/agentstore/agent/install',
 			handler: Handlers.APM.AgentStore.Agent.Install,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Install Agent from Agent Store to APM',
 				notes: 'Provide agent specification',
 				auth: 'token',
@@ -254,7 +254,7 @@ const internals = {
 			path: '/apm/agentstore/agent/uninstall',
 			handler: Handlers.APM.AgentStore.Agent.Uninstall,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Uninstall APM Agent',
 				notes: 'Provide agent specification',
 				auth: 'token',
@@ -274,7 +274,7 @@ const internals = {
 			path: '/apm/agentstore/agent/publish',
 			handler: Handlers.APM.AgentStore.Agent.Publish,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Publish agent package to agent store',
 				notes: 'Provide agent package .tar.gz',
 				auth: 'token',

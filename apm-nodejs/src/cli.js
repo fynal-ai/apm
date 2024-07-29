@@ -3,7 +3,6 @@ import minimist from 'minimist';
 import { APM_AGENT } from './APMAgent.js';
 async function main() {
 	const options = minimist(process.argv.slice(2));
-	console.log('options', options);
 
 	if (options.help) {
 		console.log(`
@@ -48,6 +47,11 @@ Examples:
 	// init
 	if (_[0] === 'init') {
 		await APM_AGENT.init();
+	}
+
+	// publish
+	if (_[0] === 'publish') {
+		await APM_AGENT.publish();
 	}
 }
 main();

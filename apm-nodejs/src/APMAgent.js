@@ -80,8 +80,15 @@ class APMAgent {
 			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
 			const agentdir = path.resolve(process.cwd(), 'apm-agent-' + executor);
 			await fs.copy(tmpdir, agentdir);
+			console.log(`Succeed init apm agent for ${executor} in ${agentdir}`);
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);
+		}
+	}
+	async publish() {
+		try {
+		} catch (error) {
+			console.log('Error while publish apm agent: ', error.message);
 		}
 	}
 	/**

@@ -1,7 +1,9 @@
 import fs from 'fs-extra';
 import path from 'path';
+import JwtAuth from '../../auth/jwt-strategy.js';
 import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
+import { User } from '../../database/models/User.js';
 import EmpError from '../EmpError.js';
 import { AGENT_STORE } from './AgentStore.js';
 
@@ -17,6 +19,9 @@ class Agent {
 		return await APMAgent.findOne(filters).sort({ version: -1 }).lean();
 	}
 	async login(payload) {
+		// cache apm auth
+		await this.getConfigFileCreate();
+		// login to agent store
 		return await AGENT_STORE.login(payload.username, payload.password);
 	}
 	async install(payload) {
@@ -148,6 +153,38 @@ class Agent {
 			name,
 			version,
 		};
+	}
+	async getConfigFileCreate() {
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
+
+		await fs.ensureDir(path.dirname(filepath));
+
+		// file 404
+		if ((await fs.exists(filepath)) === false) {
+			const apmApiKey = await this.getApiKey();
+			fs.writeJson(
+				filepath,
+				{
+					auth: {
+						apm: {
+							...(apmApiKey ? { apiKey: apmApiKey } : {}),
+						},
+						agentstore: {},
+					},
+				},
+				{ spaces: 4 }
+			);
+		}
+
+		return filepath;
+	}
+	async getApiKey() {
+		// first apm user
+		const user = await User.findOne({}).sort({ createdAt: -1 });
+		if (!user) {
+			return;
+		}
+		return JwtAuth.createToken({ id: user._id });
 	}
 }
 

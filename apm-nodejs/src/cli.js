@@ -4,7 +4,7 @@ import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
 async function main() {
 	const options = minimist(process.argv.slice(2));
-	console.log('options', options);
+	// console.log('options', options);
 
 	if (options.help) {
 		console.log(`

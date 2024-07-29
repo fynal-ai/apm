@@ -113,7 +113,9 @@ class AgentService {
 		return shortuuid.generate();
 	}
 	async generateShellScript(payload) {
-		const { executor } = payload;
+		// console.log('payload', payload);
+		const { executor } = payload.apmAgent;
+		// console.log('executor', executor);
 		if (!executor || executor === 'python') {
 			return await this.generatePythonShellScript(payload);
 		}
@@ -122,7 +124,7 @@ class AgentService {
 			return await this.generateNodeJSShellScript(payload);
 		}
 	}
-	async generatePythonShellScript({
+	async generateNodeJSShellScript({
 		workflow,
 		apmAgent,
 		token,
@@ -181,7 +183,7 @@ node main.js
 `;
 		return sh;
 	}
-	async generateNodeJSShellScript({
+	async generatePythonShellScript({
 		workflow,
 		apmAgent,
 		token,

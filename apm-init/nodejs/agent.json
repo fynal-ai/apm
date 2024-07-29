@@ -1,6 +1,7 @@
 {
-	"version": "1.0.1",
+	"author": "jobsimi",
 	"name": "jobsimi/hello-apm",
+	"version": "1.0.1",
 	"label": "HelloAPM",
 	"description": "APM agent template",
 	"icon": "https://bonsai.baystoneai.com/favicon.png",
@@ -14,5 +15,13 @@
 			"text": "Hello APM!"
 		}
 	},
-	"executor": "nodejs"
+	"executor": "nodejs",
+
+	"price": {
+		"original": 0,
+		"discount": 0
+	},
+	"validity": {
+		"validityType": "forever"
+	}
 }

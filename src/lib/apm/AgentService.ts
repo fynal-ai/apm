@@ -124,11 +124,11 @@ class AgentService {
 			});
 
 			{
-				await new Promise((resolve) => {
-					setTimeout(() => {
-						resolve('timeout');
-					}, 3000);
-				});
+				// await new Promise((resolve) => {
+				// 	setTimeout(() => {
+				// 		resolve('timeout');
+				// 	}, 3000);
+				// });
 				if (hasError) {
 					await this.saveResult({ runId, status: { stage: 'failure' } });
 				} else {
@@ -379,7 +379,7 @@ ${pythonProgram} main.py
 			{ runId: payload.runId },
 			{
 				$set: {
-					...apmAgentServiceRun,
+					// ...apmAgentServiceRun,
 
 					...payload,
 
@@ -387,6 +387,8 @@ ${pythonProgram} main.py
 						...apmAgentServiceRun.status,
 
 						...payload.status,
+
+						stage: payload.status.stage || apmAgentServiceRun.status.stage,
 					},
 				},
 			},

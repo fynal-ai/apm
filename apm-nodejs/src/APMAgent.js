@@ -1,6 +1,9 @@
 import axios from 'axios';
+import fs from 'fs-extra';
+import path from 'path';
 
 class APMAgent {
+	config = {}; // apm.json
 	constructor() {}
 	async saveOutput(saveconfig, status = { done: true }, output = {}) {
 		try {
@@ -25,44 +28,64 @@ class APMAgent {
 		}
 	}
 	async install(spec) {
+		await this.loadConfig();
+
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: 'http://127.0.0.1:12008/apm/agent/install',
+				url: '/apm/agent/install',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.config?.auth?.apm?.apiKey,
+				},
 				data: { spec },
+				baseURL: this.config?.baseURL,
 			});
 
 			const responseJSON = response.data;
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while installing apm agent: ', error);
+			console.log('Error while installing apm agent: ', error.message);
 		}
 	}
 	async uninstall(spec) {
+		await this.loadConfig();
+
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: 'http://127.0.0.1:12008/apm/agent/uninstall',
+				url: '/apm/agent/uninstall',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this?.config?.auth?.apm?.apiKey,
+				},
 				data: { spec },
+				baseURL: this.config?.baseURL,
 			});
 			const responseJSON = response.data;
-			console.log(`Succeed uninstalled ${responseJSON.name}:${responseJSON.version}`);
+			console.log(
+				`Succeed uninstalled ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while uninstalling apm agent: ', error);
+			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
-	parseAgentSpec(agentSpec) {
-		// jobsimi/draw-image:1.0.1
-		const name = agentSpec.split(':')[0];
-		const version = agentSpec.split(':')[1] || '';
-		const author = name.split('/')[0];
-		return {
-			author,
-			name,
-			version,
-		};
+	/**
+	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
+	 */
+	async loadConfig() {
+		const localRepositoryDir =
+			process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm');
+		const filepath = path.resolve(localRepositoryDir, 'apm.json');
+
+		await fs.ensureDir(path.dirname(filepath));
+
+		if ((await fs.exists(filepath)) === true) {
+			this.config = await fs.readJson(filepath);
+		}
 	}
 }
 

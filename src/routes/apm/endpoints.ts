@@ -85,13 +85,7 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: Joi.object({
-						tenant: Joi.string().description('tenant').example('669b97fd461a7529116826a7'),
-						wfId: Joi.string()
-							.required()
-							.description('worflow id')
-							.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
-						nodeId: Joi.string().required().description('node id').example('agent3'),
-						roundId: Joi.string().required().description('round id').example('0'),
+						runId: Joi.string().description('run id'),
 						name: Joi.string()
 							.required()
 							.description('agent name')
@@ -125,15 +119,11 @@ const internals = {
 			config: {
 				tags: ['api'],
 				description: 'Get agent run result',
-				notes: 'By tenant, wfId, nodeId, roundId, name',
+				notes: 'By runId',
 				auth: 'token',
 				validate: {
 					payload: {
-						tenant: Joi.string().description('tenant'),
-						wfId: Joi.string().required().description('workflow id'),
-						nodeId: Joi.string().required().description('node id'),
-						roundId: Joi.string().allow('').description('round id'),
-						name: Joi.string().description('agent name'),
+						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
 							.default(true)
 							.description('delete after request, default is true'),
@@ -146,12 +136,6 @@ const internals = {
 							200: {
 								schema: Joi.object({
 									runId: Joi.string().description('run id').example('3x6pAypWsmhGzgactBFVG8'),
-									tenant: Joi.string().description('tenant').example('669b97fd461a7529116826a7'),
-									wfId: Joi.string()
-										.description('workflow id')
-										.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
-									nodeId: Joi.string().description('node id').example('agent3'),
-									roundId: Joi.string().description('round id').example('0'),
 									name: Joi.string().description('agent name').example('fynal-ai/flood_control'),
 									version: Joi.string().description('agent version').example('1.0.1'),
 									input: Joi.object().description('agent input').example({
@@ -194,14 +178,11 @@ const internals = {
 			config: {
 				tags: ['api'],
 				description: 'Clean run results',
-				notes: 'By tenant, wfId, nodeId, roundId',
+				notes: 'By runId',
 				auth: 'token',
 				validate: {
 					payload: {
-						tenant: Joi.string().description('tenant'),
-						wfId: Joi.string().required().description('workflow id'),
-						nodeId: Joi.string().allow('').description('node id'),
-						roundId: Joi.string().allow('').description('round id'),
+						runId: Joi.string().required().description('run id'),
 					},
 					validator: Joi,
 				},
@@ -219,10 +200,6 @@ const internals = {
 				validate: {
 					payload: {
 						runId: Joi.string().required().description('run id'),
-						tenant: Joi.string().description('tenant'),
-						wfId: Joi.string().required().description('worklfow id'),
-						nodeId: Joi.string().required().description('node id'),
-						roundId: Joi.string().allow('').description('round id'),
 						name: Joi.string().description('agent name'),
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),

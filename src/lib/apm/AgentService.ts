@@ -12,7 +12,7 @@ import { AGENT } from './Agent.js';
 
 class AgentService {
 	async run(payload) {
-		const runId = await this.generateRunId();
+		const runId = payload.runId || (await this.generateRunId());
 		console.log('runId', runId);
 
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
@@ -24,30 +24,20 @@ class AgentService {
 		await this.saveResult({
 			runId,
 
-			wfId: payload.wfId,
-			nodeId: payload.nodeId,
-			roundId: payload.roundId,
-			tenant: payload.tenant,
-
 			status: { stage: 'pending' },
 		});
 
 		// 执行代码
 		this.executeAgentCode(
 			runId,
-			{
-				wfId: payload.wfId,
-				nodeId: payload.nodeId,
-				roundId: payload.roundId,
-				tenant: payload.tenant,
-			},
+
 			apmAgent,
 			payload.token
 		);
 
 		return { runId };
 	}
-	async executeAgentCode(runId, workflow, apmAgent: APMAgentType, token) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -63,10 +53,6 @@ class AgentService {
 			},
 			data: {
 				runId: runId,
-				tenant: workflow.tenant,
-				wfId: workflow.wfId,
-				nodeId: workflow.nodeId,
-				roundId: workflow.roundId,
 				name: apmAgent.name,
 				version: apmAgent.version,
 				input: apmAgent.config.input,
@@ -78,7 +64,6 @@ class AgentService {
 		// Generate sh
 		{
 			const sh = await this.generateShellScript({
-				workflow,
 				apmAgent,
 				token,
 				author,
@@ -155,7 +140,6 @@ class AgentService {
 		}
 	}
 	async generateNodeJSShellScript({
-		workflow,
 		apmAgent,
 		token,
 		author,
@@ -214,7 +198,6 @@ node main.js
 		return sh;
 	}
 	async generatePythonShellScript({
-		workflow,
 		apmAgent,
 		token,
 		author,
@@ -286,28 +269,7 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
-		const filters = {
-			wfId: payload.wfId,
-			nodeId: payload.nodeId,
-		};
-
-		if (payload.name) {
-			Object.assign(filters, {
-				name: payload.name,
-			});
-		}
-
-		if (payload.roundId) {
-			Object.assign(filters, {
-				roundId: payload.roundId,
-			});
-		}
-
-		if (payload.tenant) {
-			Object.assign(filters, {
-				tenant: payload.tenant,
-			});
-		}
+		const filters = { runId: payload.runId };
 
 		let task;
 
@@ -337,26 +299,8 @@ ${pythonProgram} main.py
 	}
 	async cleanResult(payload) {
 		const filters = {
-			wfId: payload.wfId,
+			runId: payload.runId,
 		};
-
-		if (payload.nodeId) {
-			Object.assign(filters, {
-				nodeId: payload.nodeId,
-			});
-		}
-
-		if (payload.roundId) {
-			Object.assign(filters, {
-				roundId: payload.roundId,
-			});
-		}
-
-		if (payload.tenant) {
-			Object.assign(filters, {
-				tenant: payload.tenant,
-			});
-		}
 
 		let task;
 

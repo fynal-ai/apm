@@ -37,10 +37,10 @@ class APMAgent {
 				url: '/apm/agent/install',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apiKey,
+					Authorization: this.apmApiKey,
 				},
 				data: { spec },
-				baseURL: this.baseURL,
+				baseURL: this.apmBaseURL,
 			});
 
 			const responseJSON = response.data;
@@ -59,10 +59,10 @@ class APMAgent {
 				url: '/apm/agent/uninstall',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apiKey,
+					Authorization: this.apmApiKey,
 				},
 				data: { spec },
-				baseURL: this.baseURL,
+				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;
 			console.log(

@@ -118,7 +118,7 @@ const internals = {
 				// tags: ['api'],
 				description: 'Install Agent from Agent Store to APM',
 				notes: 'Provide agent specification',
-				// auth: 'token',
+				auth: 'token',
 				validate: {
 					payload: {
 						spec: Joi.string()
@@ -138,7 +138,7 @@ const internals = {
 				// tags: ['api'],
 				description: 'Uninstall APM Agent',
 				notes: 'Provide agent specification',
-				// auth: 'token',
+				auth: 'token',
 				validate: {
 					payload: {
 						spec: Joi.string()

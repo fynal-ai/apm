@@ -3,7 +3,8 @@ import fs from 'fs-extra';
 import path from 'path';
 
 class APMAgent {
-	config = {}; // apm.json
+	apmApiKey = '';
+	apmBaseURL = '';
 	constructor() {}
 	async saveOutput(saveconfig, status = { done: true }, output = {}) {
 		try {
@@ -36,10 +37,10 @@ class APMAgent {
 				url: '/apm/agent/install',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.config?.auth?.apm?.apiKey,
+					Authorization: this.apiKey,
 				},
 				data: { spec },
-				baseURL: this.config?.baseURL,
+				baseURL: this.baseURL,
 			});
 
 			const responseJSON = response.data;
@@ -58,10 +59,10 @@ class APMAgent {
 				url: '/apm/agent/uninstall',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this?.config?.auth?.apm?.apiKey,
+					Authorization: this.apiKey,
 				},
 				data: { spec },
-				baseURL: this.config?.baseURL,
+				baseURL: this.baseURL,
 			});
 			const responseJSON = response.data;
 			console.log(
@@ -84,7 +85,10 @@ class APMAgent {
 		await fs.ensureDir(path.dirname(filepath));
 
 		if ((await fs.exists(filepath)) === true) {
-			this.config = await fs.readJson(filepath);
+			const config = await fs.readJson(filepath);
+
+			this.apmApiKey = config?.auth?.apm?.apiKey;
+			this.apmBaseURL = config?.baseURL;
 		}
 	}
 }

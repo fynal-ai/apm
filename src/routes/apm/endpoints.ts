@@ -11,14 +11,14 @@ const internals = {
 			handler: Handlers.APM.Agent.Search,
 			config: {
 				tags: ['api'],
-				description: '搜索APM里安装的智能体',
-				notes: '查找智能体',
+				description: 'Search installed agents in APM',
+				notes: 'Search agents',
 				auth: 'token',
 				validate: {
 					payload: {
 						...PAGING_PAYLOAD,
 
-						q: Joi.string().description('搜索关键词'),
+						q: Joi.string().description('query'),
 					},
 					validator: Joi,
 				},
@@ -30,13 +30,13 @@ const internals = {
 			handler: Handlers.APM.Agent.Detail,
 			config: {
 				tags: ['api'],
-				description: '查看智能体详情',
-				notes: '根据name来查询',
+				description: 'Agent detail',
+				notes: 'By name',
 				auth: 'token',
 				validate: {
 					payload: {
-						name: Joi.string().required().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
+						name: Joi.string().required().description('agent name'),
+						version: Joi.string().allow('').description('agent version'),
 					},
 					validator: Joi,
 				},
@@ -77,8 +77,8 @@ const internals = {
 			path: '/apm/agent/login',
 			handler: Handlers.APM.Agent.Login,
 			config: {
-				// tags: ['api'],
-				description: 'login',
+				tags: ['api'],
+				description: 'Login',
 				notes: 'Auto register to login to Agent Store.',
 				validate: {
 					payload: Joi.object({
@@ -115,7 +115,7 @@ const internals = {
 			path: '/apm/agent/install',
 			handler: Handlers.APM.Agent.Install,
 			config: {
-				// tags: ['api'],
+				tags: ['api'],
 				description: 'Install Agent from Agent Store to APM',
 				notes: 'Provide agent specification',
 				auth: 'token',
@@ -135,7 +135,7 @@ const internals = {
 			path: '/apm/agent/uninstall',
 			handler: Handlers.APM.Agent.Uninstall,
 			config: {
-				// tags: ['api'],
+				tags: ['api'],
 				description: 'Uninstall APM Agent',
 				notes: 'Provide agent specification',
 				auth: 'token',
@@ -161,7 +161,7 @@ const internals = {
 				auth: 'token',
 				validate: {
 					payload: {
-						file: Joi.object().required().description('文件'),
+						file: Joi.object().required().description('file'),
 					},
 					validator: Joi,
 				},
@@ -181,24 +181,25 @@ const internals = {
 			handler: Handlers.APM.AgentService.Run,
 			config: {
 				tags: ['api'],
-				description: '运行智能体',
-				notes: '运行智能体，并返回运行编号 runId，运行中的中间结果使用接口查询获取。',
+				description: 'Run agent',
+				notes:
+					'Run agent and return runId immediately. There could be many intermediate results, using /result/get to get the result and using /result/clean to clean results。',
 				auth: 'token',
 				validate: {
 					payload: Joi.object({
-						tenant: Joi.string().description('用户').example('669b97fd461a7529116826a7'),
+						tenant: Joi.string().description('tenant').example('669b97fd461a7529116826a7'),
 						wfId: Joi.string()
 							.required()
-							.description('流程的编号')
+							.description('worflow id')
 							.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
-						nodeId: Joi.string().required().description('节点的编号').example('agent3'),
-						roundId: Joi.string().required().description('轮次的编号').example('0'),
+						nodeId: Joi.string().required().description('node id').example('agent3'),
+						roundId: Joi.string().required().description('round id').example('0'),
 						name: Joi.string()
 							.required()
-							.description('智能体名称')
+							.description('agent name')
 							.example('fynal-ai/flood_control'),
-						version: Joi.string().allow('').description('智能体版本').example('1.0.1'),
-						input: Joi.object().required().description('输入参数').example({
+						version: Joi.string().allow('').description('agent version').example('1.0.1'),
+						input: Joi.object().required().description('agent input').example({
 							prompt: '潘家塘最大降雨量多少？',
 							start_time: 1715961600,
 							end_time: 1721364927,
@@ -211,7 +212,7 @@ const internals = {
 						responses: {
 							200: {
 								schema: Joi.object({
-									runId: Joi.string().description('运行编号').example('2HVYnYiCp9KQ792MMSUoE6'),
+									runId: Joi.string().description('run id').example('2HVYnYiCp9KQ792MMSUoE6'),
 								}).label('APMAgentServiceRunResponse'),
 							},
 						},
@@ -225,19 +226,19 @@ const internals = {
 			handler: Handlers.APM.AgentService.Result.Get,
 			config: {
 				tags: ['api'],
-				description: '查询智能体运行结果',
-				notes: '根据wfId、nodeId、roundId、name查询',
+				description: 'Get agent run result',
+				notes: 'By tenant, wfId, nodeId, roundId, name',
 				auth: 'token',
 				validate: {
 					payload: {
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						name: Joi.string().description('智能体名称'),
+						tenant: Joi.string().description('tenant'),
+						wfId: Joi.string().required().description('workflow id'),
+						nodeId: Joi.string().required().description('node id'),
+						roundId: Joi.string().allow('').description('round id'),
+						name: Joi.string().description('agent name'),
 						deleteAfter: Joi.boolean()
 							.default(true)
-							.description('是否查询后删除，默认为true，不传时为true。'),
-						tenant: Joi.string().description('用户'),
+							.description('delete after request, default is true'),
 					},
 					validator: Joi,
 				},
@@ -249,15 +250,15 @@ const internals = {
 			handler: Handlers.APM.AgentService.Result.Clean,
 			config: {
 				tags: ['api'],
-				description: '清除智能体运行结果',
-				notes: '根据wfId、nodeId、roundId清除结果',
+				description: 'Clean run results',
+				notes: 'By tenant, wfId, nodeId, roundId',
 				auth: 'token',
 				validate: {
 					payload: {
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().allow('').description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						tenant: Joi.string().description('用户'),
+						tenant: Joi.string().description('tenant'),
+						wfId: Joi.string().required().description('workflow id'),
+						nodeId: Joi.string().allow('').description('node id'),
+						roundId: Joi.string().allow('').description('round id'),
 					},
 					validator: Joi,
 				},
@@ -269,21 +270,23 @@ const internals = {
 			handler: Handlers.APM.AgentService.Result.Save,
 			config: {
 				tags: ['api'],
-				description: '保存智能体运行结果',
+				description: 'Create a run result and save',
 				notes: 'save',
 				auth: 'token',
 				validate: {
 					payload: {
-						runId: Joi.string().required().description('运行编号'),
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						name: Joi.string().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
-						tenant: Joi.string().description('用户'),
-						input: Joi.object().description('智能体的输入'),
-						output: Joi.object().description('智能体的输出'),
-						status: Joi.object().description('智能体当前的状态'),
+						runId: Joi.string().required().description('run id'),
+						tenant: Joi.string().description('tenant'),
+						wfId: Joi.string().required().description('worklfow id'),
+						nodeId: Joi.string().required().description('node id'),
+						roundId: Joi.string().allow('').description('round id'),
+						name: Joi.string().description('agent name'),
+						version: Joi.string().allow('').description('agent version'),
+						input: Joi.object().description('agent input'),
+						output: Joi.object().description('agent output'),
+						status: Joi.object().description('current run status').example({
+							done: true,
+						}),
 					},
 					validator: Joi,
 				},

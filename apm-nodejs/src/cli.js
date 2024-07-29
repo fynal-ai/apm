@@ -13,7 +13,8 @@ Examples:
   - show help
     apm --help
   - init a agent package
-    apm init    
+    apm init
+	apm init --author jobsimi --name jobsimi/hello-apm --executor nodejs
   - login to Agent Store
     apm login
   - publish to Agent Store
@@ -48,24 +49,47 @@ Examples:
 
 	// init
 	if (_[0] === 'init') {
-		let executor = _[1];
-		if (!executor) {
-			const rl = readline.createInterface({
-				input: process.stdin,
-				output: process.stdout,
-			});
-			await new Promise((resolve) => {
-				rl.question(`Agent executor: `, async (input) => {
-					executor = input;
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+		});
 
-					rl.close();
+		let author = options.author;
+		if (!author) {
+			await new Promise((resolve) => {
+				rl.question(`Agent author: `, async (input) => {
+					author = input;
 
 					resolve(true);
 				});
 			});
 		}
 
-		await APM_AGENT.init(executor);
+		let name = options.name;
+		if (!name) {
+			await new Promise((resolve) => {
+				rl.question(`Agent name: ${author}/`, async (input) => {
+					name = `${author}/${input}`;
+
+					resolve(true);
+				});
+			});
+		}
+
+		let executor = options.executor;
+		if (!executor) {
+			await new Promise((resolve) => {
+				rl.question(`Agent executor: `, async (input) => {
+					executor = input;
+
+					resolve(true);
+				});
+			});
+		}
+
+		rl.close();
+
+		await APM_AGENT.init({ author, name, executor });
 	}
 
 	// publish

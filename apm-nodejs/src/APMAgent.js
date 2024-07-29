@@ -74,11 +74,19 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
-	async init(executor = 'nodejs') {
+	async init({ author, name, executor = 'nodejs' } = {}) {
 		try {
+			if (!author || !name) {
+				throw new Error('author and name are required');
+			}
+			if (name.startsWith(author + '/') === false) {
+				throw new Error('name should start with author');
+			}
+
 			const localRepositoryDir = this.getLocalRepositoryDir();
 			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
-			const agentdir = path.resolve(process.cwd(), 'apm-agent-' + executor);
+			const agentdir = path.resolve(process.cwd(), name);
+			await fs.ensureDir(agentdir);
 			await fs.copy(tmpdir, agentdir);
 			console.log(`Succeed init apm agent for ${executor} in ${agentdir}`);
 		} catch (error) {

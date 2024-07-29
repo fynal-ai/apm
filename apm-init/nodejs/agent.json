@@ -1,0 +1,18 @@
+{
+	"version": "1.0.1",
+	"name": "jobsimi/hello-apm",
+	"label": "HelloAPM",
+	"description": "APM agent template",
+	"icon": "https://bonsai.baystoneai.com/favicon.png",
+	"doc": "doc",
+	"config": {
+		"input": {
+			"style": "ink",
+			"prompt": "hello"
+		},
+		"output": {
+			"text": "Hello APM!"
+		}
+	},
+	"executor": "nodejs"
+}

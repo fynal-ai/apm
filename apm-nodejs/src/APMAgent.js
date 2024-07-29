@@ -84,13 +84,13 @@ class APMAgent {
 			}
 
 			// copy template
-			{
-				const localRepositoryDir = this.getLocalRepositoryDir();
-				const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
-				const agentdir = path.resolve(process.cwd(), name);
-				await fs.ensureDir(agentdir);
-				await fs.copy(tmpdir, agentdir);
-			}
+
+			const localRepositoryDir = this.getLocalRepositoryDir();
+			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
+			const agentName = name.split('/').at(-1);
+			const agentdir = path.resolve(process.cwd(), agentName);
+			await fs.ensureDir(agentdir);
+			await fs.copy(tmpdir, agentdir);
 
 			// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
 			{
@@ -101,11 +101,11 @@ class APMAgent {
 					}
 					let fileContent = await fs.readFile(filePath, 'utf8');
 					fileContent = fileContent.replace(/{{AUTHOR}}/g, author);
-					const agentName = name.split('/').at(-1);
 					fileContent = fileContent.replace(/{{NAME}}/g, agentName);
 					await fs.writeFile(filePath, fileContent);
 				}
 			}
+
 			console.log(`Succeed init apm agent for ${executor} in ${agentdir}`);
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);

@@ -83,11 +83,29 @@ class APMAgent {
 				throw new Error('name should start with author');
 			}
 
-			const localRepositoryDir = this.getLocalRepositoryDir();
-			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
-			const agentdir = path.resolve(process.cwd(), name);
-			await fs.ensureDir(agentdir);
-			await fs.copy(tmpdir, agentdir);
+			// copy template
+			{
+				const localRepositoryDir = this.getLocalRepositoryDir();
+				const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
+				const agentdir = path.resolve(process.cwd(), name);
+				await fs.ensureDir(agentdir);
+				await fs.copy(tmpdir, agentdir);
+			}
+
+			// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
+			{
+				for (let file of ['agent.json', 'package.json']) {
+					const filePath = path.resolve(agentdir, file);
+					if ((await fs.exists(filePath)) === false) {
+						continue;
+					}
+					let fileContent = await fs.readFile(filePath, 'utf8');
+					fileContent = fileContent.replace(/{{AUTHOR}}/g, author);
+					const agentName = name.split('/').at(-1);
+					fileContent = fileContent.replace(/{{NAME}}/g, agentName);
+					await fs.writeFile(filePath, fileContent);
+				}
+			}
 			console.log(`Succeed init apm agent for ${executor} in ${agentdir}`);
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);
@@ -95,6 +113,7 @@ class APMAgent {
 	}
 	async publish() {
 		try {
+			// tar ignore .gitignore files to .tar.gz
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
 		}

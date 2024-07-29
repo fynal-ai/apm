@@ -1,6 +1,6 @@
 {
-	"author": "jobsimi",
-	"name": "jobsimi/hello_apm",
+	"author": "{{AUTHOR}}",
+	"name": "{{AUTHOR}}/{{NAME}}",
 	"version": "0.0.1",
 	"label": "HelloAPM",
 	"description": "APM agent template",

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import minimist from 'minimist';
+import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
 async function main() {
 	const options = minimist(process.argv.slice(2));
@@ -46,7 +47,8 @@ Examples:
 
 	// init
 	if (_[0] === 'init') {
-		await APM_AGENT.init();
+		readline;
+		await APM_AGENT.init(executor);
 	}
 
 	// publish

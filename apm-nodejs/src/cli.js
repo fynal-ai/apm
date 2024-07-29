@@ -79,7 +79,7 @@ Examples:
 		let executor = options.executor;
 		if (!executor) {
 			await new Promise((resolve) => {
-				rl.question(`Agent executor: `, async (input) => {
+				rl.question(`Agent executor (python, nodejs): `, async (input) => {
 					executor = input;
 
 					resolve(true);

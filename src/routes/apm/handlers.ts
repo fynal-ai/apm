@@ -77,26 +77,6 @@ export default {
 					return await apmAgent.save();
 				});
 			},
-			Login: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.login(PLD);
-				});
-			},
-			Install: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.install(PLD);
-				});
-			},
-			Uninstall: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.uninstall(PLD);
-				});
-			},
-			Publish: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.publish(PLD);
-				});
-			},
 		},
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {
@@ -122,6 +102,30 @@ export default {
 				Save: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return await AGENT_SERVICE.saveResult(PLD);
+					});
+				},
+			},
+		},
+		AgentStore: {
+			Agent: {
+				Login: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.login(PLD);
+					});
+				},
+				Install: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.install(PLD);
+					});
+				},
+				Uninstall: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.uninstall(PLD);
+					});
+				},
+				Publish: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.publish(PLD);
 					});
 				},
 			},

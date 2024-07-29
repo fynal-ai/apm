@@ -162,9 +162,10 @@ class Agent {
 		// file 404
 		if ((await fs.exists(filepath)) === false) {
 			const apmApiKey = await this.getApiKey();
-			fs.writeJson(
+			await fs.writeJson(
 				filepath,
 				{
+					baseURL: `http://127.0.0.1:${ServerConfig.hapi.port}`,
 					auth: {
 						apm: {
 							...(apmApiKey ? { apiKey: apmApiKey } : {}),

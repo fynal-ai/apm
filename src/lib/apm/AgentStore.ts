@@ -117,23 +117,37 @@ class AgentStore {
 		return false;
 	}
 	async readCachedAuthFile() {
-		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
 
 		// 文件不存在
 		if ((await fs.exists(filepath)) === false) {
 			return;
 		}
 
-		const auth = await fs.readJson(filepath);
+		const { auth } = await fs.readJson(filepath);
 
-		this.setApiKey(auth.apiKey);
+		this.setApiKey(auth?.agentstore?.apiKey);
 	}
 	async saveToCachedAuthFile() {
-		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'auth.json');
+		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
 
 		await fs.ensureDir(path.dirname(filepath));
 
-		await fs.writeJson(filepath, { apiKey: this.apiKey });
+		let fileJSON: any = {};
+		// 文件不存在
+		if ((await fs.exists(filepath)) === false) {
+			fileJSON = {
+				auth: {
+					agentstore: {},
+				},
+			};
+		} else {
+			fileJSON = await fs.readJson(filepath);
+		}
+
+		Object.assign(fileJSON.auth.agentstore, { apiKey: this.apiKey });
+
+		await fs.writeJson(filepath, fileJSON, { spaces: 4 });
 	}
 	async download(agentStoreAgent) {
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;

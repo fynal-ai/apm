@@ -20,6 +20,18 @@ class AgentService {
 		// 读取input
 		apmAgent.config.input = payload.input;
 
+		// 记录
+		await this.saveResult({
+			runId,
+
+			wfId: payload.wfId,
+			nodeId: payload.nodeId,
+			roundId: payload.roundId,
+			tenant: payload.tenant,
+
+			status: { stage: 'pending' },
+		});
+
 		// 执行代码
 		this.executeAgentCode(
 			runId,
@@ -83,6 +95,9 @@ class AgentService {
 
 		// 执行sh
 		{
+			await this.saveResult({ runId, status: { stage: 'underway' } });
+
+			let hasError = false;
 			await new Promise(async (resolve) => {
 				{
 					const childProcess = await child_process.exec('bash ./run.sh', {
@@ -97,14 +112,29 @@ class AgentService {
 						console.log('error', data);
 
 						this.saveLog(workdir, data);
+
+						hasError = true;
 					});
-					childProcess.stdout.on('close', () => {
+					childProcess.stdout.on('close', async () => {
 						console.log('child process exited');
 
 						resolve('close');
 					});
 				}
 			});
+
+			{
+				await new Promise((resolve) => {
+					setTimeout(() => {
+						resolve('timeout');
+					}, 3000);
+				});
+				if (hasError) {
+					await this.saveResult({ runId, status: { stage: 'failure' } });
+				} else {
+					await this.saveResult({ runId, status: { stage: 'finished' } });
+				}
+			}
 		}
 
 		return {};
@@ -335,11 +365,35 @@ ${pythonProgram} main.py
 		return await task;
 	}
 	async saveResult(payload) {
-		const apmAgentServiceRun = await APMAgentServiceRun.create({
-			...payload,
-		});
+		console.log('payload.status.stage', payload.status.stage);
+		// create or update
+		let apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId: payload.runId });
 
-		return await apmAgentServiceRun.save();
+		if (!apmAgentServiceRun) {
+			apmAgentServiceRun = new APMAgentServiceRun(payload);
+
+			return await apmAgentServiceRun.save();
+		}
+
+		return await APMAgentServiceRun.findOneAndUpdate(
+			{ runId: payload.runId },
+			{
+				$set: {
+					...apmAgentServiceRun,
+
+					...payload,
+
+					status: {
+						...apmAgentServiceRun.status,
+
+						...payload.status,
+					},
+				},
+			},
+			{
+				new: true,
+			}
+		).lean();
 	}
 }
 

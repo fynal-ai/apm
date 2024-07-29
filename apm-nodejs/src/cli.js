@@ -4,6 +4,7 @@ import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
 async function main() {
 	const options = minimist(process.argv.slice(2));
+	console.log('options', options);
 
 	if (options.help) {
 		console.log(`
@@ -47,7 +48,23 @@ Examples:
 
 	// init
 	if (_[0] === 'init') {
-		readline;
+		let executor = _[1];
+		if (!executor) {
+			const rl = readline.createInterface({
+				input: process.stdin,
+				output: process.stdout,
+			});
+			await new Promise((resolve) => {
+				rl.question(`Agent executor: `, async (input) => {
+					executor = input;
+
+					rl.close();
+
+					resolve(true);
+				});
+			});
+		}
+
 		await APM_AGENT.init(executor);
 	}
 

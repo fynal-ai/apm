@@ -140,6 +140,51 @@ const internals = {
 					},
 					validator: Joi,
 				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									runId: Joi.string().description('run id').example('3x6pAypWsmhGzgactBFVG8'),
+									tenant: Joi.string().description('tenant').example('669b97fd461a7529116826a7'),
+									wfId: Joi.string()
+										.description('workflow id')
+										.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
+									nodeId: Joi.string().description('node id').example('agent3'),
+									roundId: Joi.string().description('round id').example('0'),
+									name: Joi.string().description('agent name').example('fynal-ai/flood_control'),
+									version: Joi.string().description('agent version').example('1.0.1'),
+									input: Joi.object().description('agent input').example({
+										prompt: '潘家塘最大降雨量多少？',
+										start_time: 1715961600,
+										end_time: 1721364927,
+									}),
+									output: Joi.object().description('agent output').example({
+										text: '山峡水库在2024-06-18 10:00:00时的上水位最高为167m;这是这时间段内的最高水位。',
+									}),
+									status: Joi.object({
+										stage: Joi.string()
+											.valid(
+												'notstart',
+												'pending',
+												'underway',
+												'finished',
+												'failure',
+												'stopped',
+												'offline'
+											)
+											.description('stage'),
+										done: Joi.boolean().description('is done'),
+										message: Joi.string().description('message'),
+										code: Joi.number().description('code'),
+										error: Joi.string().description('error'),
+										progress: Joi.number().description('progress'),
+									}).description('agent running status'),
+								}).label('APMAgentServiceRunResponse'),
+							},
+						},
+					},
+				},
 			},
 		},
 		{
@@ -182,9 +227,28 @@ const internals = {
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),
 						output: Joi.object().description('agent output'),
-						status: Joi.object().description('current run status').example({
-							done: true,
-						}),
+						status: Joi.object({
+							stage: Joi.string()
+								.valid(
+									'notstart',
+									'pending',
+									'underway',
+									'finished',
+									'failure',
+									'stopped',
+									'offline'
+								)
+								.description('stage'),
+							done: Joi.boolean().description('is done'),
+							message: Joi.string().description('message'),
+							code: Joi.number().description('code'),
+							error: Joi.string().description('error'),
+							progress: Joi.number().description('progress'),
+						})
+							.description('current run status')
+							.example({
+								done: true,
+							}),
 					},
 					validator: Joi,
 				},

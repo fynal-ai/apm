@@ -44,5 +44,10 @@ Examples:
 		}
 		await APM_AGENT.uninstall(agentSpec);
 	}
+
+	// init
+	if (_[0] === 'init') {
+		await APM_AGENT.init();
+	}
 }
 main();

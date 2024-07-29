@@ -56,7 +56,7 @@ class APMAgent {
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agent/uninstall',
+				url: '/apm/agentstore/agent/uninstall',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: this.apmApiKey,
@@ -72,6 +72,30 @@ class APMAgent {
 			return responseJSON;
 		} catch (error) {
 			console.log('Error while uninstalling apm agent: ', error.message);
+		}
+	}
+	async init() {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/init',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.apmApiKey,
+				},
+				data: { spec },
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			console.log(
+				`Succeed uninstalled ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while init apm agent: ', error.message);
 		}
 	}
 	/**

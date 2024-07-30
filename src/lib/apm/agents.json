@@ -53,5 +53,27 @@
 			}
 		},
 		"executor": "nodejs"
+	},
+	{
+		"version": "1.0.1",
+		"name": "fynal-ai/flood_control",
+		"config": {
+			"input": {
+				"prompt": "销量趋势"
+			},
+			"output": {
+				"text": "1"
+			}
+		},
+		"executor": "remote",
+		"executorConfig": {
+			"endpoints": {
+				"run": "https://apmemp.baystoneai.com/apm/agentservice/run",
+				"auth": "https://apmemp.baystoneai.com/apm/auth",
+				"result": "https://apmemp.baystoneai.com/apm/agentservice/result/get"
+			},
+			"access_id": "eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RAZ21",
+			"access_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RAZ21"
+		}
 	}
 ]

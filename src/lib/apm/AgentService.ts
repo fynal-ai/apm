@@ -1,5 +1,6 @@
 import child_process from 'child_process';
 import fs from 'fs-extra';
+import path from 'path';
 import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
 import { APMAgentType } from '../../database/models/APMAgent.js';
@@ -7,34 +8,72 @@ import {
 	APMAgentServiceRun,
 	APMAgentServiceRunType,
 } from '../../database/models/APMAgentServiceRun.js';
+import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
 
 class AgentService {
 	async run(payload) {
-		const runId = await this.generateRunId();
+		const runId = payload.runId || (await this.generateRunId());
 		console.log('runId', runId);
+		{
+			// runId已经存在时
+			if ((await this.isRunIdExist(runId)) === true) {
+				throw new EmpError('RUN_ID_EXIST', `RunId ${runId} already exist`);
+			}
+		}
 
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
 
 		// 读取input
 		apmAgent.config.input = payload.input;
 
+		// 记录
+		await this.saveResult({
+			runId,
+			runMode: apmAgent.runMode,
+
+			status: { stage: 'pending' },
+		});
+
 		// 执行代码
+		if (apmAgent.runMode == 'sync') {
+			return await this.executeAgentCode(
+				runId,
+
+				apmAgent,
+				payload.token
+			);
+		}
+
 		this.executeAgentCode(
 			runId,
-			{
-				wfId: payload.wfId,
-				nodeId: payload.nodeId,
-				roundId: payload.roundId,
-				tenant: payload.tenant,
-			},
+
 			apmAgent,
 			payload.token
 		);
-
-		return { runId };
+		return { runId, runMode: 'async' };
 	}
-	async executeAgentCode(runId, workflow, apmAgent: APMAgentType, token) {
+	async isRunIdExist(runId) {
+		// check .apm/run/[runId]
+		{
+			const runPath = path.join(ServerConfig.apm.localRepositoryDir, 'run', runId);
+			if ((await fs.exists(runPath)) === true) {
+				return true;
+			}
+		}
+		{
+			const apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId });
+			if (apmAgentServiceRun) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -50,10 +89,6 @@ class AgentService {
 			},
 			data: {
 				runId: runId,
-				tenant: workflow.tenant,
-				wfId: workflow.wfId,
-				nodeId: workflow.nodeId,
-				roundId: workflow.roundId,
 				name: apmAgent.name,
 				version: apmAgent.version,
 				input: apmAgent.config.input,
@@ -65,7 +100,6 @@ class AgentService {
 		// Generate sh
 		{
 			const sh = await this.generateShellScript({
-				workflow,
 				apmAgent,
 				token,
 				author,
@@ -82,6 +116,9 @@ class AgentService {
 
 		// 执行sh
 		{
+			await this.saveResult({ runId, status: { stage: 'underway' } });
+
+			let hasError = false;
 			await new Promise(async (resolve) => {
 				{
 					const childProcess = await child_process.exec('bash ./run.sh', {
@@ -96,23 +133,40 @@ class AgentService {
 						console.log('error', data);
 
 						this.saveLog(workdir, data);
+
+						hasError = true;
 					});
-					childProcess.stdout.on('close', () => {
+					childProcess.stdout.on('close', async () => {
 						console.log('child process exited');
 
 						resolve('close');
 					});
 				}
 			});
+
+			{
+				// await new Promise((resolve) => {
+				// 	setTimeout(() => {
+				// 		resolve('timeout');
+				// 	}, 3000);
+				// });
+				if (hasError) {
+					await this.saveResult({ runId, status: { stage: 'failure' } });
+				} else {
+					await this.saveResult({ runId, status: { stage: 'finished' } });
+				}
+			}
 		}
 
-		return {};
+		return await this.getResult({ runId, deleteAfter: false });
 	}
 	async generateRunId() {
 		return shortuuid.generate();
 	}
 	async generateShellScript(payload) {
-		const { executor } = payload;
+		// console.log('payload', payload);
+		const { executor } = payload.apmAgent;
+		// console.log('executor', executor);
 		if (!executor || executor === 'python') {
 			return await this.generatePythonShellScript(payload);
 		}
@@ -121,8 +175,7 @@ class AgentService {
 			return await this.generateNodeJSShellScript(payload);
 		}
 	}
-	async generatePythonShellScript({
-		workflow,
+	async generateNodeJSShellScript({
 		apmAgent,
 		token,
 		author,
@@ -180,8 +233,7 @@ node main.js
 `;
 		return sh;
 	}
-	async generateNodeJSShellScript({
-		workflow,
+	async generatePythonShellScript({
 		apmAgent,
 		token,
 		author,
@@ -253,28 +305,7 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
-		const filters = {
-			wfId: payload.wfId,
-			nodeId: payload.nodeId,
-		};
-
-		if (payload.name) {
-			Object.assign(filters, {
-				name: payload.name,
-			});
-		}
-
-		if (payload.roundId) {
-			Object.assign(filters, {
-				roundId: payload.roundId,
-			});
-		}
-
-		if (payload.tenant) {
-			Object.assign(filters, {
-				tenant: payload.tenant,
-			});
-		}
+		const filters = { runId: payload.runId };
 
 		let task;
 
@@ -291,31 +322,21 @@ ${pythonProgram} main.py
 
 			task = task.sort({ createdAt: -1 });
 
-			return await task;
+			{
+				task = await task;
+
+				if (!task) {
+					throw new EmpError('RESULT_NOT_FOUND', 'Requested result not found: ');
+				}
+
+				return task;
+			}
 		}
 	}
 	async cleanResult(payload) {
 		const filters = {
-			wfId: payload.wfId,
+			runId: payload.runId,
 		};
-
-		if (payload.nodeId) {
-			Object.assign(filters, {
-				nodeId: payload.nodeId,
-			});
-		}
-
-		if (payload.roundId) {
-			Object.assign(filters, {
-				roundId: payload.roundId,
-			});
-		}
-
-		if (payload.tenant) {
-			Object.assign(filters, {
-				tenant: payload.tenant,
-			});
-		}
 
 		let task;
 
@@ -324,11 +345,37 @@ ${pythonProgram} main.py
 		return await task;
 	}
 	async saveResult(payload) {
-		const apmAgentServiceRun = await APMAgentServiceRun.create({
-			...payload,
-		});
+		console.log('payload.status.stage', payload.status.stage);
+		// create or update
+		let apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId: payload.runId });
 
-		return await apmAgentServiceRun.save();
+		if (!apmAgentServiceRun) {
+			apmAgentServiceRun = new APMAgentServiceRun(payload);
+
+			return await apmAgentServiceRun.save();
+		}
+
+		return await APMAgentServiceRun.findOneAndUpdate(
+			{ runId: payload.runId },
+			{
+				$set: {
+					// ...apmAgentServiceRun,
+
+					...payload,
+
+					status: {
+						...apmAgentServiceRun.status,
+
+						...payload.status,
+
+						stage: payload.status.stage || apmAgentServiceRun.status.stage,
+					},
+				},
+			},
+			{
+				new: true,
+			}
+		).lean();
 	}
 }
 

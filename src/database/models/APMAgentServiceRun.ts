@@ -4,10 +4,7 @@ import { HydratedDocument, InferSchemaType, Schema, model } from 'mongoose';
 const schema = new Schema(
 	{
 		runId: { type: String },
-		tenant: { type: String },
-		wfId: { type: String },
-		nodeId: { type: String },
-		roundId: { type: String },
+		runMode: { type: String, enum: ['sync', 'async'] },
 		name: { type: String },
 		version: { type: String },
 		input: { type: Object },

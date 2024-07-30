@@ -7,18 +7,48 @@ const internals = {
 	endpoints: [
 		{
 			method: 'POST',
+			path: '/apm/auth',
+			handler: Handlers.APM.Auth,
+			config: {
+				tags: ['api'],
+				description: 'Get access_token',
+				notes: 'Provide access_id, access_key',
+				validate: {
+					payload: {
+						access_id: Joi.string().required().description('access_id'),
+						access_key: Joi.string().required().description('access_key'),
+					},
+					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									access_id: Joi.string().required().description('access_id'),
+									access_token: Joi.string().required().description('access_token'),
+								}),
+							},
+						},
+					},
+				},
+			},
+		},
+
+		{
+			method: 'POST',
 			path: '/apm/agent/search',
 			handler: Handlers.APM.Agent.Search,
 			config: {
 				tags: ['api'],
-				description: '搜索APM里安装的智能体',
-				notes: '查找智能体',
+				description: 'Search installed agents in APM',
+				notes: 'Search agents',
 				auth: 'token',
 				validate: {
 					payload: {
 						...PAGING_PAYLOAD,
 
-						q: Joi.string().description('搜索关键词'),
+						q: Joi.string().allow('').description('query'),
 					},
 					validator: Joi,
 				},
@@ -30,13 +60,13 @@ const internals = {
 			handler: Handlers.APM.Agent.Detail,
 			config: {
 				tags: ['api'],
-				description: '查看智能体详情',
-				notes: '根据name来查询',
+				description: 'Agent detail',
+				notes: 'By name',
 				auth: 'token',
 				validate: {
 					payload: {
-						name: Joi.string().required().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
+						name: Joi.string().required().description('agent name'),
+						version: Joi.string().allow('').description('agent version'),
 					},
 					validator: Joi,
 				},
@@ -49,24 +79,141 @@ const internals = {
 			config: {
 				// Include this API in swagger documentation
 				// tags: ['api'],
-				description: '往APM里添加智能体',
-				notes: '提供智能体的详细信息',
+				description: 'Register agent to APM',
+				notes: 'Provide agent info',
 				auth: 'token',
 				validate: {
 					payload: {
-						author: Joi.string().required().description('作者'),
-						version: Joi.string().required().description('版本'),
-						name: Joi.string().required().description('名称'),
-						label: Joi.string().required().description('标签'),
-						description: Joi.string().description('描述'),
-						icon: Joi.string().description('图标'),
-						doc: Joi.string().description('文档'),
+						author: Joi.string().required().description('author'),
+						version: Joi.string().required().description('version'),
+						name: Joi.string().required().description('name'),
+						label: Joi.string().required().description('label'),
+						description: Joi.string().description('description'),
+						icon: Joi.string().description('icon'),
+						doc: Joi.string().description('doc'),
 						config: {
-							input: Joi.object().required().description('输入参数'),
-							output: Joi.object().required().description('输出参数'),
+							input: Joi.object().required().description('input params'),
+							output: Joi.object().required().description('output example'),
 						},
-						executor: Joi.string().description('执行器'),
+						executor: Joi.string().description('executor'),
+						executorConfig: Joi.object().description('executor config'),
 						md5: Joi.string().description('md5'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
+			path: '/apm/agentservice/run',
+			handler: Handlers.APM.AgentService.Run,
+			config: {
+				tags: ['api'],
+				description: 'Run agent',
+				notes:
+					'Run agent and return runId immediately. There could be many intermediate results, using /result/get to get the result and using /result/clean to clean results。',
+				auth: 'token',
+				validate: {
+					payload: Joi.object({
+						runId: Joi.string().description('run id'),
+						name: Joi.string()
+							.required()
+							.description('agent name')
+							.example('fynal-ai/flood_control'),
+						version: Joi.string().allow('').description('agent version').example('1.0.1'),
+						input: Joi.object().required().description('agent input').example({
+							prompt: '潘家塘最大降雨量多少？',
+							start_time: 1715961600,
+							end_time: 1721364927,
+						}),
+					}).label('APMAgentServiceRunPayload'),
+					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									runId: Joi.string().description('run id').example('2HVYnYiCp9KQ792MMSUoE6'),
+								}).label('APMAgentServiceRunResponse'),
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/get',
+			handler: Handlers.APM.AgentService.Result.Get,
+			config: {
+				tags: ['api'],
+				description: 'Get agent run result',
+				notes: 'By runId',
+				auth: 'token',
+				validate: {
+					payload: {
+						runId: Joi.string().required().description('run id'),
+						deleteAfter: Joi.boolean()
+							.default(true)
+							.description('delete after request, default is true'),
+					},
+					validator: Joi,
+				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									runId: Joi.string().description('run id').example('3x6pAypWsmhGzgactBFVG8'),
+									name: Joi.string().description('agent name').example('fynal-ai/flood_control'),
+									version: Joi.string().description('agent version').example('1.0.1'),
+									input: Joi.object().description('agent input').example({
+										prompt: '潘家塘最大降雨量多少？',
+										start_time: 1715961600,
+										end_time: 1721364927,
+									}),
+									output: Joi.object().description('agent output').example({
+										text: '山峡水库在2024-06-18 10:00:00时的上水位最高为167m;这是这时间段内的最高水位。',
+									}),
+									status: Joi.object({
+										stage: Joi.string()
+											.valid(
+												'notstart',
+												'pending',
+												'underway',
+												'finished',
+												'failure',
+												'stopped',
+												'offline'
+											)
+											.description('stage'),
+										done: Joi.boolean().description('is done'),
+										message: Joi.string().description('message'),
+										code: Joi.number().description('code'),
+										error: Joi.string().description('error'),
+										progress: Joi.number().description('progress'),
+									}).description('agent running status'),
+								}).label('APMAgentServiceRunResponse'),
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/clean',
+			handler: Handlers.APM.AgentService.Result.Clean,
+			config: {
+				tags: ['api'],
+				description: 'Clean run results',
+				notes: 'By runId',
+				auth: 'token',
+				validate: {
+					payload: {
+						runId: Joi.string().required().description('run id'),
 					},
 					validator: Joi,
 				},
@@ -74,11 +221,56 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agent/login',
-			handler: Handlers.APM.Agent.Login,
+			path: '/apm/agentservice/result/save',
+			handler: Handlers.APM.AgentService.Result.Save,
 			config: {
 				// tags: ['api'],
-				description: 'login',
+				description: 'Create a run result and save',
+				notes: 'save',
+				auth: 'token',
+				validate: {
+					payload: {
+						runId: Joi.string().required().description('run id'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
+						name: Joi.string().description('agent name'),
+						version: Joi.string().allow('').description('agent version'),
+						input: Joi.object().description('agent input'),
+						output: Joi.object().description('agent output'),
+						status: Joi.object({
+							stage: Joi.string()
+								.valid(
+									'notstart',
+									'pending',
+									'underway',
+									'finished',
+									'failure',
+									'stopped',
+									'offline'
+								)
+								.description('stage'),
+							done: Joi.boolean().description('is done'),
+							message: Joi.string().description('message'),
+							code: Joi.number().description('code'),
+							error: Joi.string().description('error'),
+							progress: Joi.number().description('progress'),
+						})
+							.description('current run status')
+							.example({
+								done: true,
+							}),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
+			path: '/apm/agentstore/agent/login',
+			handler: Handlers.APM.AgentStore.Agent.Login,
+			config: {
+				// tags: ['api'],
+				description: 'Login',
 				notes: 'Auto register to login to Agent Store.',
 				validate: {
 					payload: Joi.object({
@@ -112,13 +304,13 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agent/install',
-			handler: Handlers.APM.Agent.Install,
+			path: '/apm/agentstore/agent/install',
+			handler: Handlers.APM.AgentStore.Agent.Install,
 			config: {
 				// tags: ['api'],
 				description: 'Install Agent from Agent Store to APM',
 				notes: 'Provide agent specification',
-				// auth: 'token',
+				auth: 'token',
 				validate: {
 					payload: {
 						spec: Joi.string()
@@ -132,13 +324,13 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agent/uninstall',
-			handler: Handlers.APM.Agent.Uninstall,
+			path: '/apm/agentstore/agent/uninstall',
+			handler: Handlers.APM.AgentStore.Agent.Uninstall,
 			config: {
 				// tags: ['api'],
 				description: 'Uninstall APM Agent',
 				notes: 'Provide agent specification',
-				// auth: 'token',
+				auth: 'token',
 				validate: {
 					payload: {
 						spec: Joi.string()
@@ -152,16 +344,16 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agent/publish',
-			handler: Handlers.APM.Agent.Publish,
+			path: '/apm/agentstore/agent/publish',
+			handler: Handlers.APM.AgentStore.Agent.Publish,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Publish agent package to agent store',
 				notes: 'Provide agent package .tar.gz',
 				auth: 'token',
 				validate: {
 					payload: {
-						file: Joi.object().required().description('文件'),
+						file: Joi.object().required().description('file'),
 					},
 					validator: Joi,
 				},
@@ -171,121 +363,6 @@ const internals = {
 					output: 'stream',
 					allow: 'multipart/form-data', // important
 					multipart: true, // important
-				},
-			},
-		},
-
-		{
-			method: 'POST',
-			path: '/apm/agentservice/run',
-			handler: Handlers.APM.AgentService.Run,
-			config: {
-				tags: ['api'],
-				description: '运行智能体',
-				notes: '运行智能体，并返回运行编号 runId，运行中的中间结果使用接口查询获取。',
-				auth: 'token',
-				validate: {
-					payload: Joi.object({
-						tenant: Joi.string().description('用户').example('669b97fd461a7529116826a7'),
-						wfId: Joi.string()
-							.required()
-							.description('流程的编号')
-							.example('949abe7a-5da2-437c-bdc5-7e5adbac4ddc'),
-						nodeId: Joi.string().required().description('节点的编号').example('agent3'),
-						roundId: Joi.string().required().description('轮次的编号').example('0'),
-						name: Joi.string()
-							.required()
-							.description('智能体名称')
-							.example('fynal-ai/flood_control'),
-						version: Joi.string().allow('').description('智能体版本').example('1.0.1'),
-						input: Joi.object().required().description('输入参数').example({
-							prompt: '潘家塘最大降雨量多少？',
-							start_time: 1715961600,
-							end_time: 1721364927,
-						}),
-					}).label('APMAgentServiceRunPayload'),
-					validator: Joi,
-				},
-				plugins: {
-					'hapi-swagger': {
-						responses: {
-							200: {
-								schema: Joi.object({
-									runId: Joi.string().description('运行编号').example('2HVYnYiCp9KQ792MMSUoE6'),
-								}).label('APMAgentServiceRunResponse'),
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			method: 'POST',
-			path: '/apm/agentservice/result/get',
-			handler: Handlers.APM.AgentService.Result.Get,
-			config: {
-				tags: ['api'],
-				description: '查询智能体运行结果',
-				notes: '根据wfId、nodeId、roundId、name查询',
-				auth: 'token',
-				validate: {
-					payload: {
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						name: Joi.string().description('智能体名称'),
-						deleteAfter: Joi.boolean()
-							.default(true)
-							.description('是否查询后删除，默认为true，不传时为true。'),
-						tenant: Joi.string().description('用户'),
-					},
-					validator: Joi,
-				},
-			},
-		},
-		{
-			method: 'POST',
-			path: '/apm/agentservice/result/clean',
-			handler: Handlers.APM.AgentService.Result.Clean,
-			config: {
-				tags: ['api'],
-				description: '清除智能体运行结果',
-				notes: '根据wfId、nodeId、roundId清除结果',
-				auth: 'token',
-				validate: {
-					payload: {
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().allow('').description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						tenant: Joi.string().description('用户'),
-					},
-					validator: Joi,
-				},
-			},
-		},
-		{
-			method: 'POST',
-			path: '/apm/agentservice/result/save',
-			handler: Handlers.APM.AgentService.Result.Save,
-			config: {
-				tags: ['api'],
-				description: '保存智能体运行结果',
-				notes: 'save',
-				auth: 'token',
-				validate: {
-					payload: {
-						runId: Joi.string().required().description('运行编号'),
-						wfId: Joi.string().required().description('流程的编号'),
-						nodeId: Joi.string().required().description('节点的编号'),
-						roundId: Joi.string().allow('').description('轮次的编号'),
-						name: Joi.string().description('智能体名称'),
-						version: Joi.string().allow('').description('智能体版本'),
-						tenant: Joi.string().description('用户'),
-						input: Joi.object().description('智能体的输入'),
-						output: Joi.object().description('智能体的输出'),
-						status: Joi.object().description('智能体当前的状态'),
-					},
-					validator: Joi,
 				},
 			},
 		},

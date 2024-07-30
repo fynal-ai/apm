@@ -1,0 +1,11 @@
+{
+	"name": "@{{AUTHOR}}/{{NAME}}",
+	"type": "module",
+	"main": "./src/index.js",
+	"scripts": {
+		"dev": "node example/index.js"
+	},
+	"dependencies": {
+		"@jobsimi/apm": "^0.0.3"
+	}
+}

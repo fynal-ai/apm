@@ -1,0 +1,27 @@
+{
+	"author": "{{AUTHOR}}",
+	"name": "{{AUTHOR}}/{{NAME}}",
+	"version": "1.0.1",
+	"label": "HelloAPM",
+	"description": "APM agent template",
+	"icon": "https://bonsai.baystoneai.com/favicon.png",
+	"doc": "doc",
+	"config": {
+		"input": {
+			"style": "ink",
+			"prompt": "hello"
+		},
+		"output": {
+			"text": "Hello APM!"
+		}
+	},
+	"executor": "nodejs",
+
+	"price": {
+		"original": 0,
+		"discount": 0
+	},
+	"validity": {
+		"validityType": "forever"
+	}
+}

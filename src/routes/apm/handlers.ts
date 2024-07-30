@@ -5,9 +5,19 @@ import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import { AGENT } from '../../lib/apm/Agent.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
+import { Auth } from '../../lib/apm/Auth.js';
 
 export default {
 	APM: {
+		/**
+		 * ## loginUser
+		 *
+		 * Find the user by username, verify the password matches and return
+		 * the user
+		 *
+		 */
+
+		Auth: Auth,
 		Agent: {
 			Search: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
@@ -77,26 +87,6 @@ export default {
 					return await apmAgent.save();
 				});
 			},
-			Login: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.login(PLD);
-				});
-			},
-			Install: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.install(PLD);
-				});
-			},
-			Uninstall: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.uninstall(PLD);
-				});
-			},
-			Publish: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT.publish(PLD);
-				});
-			},
 		},
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {
@@ -122,6 +112,30 @@ export default {
 				Save: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return await AGENT_SERVICE.saveResult(PLD);
+					});
+				},
+			},
+		},
+		AgentStore: {
+			Agent: {
+				Login: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.login(PLD);
+					});
+				},
+				Install: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.install(PLD);
+					});
+				},
+				Uninstall: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.uninstall(PLD);
+					});
+				},
+				Publish: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return await AGENT.publish(PLD);
 					});
 				},
 			},

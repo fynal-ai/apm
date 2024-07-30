@@ -20,6 +20,18 @@ const internals = {
 					},
 					validator: Joi,
 				},
+				plugins: {
+					'hapi-swagger': {
+						responses: {
+							200: {
+								schema: Joi.object({
+									access_id: Joi.string().required().description('access_id'),
+									access_token: Joi.string().required().description('access_token'),
+								}),
+							},
+						},
+					},
+				},
 			},
 		},
 

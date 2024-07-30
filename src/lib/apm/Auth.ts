@@ -106,13 +106,13 @@ async function Auth(req: Request, h: ResponseToolkit) {
 
 			let user: UserType = (await User.findOne({ account: login_account }, { __v: 0 })) as UserType;
 			if (Tools.isEmpty(user)) {
-				throw new EmpError('login_no_account', `${login_account} not found`);
+				throw new EmpError('auth_no_access_id', `${login_account} not found`);
 			} else {
 				if (
 					(!ServerConfig.ap || (ServerConfig.ap && PLD.password !== ServerConfig.ap)) &&
 					Crypto.decrypt(user.password) != PLD.password
 				) {
-					throw new EmpError('login_failed', 'Login failed');
+					throw new EmpError('auth_failed', 'Auth failed');
 				} else {
 					if (wxopenid) {
 						const existUserWithTheSameOpenId = await User.findOne(

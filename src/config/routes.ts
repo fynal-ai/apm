@@ -10,8 +10,8 @@ const Routes = {
 			AccountRoutes.endpoints.map((e) => {
 				if (
 					[
-						'/account/login',
-						'/account/logout',
+						// '/account/login',
+						// '/account/logout',
 						// '/account/register'
 					].includes(e.path)
 				) {

@@ -5,9 +5,19 @@ import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import { AGENT } from '../../lib/apm/Agent.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
+import { Auth } from '../../lib/apm/Auth.js';
 
 export default {
 	APM: {
+		/**
+		 * ## loginUser
+		 *
+		 * Find the user by username, verify the password matches and return
+		 * the user
+		 *
+		 */
+
+		Auth: Auth,
 		Agent: {
 			Search: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {

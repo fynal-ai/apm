@@ -7,6 +7,24 @@ const internals = {
 	endpoints: [
 		{
 			method: 'POST',
+			path: '/apm/auth',
+			handler: Handlers.APM.Auth,
+			config: {
+				tags: ['api'],
+				description: 'Get access_token',
+				notes: 'Provide access_id, access_key',
+				validate: {
+					payload: {
+						access_id: Joi.string().required().description('access_id'),
+						access_key: Joi.string().required().description('access_key'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
 			path: '/apm/agent/search',
 			handler: Handlers.APM.Agent.Search,
 			config: {

@@ -1,5 +1,6 @@
 import child_process from 'child_process';
 import fs from 'fs-extra';
+import path from 'path';
 import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
 import { APMAgentType } from '../../database/models/APMAgent.js';
@@ -14,6 +15,12 @@ class AgentService {
 	async run(payload) {
 		const runId = payload.runId || (await this.generateRunId());
 		console.log('runId', runId);
+		{
+			// runId已经存在时
+			if ((await this.isRunIdExist(runId)) === true) {
+				throw new EmpError('RUN_ID_EXIST', `RunId ${runId} already exist`);
+			}
+		}
 
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 		if (!apmAgent) {
@@ -47,6 +54,23 @@ class AgentService {
 			apmAgent,
 			payload.token
 		);
+	}
+	async isRunIdExist(runId) {
+		// check .apm/run/[runId]
+		{
+			const runPath = path.join(ServerConfig.apm.localRepositoryDir, 'run', runId);
+			if ((await fs.exists(runPath)) === true) {
+				return true;
+			}
+		}
+		{
+			const apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId });
+			if (apmAgentServiceRun) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;

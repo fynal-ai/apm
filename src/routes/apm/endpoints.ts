@@ -127,6 +127,7 @@ const internals = {
 							start_time: 1715961600,
 							end_time: 1721364927,
 						}),
+						async: Joi.boolean().default(true).description('async or not').example(true),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},

@@ -16,6 +16,9 @@ class AgentService {
 		console.log('runId', runId);
 
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
 
 		// 读取input
 		apmAgent.config.input = payload.input;
@@ -28,14 +31,22 @@ class AgentService {
 		});
 
 		// 执行代码
-		this.executeAgentCode(
+		if (payload.async === true) {
+			this.executeAgentCode(
+				runId,
+
+				apmAgent,
+				payload.token
+			);
+			return { runId };
+		}
+
+		return await this.executeAgentCode(
 			runId,
 
 			apmAgent,
 			payload.token
 		);
-
-		return { runId };
 	}
 	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
 		const author = apmAgent.author;
@@ -122,7 +133,7 @@ class AgentService {
 			}
 		}
 
-		return {};
+		return await this.getResult({ runId });
 	}
 	async generateRunId() {
 		return shortuuid.generate();

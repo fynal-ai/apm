@@ -157,7 +157,7 @@ class AgentService {
 			}
 		}
 
-		return await this.getResult({ runId });
+		return await this.getResult({ runId, deleteAfter: false });
 	}
 	async generateRunId() {
 		return shortuuid.generate();

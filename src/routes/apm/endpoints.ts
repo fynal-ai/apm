@@ -127,7 +127,6 @@ const internals = {
 							start_time: 1715961600,
 							end_time: 1721364927,
 						}),
-						async: Joi.boolean().default(true).description('async or not').example(true),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},
@@ -232,6 +231,7 @@ const internals = {
 				validate: {
 					payload: {
 						runId: Joi.string().required().description('run id'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 						name: Joi.string().description('agent name'),
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),

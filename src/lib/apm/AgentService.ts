@@ -33,27 +33,28 @@ class AgentService {
 		// 记录
 		await this.saveResult({
 			runId,
+			runMode: apmAgent.runMode,
 
 			status: { stage: 'pending' },
 		});
 
 		// 执行代码
-		if (payload.async === true) {
-			this.executeAgentCode(
+		if (apmAgent.runMode == 'sync') {
+			return await this.executeAgentCode(
 				runId,
 
 				apmAgent,
 				payload.token
 			);
-			return { runId };
 		}
 
-		return await this.executeAgentCode(
+		this.executeAgentCode(
 			runId,
 
 			apmAgent,
 			payload.token
 		);
+		return { runId, runMode: 'async' };
 	}
 	async isRunIdExist(runId) {
 		// check .apm/run/[runId]

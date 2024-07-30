@@ -17,6 +17,7 @@ const schema = new Schema(
 		executor: { type: String },
 		executorConfig: { type: Object },
 		md5: { type: String },
+		runMode: { type: String, enum: ['sync', 'async'] },
 	},
 
 	{ timestamps: true }

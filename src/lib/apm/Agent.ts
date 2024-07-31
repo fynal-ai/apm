@@ -18,13 +18,14 @@ class Agent {
 	}
 	replaceRemoteEndpoints(detail) {
 		if (detail?.executor === 'remote') {
+			let baseURL = 'https://apmemp.baystoneai.com';
 			detail.endpoints = {
 				...detail.endpoints,
 
-				auth: 'https://apmemp.baystoneai.com/apm/agentservice/auth',
-				run: 'https://apmemp.baystoneai.com/apm/agentservice/run',
-				getresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/get',
-				cleanresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/clean',
+				auth: baseURL + '/apm/agentservice/auth',
+				run: baseURL + '/apm/agentservice/run',
+				getresult: baseURL + '/apm/agentservice/result/get',
+				cleanresult: baseURL + '/apm/agentservice/result/clean',
 			};
 		}
 	}

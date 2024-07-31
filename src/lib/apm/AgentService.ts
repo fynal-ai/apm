@@ -48,7 +48,7 @@ class AgentService {
 		const response = await remoteAgent.run(payload);
 
 		{
-			// 保存结果, remoteRunId
+			// save result remoteRunId
 			const apmAgentRun = new APMAgentServiceRun({
 				remoteRunId: response.runId,
 				name: apmAgent.name,
@@ -63,7 +63,7 @@ class AgentService {
 		const runId = payload.runId || (await this.generateRunId());
 		console.log('runId', runId);
 		{
-			// runId已经存在时
+			// runId exist
 			if ((await this.isRunIdExist(runId)) === true) {
 				throw new EmpError('RUN_ID_EXIST', `RunId ${runId} already exist`);
 			}
@@ -74,32 +74,34 @@ class AgentService {
 			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
 		}
 
-		// 读取input
+		// inject input
 		apmAgent.config.input = payload.input;
 
-		// 记录
+		// save result
 		await this.saveResult({
 			runId,
 			runMode: apmAgent.runMode,
 		});
 
-		// 执行代码
-		if (apmAgent.runMode == 'sync') {
-			return await this.executeAgentCode(
+		// execute agent
+		{
+			if (apmAgent.runMode == 'sync') {
+				return await this.executeAgentCode(
+					runId,
+
+					apmAgent,
+					payload.token
+				);
+			}
+
+			this.executeAgentCode(
 				runId,
 
 				apmAgent,
 				payload.token
 			);
+			return { runId, runMode: 'async' };
 		}
-
-		this.executeAgentCode(
-			runId,
-
-			apmAgent,
-			payload.token
-		);
-		return { runId, runMode: 'async' };
 	}
 	async isRunIdExist(runId) {
 		// check .apm/run/[runId]

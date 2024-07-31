@@ -25,7 +25,17 @@ class AgentService {
 
 		const params = payload.input;
 
-		return await remoteAgent.run(params);
+		const response = await remoteAgent.run(params);
+
+		{
+			// 保存结果, remoteRunId
+			const apmAgentRun = new APMAgentServiceRun({
+				remoteRunId: response.runId,
+			});
+			await apmAgentRun.save();
+		}
+
+		return response;
 	}
 	async runLocalAgent(payload) {
 		const runId = payload.runId || (await this.generateRunId());

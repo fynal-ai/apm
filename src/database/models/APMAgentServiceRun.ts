@@ -10,6 +10,7 @@ const schema = new Schema(
 		input: { type: Object },
 		output: { type: Object },
 		status: { type: Object },
+		remoteRunId: { type: String }, // run remote agent
 	},
 
 	{ timestamps: true }

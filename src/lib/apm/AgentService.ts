@@ -77,8 +77,6 @@ class AgentService {
 		await this.saveResult({
 			runId,
 			runMode: apmAgent.runMode,
-
-			status: { stage: 'pending' },
 		});
 
 		// 执行代码
@@ -159,7 +157,7 @@ class AgentService {
 
 		// 执行sh
 		{
-			await this.saveResult({ runId, status: { stage: 'underway' } });
+			await this.saveResult({ runId, status: 'ST_RUN' });
 
 			let hasError = false;
 			await new Promise(async (resolve) => {
@@ -194,9 +192,9 @@ class AgentService {
 				// 	}, 3000);
 				// });
 				if (hasError) {
-					await this.saveResult({ runId, status: { stage: 'failure' } });
+					await this.saveResult({ runId, status: 'ST_FAIL' });
 				} else {
-					await this.saveResult({ runId, status: { stage: 'finished' } });
+					await this.saveResult({ runId, status: 'ST_DOWN' });
 				}
 			}
 		}
@@ -447,13 +445,7 @@ ${pythonProgram} main.py
 
 					...payload,
 
-					status: {
-						...apmAgentServiceRun.status,
-
-						...payload.status,
-
-						stage: payload.status.stage || apmAgentServiceRun.status.stage,
-					},
+					status: payload.status || apmAgentServiceRun.status,
 				},
 			},
 			{

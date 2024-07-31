@@ -55,25 +55,29 @@
 		"executor": "nodejs"
 	},
 	{
+		"author": "fynal-ai",
+		"name": "fynal-ai/draw_image",
 		"version": "1.0.1",
-		"name": "fynal-ai/flood_control",
+		"label": "Draw image",
+		"description": "Draw image",
+		"icon": "https://bonsai.baystoneai.com/favicon.png",
+		"doc": "Provide article info",
 		"config": {
 			"input": {
-				"prompt": "销量趋势"
+				"style": "水墨画",
+				"prompt": "无边落木萧萧下，不尽长江滚滚来。"
 			},
 			"output": {
-				"text": "1"
+				"text": "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)"
 			}
 		},
 		"executor": "remote",
-		"executorConfig": {
-			"endpoints": {
-				"run": "https://apmemp.baystoneai.com/apm/agentservice/run",
-				"auth": "https://apmemp.baystoneai.com/apm/auth",
-				"result": "https://apmemp.baystoneai.com/apm/agentservice/result/get"
-			},
-			"access_id": "eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RAZ21",
-			"access_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RAZ21"
+		"endpoints": {
+			"auth": "https://apmemp.baystoneai.com/apm/auth",
+			"authType": "idandkey",
+			"run": "https://apmemp.baystoneai.com/apm/agentservice/run",
+			"getresult": "https://apmemp.baystoneai.com/apm/agentservice/result/get",
+			"cleanresult": "https://apmemp.baystoneai.com/apm/agentservice/result/clean"
 		}
 	}
 ]

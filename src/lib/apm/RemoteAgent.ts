@@ -43,10 +43,17 @@ class RemoteAgent {
 			const response = await axios({
 				method: 'POST',
 				url,
-				headers: {
-					Authorization: `Bearer ${data.token}`,
+				headers:
+					this.apmAgent.endpoints.tokenpos === 'header'
+						? {
+								Authorization: `Bearer ${data.token}`,
+							}
+						: {},
+				data: {
+					...data,
+
+					...(this.apmAgent.endpoints.tokenpos === 'header' ? { token: undefined } : {}),
 				},
-				data,
 			});
 			return response.data;
 		} catch (error) {

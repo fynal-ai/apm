@@ -374,9 +374,15 @@ ${pythonProgram} main.py
 		}
 	}
 	async cleanResult(payload) {
+		const isRemote = await this.isRemoteRun(payload.runId);
+
 		const filters = {
 			runId: payload.runId,
 		};
+
+		if (isRemote) {
+			await APMAgentServiceRun.deleteMany({ remoteRunId: payload.runId });
+		}
 
 		let task;
 

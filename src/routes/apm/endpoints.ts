@@ -111,8 +111,8 @@ const internals = {
 			handler: Handlers.APM.AgentService.Auth,
 			config: {
 				// tags: ['api'],
-				description: 'Get auth token',
-				notes: 'Provide auth info',
+				description: 'Get remote agent service auth token',
+				notes: 'Provide remote agent auth info',
 				validate: {
 					payload: Joi.object().required().description('auth'),
 					validator: Joi,

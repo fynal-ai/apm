@@ -21,7 +21,7 @@ class Agent {
 			detail.endpoints = {
 				...detail.endpoints,
 
-				auth: 'https://apmemp.baystoneai.com/apm/agent/auth',
+				auth: 'https://apmemp.baystoneai.com/apm/agentservice/auth',
 				run: 'https://apmemp.baystoneai.com/apm/agentservice/run',
 				getresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/get',
 				cleanresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/clean',

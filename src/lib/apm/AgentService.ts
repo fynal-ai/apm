@@ -13,6 +13,16 @@ import { AGENT } from './Agent.js';
 import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
+	async auth(payload) {
+		const apmAgent = await AGENT.getDBDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
+
+		const remoteAgent = new RemoteAgent(apmAgent);
+
+		return await remoteAgent.auth(payload);
+	}
 	async run(payload) {
 		// retrive agent info from database
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
@@ -27,16 +37,18 @@ class AgentService {
 		return await this.runLocalAgent(payload);
 	}
 	async runRemoteAgent(payload) {
-		const remoteAgent = new RemoteAgent();
+		const apmAgent = await AGENT.getDBDetail({ name: payload.name, version: payload.version });
 
-		const params = payload.input;
+		const remoteAgent = new RemoteAgent(apmAgent);
 
-		const response = await remoteAgent.run(params);
+		const response = await remoteAgent.run(payload.input);
 
 		{
 			// 保存结果, remoteRunId
 			const apmAgentRun = new APMAgentServiceRun({
 				remoteRunId: response.runId,
+				name: apmAgent.name,
+				version: apmAgent.version,
 			});
 			await apmAgentRun.save();
 		}
@@ -341,12 +353,17 @@ ${pythonProgram} main.py
 			const isRemote = await this.isRemoteRun(payload.runId);
 			// try remoteRunId
 			if (isRemote) {
+				const apmAgent = await APMAgentServiceRun.findOne({
+					name: isRemote.name,
+					version: isRemote.version,
+				});
+
 				// delete remoteRunId
 				if (payload.deleteAfter != false) {
 					await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
 				}
 
-				const remoteAgent = new RemoteAgent();
+				const remoteAgent = new RemoteAgent(apmAgent);
 				const result = await remoteAgent.getResult(payload);
 
 				return result;
@@ -386,12 +403,17 @@ ${pythonProgram} main.py
 		{
 			const isRemote = await this.isRemoteRun(payload.runId);
 			if (isRemote) {
+				const apmAgent = await APMAgentServiceRun.findOne({
+					name: isRemote.name,
+					version: isRemote.version,
+				});
+
 				// delete remoteRunId
 				{
 					await APMAgentServiceRun.deleteMany({ remoteRunId: payload.runId });
 				}
 
-				const remoteAgent = new RemoteAgent();
+				const remoteAgent = new RemoteAgent(apmAgent);
 				return remoteAgent.cleanResult(payload);
 			}
 		}
@@ -450,7 +472,7 @@ ${pythonProgram} main.py
 			// fix loop
 			if (apmAgentServiceRun_1 && !apmAgentServiceRun_0) {
 				// try runId
-				return true;
+				return apmAgentServiceRun_1;
 			}
 		}
 

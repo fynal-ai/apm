@@ -98,12 +98,27 @@ const internals = {
 						executor: Joi.string().description('executor'),
 						executorConfig: Joi.object().description('executor config'),
 						md5: Joi.string().description('md5'),
+						endpoints: Joi.object().description('remote agent endpoints'),
 					},
 					validator: Joi,
 				},
 			},
 		},
 
+		{
+			method: 'POST',
+			path: '/apm/agentservice/auth',
+			handler: Handlers.APM.AgentService.Auth,
+			config: {
+				// tags: ['api'],
+				description: 'Get auth token',
+				notes: 'Provide auth info',
+				validate: {
+					payload: Joi.object().required().description('auth'),
+					validator: Joi,
+				},
+			},
+		},
 		{
 			method: 'POST',
 			path: '/apm/agentservice/run',

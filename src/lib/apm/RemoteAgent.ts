@@ -1,56 +1,49 @@
 import axios from 'axios';
-import ServerConfig from '../../config/server.js';
+import { APMAgentType } from '../../database/models/APMAgent';
 
 class RemoteAgent {
-	baseURL = 'http://127.0.0.1:12008';
-	access_token = ServerConfig.apm.remoteRunAccessToken;
-	constructor() {}
-	async run(params) {
-		// console.log("Receive", params);
+	apmAgent: APMAgentType;
 
-		// console.log("prompt", prompt);
-		return await this.sendToRun(params);
+	constructor(apmAgent: APMAgentType) {
+		this.apmAgent = apmAgent;
 	}
 	async auth(payload) {
-		try {
-			const response = await axios({
-				method: 'POST',
-				url: '/apm/auth',
-				data: payload,
-				baseURL: this.baseURL,
+		if (this.apmAgent.endpoints.authType === 'user') {
+			return await this.post(this.apmAgent.endpoints.auth, {
+				username: payload.username,
+				password: payload.password,
 			});
-			if (response.data.access_token) {
-				this.access_token = response.data.access_token;
-			}
-			// console.log(response.data);
-			if (response.data.error) {
-				throw new Error(response.data.error.message);
-			}
-		} catch (error) {
-			throw new Error(error.message);
+		}
+		if (this.apmAgent.endpoints.authType === 'idandkey') {
+			return await this.post(this.apmAgent.endpoints.auth, {
+				access_id: payload.access_id,
+				access_key: payload.access_key,
+			});
+		}
+		if (this.apmAgent.endpoints.authType === 'keyonly') {
+			return await this.post(this.apmAgent.endpoints.auth, {
+				access_key: payload.access_key,
+			});
 		}
 	}
+	async run(params) {
+		return await this.sendToRun(params);
+	}
 	async sendToRun(payload) {
-		return await this.post('/apm/agentservice/run', payload);
+		return await this.post(this.apmAgent.endpoints.run, payload);
 	}
 	async getResult(payload) {
-		return await this.post('/apm/agentservice/result/get', payload);
+		return await this.post(this.apmAgent.endpoints.getresult, payload);
 	}
 	async cleanResult(payload) {
-		return await this.post('/apm/agentservice/result/clean', payload);
+		return await this.post(this.apmAgent.endpoints.cleanresult, payload);
 	}
 	async post(url, data) {
 		try {
 			const response = await axios({
 				method: 'POST',
 				url,
-				headers: this.access_token
-					? {
-							Authorization: 'Bearer ' + this.access_token,
-						}
-					: {},
 				data,
-				baseURL: this.baseURL,
 			});
 			return response.data;
 		} catch (error) {

@@ -10,6 +10,25 @@ import { AGENT_STORE } from './AgentStore.js';
 class Agent {
 	constructor() {}
 	async getDetail(payload): Promise<APMAgentType> {
+		const detail = await this.getDBDetail(payload);
+
+		this.replaceRemoteEndpoints(detail);
+
+		return detail;
+	}
+	replaceRemoteEndpoints(detail) {
+		if (detail?.executor === 'remote') {
+			detail.endpoints = {
+				...detail.endpoints,
+
+				auth: 'https://apmemp.baystoneai.com/apm/agent/auth',
+				run: 'https://apmemp.baystoneai.com/apm/agentservice/run',
+				getresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/get',
+				cleanresult: 'https://apmemp.baystoneai.com/apm/agentservice/result/clean',
+			};
+		}
+	}
+	async getDBDetail(payload): Promise<APMAgentType> {
 		const filters = { name: payload.name };
 
 		if (payload.version) {

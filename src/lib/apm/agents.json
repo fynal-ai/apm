@@ -103,6 +103,7 @@
 			"site": "http://172.16.7.157:6008",
 			"auth": "http://172.16.7.157:6008/agent/auth",
 			"authType": "user",
+			"tokenpos": "header",
 			"run": "http://172.16.7.157:6008/agent/run",
 			"getresult": "http://172.16.7.157:6008/agent/getResult",
 			"cleanresult": "http://172.16.7.157:6008/agent/cleanResult"

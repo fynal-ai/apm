@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { APMAgentType } from '../../database/models/APMAgent';
+import { APMAgentType } from '../../database/models/APMAgent.js';
+import EmpError from '../EmpError.js';
 
 class RemoteAgent {
 	apmAgent: APMAgentType;
@@ -57,7 +58,7 @@ class RemoteAgent {
 			});
 			return response.data;
 		} catch (error) {
-			throw new Error(error.message);
+			throw new EmpError('REMOTE_AGENT_ERROR', error.message);
 		}
 	}
 }

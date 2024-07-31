@@ -79,5 +79,33 @@
 			"getresult": "https://apmemp.baystoneai.com/apm/agentservice/result/get",
 			"cleanresult": "https://apmemp.baystoneai.com/apm/agentservice/result/clean"
 		}
+	},
+	{
+		"author": "lucas",
+		"name": "lucus/article1",
+		"version": "1.0.0",
+		"description": "AIWork is a powerful tool for AI developers",
+		"doc": "abcd",
+		"icon": "https://myserver.com/agent/aiwork.png",
+		"label": "AIWork",
+		"executor": "remote",
+		"config": {
+			"input": {
+				"runId": "agent_process_0001",
+				"wfTitle": "今天的文章流程"
+			},
+			"output": {
+				"runId": "agent_process_0001",
+				"status": "ST_RUN"
+			}
+		},
+		"endpoints": {
+			"site": "http://172.16.7.157:6008",
+			"auth": "http://172.16.7.157:6008/account/login",
+			"authType": "user",
+			"run": "http://172.16.7.157:6008/agent/run",
+			"getresult": "http://172.16.7.157:6008/agent/getResult",
+			"cleanresult": "http://172.16.7.157:6008/agent/cleanResult"
+		}
 	}
 ]

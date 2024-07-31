@@ -101,7 +101,7 @@
 		},
 		"endpoints": {
 			"site": "http://172.16.7.157:6008",
-			"auth": "http://172.16.7.157:6008/account/login",
+			"auth": "http://172.16.7.157:6008/agent/auth",
 			"authType": "user",
 			"run": "http://172.16.7.157:6008/agent/run",
 			"getresult": "http://172.16.7.157:6008/agent/getResult",

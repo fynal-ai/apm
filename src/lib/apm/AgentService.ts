@@ -427,7 +427,7 @@ ${pythonProgram} main.py
 		return await task;
 	}
 	async saveResult(payload) {
-		console.log('payload.status.stage', payload.status.stage);
+		// console.log('payload.status.stage', payload.status.stage);
 		// create or update
 		let apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId: payload.runId });
 

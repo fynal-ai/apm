@@ -330,14 +330,10 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
-		// try runId or remoteRunId
+		const isRemote = await this.isRemoteRun(payload.runId);
 		{
-			const apmAgentServiceRun_0 = await APMAgentServiceRun.findOne({ runId: payload.runId });
-			const apmAgentServiceRun_1 = await APMAgentServiceRun.findOne({ remoteRunId: payload.runId });
-
-			// fix loop
-			if (apmAgentServiceRun_1 && !apmAgentServiceRun_0) {
-				// try runId
+			// try remoteRunId
+			if (isRemote) {
 				const remoteAgent = new RemoteAgent();
 				return await remoteAgent.getResult(payload);
 			}
@@ -357,7 +353,7 @@ ${pythonProgram} main.py
 		}
 
 		// delete remoteRunId
-		{
+		if (isRemote) {
 			await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
 		}
 
@@ -420,6 +416,23 @@ ${pythonProgram} main.py
 				new: true,
 			}
 		).lean();
+	}
+	async isRemoteRun(runId) {
+		// try runId or remoteRunId
+		{
+			const apmAgentServiceRun_0 = await APMAgentServiceRun.findOne({ runId });
+			const apmAgentServiceRun_1 = await APMAgentServiceRun.findOne({
+				remoteRunId: runId,
+			});
+
+			// fix loop
+			if (apmAgentServiceRun_1 && !apmAgentServiceRun_0) {
+				// try runId
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 

@@ -24,10 +24,7 @@ const internals = {
 					'hapi-swagger': {
 						responses: {
 							200: {
-								schema: Joi.object({
-									access_id: Joi.string().required().description('access_id'),
-									access_token: Joi.string().required().description('access_token'),
-								}),
+								schema: Joi.string().required().description('access_token'),
 							},
 						},
 					},
@@ -98,12 +95,32 @@ const internals = {
 						executor: Joi.string().description('executor'),
 						executorConfig: Joi.object().description('executor config'),
 						md5: Joi.string().description('md5'),
+						endpoints: Joi.object().description('remote agent endpoints'),
 					},
 					validator: Joi,
 				},
 			},
 		},
 
+		{
+			method: 'POST',
+			path: '/apm/agentservice/auth',
+			handler: Handlers.APM.AgentService.Auth,
+			config: {
+				tags: ['api'],
+				description: 'Get remote agent service auth token',
+				notes: 'Provide remote agent auth info',
+				validate: {
+					payload: Joi.object({
+						name: Joi.string().required().description('name'),
+						version: Joi.string().description('version'),
+						arg1: Joi.string().required().description('arg1'),
+						arg2: Joi.string().description('arg2'),
+					}).description('auth'),
+					validator: Joi,
+				},
+			},
+		},
 		{
 			method: 'POST',
 			path: '/apm/agentservice/run',
@@ -113,9 +130,11 @@ const internals = {
 				description: 'Run agent',
 				notes:
 					'Run agent and return runId immediately. There could be many intermediate results, using /result/get to get the result and using /result/clean to clean results。',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: Joi.object({
+						token: Joi.string().required().description('token'),
+
 						runId: Joi.string().description('run id'),
 						name: Joi.string()
 							.required()
@@ -151,13 +170,14 @@ const internals = {
 				tags: ['api'],
 				description: 'Get agent run result',
 				notes: 'By runId',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
+						token: Joi.string().required().description('token'),
 						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
-							.default(true)
-							.description('delete after request, default is true'),
+							.default(false)
+							.description('delete after request, default is false'),
 					},
 					validator: Joi,
 				},
@@ -177,24 +197,9 @@ const internals = {
 									output: Joi.object().description('agent output').example({
 										text: '山峡水库在2024-06-18 10:00:00时的上水位最高为167m;这是这时间段内的最高水位。',
 									}),
-									status: Joi.object({
-										stage: Joi.string()
-											.valid(
-												'notstart',
-												'pending',
-												'underway',
-												'finished',
-												'failure',
-												'stopped',
-												'offline'
-											)
-											.description('stage'),
-										done: Joi.boolean().description('is done'),
-										message: Joi.string().description('message'),
-										code: Joi.number().description('code'),
-										error: Joi.string().description('error'),
-										progress: Joi.number().description('progress'),
-									}).description('agent running status'),
+									status: Joi.string()
+										.valid('ST_RUN', 'ST_FAIL', 'ST_DONE')
+										.description('agent running status'),
 								}).label('APMAgentServiceRunResponse'),
 							},
 						},
@@ -210,9 +215,11 @@ const internals = {
 				tags: ['api'],
 				description: 'Clean run results',
 				notes: 'By runId',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
+						token: Joi.string().required().description('token'),
+
 						runId: Joi.string().required().description('run id'),
 					},
 					validator: Joi,

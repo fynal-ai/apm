@@ -9,7 +9,8 @@ const schema = new Schema(
 		version: { type: String },
 		input: { type: Object },
 		output: { type: Object },
-		status: { type: Object },
+		status: { type: String, enum: ['ST_RUN', 'ST_FAIL', 'ST_DONE'] },
+		remoteRunId: { type: String }, // run remote agent
 	},
 
 	{ timestamps: true }

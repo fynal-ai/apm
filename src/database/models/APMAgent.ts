@@ -18,6 +18,7 @@ const schema = new Schema(
 		executorConfig: { type: Object },
 		md5: { type: String },
 		runMode: { type: String, enum: ['sync', 'async'] },
+		endpoints: { type: Object }, // remote agent server
 	},
 
 	{ timestamps: true }

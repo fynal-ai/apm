@@ -3,20 +3,67 @@ import fs from 'fs-extra';
 import path from 'path';
 import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
-import { APMAgentType } from '../../database/models/APMAgent.js';
+import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import {
 	APMAgentServiceRun,
 	APMAgentServiceRunType,
 } from '../../database/models/APMAgentServiceRun.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
+import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
+	async auth(payload) {
+		const apmAgent = await AGENT.getDBDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
+
+		if (!apmAgent?.endpoints?.authType) {
+			throw new EmpError('AGENT_NOT_REMOTE', `Agent ${payload.name} is not remote agent`);
+		}
+
+		const remoteAgent = new RemoteAgent(apmAgent);
+
+		return await remoteAgent.auth(payload);
+	}
 	async run(payload) {
+		// retrive agent info from database
+		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
+
+		if (apmAgent.executor === 'remote') {
+			return await this.runRemoteAgent(payload);
+		}
+
+		return await this.runLocalAgent(payload);
+	}
+	async runRemoteAgent(payload) {
+		const apmAgent = await AGENT.getDBDetail({ name: payload.name, version: payload.version });
+
+		const remoteAgent = new RemoteAgent(apmAgent);
+
+		const response = await remoteAgent.run(payload);
+
+		{
+			// save result remoteRunId
+			const apmAgentRun = new APMAgentServiceRun({
+				remoteRunId: response.runId,
+				name: apmAgent.name,
+				version: apmAgent.version,
+			});
+			await apmAgentRun.save();
+		}
+
+		return response;
+	}
+	async runLocalAgent(payload) {
 		const runId = payload.runId || (await this.generateRunId());
 		console.log('runId', runId);
 		{
-			// runId已经存在时
+			// runId exist
 			if ((await this.isRunIdExist(runId)) === true) {
 				throw new EmpError('RUN_ID_EXIST', `RunId ${runId} already exist`);
 			}
@@ -27,34 +74,34 @@ class AgentService {
 			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
 		}
 
-		// 读取input
+		// inject input
 		apmAgent.config.input = payload.input;
 
-		// 记录
+		// save result
 		await this.saveResult({
 			runId,
 			runMode: apmAgent.runMode,
-
-			status: { stage: 'pending' },
 		});
 
-		// 执行代码
-		if (apmAgent.runMode == 'sync') {
-			return await this.executeAgentCode(
+		// execute agent
+		{
+			if (apmAgent.runMode == 'sync') {
+				return await this.executeAgentCode(
+					runId,
+
+					apmAgent,
+					payload.token
+				);
+			}
+
+			this.executeAgentCode(
 				runId,
 
 				apmAgent,
 				payload.token
 			);
+			return { runId, runMode: 'async' };
 		}
-
-		this.executeAgentCode(
-			runId,
-
-			apmAgent,
-			payload.token
-		);
-		return { runId, runMode: 'async' };
 	}
 	async isRunIdExist(runId) {
 		// check .apm/run/[runId]
@@ -93,7 +140,6 @@ class AgentService {
 				version: apmAgent.version,
 				input: apmAgent.config.input,
 				output: {},
-				status: {},
 			},
 		};
 
@@ -116,7 +162,7 @@ class AgentService {
 
 		// 执行sh
 		{
-			await this.saveResult({ runId, status: { stage: 'underway' } });
+			await this.saveResult({ runId, status: 'ST_RUN' });
 
 			let hasError = false;
 			await new Promise(async (resolve) => {
@@ -151,9 +197,9 @@ class AgentService {
 				// 	}, 3000);
 				// });
 				if (hasError) {
-					await this.saveResult({ runId, status: { stage: 'failure' } });
+					await this.saveResult({ runId, status: 'ST_FAIL' });
 				} else {
-					await this.saveResult({ runId, status: { stage: 'finished' } });
+					await this.saveResult({ runId, status: 'ST_DONE' });
 				}
 			}
 		}
@@ -305,6 +351,28 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
+		// remote
+		{
+			const isRemote = await this.isRemoteRun(payload.runId);
+			// try remoteRunId
+			if (isRemote) {
+				const apmAgent = await APMAgent.findOne({
+					name: isRemote.name,
+					version: isRemote.version,
+				});
+
+				// delete remoteRunId
+				if (payload.deleteAfter != false) {
+					await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
+				}
+
+				const remoteAgent = new RemoteAgent(apmAgent);
+				const result = await remoteAgent.getResult(payload);
+
+				return result;
+			}
+		}
+
 		const filters = { runId: payload.runId };
 
 		let task;
@@ -314,7 +382,13 @@ ${pythonProgram} main.py
 
 			task = task.sort({ createdAt: -1 });
 
-			return await task;
+			task = await task;
+
+			if (!task) {
+				throw new EmpError('RESULT_NOT_FOUND', 'Requested result not found: ');
+			}
+
+			return task;
 		}
 
 		{
@@ -334,6 +408,25 @@ ${pythonProgram} main.py
 		}
 	}
 	async cleanResult(payload) {
+		// remote
+		{
+			const isRemote = await this.isRemoteRun(payload.runId);
+			if (isRemote) {
+				const apmAgent = await APMAgent.findOne({
+					name: isRemote.name,
+					version: isRemote.version,
+				});
+
+				// delete remoteRunId
+				{
+					await APMAgentServiceRun.deleteMany({ remoteRunId: payload.runId });
+				}
+
+				const remoteAgent = new RemoteAgent(apmAgent);
+				return remoteAgent.cleanResult(payload);
+			}
+		}
+
 		const filters = {
 			runId: payload.runId,
 		};
@@ -345,7 +438,7 @@ ${pythonProgram} main.py
 		return await task;
 	}
 	async saveResult(payload) {
-		console.log('payload.status.stage', payload.status.stage);
+		// console.log('payload.status.stage', payload.status.stage);
 		// create or update
 		let apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId: payload.runId });
 
@@ -363,19 +456,30 @@ ${pythonProgram} main.py
 
 					...payload,
 
-					status: {
-						...apmAgentServiceRun.status,
-
-						...payload.status,
-
-						stage: payload.status.stage || apmAgentServiceRun.status.stage,
-					},
+					status: payload.status || apmAgentServiceRun.status,
 				},
 			},
 			{
 				new: true,
 			}
 		).lean();
+	}
+	async isRemoteRun(runId) {
+		// try runId or remoteRunId
+		{
+			const apmAgentServiceRun_0 = await APMAgentServiceRun.findOne({ runId });
+			const apmAgentServiceRun_1 = await APMAgentServiceRun.findOne({
+				remoteRunId: runId,
+			});
+
+			// fix loop
+			if (apmAgentServiceRun_1 && !apmAgentServiceRun_0) {
+				// try runId
+				return apmAgentServiceRun_1;
+			}
+		}
+
+		return false;
 	}
 }
 

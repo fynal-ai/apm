@@ -62,15 +62,22 @@ export default {
 						task = task.skip(PLD.skip);
 					}
 
+					const list = await task;
+
+					for (let i = 0; i < list.length; i = i + 1) {
+						const detail = list[i];
+						AGENT.replaceRemoteEndpoints(detail);
+					}
+
 					if (PLD.hastotal === true) {
 						const total = await APMAgent.countDocuments(filters).lean();
 						return {
 							total: total,
-							list: await task,
+							list,
 						};
 					}
 
-					return await task;
+					return list;
 				});
 			},
 			Detail: async (req: Request, h: ResponseToolkit) => {
@@ -89,13 +96,14 @@ export default {
 			},
 		},
 		AgentService: {
+			Auth: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT_SERVICE.auth(PLD);
+				});
+			},
 			Run: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT_SERVICE.run({
-						...PLD,
-
-						token: req.auth.artifacts.token,
-					});
+					return await AGENT_SERVICE.run(PLD);
 				});
 			},
 			Result: {
@@ -111,6 +119,7 @@ export default {
 				},
 				Save: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
+						delete PLD.status;
 						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},

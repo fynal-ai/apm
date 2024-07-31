@@ -20,7 +20,7 @@ class AgentService {
 		}
 
 		if (!apmAgent?.endpoints?.authType) {
-			throw new EmpError('AGENT_AUTH_TYPE_NOT_FOUND', `Agent ${payload.name} auth type not found`);
+			throw new EmpError('AGENT_NOT_REMOTE', `Agent ${payload.name} is not remote agent`);
 		}
 
 		const remoteAgent = new RemoteAgent(apmAgent);

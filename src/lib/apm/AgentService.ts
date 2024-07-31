@@ -10,34 +10,22 @@ import {
 } from '../../database/models/APMAgentServiceRun.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
-import { RemoteAgent } from './RemoteAgent/index.js';
+import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
 	async run(payload) {
-		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
-		if (!apmAgent) {
-			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
-		}
-
-		if (apmAgent.remoteAgentServer) {
+		if (payload.name === 'fynal-ai/remote-agent') {
 			return await this.runRemoteAgent(payload);
 		}
 
 		return await this.runLocalAgent(payload);
 	}
 	async runRemoteAgent(payload) {
-		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
-		if (!apmAgent) {
-			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
-		}
-
 		const remoteAgent = new RemoteAgent();
-
-		const remoteAgentServer = apmAgent.remoteAgentServer;
 
 		const params = payload.input;
 
-		return await remoteAgent.run(remoteAgentServer, params);
+		return await remoteAgent.run(params);
 	}
 	async runLocalAgent(payload) {
 		const runId = payload.runId || (await this.generateRunId());

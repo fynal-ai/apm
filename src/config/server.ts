@@ -47,5 +47,6 @@ export default {
 		agentStore: {
 			baseURL: process.env.APM_AGENT_STORE_BASE_URL || 'https://agentstoreemp.baystoneai.com',
 		},
+		remoteRunAccessToken: process.env.APM_REMOTE_RUN_ACCESS_TOKEN,
 	},
 };

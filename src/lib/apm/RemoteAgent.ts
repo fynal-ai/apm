@@ -1,20 +1,15 @@
 import axios from 'axios';
+import ServerConfig from '../../config/server.js';
 
-class APMAgent {
-	baseURL = '';
-	access_token = '';
+class RemoteAgent {
+	baseURL = 'http://127.0.0.1:12008';
+	access_token = ServerConfig.apm.remoteRunAccessToken;
 	constructor() {}
 	async run(params) {
-		this.baseURL = params.baseURL;
 		// console.log("Receive", params);
 
 		// console.log("prompt", prompt);
-		await this.auth({
-			access_id: params.access_id,
-			access_key: params.access_key,
-		});
-
-		return await this.sendToRun(params.input);
+		return await this.sendToRun(params);
 	}
 	async auth(payload) {
 		try {
@@ -55,4 +50,4 @@ class APMAgent {
 	}
 }
 
-export { APMAgent };
+export { RemoteAgent };

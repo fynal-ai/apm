@@ -91,11 +91,7 @@ export default {
 		AgentService: {
 			Run: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT_SERVICE.run({
-						...PLD,
-
-						token: req.auth.artifacts.token,
-					});
+					return await AGENT_SERVICE.run(PLD);
 				});
 			},
 			Result: {

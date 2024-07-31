@@ -113,9 +113,11 @@ const internals = {
 				description: 'Run agent',
 				notes:
 					'Run agent and return runId immediately. There could be many intermediate results, using /result/get to get the result and using /result/clean to clean results。',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: Joi.object({
+						token: Joi.string().required().description('token'),
+
 						runId: Joi.string().description('run id'),
 						name: Joi.string()
 							.required()
@@ -151,9 +153,10 @@ const internals = {
 				tags: ['api'],
 				description: 'Get agent run result',
 				notes: 'By runId',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
+						token: Joi.string().required().description('token'),
 						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
 							.default(true)
@@ -210,9 +213,11 @@ const internals = {
 				tags: ['api'],
 				description: 'Clean run results',
 				notes: 'By runId',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
+						token: Joi.string().required().description('token'),
+
 						runId: Joi.string().required().description('run id'),
 					},
 					validator: Joi,

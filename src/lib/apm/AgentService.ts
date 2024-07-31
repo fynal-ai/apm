@@ -330,6 +330,20 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
+		// try runId or remoteRunId
+		{
+			const apmAgentServiceRun_0 = await APMAgentServiceRun.findOne({ runId: payload.runId });
+			const apmAgentServiceRun_1 = await APMAgentServiceRun.findOne({ remoteRunId: payload.runId });
+
+			// fix loop
+			if (apmAgentServiceRun_1 && !apmAgentServiceRun_0) {
+				// try runId
+				const remoteAgent = new RemoteAgent();
+				return await remoteAgent.getResult(payload);
+			}
+		}
+
+		// try runId
 		const filters = { runId: payload.runId };
 
 		let task;

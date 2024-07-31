@@ -31,16 +31,22 @@ class RemoteAgent {
 		}
 	}
 	async sendToRun(payload) {
+		return await this.post('/apm/agentservice/run', payload);
+	}
+	async getResult(payload) {
+		return await this.post('/apm/agentservice/result/get', payload);
+	}
+	async post(url, data) {
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agentservice/run',
+				url,
 				headers: this.access_token
 					? {
 							Authorization: 'Bearer ' + this.access_token,
 						}
 					: {},
-				data: payload,
+				data,
 				baseURL: this.baseURL,
 			});
 			return response.data;

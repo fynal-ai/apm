@@ -24,10 +24,7 @@ const internals = {
 					'hapi-swagger': {
 						responses: {
 							200: {
-								schema: Joi.object({
-									access_id: Joi.string().required().description('access_id'),
-									access_token: Joi.string().required().description('access_token'),
-								}),
+								schema: Joi.string().required().description('access_token'),
 							},
 						},
 					},

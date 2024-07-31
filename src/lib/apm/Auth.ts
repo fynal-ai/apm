@@ -174,7 +174,7 @@ async function Auth(req: Request, h: ResponseToolkit) {
 						access_id: ret.user.account,
 						access_token: ret.sessionToken,
 					};
-					return _ret;
+					return ret.sessionToken;
 				}
 			}
 		})

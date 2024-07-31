@@ -330,16 +330,23 @@ ${pythonProgram} main.py
 		}
 	}
 	async getResult(payload): Promise<APMAgentServiceRunType> {
-		const isRemote = await this.isRemoteRun(payload.runId);
+		// remote
 		{
+			const isRemote = await this.isRemoteRun(payload.runId);
 			// try remoteRunId
 			if (isRemote) {
+				// delete remoteRunId
+				if (payload.deleteAfter != false) {
+					await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
+				}
+
 				const remoteAgent = new RemoteAgent();
-				return await remoteAgent.getResult(payload);
+				const result = await remoteAgent.getResult(payload);
+
+				return result;
 			}
 		}
 
-		// try runId
 		const filters = { runId: payload.runId };
 
 		let task;
@@ -350,11 +357,6 @@ ${pythonProgram} main.py
 			task = task.sort({ createdAt: -1 });
 
 			return await task;
-		}
-
-		// delete remoteRunId
-		if (isRemote) {
-			await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
 		}
 
 		{
@@ -374,15 +376,23 @@ ${pythonProgram} main.py
 		}
 	}
 	async cleanResult(payload) {
-		const isRemote = await this.isRemoteRun(payload.runId);
+		// remote
+		{
+			const isRemote = await this.isRemoteRun(payload.runId);
+			if (isRemote) {
+				// delete remoteRunId
+				{
+					await APMAgentServiceRun.deleteMany({ remoteRunId: payload.runId });
+				}
+
+				const remoteAgent = new RemoteAgent();
+				return remoteAgent.cleanResult(payload);
+			}
+		}
 
 		const filters = {
 			runId: payload.runId,
 		};
-
-		if (isRemote) {
-			await APMAgentServiceRun.deleteMany({ remoteRunId: payload.runId });
-		}
 
 		let task;
 

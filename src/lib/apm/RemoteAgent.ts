@@ -36,6 +36,9 @@ class RemoteAgent {
 	async getResult(payload) {
 		return await this.post('/apm/agentservice/result/get', payload);
 	}
+	async cleanResult(payload) {
+		return await this.post('/apm/agentservice/result/clean', payload);
+	}
 	async post(url, data) {
 		try {
 			const response = await axios({

@@ -380,7 +380,13 @@ ${pythonProgram} main.py
 
 			task = task.sort({ createdAt: -1 });
 
-			return await task;
+			task = await task;
+
+			if (!task) {
+				throw new EmpError('RESULT_NOT_FOUND', 'Requested result not found: ');
+			}
+
+			return task;
 		}
 
 		{

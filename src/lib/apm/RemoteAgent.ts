@@ -43,6 +43,9 @@ class RemoteAgent {
 			const response = await axios({
 				method: 'POST',
 				url,
+				headers: {
+					Authorization: `Bearer ${data.token}`,
+				},
 				data,
 			});
 			return response.data;

@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import shortuuid from 'short-uuid';
 import ServerConfig from '../../config/server.js';
-import { APMAgentType } from '../../database/models/APMAgent.js';
+import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import {
 	APMAgentServiceRun,
 	APMAgentServiceRunType,
@@ -353,7 +353,7 @@ ${pythonProgram} main.py
 			const isRemote = await this.isRemoteRun(payload.runId);
 			// try remoteRunId
 			if (isRemote) {
-				const apmAgent = await APMAgentServiceRun.findOne({
+				const apmAgent = await APMAgent.findOne({
 					name: isRemote.name,
 					version: isRemote.version,
 				});
@@ -403,7 +403,7 @@ ${pythonProgram} main.py
 		{
 			const isRemote = await this.isRemoteRun(payload.runId);
 			if (isRemote) {
-				const apmAgent = await APMAgentServiceRun.findOne({
+				const apmAgent = await APMAgent.findOne({
 					name: isRemote.name,
 					version: isRemote.version,
 				});

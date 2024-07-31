@@ -14,7 +14,13 @@ import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
 	async run(payload) {
-		if (payload.name === 'fynal-ai/remote-agent') {
+		// retrive agent info from database
+		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
+
+		if (apmAgent.executor === 'remote') {
 			return await this.runRemoteAgent(payload);
 		}
 

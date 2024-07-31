@@ -134,7 +134,6 @@ class AgentService {
 				version: apmAgent.version,
 				input: apmAgent.config.input,
 				output: {},
-				status: {},
 			},
 		};
 

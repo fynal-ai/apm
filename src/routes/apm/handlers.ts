@@ -119,6 +119,7 @@ export default {
 				},
 				Save: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
+						delete PLD.status;
 						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},

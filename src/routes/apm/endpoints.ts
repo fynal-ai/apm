@@ -241,9 +241,28 @@ const internals = {
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),
 						output: Joi.object().description('agent output'),
-						status: Joi.string()
-							.valid('ST_RUN', 'ST_FAIL', 'ST_DONE')
-							.description('agent running status'),
+						status: Joi.object({
+							stage: Joi.string()
+								.valid(
+									'notstart',
+									'pending',
+									'underway',
+									'finished',
+									'failure',
+									'stopped',
+									'offline'
+								)
+								.description('stage'),
+							done: Joi.boolean().description('is done'),
+							message: Joi.string().description('message'),
+							code: Joi.number().description('code'),
+							error: Joi.string().description('error'),
+							progress: Joi.number().description('progress'),
+						})
+							.description('current run status')
+							.example({
+								done: true,
+							}),
 					},
 					validator: Joi,
 				},

@@ -26,8 +26,8 @@ class RemoteAgent {
 			});
 		}
 	}
-	async run(params) {
-		return await this.sendToRun(params);
+	async run(payload) {
+		return await this.sendToRun(payload);
 	}
 	async sendToRun(payload) {
 		return await this.post(this.apmAgent.endpoints.run, payload);

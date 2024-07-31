@@ -41,7 +41,7 @@ class AgentService {
 
 		const remoteAgent = new RemoteAgent(apmAgent);
 
-		const response = await remoteAgent.run(payload.input);
+		const response = await remoteAgent.run(payload);
 
 		{
 			// 保存结果, remoteRunId

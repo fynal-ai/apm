@@ -10,19 +10,19 @@ class RemoteAgent {
 	async auth(payload) {
 		if (this.apmAgent.endpoints.authType === 'user') {
 			return await this.post(this.apmAgent.endpoints.auth, {
-				username: payload.username,
-				password: payload.password,
+				username: payload.arg1,
+				password: payload.arg2,
 			});
 		}
 		if (this.apmAgent.endpoints.authType === 'idandkey') {
 			return await this.post(this.apmAgent.endpoints.auth, {
-				access_id: payload.access_id,
-				access_key: payload.access_key,
+				access_id: payload.arg1,
+				access_key: payload.arg2,
 			});
 		}
 		if (this.apmAgent.endpoints.authType === 'keyonly') {
 			return await this.post(this.apmAgent.endpoints.auth, {
-				access_key: payload.access_key,
+				access_key: payload.arg1,
 			});
 		}
 	}

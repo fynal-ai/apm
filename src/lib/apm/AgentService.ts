@@ -194,7 +194,7 @@ class AgentService {
 				if (hasError) {
 					await this.saveResult({ runId, status: 'ST_FAIL' });
 				} else {
-					await this.saveResult({ runId, status: 'ST_DOWN' });
+					await this.saveResult({ runId, status: 'ST_DONE' });
 				}
 			}
 		}

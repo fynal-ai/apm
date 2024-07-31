@@ -356,6 +356,11 @@ ${pythonProgram} main.py
 			return await task;
 		}
 
+		// delete remoteRunId
+		{
+			await APMAgentServiceRun.findOneAndDelete({ remoteRunId: payload.runId });
+		}
+
 		{
 			task = APMAgentServiceRun.findOneAndDelete(filters);
 

@@ -176,8 +176,8 @@ const internals = {
 						token: Joi.string().required().description('token'),
 						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
-							.default(true)
-							.description('delete after request, default is true'),
+							.default(false)
+							.description('delete after request, default is false'),
 					},
 					validator: Joi,
 				},

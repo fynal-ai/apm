@@ -111,6 +111,8 @@ class APMAgent {
 	}
 	async publish() {
 		try {
+			const folderpath = path.resolve('.');
+			console.log(`Publish agent from folder ${folderpath}`);
 			// tar ignore .gitignore files to dist/[agentName]-v[version].tar.gz
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);

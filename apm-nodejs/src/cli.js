@@ -18,7 +18,9 @@ Usage:
     apm install <agent-folder>
 	apm install .
   - uninstall agent
-     apm uninstall <name>:[version]
+    apm uninstall <name>:[version]
+  - cd to agent folder and publish agent
+    apm publish
         `);
 		return;
 	}
@@ -89,9 +91,6 @@ Usage:
 	}
 
 	// publish
-	if (_[0] === 'publish') {
-		return;
-	}
 	if (_[0] === 'publish') {
 		await APM_AGENT.publish();
 	}

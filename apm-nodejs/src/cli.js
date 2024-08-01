@@ -8,13 +8,13 @@ async function main() {
 
 	if (options.help || options._.length === 0) {
 		const version = await APM_AGENT.getCLIVersion();
-		console.log(`APM(Agent Package Manager) v${version}
+		console.log(`APM(Agent Package Manager) CLI v${version}
 
 Usage:
 
   - show help
     apm --help
-  - install
+  - install agent
     apm install <agent-folder>
         `);
 		return;

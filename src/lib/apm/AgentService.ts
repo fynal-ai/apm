@@ -132,9 +132,9 @@ class AgentService {
 			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
 			},
 			data: {
+				token,
 				runId: runId,
 				name: apmAgent.name,
 				version: apmAgent.version,

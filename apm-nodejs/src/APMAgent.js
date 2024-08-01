@@ -113,7 +113,25 @@ class APMAgent {
 		try {
 			const folderpath = path.resolve('.');
 			console.log(`Publish agent from folder ${folderpath}`);
+			// parse agent.json
+			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
+			console.log('Agent author', apmAgent.author);
+			console.log('Agent name', apmAgent.name);
+			console.log('Agent version', apmAgent.version);
+			console.log('Agent executor', apmAgent.executor);
+
 			// tar ignore .gitignore files to dist/[agentName]-v[version].tar.gz
+			// folder to .tmp/[md5].tar.gz
+			const tarFilePath = await this.tarAgentFolder(folderpath);
+			console.log('tarFilePath', tarFilePath);
+
+			// upload to agentstore
+			const dbAgent = await this.uploadAgentToAgentStore(tarFilePath, apmAgent);
+
+			// edit
+			await this.editAgentStoreAgent(dbAgent._id, apmAgent);
+
+			console.log('Succeed published agent to agent store');
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
 		}
@@ -177,9 +195,9 @@ class APMAgent {
 		console.log('tarFilePath', tarFilePath);
 
 		// upload to apm
-		const dbAPMAgent = await this.uploadAgent(tarFilePath, apmAgent);
+		const dbAgent = await this.uploadAgentToAPM(tarFilePath, apmAgent);
 		// edit
-		await this.editAgent(dbAPMAgent._id, apmAgent);
+		await this.editAPMAgent(dbAgent._id, apmAgent);
 	}
 	async installRemoteFromAgentFolder(folderpath, apmAgent) {
 		console.log('Installing remote agent...');
@@ -244,7 +262,13 @@ class APMAgent {
 
 		return outputFilePath;
 	}
-	async uploadAgent(filepath, apmAgent) {
+	async uploadAgentToAPM(filepath, apmAgent) {
+		return await this.uploadAgent('/apm/agent/upload', filepath, apmAgent);
+	}
+	async uploadAgentToAgentStore(filepath, apmAgent) {
+		return await this.uploadAgent('/apm/agentstore/agent/upload', filepath, apmAgent);
+	}
+	async uploadAgent(url, filepath, apmAgent) {
 		await this.loadConfig();
 
 		try {
@@ -256,7 +280,7 @@ class APMAgent {
 
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agent/upload',
+				url,
 				headers: {
 					Authorization: this.apmApiKey,
 				},
@@ -271,16 +295,22 @@ class APMAgent {
 			return responseJSON;
 		} catch (error) {
 			console.error(error.response.data.message);
-			throw new Error(`Error while upload apm agent: ${error.message}`);
+			throw new Error(`Error while upload agent: ${error.message}`);
 		}
 	}
-	async editAgent(_id, payload) {
+	async editAPMAgent(_id, payload) {
+		return await this.editAgent('/apm/agent/edit', _id, payload);
+	}
+	async editAgentStoreAgent(_id, payload) {
+		return await this.editAgent('/apm/agentstore/agent/shelf', _id, payload);
+	}
+	async editAgent(url, _id, payload) {
 		await this.loadConfig();
 
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agent/edit',
+				url,
 				headers: {
 					Authorization: this.apmApiKey,
 				},
@@ -303,7 +333,7 @@ class APMAgent {
 			return responseJSON;
 		} catch (error) {
 			console.error(error.response.data.message);
-			throw new Error(`Error while edit apm agent: ${error.message}`);
+			throw new Error(`Error while edit agent: ${error.message}`);
 		}
 	}
 	async createAgent(payload) {

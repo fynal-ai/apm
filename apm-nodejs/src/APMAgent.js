@@ -154,10 +154,13 @@ class APMAgent {
 		console.log('Agent executor', apmAgent.executor);
 		// remote agent
 		if (apmAgent.executor === 'remote') {
-			return await this.installRemoteFromAgentFolder(folderpath, apmAgent);
+			await this.installRemoteFromAgentFolder(folderpath, apmAgent);
+		} else {
+			// local
+			await this.installLocalFromAgentFolder(folderpath, apmAgent);
 		}
-		// local
-		return await this.installLocalFromAgentFolder(folderpath, apmAgent);
+
+		console.log('Succeed installed agent');
 	}
 	async installLocalFromAgentFolder(folderpath, apmAgent) {
 		// folder to .tmp/[md5].tar.gz
@@ -168,10 +171,10 @@ class APMAgent {
 		const dbAPMAgent = await this.uploadAgent(tarFilePath, apmAgent);
 		// edit
 		await this.editAgent(dbAPMAgent._id, apmAgent);
-		console.log('Succeed install agent');
 	}
 	async installRemoteFromAgentFolder(folderpath, apmAgent) {
-		console.log('Remote agent not supported yet');
+		console.log('Installing remote agent...');
+		await this.createAgent(apmAgent);
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();
@@ -283,6 +286,29 @@ class APMAgent {
 			return responseJSON;
 		} catch (error) {
 			console.log('Error while edit apm agent: ', error.message);
+		}
+	}
+	async createAgent(payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/create',
+				headers: {
+					Authorization: this.apmApiKey,
+				},
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			console.log(
+				`Succeed created ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while created apm agent: ', error.message);
 		}
 	}
 }

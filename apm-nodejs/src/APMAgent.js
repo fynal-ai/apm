@@ -215,7 +215,7 @@ class APMAgent {
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agent/install',
+				url: '/apm/agentstore/agent/install',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: this.apmApiKey,

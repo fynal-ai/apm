@@ -133,7 +133,7 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: Joi.object({
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
 
 						runId: Joi.string().description('run id'),
 						name: Joi.string()
@@ -173,7 +173,8 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: {
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
+
 						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
 							.default(false)
@@ -218,7 +219,7 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: {
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
 
 						runId: Joi.string().required().description('run id'),
 					},
@@ -237,7 +238,8 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: {
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
+
 						runId: Joi.string().required().description('run id'),
 						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 						name: Joi.string().description('agent name'),

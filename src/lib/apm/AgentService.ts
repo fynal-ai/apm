@@ -90,7 +90,7 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.token
+					payload.access_token
 				);
 			}
 
@@ -98,7 +98,7 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.token
+				payload.access_token
 			);
 			return { runId, runMode: 'async' };
 		}
@@ -120,7 +120,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -134,7 +134,8 @@ class AgentService {
 				'Content-Type': 'application/json',
 			},
 			data: {
-				token,
+				access_token,
+
 				runId: runId,
 				name: apmAgent.name,
 				version: apmAgent.version,
@@ -147,7 +148,7 @@ class AgentService {
 		{
 			const sh = await this.generateShellScript({
 				apmAgent,
-				token,
+				access_token,
 				author,
 				agentName,
 				version,
@@ -223,7 +224,7 @@ class AgentService {
 	}
 	async generateNodeJSShellScript({
 		apmAgent,
-		token,
+		access_token,
 		author,
 		agentName,
 		version,
@@ -281,7 +282,7 @@ node main.js
 	}
 	async generatePythonShellScript({
 		apmAgent,
-		token,
+		access_token,
 		author,
 		agentName,
 		version,

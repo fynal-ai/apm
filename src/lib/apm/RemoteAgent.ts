@@ -40,24 +40,27 @@ class RemoteAgent {
 		return await this.post(this.apmAgent.endpoints.cleanresult, payload);
 	}
 	async post(url, data) {
+		// console.log(url, data);
+
 		try {
+			if (data.access_token) {
+				if (this.apmAgent.endpoints.tokenpos === 'header') {
+					delete data.access_token;
+				}
+			}
 			const response = await axios({
 				method: 'POST',
 				url,
-				headers:
-					this.apmAgent.endpoints.tokenpos === 'header'
-						? {
-								Authorization: `Bearer ${data.token}`,
-							}
-						: {},
-				data: {
-					...data,
-
-					...(this.apmAgent.endpoints.tokenpos === 'header' ? { token: undefined } : {}),
-				},
+				headers: data.access_token
+					? {
+							Authorization: `Bearer ${data.access_token}`,
+						}
+					: {},
+				data,
 			});
 			return response.data;
 		} catch (error) {
+			// console.log(error.message);
 			throw new EmpError('REMOTE_AGENT_ERROR', error.message);
 		}
 	}

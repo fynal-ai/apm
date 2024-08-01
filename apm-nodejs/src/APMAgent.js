@@ -1,6 +1,5 @@
 import axios from 'axios';
 import child_process from 'child_process';
-import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -144,10 +143,8 @@ class APMAgent {
 		// folder to .tmp/[md5].tar.gz
 		const tarFilePath = await this.tarAgentFolder(folderpath);
 		console.log('tarFilePath', tarFilePath);
-		// compute md5
-		const md5 = await this.getFileMD5(tarFilePath);
-		console.log('compute md5', md5);
 		// upload to apm
+		await this.uploadAgent(tarFilePath, md5);
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();
@@ -172,7 +169,7 @@ class APMAgent {
 		}
 	}
 	async tarAgentFolder(folderpath) {
-		const outputDir = path.resolve(folderpath, '.tmp');
+		const outputDir = path.resolve(folderpath, 'tmp');
 		await fs.remove(outputDir);
 		await fs.ensureDir(outputDir);
 
@@ -188,10 +185,10 @@ class APMAgent {
 					cwd: folderpath,
 				});
 				childProcess.stdout.on('data', async (data) => {
-					console.log('data', data);
+					// console.log('data', data);
 				});
 				childProcess.stderr.on('data', async (data) => {
-					console.log(data);
+					// console.log(data);
 				});
 				childProcess.stdout.on('close', async () => {
 					resolve(true);
@@ -201,20 +198,34 @@ class APMAgent {
 
 		return outputFilePath;
 	}
-	async getFileMD5(filepath) {
-		return new Promise(async (resolve, reject) => {
-			const stream = await fs.createReadStream(filepath);
-			const hash = crypto.createHash('md5');
-			stream.on('data', (chunk) => {
-				hash.update(chunk);
-			});
-			stream.on('end', () => {
-				const md5 = hash.digest('hex');
-				// console.log(md5);
+	async uploadAgent(spec) {
+		await this.loadConfig();
 
-				resolve(md5);
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			formData.append('filename', this.filename);
+			formData.append('uuid', this.uuid);
+
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/upload',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.apmApiKey,
+				},
+				data: { spec },
+				baseURL: this.apmBaseURL,
 			});
-		});
+			const responseJSON = response.data;
+			console.log(
+				`Succeed uploaded ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while upload apm agent: ', error.message);
+		}
 	}
 }
 

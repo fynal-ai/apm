@@ -179,7 +179,7 @@ class Agent {
 
 		// save file
 		{
-			const workdir = await this.getUserWorkDirCreate(author);
+			const workdir = await this.getTMPWorkDirCreate();
 			let md5 = await this.saveUploadFile(workdir, PLD.file);
 
 			// Create Agent
@@ -262,6 +262,12 @@ class Agent {
 	async getUserWorkDirCreate(username) {
 		const sharefolder = ServerConfig.apm.localRepositoryDir;
 		const workdir = path.join(sharefolder, 'agents', username);
+		await fs.ensureDir(workdir);
+		return workdir;
+	}
+	async getTMPWorkDirCreate() {
+		const sharefolder = ServerConfig.apm.localRepositoryDir;
+		const workdir = path.join(sharefolder, 'tmp');
 		await fs.ensureDir(workdir);
 		return workdir;
 	}

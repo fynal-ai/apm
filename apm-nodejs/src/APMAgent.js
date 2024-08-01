@@ -126,7 +126,9 @@ class APMAgent {
 			this.apmApiKey = config?.auth?.apm?.apiKey;
 			this.apmBaseURL = config?.baseURL;
 		} else {
-			throw new Error('APM config file apm.json not found, try set env "APM_LOCAL_REPOSITORY_DIR"');
+			throw new Error(
+				'APM config file apm.json not found, it should be auto installed at env "APM_LOCAL_REPOSITORY_DIR". Try set env "APM_LOCAL_REPOSITORY_DIR" to you apm repository dir manual.'
+			);
 		}
 	}
 	getLocalRepositoryDir() {

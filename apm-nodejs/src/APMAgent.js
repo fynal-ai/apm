@@ -298,7 +298,8 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while edit apm agent: ', error.message);
+			console.error(error.response.data);
+			throw new Error(`Error while edit apm agent: ${error.message}`);
 		}
 	}
 	async createAgent(payload) {

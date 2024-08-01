@@ -148,8 +148,13 @@ class APMAgent {
 		// folder to .tmp/[md5].tar.gz
 		const tarFilePath = await this.tarAgentFolder(folderpath);
 		console.log('tarFilePath', tarFilePath);
+		// parse agent.json
+		const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
+		console.log('Agent author', apmAgent.author);
+		console.log('Agent name', apmAgent.name);
+		console.log('Agent version', apmAgent.version);
 		// upload to apm
-		await this.uploadAgent(tarFilePath);
+		await this.uploadAgent(tarFilePath, apmAgent);
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();
@@ -203,14 +208,14 @@ class APMAgent {
 
 		return outputFilePath;
 	}
-	async uploadAgent(filepath) {
+	async uploadAgent(filepath, apmAgent) {
 		await this.loadConfig();
 
 		try {
 			const formData = new FormData();
-			formData.append('author', 'jobsimi');
-			formData.append('name', 'jobsimi/hello-apm');
-			formData.append('version', '1.0.1');
+			formData.append('author', apmAgent.author);
+			formData.append('name', apmAgent.name);
+			formData.append('version', apmAgent.version);
 			formData.append('file', fs.createReadStream(filepath));
 
 			const response = await axios({

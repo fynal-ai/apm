@@ -5,6 +5,7 @@ import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import { AGENT } from '../../lib/apm/Agent.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
+import { AGENT_STORE } from '../../lib/apm/AgentStore.js';
 import { Auth } from '../../lib/apm/Auth.js';
 
 export default {
@@ -166,9 +167,9 @@ export default {
 						return await AGENT.uninstall(PLD);
 					});
 				},
-				Publish: async (req: Request, h: ResponseToolkit) => {
+				Upload: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
-						return await AGENT.publish(PLD);
+						return AGENT_STORE.upload(PLD);
 					});
 				},
 			},

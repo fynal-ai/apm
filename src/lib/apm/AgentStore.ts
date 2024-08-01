@@ -3,6 +3,7 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import ServerConfig from '../../config/server.js';
+import { AGENT } from './Agent.js';
 
 class AgentStore {
 	axios: AxiosInstance;
@@ -72,12 +73,28 @@ class AgentStore {
 			},
 		});
 	}
-	async upload(file) {
+	async upload(payload) {
+		// console.log(typeof payload.file._data);
+
+		// save to tmp
+		const tmp_dir = await AGENT.getTMPWorkDirCreate();
+		const md5 = await AGENT.saveUploadFile(tmp_dir, payload.file);
+		// read from tmp
+		const filename = `${md5}.tar.gz`;
+		const filepath = path.join(tmp_dir, filename);
+
 		const response = await this.axios({
 			method: 'POST',
 			url: '/agentstore/agent/upload',
-			data: { file },
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+			data: {
+				...payload,
+				file: fs.createReadStream(filepath),
+			},
 		});
+		return response.data;
 	}
 
 	setApiKey(apiKey: string) {

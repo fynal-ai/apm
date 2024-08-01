@@ -414,22 +414,40 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agentstore/agent/publish',
-			handler: Handlers.APM.AgentStore.Agent.Publish,
+			path: '/apm/agentstore/agent/upload',
+			handler: Handlers.APM.AgentStore.Agent.Upload,
 			config: {
+				// Include this API in swagger documentation
 				// tags: ['api'],
-				description: 'Publish agent package to agent store',
-				notes: 'Provide agent package .tar.gz',
+				description: 'Upload agent to Agent Store',
+				notes: 'Provide agent info',
 				auth: 'token',
 				validate: {
 					payload: {
-						file: Joi.object().required().description('file'),
+						author: Joi.string()
+							.required()
+							.description(
+								'The author, same as your Agent Store username, and should appear in agent name'
+							),
+						name: Joi.string()
+							.required()
+							.description('The name: with author')
+							.example('fynalai/flood_control'),
+						version: Joi.string().required().description('version'),
+
+						file: Joi.object().required().description('agent .tar.gz file'),
 					},
 					validator: Joi,
 				},
 
+				plugins: {
+					'hapi-swagger': {
+						payloadType: 'form',
+					},
+				},
+
 				payload: {
-					maxBytes: 1024 * 1024 * 100, // 100MB
+					maxBytes: 1024 * 1024 * 500, // 500MB
 					output: 'stream',
 					allow: 'multipart/form-data', // important
 					multipart: true, // important

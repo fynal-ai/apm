@@ -95,6 +95,9 @@ dependencies:
   exceljs:
     specifier: ^4.3.0
     version: 4.4.0
+  form-data:
+    specifier: ^4.0.0
+    version: 4.0.0
   fs-extra:
     specifier: ^11.2.0
     version: 11.2.0

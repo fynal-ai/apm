@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
 import JwtAuth from '../../auth/jwt-strategy.js';
@@ -146,6 +147,56 @@ class Agent {
 			return apmAgent;
 		}
 	}
+	/**
+	 * upload
+	 */
+	async upload(PLD) {
+		// author in name
+		const author = PLD.name.split('/')[0];
+		{
+			{
+				if (author !== PLD.author) {
+					throw new EmpError(
+						'AUTHOR_MISSING_IN_AGENT_NAME',
+						'author is not in agent name, like author "fynalai" in "fynalai/flood_control"'
+					);
+				}
+			}
+		}
+
+		// Check if exists
+		{
+			const apmAgent = await APMAgent.findOne({
+				author: author,
+				name: PLD.name,
+				version: PLD.version,
+			});
+
+			if (apmAgent) {
+				return apmAgent;
+			}
+		}
+
+		// save file
+		{
+			const workdir = await this.getUserWorkDirCreate(author);
+			let md5 = await this.saveUploadFile(workdir, PLD.file);
+
+			// Create Agent
+			{
+				let agentStoreAgent = new APMAgent({
+					author,
+					name: PLD.name,
+					version: PLD.version,
+					md5,
+				});
+
+				agentStoreAgent = await agentStoreAgent.save();
+
+				return agentStoreAgent;
+			}
+		}
+	}
 
 	async publish(payload) {
 		const { file } = payload;
@@ -206,6 +257,48 @@ class Agent {
 			return;
 		}
 		return JwtAuth.createToken({ id: user._id });
+	}
+
+	async getUserWorkDirCreate(username) {
+		const sharefolder = ServerConfig.apm.localRepositoryDir;
+		const workdir = path.join(sharefolder, 'agents', username);
+		await fs.ensureDir(workdir);
+		return workdir;
+	}
+	async saveUploadFile(workdir, file) {
+		// 保存为随机文件名
+		const tmp_filename = `${crypto.randomBytes(16).toString('hex')}.tar.gz`;
+		const tmp_filepath = path.join(workdir, tmp_filename);
+		await fs.writeFile(tmp_filepath, file._data);
+
+		// 计算md5
+		const md5 = await this.getFileMD5(tmp_filepath);
+
+		// 重命名
+		const filename = `${md5}.tar.gz`;
+		const filepath = path.join(workdir, filename);
+		if (await fs.exists(filepath)) {
+			await fs.remove(tmp_filepath);
+		} else {
+			await fs.move(tmp_filepath, filepath);
+		}
+
+		return md5;
+	}
+	async getFileMD5(filepath) {
+		return new Promise(async (resolve, reject) => {
+			const stream = await fs.createReadStream(filepath);
+			const hash = crypto.createHash('md5');
+			stream.on('data', (chunk: any) => {
+				hash.update(chunk);
+			});
+			stream.on('end', () => {
+				const md5 = hash.digest('hex');
+				// console.log(md5);
+
+				resolve(md5);
+			});
+		});
 	}
 }
 

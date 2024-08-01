@@ -94,6 +94,11 @@ export default {
 					return await apmAgent.save();
 				});
 			},
+			Upload: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return AGENT.upload(PLD);
+				});
+			},
 		},
 		AgentService: {
 			Auth: async (req: Request, h: ResponseToolkit) => {

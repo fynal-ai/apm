@@ -165,6 +165,7 @@ class Agent {
 		}
 
 		// Check if exists
+
 		{
 			const apmAgent = await APMAgent.findOne({
 				author: author,
@@ -179,21 +180,38 @@ class Agent {
 
 		// save file
 		{
-			const workdir = await this.getTMPWorkDirCreate();
-			let md5 = await this.saveUploadFile(workdir, PLD.file);
+			const tmp_dir = await this.getTMPWorkDirCreate();
+			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
+
+			// extract to user dir
+			{
+				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
+
+				const workdir = await this.getUserWorkDirCreate(author);
+				// untar
+				const untarDir = path.resolve(tmp_dir, md5);
+				await AGENT_STORE.untar(tmp_filepath, untarDir);
+
+				// mv to author/name/version
+				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
+					author,
+					name: PLD.name,
+					version: PLD.version,
+				});
+			}
 
 			// Create Agent
 			{
-				let agentStoreAgent = new APMAgent({
+				let apmAgent = new APMAgent({
 					author,
 					name: PLD.name,
 					version: PLD.version,
 					md5,
 				});
 
-				agentStoreAgent = await agentStoreAgent.save();
+				apmAgent = await apmAgent.save();
 
-				return agentStoreAgent;
+				return apmAgent;
 			}
 		}
 	}
@@ -315,7 +333,7 @@ class Agent {
 
 		return md5;
 	}
-	async getFileMD5(filepath) {
+	async getFileMD5(filepath): Promise<string> {
 		return new Promise(async (resolve, reject) => {
 			const stream = await fs.createReadStream(filepath);
 			const hash = crypto.createHash('md5');

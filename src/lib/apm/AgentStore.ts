@@ -175,6 +175,19 @@ class AgentStore {
 		await this.untar(tmp_filepath, untarDir);
 
 		// mv to author/name/version
+		return await this.moveToAuthorAgentDir(untarDir, agentStoreAgent);
+	}
+	async untar(filepath, outputDir) {
+		await fs.ensureDir(outputDir);
+		console.log('untar', filepath, '=>', outputDir);
+		await child_process.exec(`tar zxvf ${filepath}`, {
+			cwd: outputDir,
+		});
+	}
+	// mv to author/name/version
+	async moveToAuthorAgentDir(folder, agentStoreAgent) {
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+
 		const agentName = agentStoreAgent.name.split('/').at(-1);
 		const agentNameDir = path.resolve(
 			localRepositoryDir,
@@ -184,16 +197,9 @@ class AgentStore {
 		);
 		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
 		await fs.ensureDir(path.dirname(agentNameDir));
-		await fs.move(untarDir, agentVersionDir);
+		await fs.move(folder, agentVersionDir);
 
 		return agentVersionDir;
-	}
-	async untar(filepath, outputDir) {
-		await fs.ensureDir(outputDir);
-		console.log('untar', filepath, '=>', outputDir);
-		await child_process.exec(`tar zxvf ${filepath}`, {
-			cwd: outputDir,
-		});
 	}
 }
 

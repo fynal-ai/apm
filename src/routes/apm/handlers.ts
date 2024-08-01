@@ -172,6 +172,11 @@ export default {
 						return AGENT_STORE.upload(PLD);
 					});
 				},
+				Shelf: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return AGENT_STORE.shelf(PLD);
+					});
+				},
 			},
 		},
 	},

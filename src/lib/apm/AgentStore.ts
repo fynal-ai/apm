@@ -55,23 +55,21 @@ class AgentStore {
 			},
 		});
 	}
-	async edit(payload) {
+	async shelf(payload) {
 		const response = await this.axios({
 			method: 'POST',
-			url: '/agentstore/agent/edit',
+			url: '/agentstore/agent/shelf',
 			data: {
-				name: payload.name,
-				version: payload.version,
-
+				_id: payload._id,
 				label: payload.label,
 				description: payload.description,
 				icon: payload.icon,
 				doc: payload.doc,
 				config: payload.config,
 				executor: payload.executor,
-				md5: payload.md5,
 			},
 		});
+		return response.data;
 	}
 	async upload(payload) {
 		// console.log(typeof payload.file._data);

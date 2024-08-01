@@ -454,6 +454,81 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agentstore/agent/shelf',
+			handler: Handlers.APM.AgentStore.Agent.Shelf,
+			config: {
+				// Include this API in swagger documentation
+				// tags: ['api'],
+				description: 'Shelf agent to Agent Store',
+				notes: 'Provide agent info',
+				auth: 'token',
+				validate: {
+					payload: {
+						_id: Joi.string().description('agent _id'),
+						label: Joi.string().description('label'),
+						description: Joi.string().description('description'),
+						icon: Joi.string().description('icon url'),
+						doc: Joi.string().description('doc in markdown'),
+						config: Joi.object({
+							input: Joi.object().required().description('agent input params'),
+							output: Joi.object().required().description('agent output example'),
+						})
+							.description('agent input params and output example')
+							.example({
+								input: {
+									style: '水墨画',
+									prompt: '无边落木萧萧下，不尽长江滚滚来。',
+								},
+								output: {
+									text: "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)",
+								},
+							}),
+						executor: Joi.string()
+							.valid('python', 'nodejs', 'aiwork')
+							.required()
+							.description('Use which executor to run agent'),
+
+						price: Joi.object({
+							original: Joi.number().default(0).description('agent original price'),
+							discount: Joi.number().description('agent discount price').example(0),
+						})
+							.description('agent original and discount price')
+							.example({
+								original: 100,
+								discount: 0,
+							}),
+						costType: Joi.string()
+							.description('agent cost type')
+							.valid('trial', 'subscription')
+							.example('trial'),
+						validity: Joi.object({
+							validityType: Joi.string()
+								.default('forever')
+								.valid('forever', 'limited')
+								.description('agent validity'),
+							quantity: Joi.number().description(
+								'agent valid quantity when validityType is limited'
+							),
+							unit: Joi.string()
+								.valid('hour', 'day', 'week', 'month', 'year')
+								.description('agent valid quantity unit when validityType is limited '),
+						})
+							.description('agent validity')
+							.example({
+								validityType: 'forever',
+							})
+							.example({
+								validityType: 'limited',
+								quantity: 1,
+								unit: 'year',
+							}),
+					},
+					validator: Joi,
+				},
+			},
+		},
 	],
 };
 

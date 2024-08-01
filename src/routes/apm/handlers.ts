@@ -87,6 +87,19 @@ export default {
 			},
 			Create: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
+					// check if exists
+					{
+						const apmAgent = await APMAgent.findOne({
+							author: PLD.author,
+							name: PLD.name,
+							version: PLD.version,
+						});
+						if (apmAgent) {
+							return apmAgent;
+						}
+					}
+
+					// create new
 					let apmAgent = new APMAgent({
 						...PLD,
 					});

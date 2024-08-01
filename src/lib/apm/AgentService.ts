@@ -90,7 +90,7 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.token
+					payload.access_token
 				);
 			}
 
@@ -98,7 +98,7 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.token
+				payload.access_token
 			);
 			return { runId, runMode: 'async' };
 		}
@@ -120,7 +120,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, token) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -132,9 +132,10 @@ class AgentService {
 			url: `http://127.0.0.1:${ServerConfig.hapi.port}/apm/agentservice/result/save`,
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
 			},
 			data: {
+				access_token,
+
 				runId: runId,
 				name: apmAgent.name,
 				version: apmAgent.version,
@@ -147,7 +148,7 @@ class AgentService {
 		{
 			const sh = await this.generateShellScript({
 				apmAgent,
-				token,
+				access_token,
 				author,
 				agentName,
 				version,
@@ -174,6 +175,8 @@ class AgentService {
 						// console.log(data);
 
 						this.saveLog(workdir, data);
+
+						hasError = false;
 					});
 					childProcess.stderr.on('data', async (data) => {
 						console.log('error', data);
@@ -191,11 +194,6 @@ class AgentService {
 			});
 
 			{
-				// await new Promise((resolve) => {
-				// 	setTimeout(() => {
-				// 		resolve('timeout');
-				// 	}, 3000);
-				// });
 				if (hasError) {
 					await this.saveResult({ runId, status: 'ST_FAIL' });
 				} else {
@@ -223,7 +221,7 @@ class AgentService {
 	}
 	async generateNodeJSShellScript({
 		apmAgent,
-		token,
+		access_token,
 		author,
 		agentName,
 		version,
@@ -281,7 +279,7 @@ node main.js
 	}
 	async generatePythonShellScript({
 		apmAgent,
-		token,
+		access_token,
 		author,
 		agentName,
 		version,

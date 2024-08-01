@@ -101,6 +101,88 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/upload',
+			handler: Handlers.APM.Agent.Upload,
+			config: {
+				// Include this API in swagger documentation
+				// tags: ['api'],
+				description: 'Upload agent to APM',
+				notes: 'Provide agent info',
+				auth: 'token',
+				validate: {
+					payload: {
+						author: Joi.string()
+							.required()
+							.description(
+								'The author, same as your Agent Store username, and should appear in agent name'
+							),
+						name: Joi.string()
+							.required()
+							.description('The name: with author')
+							.example('fynalai/flood_control'),
+						version: Joi.string().required().description('version'),
+
+						file: Joi.object().required().description('agent .tar.gz file'),
+					},
+					validator: Joi,
+				},
+
+				plugins: {
+					'hapi-swagger': {
+						payloadType: 'form',
+					},
+				},
+
+				payload: {
+					maxBytes: 1024 * 1024 * 500, // 500MB
+					output: 'stream',
+					allow: 'multipart/form-data', // important
+					multipart: true, // important
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agent/edit',
+			handler: Handlers.APM.Agent.Edit,
+			config: {
+				// Include this API in swagger documentation
+				// tags: ['api'],
+				description: 'Edit agent in APM',
+				notes: 'Provide agent info',
+				auth: 'token',
+				validate: {
+					payload: {
+						_id: Joi.string().description('agent _id'),
+						label: Joi.string().description('label'),
+						description: Joi.string().description('description'),
+						icon: Joi.string().description('icon url'),
+						doc: Joi.string().description('doc in markdown'),
+						config: Joi.object({
+							input: Joi.object().required().description('agent input params'),
+							output: Joi.object().required().description('agent output example'),
+						})
+							.description('agent input params and output example')
+							.example({
+								input: {
+									style: '水墨画',
+									prompt: '无边落木萧萧下，不尽长江滚滚来。',
+								},
+								output: {
+									text: "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)",
+								},
+							}),
+						executor: Joi.string()
+							.valid('python', 'nodejs', 'aiwork')
+							.required()
+							.description('Use which executor to run agent'),
+					},
+					validator: Joi,
+				},
+			},
+		},
 
 		{
 			method: 'POST',
@@ -133,7 +215,7 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: Joi.object({
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
 
 						runId: Joi.string().description('run id'),
 						name: Joi.string()
@@ -173,7 +255,8 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: {
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
+
 						runId: Joi.string().required().description('run id'),
 						deleteAfter: Joi.boolean()
 							.default(false)
@@ -218,7 +301,7 @@ const internals = {
 				// auth: 'token',
 				validate: {
 					payload: {
-						token: Joi.string().required().description('token'),
+						access_token: Joi.string().required().description('access_token'),
 
 						runId: Joi.string().required().description('run id'),
 					},
@@ -234,37 +317,17 @@ const internals = {
 				// tags: ['api'],
 				description: 'Create a run result and save',
 				notes: 'save',
-				auth: 'token',
+				// auth: 'token',
 				validate: {
 					payload: {
+						access_token: Joi.string().required().description('access_token'),
+
 						runId: Joi.string().required().description('run id'),
 						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 						name: Joi.string().description('agent name'),
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),
 						output: Joi.object().description('agent output'),
-						status: Joi.object({
-							stage: Joi.string()
-								.valid(
-									'notstart',
-									'pending',
-									'underway',
-									'finished',
-									'failure',
-									'stopped',
-									'offline'
-								)
-								.description('stage'),
-							done: Joi.boolean().description('is done'),
-							message: Joi.string().description('message'),
-							code: Joi.number().description('code'),
-							error: Joi.string().description('error'),
-							progress: Joi.number().description('progress'),
-						})
-							.description('current run status')
-							.example({
-								done: true,
-							}),
 					},
 					validator: Joi,
 				},
@@ -351,25 +414,118 @@ const internals = {
 		},
 		{
 			method: 'POST',
-			path: '/apm/agentstore/agent/publish',
-			handler: Handlers.APM.AgentStore.Agent.Publish,
+			path: '/apm/agentstore/agent/upload',
+			handler: Handlers.APM.AgentStore.Agent.Upload,
 			config: {
+				// Include this API in swagger documentation
 				// tags: ['api'],
-				description: 'Publish agent package to agent store',
-				notes: 'Provide agent package .tar.gz',
+				description: 'Upload agent to Agent Store',
+				notes: 'Provide agent info',
 				auth: 'token',
 				validate: {
 					payload: {
-						file: Joi.object().required().description('file'),
+						author: Joi.string()
+							.required()
+							.description(
+								'The author, same as your Agent Store username, and should appear in agent name'
+							),
+						name: Joi.string()
+							.required()
+							.description('The name: with author')
+							.example('fynalai/flood_control'),
+						version: Joi.string().required().description('version'),
+
+						file: Joi.object().required().description('agent .tar.gz file'),
 					},
 					validator: Joi,
 				},
 
+				plugins: {
+					'hapi-swagger': {
+						payloadType: 'form',
+					},
+				},
+
 				payload: {
-					maxBytes: 1024 * 1024 * 100, // 100MB
+					maxBytes: 1024 * 1024 * 500, // 500MB
 					output: 'stream',
 					allow: 'multipart/form-data', // important
 					multipart: true, // important
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentstore/agent/shelf',
+			handler: Handlers.APM.AgentStore.Agent.Shelf,
+			config: {
+				// Include this API in swagger documentation
+				// tags: ['api'],
+				description: 'Shelf agent to Agent Store',
+				notes: 'Provide agent info',
+				auth: 'token',
+				validate: {
+					payload: {
+						_id: Joi.string().description('agent _id'),
+						label: Joi.string().description('label'),
+						description: Joi.string().description('description'),
+						icon: Joi.string().description('icon url'),
+						doc: Joi.string().description('doc in markdown'),
+						config: Joi.object({
+							input: Joi.object().required().description('agent input params'),
+							output: Joi.object().required().description('agent output example'),
+						})
+							.description('agent input params and output example')
+							.example({
+								input: {
+									style: '水墨画',
+									prompt: '无边落木萧萧下，不尽长江滚滚来。',
+								},
+								output: {
+									text: "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)",
+								},
+							}),
+						executor: Joi.string()
+							.valid('python', 'nodejs', 'aiwork')
+							.required()
+							.description('Use which executor to run agent'),
+
+						price: Joi.object({
+							original: Joi.number().default(0).description('agent original price'),
+							discount: Joi.number().description('agent discount price').example(0),
+						})
+							.description('agent original and discount price')
+							.example({
+								original: 100,
+								discount: 0,
+							}),
+						costType: Joi.string()
+							.description('agent cost type')
+							.valid('trial', 'subscription')
+							.example('trial'),
+						validity: Joi.object({
+							validityType: Joi.string()
+								.default('forever')
+								.valid('forever', 'limited')
+								.description('agent validity'),
+							quantity: Joi.number().description(
+								'agent valid quantity when validityType is limited'
+							),
+							unit: Joi.string()
+								.valid('hour', 'day', 'week', 'month', 'year')
+								.description('agent valid quantity unit when validityType is limited '),
+						})
+							.description('agent validity')
+							.example({
+								validityType: 'forever',
+							})
+							.example({
+								validityType: 'limited',
+								quantity: 1,
+								unit: 'year',
+							}),
+					},
+					validator: Joi,
 				},
 			},
 		},

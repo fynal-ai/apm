@@ -5,6 +5,7 @@ import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import { AGENT } from '../../lib/apm/Agent.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
+import { AGENT_STORE } from '../../lib/apm/AgentStore.js';
 import { Auth } from '../../lib/apm/Auth.js';
 
 export default {
@@ -87,11 +88,34 @@ export default {
 			},
 			Create: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
+					// check if exists
+					{
+						const apmAgent = await APMAgent.findOne({
+							author: PLD.author,
+							name: PLD.name,
+							version: PLD.version,
+						});
+						if (apmAgent) {
+							return apmAgent;
+						}
+					}
+
+					// create new
 					let apmAgent = new APMAgent({
 						...PLD,
 					});
 
 					return await apmAgent.save();
+				});
+			},
+			Upload: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return AGENT.upload(PLD);
+				});
+			},
+			Edit: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return AGENT.edit(PLD);
 				});
 			},
 		},
@@ -120,6 +144,7 @@ export default {
 				Save: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						delete PLD.status;
+						delete PLD.token;
 						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},
@@ -142,9 +167,14 @@ export default {
 						return await AGENT.uninstall(PLD);
 					});
 				},
-				Publish: async (req: Request, h: ResponseToolkit) => {
+				Upload: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
-						return await AGENT.publish(PLD);
+						return AGENT_STORE.upload(PLD);
+					});
+				},
+				Shelf: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return AGENT_STORE.shelf(PLD);
 					});
 				},
 			},

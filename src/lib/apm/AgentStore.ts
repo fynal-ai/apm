@@ -3,6 +3,8 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import ServerConfig from '../../config/server.js';
+import EmpError from '../EmpError.js';
+import { AGENT } from './Agent.js';
 
 class AgentStore {
 	axios: AxiosInstance;
@@ -54,30 +56,52 @@ class AgentStore {
 			},
 		});
 	}
-	async edit(payload) {
+	async shelf(payload) {
 		const response = await this.axios({
 			method: 'POST',
-			url: '/agentstore/agent/edit',
+			url: '/agentstore/agent/shelf',
 			data: {
-				name: payload.name,
-				version: payload.version,
-
+				_id: payload._id,
 				label: payload.label,
 				description: payload.description,
 				icon: payload.icon,
 				doc: payload.doc,
 				config: payload.config,
 				executor: payload.executor,
-				md5: payload.md5,
 			},
 		});
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
+		return response.data;
 	}
-	async upload(file) {
+	async upload(payload) {
+		// console.log(typeof payload.file._data);
+
+		// save to tmp
+		const tmp_dir = await AGENT.getTMPWorkDirCreate();
+		const md5 = await AGENT.saveUploadFile(tmp_dir, payload.file);
+		// read from tmp
+		const filename = `${md5}.tar.gz`;
+		const filepath = path.join(tmp_dir, filename);
+
 		const response = await this.axios({
 			method: 'POST',
 			url: '/agentstore/agent/upload',
-			data: { file },
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+			data: {
+				...payload,
+				file: fs.createReadStream(filepath),
+			},
 		});
+
+		// console.log(response.data);
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
+		return response.data;
 	}
 
 	setApiKey(apiKey: string) {
@@ -175,6 +199,19 @@ class AgentStore {
 		await this.untar(tmp_filepath, untarDir);
 
 		// mv to author/name/version
+		return await this.moveToAuthorAgentDir(untarDir, agentStoreAgent);
+	}
+	async untar(filepath, outputDir) {
+		await fs.ensureDir(outputDir);
+		console.log('untar', filepath, '=>', outputDir);
+		await child_process.exec(`tar zxvf ${filepath}`, {
+			cwd: outputDir,
+		});
+	}
+	// mv to author/name/version
+	async moveToAuthorAgentDir(folder, agentStoreAgent) {
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+
 		const agentName = agentStoreAgent.name.split('/').at(-1);
 		const agentNameDir = path.resolve(
 			localRepositoryDir,
@@ -184,16 +221,9 @@ class AgentStore {
 		);
 		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
 		await fs.ensureDir(path.dirname(agentNameDir));
-		await fs.move(untarDir, agentVersionDir);
+		await fs.move(folder, agentVersionDir);
 
 		return agentVersionDir;
-	}
-	async untar(filepath, outputDir) {
-		await fs.ensureDir(outputDir);
-		console.log('untar', filepath, '=>', outputDir);
-		await child_process.exec(`tar zxvf ${filepath}`, {
-			cwd: outputDir,
-		});
 	}
 }
 

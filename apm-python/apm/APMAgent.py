@@ -5,7 +5,7 @@ class APMAgent:
     def __init__(self):
         pass
 
-    def save_output(self, saveconfig, status = {"done": True}, output = {}):
+    def save_output(self, saveconfig,output = {}):
         """
         save output to apm server
         """
@@ -15,7 +15,6 @@ class APMAgent:
             
             data = saveconfig.get("data")
             data["output"] = output
-            data["status"] = status
 
             # print("data", data)
 

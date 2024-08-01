@@ -1,19 +1,21 @@
 import axios from 'axios';
+import child_process from 'child_process';
+import FormData from 'form-data';
 import fs from 'fs-extra';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 class APMAgent {
 	apmApiKey = '';
 	apmBaseURL = '';
 	constructor() {}
-	async saveOutput(saveconfig, status = { done: true }, output = {}) {
+	async saveOutput(saveconfig, output = {}) {
 		try {
 			const url = saveconfig['url'];
 			const headers = saveconfig['headers'];
 
 			const data = saveconfig['data'];
 			data['output'] = output;
-			data['status'] = status;
 
 			const response = await axios({
 				method: 'POST',
@@ -29,27 +31,23 @@ class APMAgent {
 		}
 	}
 	async install(spec) {
-		await this.loadConfig();
+		// install from agent folder
+		// install from agent store
+		if (!spec) {
+			console.log('Try install agent from current folder');
 
-		try {
-			const response = await axios({
-				method: 'POST',
-				url: '/apm/agent/install',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: this.apmApiKey,
-				},
-				data: { spec },
-				baseURL: this.apmBaseURL,
-			});
-
-			const responseJSON = response.data;
-			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
-			return responseJSON;
-		} catch (error) {
-			console.log('Error while installing apm agent: ', error.message);
+			return await this.installFromAgentFolder('.');
 		}
+
+		const isAgentFolder = await this.isAgentFolder(spec);
+
+		if (isAgentFolder) {
+			return await this.installFromAgentFolder(spec);
+		}
+
+		return await this.installFromAgentStore(spec);
 	}
+
 	async uninstall(spec) {
 		await this.loadConfig();
 
@@ -113,7 +111,27 @@ class APMAgent {
 	}
 	async publish() {
 		try {
+			const folderpath = path.resolve('.');
+			console.log(`Publish agent from folder ${folderpath}`);
+			// parse agent.json
+			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
+			console.log('Agent author', apmAgent.author);
+			console.log('Agent name', apmAgent.name);
+			console.log('Agent version', apmAgent.version);
+			console.log('Agent executor', apmAgent.executor);
+
 			// tar ignore .gitignore files to dist/[agentName]-v[version].tar.gz
+			// folder to .tmp/[md5].tar.gz
+			const tarFilePath = await this.tarAgentFolder(folderpath);
+			console.log('tarFilePath', tarFilePath);
+
+			// upload to agentstore
+			const dbAgent = await this.uploadAgentToAgentStore(tarFilePath, apmAgent);
+
+			// edit
+			await this.editAgentStoreAgent(dbAgent._id, apmAgent);
+
+			console.log('Succeed published agent to agent store');
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
 		}
@@ -132,10 +150,224 @@ class APMAgent {
 
 			this.apmApiKey = config?.auth?.apm?.apiKey;
 			this.apmBaseURL = config?.baseURL;
+		} else {
+			throw new Error(
+				'APM config file apm.json not found, it should be auto installed by APM (https://github.com/fynal-ai/apm) at env "APM_LOCAL_REPOSITORY_DIR". Try set env "APM_LOCAL_REPOSITORY_DIR" to you apm repository dir manual.'
+			);
 		}
 	}
 	getLocalRepositoryDir() {
 		return process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm');
+	}
+	async getCLIVersion() {
+		// get version in package.json
+		return (await fs.readJson(path.resolve(fileURLToPath(import.meta.url), '../../package.json')))
+			.version;
+	}
+	async isAgentFolder(spec) {
+		if (await fs.exists(spec)) {
+			return (await fs.stat(spec)).isDirectory();
+		}
+	}
+	async installFromAgentFolder(folderpath) {
+		folderpath = path.resolve(folderpath);
+		console.log(`Installing agent from folder ${folderpath}`);
+
+		// parse agent.json
+		const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
+		console.log('Agent author', apmAgent.author);
+		console.log('Agent name', apmAgent.name);
+		console.log('Agent version', apmAgent.version);
+		console.log('Agent executor', apmAgent.executor);
+		// remote agent
+		if (apmAgent.executor === 'remote') {
+			await this.installRemoteFromAgentFolder(folderpath, apmAgent);
+		} else {
+			// local
+			await this.installLocalFromAgentFolder(folderpath, apmAgent);
+		}
+
+		console.log('Succeed installed agent');
+	}
+	async installLocalFromAgentFolder(folderpath, apmAgent) {
+		// folder to .tmp/[md5].tar.gz
+		const tarFilePath = await this.tarAgentFolder(folderpath);
+		console.log('tarFilePath', tarFilePath);
+
+		// upload to apm
+		const dbAgent = await this.uploadAgentToAPM(tarFilePath, apmAgent);
+		// edit
+		await this.editAPMAgent(dbAgent._id, apmAgent);
+	}
+	async installRemoteFromAgentFolder(folderpath, apmAgent) {
+		console.log('Installing remote agent...');
+		await this.createAgent(apmAgent);
+	}
+	async installFromAgentStore(spec) {
+		if (!spec) {
+			throw new Error('Invalid agent spec, try "apm install <agent>:[version]"');
+		}
+
+		console.log('Installing agent from agent store');
+
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agentstore/agent/install',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.apmApiKey,
+				},
+				data: { spec },
+				baseURL: this.apmBaseURL,
+			});
+
+			const responseJSON = response.data;
+			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
+			return responseJSON;
+		} catch (error) {
+			console.error(error.response.data.message);
+			throw new Error(`Error while install apm agent: ${error.message}`);
+		}
+	}
+	async tarAgentFolder(folderpath) {
+		const outputDir = path.resolve(folderpath, 'tmp');
+		await fs.remove(outputDir);
+		await fs.ensureDir(outputDir);
+
+		const foldername = path.basename(folderpath);
+		const outputname = `${foldername}.tar.gz`;
+		const outputFilePath = path.join(outputDir, outputname);
+
+		{
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore  .`;
+			// console.log('command', command);
+			await new Promise(async (resolve) => {
+				const childProcess = await child_process.exec(command, {
+					cwd: folderpath,
+				});
+				childProcess.stdout.on('data', async (data) => {
+					// console.log('data', data);
+				});
+				childProcess.stderr.on('data', async (data) => {
+					// console.log(data);
+				});
+				childProcess.stdout.on('close', async () => {
+					resolve(true);
+				});
+			});
+		}
+
+		return outputFilePath;
+	}
+	async uploadAgentToAPM(filepath, apmAgent) {
+		return await this.uploadAgent('/apm/agent/upload', filepath, apmAgent);
+	}
+	async uploadAgentToAgentStore(filepath, apmAgent) {
+		return await this.uploadAgent('/apm/agentstore/agent/upload', filepath, apmAgent);
+	}
+	async uploadAgent(url, filepath, apmAgent) {
+		await this.loadConfig();
+
+		try {
+			const formData = new FormData();
+			formData.append('author', apmAgent.author);
+			formData.append('name', apmAgent.name);
+			formData.append('version', apmAgent.version);
+			formData.append('file', fs.createReadStream(filepath));
+
+			const response = await axios({
+				method: 'POST',
+				url,
+				headers: {
+					Authorization: this.apmApiKey,
+				},
+				data: formData,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while upload agent: ${responseJSON.error}`);
+			}
+			console.log(
+				`Succeed uploaded ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.error(error.response.data.message);
+			throw new Error(`Error while upload agent: ${error.message}`);
+		}
+	}
+	async editAPMAgent(_id, payload) {
+		return await this.editAgent('/apm/agent/edit', _id, payload);
+	}
+	async editAgentStoreAgent(_id, payload) {
+		return await this.editAgent('/apm/agentstore/agent/shelf', _id, payload);
+	}
+	async editAgent(url, _id, payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url,
+				headers: {
+					Authorization: this.apmApiKey,
+				},
+				data: {
+					_id,
+					label: payload.label,
+					description: payload.description,
+					icon: payload.icon,
+					doc: payload.doc,
+					config: payload.config,
+					executor: payload.executor,
+				},
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while edit agent: ${responseJSON.error}`);
+			}
+			console.log(
+				`Succeed edited ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.error(error.response.data.message);
+			throw new Error(`Error while edit agent: ${error.message}`);
+		}
+	}
+	async createAgent(payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/create',
+				headers: {
+					Authorization: this.apmApiKey,
+				},
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+
+			console.log(
+				`Succeed created ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.error(error.response.data.message);
+			throw new Error(`Error while create apm agent: ${error.message}`);
+		}
 	}
 }
 

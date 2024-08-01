@@ -1,6 +1,7 @@
 import axios from 'axios';
 import fs from 'fs-extra';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 class APMAgent {
 	apmApiKey = '';
@@ -135,6 +136,11 @@ class APMAgent {
 	}
 	getLocalRepositoryDir() {
 		return process.env.APM_LOCAL_REPOSITORY_DIR || path.resolve(process.env.HOME, '.apm');
+	}
+	async getCLIVersion() {
+		// get version in package.json
+		return (await fs.readJson(path.resolve(fileURLToPath(import.meta.url), '../../package.json')))
+			.version;
 	}
 }
 

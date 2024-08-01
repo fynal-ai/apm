@@ -6,23 +6,16 @@ async function main() {
 	const options = minimist(process.argv.slice(2));
 	// console.log('options', options);
 
-	if (options.help) {
-		console.log(`
-Examples:
+	if (options.help || options._.length === 0) {
+		const version = await APM_AGENT.getCLIVersion();
+		console.log(`APM(Agent Package Manager) v${version}
+
+Usage:
 
   - show help
     apm --help
-  - init a agent package
-    apm init
-	apm init --author jobsimi --name jobsimi/hello-apm --executor nodejs
-  - login to Agent Store
-    apm login
-  - publish to Agent Store
-    apm publish
-  - install from Agent Store
-    apm install <name>[:<version>]
-  - uninstall agent
-    apm uninstall <name>[:<version>]
+  - install
+    apm install <agent-folder>
         `);
 		return;
 	}
@@ -33,7 +26,7 @@ Examples:
 	if (_[0] === 'install') {
 		const agentSpec = _[1];
 		if (!agentSpec) {
-			throw new Error('Invalid agent spec');
+			throw new Error('Invalid agent spec, try "apm install <agent-folder>"');
 		}
 		await APM_AGENT.install(agentSpec);
 	}
@@ -48,6 +41,9 @@ Examples:
 	}
 
 	// init
+	if (_[0] === 'init') {
+		return;
+	}
 	if (_[0] === 'init') {
 		const rl = readline.createInterface({
 			input: process.stdin,
@@ -93,6 +89,9 @@ Examples:
 	}
 
 	// publish
+	if (_[0] === 'publish') {
+		return;
+	}
 	if (_[0] === 'publish') {
 		await APM_AGENT.publish();
 	}

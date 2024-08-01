@@ -6,14 +6,13 @@ class APMAgent {
 	apmApiKey = '';
 	apmBaseURL = '';
 	constructor() {}
-	async saveOutput(saveconfig, status = { done: true }, output = {}) {
+	async saveOutput(saveconfig, output = {}) {
 		try {
 			const url = saveconfig['url'];
 			const headers = saveconfig['headers'];
 
 			const data = saveconfig['data'];
 			data['output'] = output;
-			data['status'] = status;
 
 			const response = await axios({
 				method: 'POST',

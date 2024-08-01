@@ -252,7 +252,12 @@ class APMAgent {
 				},
 				data: {
 					_id,
-					...payload,
+					label: payload.label,
+					description: payload.description,
+					icon: payload.icon,
+					doc: payload.doc,
+					config: payload.config,
+					executor: payload.executor,
 				},
 				baseURL: this.apmBaseURL,
 			});

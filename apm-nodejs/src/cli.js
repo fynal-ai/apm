@@ -16,6 +16,9 @@ Usage:
     apm --help
   - install agent
     apm install <agent-folder>
+	apm install .
+  - uninstall agent
+     apm uninstall <name>:[version]
         `);
 		return;
 	}

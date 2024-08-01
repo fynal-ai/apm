@@ -145,10 +145,9 @@ class APMAgent {
 			.version;
 	}
 	async isAgentFolder(spec) {
-		if (spec.search('/') > -1) {
-			return false;
+		if (await fs.exists(spec)) {
+			return (await fs.stat(spec)).isDirectory();
 		}
-		return (await fs.stat(spec)).isDirectory();
 	}
 	async installFromAgentFolder(folderpath) {
 		folderpath = path.resolve(folderpath);

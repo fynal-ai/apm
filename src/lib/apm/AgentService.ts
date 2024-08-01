@@ -175,6 +175,8 @@ class AgentService {
 						// console.log(data);
 
 						this.saveLog(workdir, data);
+
+						hasError = false;
 					});
 					childProcess.stderr.on('data', async (data) => {
 						console.log('error', data);
@@ -192,11 +194,6 @@ class AgentService {
 			});
 
 			{
-				// await new Promise((resolve) => {
-				// 	setTimeout(() => {
-				// 		resolve('timeout');
-				// 	}, 3000);
-				// });
 				if (hasError) {
 					await this.saveResult({ runId, status: 'ST_FAIL' });
 				} else {

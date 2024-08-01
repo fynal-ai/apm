@@ -1,5 +1,6 @@
 import axios from 'axios';
 import child_process from 'child_process';
+import FormData from 'form-data';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -124,6 +125,8 @@ class APMAgent {
 
 			this.apmApiKey = config?.auth?.apm?.apiKey;
 			this.apmBaseURL = config?.baseURL;
+		} else {
+			throw new Error('APM config file apm.json not found, try set env "APM_LOCAL_REPOSITORY_DIR"');
 		}
 	}
 	getLocalRepositoryDir() {
@@ -144,7 +147,7 @@ class APMAgent {
 		const tarFilePath = await this.tarAgentFolder(folderpath);
 		console.log('tarFilePath', tarFilePath);
 		// upload to apm
-		await this.uploadAgent(tarFilePath, md5);
+		await this.uploadAgent(tarFilePath);
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();
@@ -198,23 +201,23 @@ class APMAgent {
 
 		return outputFilePath;
 	}
-	async uploadAgent(spec) {
+	async uploadAgent(filepath) {
 		await this.loadConfig();
 
 		try {
 			const formData = new FormData();
-			formData.append('file', file);
-			formData.append('filename', this.filename);
-			formData.append('uuid', this.uuid);
+			formData.append('author', 'jobsimi');
+			formData.append('name', 'jobsimi/hello-apm');
+			formData.append('version', '1.0.1');
+			formData.append('file', fs.createReadStream(filepath));
 
 			const response = await axios({
 				method: 'POST',
 				url: '/apm/agent/upload',
 				headers: {
-					'Content-Type': 'application/json',
 					Authorization: this.apmApiKey,
 				},
-				data: { spec },
+				data: formData,
 				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;

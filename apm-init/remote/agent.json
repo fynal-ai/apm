@@ -1,0 +1,26 @@
+{
+	"author": "jobsimi",
+	"version": "1.0.1",
+	"name": "jobsimi/draw-image",
+	"label": "绘画助理",
+	"description": "描述绘画风格和主题，绘画助理为您绘图。",
+	"icon": "https://bonsai.baystoneai.com/favicon.png",
+	"doc": "描述绘画风格和主题",
+	"config": {
+		"input": {
+			"style": "水墨画",
+			"prompt": "无边落木萧萧下，不尽长江滚滚来。"
+		},
+		"output": {
+			"text": "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)"
+		}
+	},
+	"executor": "remote",
+	"endpoints": {
+		"auth": "https://apmemp.baystoneai.com/apm/auth",
+		"authType": "idandkey",
+		"run": "https://apmemp.baystoneai.com/apm/agentservice/run",
+		"getresult": "https://apmemp.baystoneai.com/apm/agentservice/result/get",
+		"cleanresult": "https://apmemp.baystoneai.com/apm/agentservice/result/clean"
+	}
+}

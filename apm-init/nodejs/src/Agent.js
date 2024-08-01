@@ -14,7 +14,7 @@ class Agent {
 
 		const output = { text: '' };
 
-		this.apmAgent.saveOutput(saveconfig, undefined, output);
+		this.apmAgent.saveOutput(saveconfig, output);
 
 		return output;
 	}

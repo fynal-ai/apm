@@ -1,5 +1,5 @@
 {
-	"name": "@{{AUTHOR}}/{{NAME}}",
+	"name": "{{NAME}}",
 	"type": "module",
 	"main": "./src/index.js",
 	"scripts": {

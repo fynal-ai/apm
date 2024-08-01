@@ -1,4 +1,5 @@
 import axios from 'axios';
+import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -165,7 +166,19 @@ class APMAgent {
 			console.log('Error while installing apm agent: ', error.message);
 		}
 	}
-	async tarAgentFolder(folderpath) {}
+	async tarAgentFolder(folderpath) {
+		const outputDir = path.resolve(folderpath, '.tmp');
+		await fs.ensureDir(outputDir);
+
+		const foldername = path.basename(folderpath);
+		const filepath = path.resolve(outputDir, `${foldername}.tar.gz`);
+		{
+			console.log('tar', folderpath, '=>', filepath);
+			await child_process.exec(`tar zcvf ${filepath} ${foldername}`, {
+				cwd: outputDir,
+			});
+		}
+	}
 }
 
 const APM_AGENT = new APMAgent();

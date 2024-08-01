@@ -197,6 +197,30 @@ class Agent {
 			}
 		}
 	}
+	async edit(PLD) {
+		const apmAgent = await APMAgent.findOneAndUpdate(
+			{ _id: PLD._id },
+			{
+				$set: {
+					label: PLD.label,
+					description: PLD.description,
+					icon: PLD.icon,
+					doc: PLD.doc,
+					config: PLD.config,
+					executor: PLD.executor,
+				},
+			},
+			{
+				new: true,
+			}
+		).lean();
+
+		if (!apmAgent) {
+			throw new EmpError('AGENT_NOT_FOUND', `Agent not found`);
+		}
+
+		return apmAgent;
+	}
 
 	async publish(payload) {
 		const { file } = payload;

@@ -99,6 +99,11 @@ export default {
 					return AGENT.upload(PLD);
 				});
 			},
+			Edit: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return AGENT.edit(PLD);
+				});
+			},
 		},
 		AgentService: {
 			Auth: async (req: Request, h: ResponseToolkit) => {

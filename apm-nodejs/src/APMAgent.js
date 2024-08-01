@@ -154,7 +154,10 @@ class APMAgent {
 		console.log('Agent name', apmAgent.name);
 		console.log('Agent version', apmAgent.version);
 		// upload to apm
-		await this.uploadAgent(tarFilePath, apmAgent);
+		const dbAPMAgent = await this.uploadAgent(tarFilePath, apmAgent);
+		// edit
+		await this.editAgent(dbAPMAgent._id, apmAgent);
+		console.log('Succeed install agent');
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();
@@ -235,6 +238,32 @@ class APMAgent {
 			return responseJSON;
 		} catch (error) {
 			console.log('Error while upload apm agent: ', error.message);
+		}
+	}
+	async editAgent(_id, payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/edit',
+				headers: {
+					Authorization: this.apmApiKey,
+				},
+				data: {
+					_id,
+					...payload,
+				},
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			console.log(
+				`Succeed edited ${responseJSON.name}` +
+					(responseJSON.version ? `:${responseJSON.version}` : '')
+			);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while edit apm agent: ', error.message);
 		}
 	}
 }

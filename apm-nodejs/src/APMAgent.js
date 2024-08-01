@@ -145,19 +145,33 @@ class APMAgent {
 	async installFromAgentFolder(folderpath) {
 		folderpath = path.resolve(folderpath);
 		console.log(`Installing agent from folder ${folderpath}`);
-		// folder to .tmp/[md5].tar.gz
-		const tarFilePath = await this.tarAgentFolder(folderpath);
-		console.log('tarFilePath', tarFilePath);
+
 		// parse agent.json
 		const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
 		console.log('Agent author', apmAgent.author);
 		console.log('Agent name', apmAgent.name);
 		console.log('Agent version', apmAgent.version);
+		console.log('Agent executor', apmAgent.executor);
+		// remote agent
+		if (apmAgent.executor === 'remote') {
+			return await this.installRemoteFromAgentFolder(folderpath, apmAgent);
+		}
+		// local
+		return await this.installLocalFromAgentFolder(folderpath, apmAgent);
+	}
+	async installLocalFromAgentFolder(folderpath, apmAgent) {
+		// folder to .tmp/[md5].tar.gz
+		const tarFilePath = await this.tarAgentFolder(folderpath);
+		console.log('tarFilePath', tarFilePath);
+
 		// upload to apm
 		const dbAPMAgent = await this.uploadAgent(tarFilePath, apmAgent);
 		// edit
 		await this.editAgent(dbAPMAgent._id, apmAgent);
 		console.log('Succeed install agent');
+	}
+	async installRemoteFromAgentFolder(folderpath, apmAgent) {
+		console.log('Remote agent not supported yet');
 	}
 	async installFromAgentStore(spec) {
 		await this.loadConfig();

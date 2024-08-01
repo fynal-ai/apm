@@ -288,6 +288,10 @@ class APMAgent {
 				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while upload agent: ${responseJSON.error}`);
+			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
 					(responseJSON.version ? `:${responseJSON.version}` : '')
@@ -326,6 +330,10 @@ class APMAgent {
 				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while edit agent: ${responseJSON.error}`);
+			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
 					(responseJSON.version ? `:${responseJSON.version}` : '')
@@ -350,6 +358,7 @@ class APMAgent {
 				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;
+
 			console.log(
 				`Succeed created ${responseJSON.name}` +
 					(responseJSON.version ? `:${responseJSON.version}` : '')

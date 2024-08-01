@@ -3,6 +3,7 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import ServerConfig from '../../config/server.js';
+import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
 
 class AgentStore {
@@ -69,6 +70,9 @@ class AgentStore {
 				executor: payload.executor,
 			},
 		});
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
 		return response.data;
 	}
 	async upload(payload) {
@@ -92,6 +96,11 @@ class AgentStore {
 				file: fs.createReadStream(filepath),
 			},
 		});
+
+		// console.log(response.data);
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
 		return response.data;
 	}
 

@@ -29,27 +29,18 @@ class APMAgent {
 		}
 	}
 	async install(spec) {
-		await this.loadConfig();
+		// install from agent folder
+		// install from agent store
 
-		try {
-			const response = await axios({
-				method: 'POST',
-				url: '/apm/agent/install',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: this.apmApiKey,
-				},
-				data: { spec },
-				baseURL: this.apmBaseURL,
-			});
+		const isAgentFolder = await this.isAgentFolder(spec);
 
-			const responseJSON = response.data;
-			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
-			return responseJSON;
-		} catch (error) {
-			console.log('Error while installing apm agent: ', error.message);
+		if (isAgentFolder) {
+			return await this.installFromAgentFolder(spec);
 		}
+
+		return await this.installFromAgentStore(spec);
 	}
+
 	async uninstall(spec) {
 		await this.loadConfig();
 
@@ -142,6 +133,39 @@ class APMAgent {
 		return (await fs.readJson(path.resolve(fileURLToPath(import.meta.url), '../../package.json')))
 			.version;
 	}
+	async isAgentFolder(spec) {
+		return (await fs.stat(spec)).isDirectory();
+	}
+	async installFromAgentFolder(folderpath) {
+		folderpath = path.resolve(folderpath);
+		console.log(`Installing agent from folder ${folderpath}`);
+		// folder to dist/[md5].tar.gz
+		await this.tarAgentFolder(folderpath);
+		// upload to apm
+	}
+	async installFromAgentStore(spec) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/install',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.apmApiKey,
+				},
+				data: { spec },
+				baseURL: this.apmBaseURL,
+			});
+
+			const responseJSON = response.data;
+			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while installing apm agent: ', error.message);
+		}
+	}
+	async tarAgentFolder(folderpath) {}
 }
 
 const APM_AGENT = new APMAgent();

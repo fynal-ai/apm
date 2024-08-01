@@ -13,10 +13,13 @@ async function main() {
 Usage:
 
   - show help
+    apm
     apm --help
-  - install agent
+  - install agent from local folder or agent store
     apm install <agent-folder>
+	apm install	
 	apm install .
+	apm install <name>:[version]
   - uninstall agent
     apm uninstall <name>:[version]
   - cd to agent folder and publish agent

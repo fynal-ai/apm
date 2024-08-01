@@ -33,6 +33,11 @@ class APMAgent {
 	async install(spec) {
 		// install from agent folder
 		// install from agent store
+		if (!spec) {
+			console.log('Try install agent from current folder');
+
+			return await this.installFromAgentFolder('.');
+		}
 
 		const isAgentFolder = await this.isAgentFolder(spec);
 
@@ -140,6 +145,9 @@ class APMAgent {
 			.version;
 	}
 	async isAgentFolder(spec) {
+		if (spec.search('/') > -1) {
+			return false;
+		}
 		return (await fs.stat(spec)).isDirectory();
 	}
 	async installFromAgentFolder(folderpath) {
@@ -177,6 +185,12 @@ class APMAgent {
 		await this.createAgent(apmAgent);
 	}
 	async installFromAgentStore(spec) {
+		if (!spec) {
+			throw new Error('Invalid agent spec, try "apm install <agent>:[version]"');
+		}
+
+		console.log('Installing agent from agent store');
+
 		await this.loadConfig();
 
 		try {

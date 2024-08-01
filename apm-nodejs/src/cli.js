@@ -28,9 +28,6 @@ Usage:
 	// install
 	if (_[0] === 'install') {
 		const agentSpec = _[1];
-		if (!agentSpec) {
-			throw new Error('Invalid agent spec, try "apm install <agent-folder>"');
-		}
 		await APM_AGENT.install(agentSpec);
 	}
 

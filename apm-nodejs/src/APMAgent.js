@@ -1,5 +1,6 @@
 import axios from 'axios';
 import child_process from 'child_process';
+import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -140,8 +141,12 @@ class APMAgent {
 	async installFromAgentFolder(folderpath) {
 		folderpath = path.resolve(folderpath);
 		console.log(`Installing agent from folder ${folderpath}`);
-		// folder to dist/[md5].tar.gz
-		await this.tarAgentFolder(folderpath);
+		// folder to .tmp/[md5].tar.gz
+		const tarFilePath = await this.tarAgentFolder(folderpath);
+		console.log('tarFilePath', tarFilePath);
+		// compute md5
+		const md5 = await this.getFileMD5(tarFilePath);
+		console.log('compute md5', md5);
 		// upload to apm
 	}
 	async installFromAgentStore(spec) {
@@ -178,10 +183,38 @@ class APMAgent {
 		{
 			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore  .`;
 			// console.log('command', command);
-			await child_process.exec(command, {
-				cwd: folderpath,
+			await new Promise(async (resolve) => {
+				const childProcess = await child_process.exec(command, {
+					cwd: folderpath,
+				});
+				childProcess.stdout.on('data', async (data) => {
+					console.log('data', data);
+				});
+				childProcess.stderr.on('data', async (data) => {
+					console.log(data);
+				});
+				childProcess.stdout.on('close', async () => {
+					resolve(true);
+				});
 			});
 		}
+
+		return outputFilePath;
+	}
+	async getFileMD5(filepath) {
+		return new Promise(async (resolve, reject) => {
+			const stream = await fs.createReadStream(filepath);
+			const hash = crypto.createHash('md5');
+			stream.on('data', (chunk) => {
+				hash.update(chunk);
+			});
+			stream.on('end', () => {
+				const md5 = hash.digest('hex');
+				// console.log(md5);
+
+				resolve(md5);
+			});
+		});
 	}
 }
 

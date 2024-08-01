@@ -132,7 +132,7 @@ class APMAgent {
 			this.apmBaseURL = config?.baseURL;
 		} else {
 			throw new Error(
-				'APM config file apm.json not found, it should be auto installed at env "APM_LOCAL_REPOSITORY_DIR". Try set env "APM_LOCAL_REPOSITORY_DIR" to you apm repository dir manual.'
+				'APM config file apm.json not found, it should be auto installed by APM (https://github.com/fynal-ai/apm) at env "APM_LOCAL_REPOSITORY_DIR". Try set env "APM_LOCAL_REPOSITORY_DIR" to you apm repository dir manual.'
 			);
 		}
 	}
@@ -208,7 +208,8 @@ class APMAgent {
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while installing apm agent: ', error.message);
+			console.error(error.response.data.message);
+			throw new Error(`Error while install apm agent: ${error.message}`);
 		}
 	}
 	async tarAgentFolder(folderpath) {
@@ -267,7 +268,8 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while upload apm agent: ', error.message);
+			console.error(error.response.data.message);
+			throw new Error(`Error while upload apm agent: ${error.message}`);
 		}
 	}
 	async editAgent(_id, payload) {
@@ -298,7 +300,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data);
+			console.error(error.response.data.message);
 			throw new Error(`Error while edit apm agent: ${error.message}`);
 		}
 	}
@@ -322,7 +324,8 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.log('Error while created apm agent: ', error.message);
+			console.error(error.response.data.message);
+			throw new Error(`Error while create apm agent: ${error.message}`);
 		}
 	}
 }

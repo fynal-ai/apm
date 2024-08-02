@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
@@ -300,8 +301,53 @@ class Agent {
 			createdAt: -1,
 		});
 		if (!user) {
-			return;
+			console.log("Initial user")
+			const PLD={
+				username:ServerConfig.apm.access_id,
+				password:ServerConfig.apm.access_key,
+			};
+
+			const API_SERVER = `http://127.0.0.1:${ServerConfig.hapi.port}`;
+			console.log('API_SERVER', API_SERVER);
+
+			// 注册用户
+			if (!user) {
+				try {
+					const response = await axios('/account/register', {
+						method: 'POST',
+						baseURL: API_SERVER,
+						data: {
+							account: PLD.username,
+							username: PLD.username,
+							password: PLD.password,
+						},
+					});
+					if (!response.data._id) {
+						throw new EmpError('LOGIN_FAILED', 'login failed');
+					}
+				} catch (error) {
+					// console.log('error.response.data', error.response.data);
+					throw new EmpError(
+						'LOGIN_FAILED',
+						error.response.data.message,
+						'Your username or password is not valid.'
+					);
+				}
+			}
+
+			// 登录
+			const { data } = await axios('/account/login', {
+				method: 'POST',
+				baseURL: API_SERVER,
+				data: {
+					account: PLD.username,
+					password: PLD.password,
+				},
+			});
+
+			return data.sessionToken;			
 		}
+		
 		return JwtAuth.createToken({ id: user._id });
 	}
 

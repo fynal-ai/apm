@@ -9,14 +9,14 @@ import { AGENT } from './Agent.js';
 class AgentStore {
 	axios: AxiosInstance;
 	baseURL: string = ServerConfig.apm.agentStore.baseURL;
-	apiKey: string;
+	sessionToken: string;
 
-	constructor(baseURL?, apiKey?) {
+	constructor(baseURL?, sessionToken?) {
 		this.axios = axios.create();
 
 		this.setBaseURL(baseURL);
-		this.setApiKey(apiKey);
-		if (!this.apiKey) {
+		this.setSessionToken(sessionToken);
+		if (!this.sessionToken) {
 			this.readCachedAuthFile();
 		}
 	}
@@ -35,7 +35,7 @@ class AgentStore {
 			url: '/agentstore/agent/login',
 			data: { username, password },
 		});
-		this.setApiKey(response.data.sessionToken);
+		this.setSessionToken(response.data.sessionToken);
 		await this.saveToCachedAuthFile();
 		return response.data;
 	}
@@ -104,13 +104,13 @@ class AgentStore {
 		return response.data;
 	}
 
-	setApiKey(apiKey: string) {
-		if (apiKey) {
-			this.apiKey = apiKey;
+	setSessionToken(sessionToken: string) {
+		if (sessionToken) {
+			this.sessionToken = sessionToken;
 		}
 
-		if (this.apiKey) {
-			this.axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiKey}`;
+		if (this.sessionToken) {
+			this.axios.defaults.headers.common['Authorization'] = `Bearer ${this.sessionToken}`;
 		}
 	}
 	setBaseURL(baseURL: string) {
@@ -150,7 +150,7 @@ class AgentStore {
 
 		const { auth } = await fs.readJson(filepath);
 
-		this.setApiKey(auth?.agentstore?.apiKey);
+		this.setSessionToken(auth?.agentstore?.sessionToken);
 	}
 	async saveToCachedAuthFile() {
 		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
@@ -169,7 +169,7 @@ class AgentStore {
 			fileJSON = await fs.readJson(filepath);
 		}
 
-		Object.assign(fileJSON.auth.agentstore, { apiKey: this.apiKey });
+		Object.assign(fileJSON.auth.agentstore, { sessionToken: this.sessionToken });
 
 		await fs.writeJson(filepath, fileJSON, { spaces: 4 });
 	}

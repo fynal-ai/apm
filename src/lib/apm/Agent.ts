@@ -274,14 +274,14 @@ class Agent {
 
 		// file 404
 		if ((await fs.exists(filepath)) === false) {
-			const apmApiKey = await this.getApiKey();
+			const access_token = await this.getAccessToken();
 			await fs.writeJson(
 				filepath,
 				{
 					baseURL: `http://127.0.0.1:${ServerConfig.hapi.port}`,
 					auth: {
 						apm: {
-							...(apmApiKey ? { apiKey: apmApiKey } : {}),
+							...(access_token ? { access_token } : {}),
 						},
 						agentstore: {},
 					},
@@ -292,7 +292,7 @@ class Agent {
 
 		return filepath;
 	}
-	async getApiKey() {
+	async getAccessToken() {
 		// apm user from process.env.ACCESS_ID
 		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({
 			createdAt: -1,

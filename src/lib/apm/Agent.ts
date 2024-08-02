@@ -293,8 +293,10 @@ class Agent {
 		return filepath;
 	}
 	async getApiKey() {
-		// first apm user
-		const user = await User.findOne({}).sort({ createdAt: -1 });
+		// apm user from process.env.ACCESS_ID
+		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({
+			createdAt: -1,
+		});
 		if (!user) {
 			return;
 		}

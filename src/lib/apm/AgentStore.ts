@@ -37,6 +37,9 @@ class AgentStore {
 			url: '/agentstore/agent/login',
 			data: { username, password },
 		});
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
 		this.username = username;
 		this.password = password;
 		this.setSessionToken(response.data.sessionToken);

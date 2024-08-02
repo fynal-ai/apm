@@ -23,7 +23,10 @@
 		"test": "lab --assert @hapi/code",
 		"start": "shx cp ./README.md src/docs && node build/index.js",
 		"debug": "node --inspect build/index.js",
-		"docs": "./node_modules/docker/docker -w -I -x node_modules -s yes -o ../aid-pages "
+		"docs": "./node_modules/docker/docker -w -I -x node_modules -s yes -o ../aid-pages ",
+		"docker.build.base":"docker build --pull --rm -f Dockerfile.base -t jobsimi/apm:base .",
+		"docker.build.latest":"docker build --pull --rm -f Dockerfile.latest -t jobsimi/apm:latest .",
+		"docker.compose":"docker compose -f docker-compose.yml up"
 	},
 	"dependencies": {
 		"@dqbd/tiktoken": "^1.0.7",

@@ -189,15 +189,18 @@ class Agent {
 			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
 
 			// extract to user dir
+			console.log("extract to user dir")
 			{
 				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
 
 				const workdir = await this.getUserWorkDirCreate(author);
 				// untar
+				console.log("untar")
 				const untarDir = path.resolve(tmp_dir, md5);
 				await AGENT_STORE.untar(tmp_filepath, untarDir);
 
 				// mv to author/name/version
+				console.log("mv to author/name/version")
 				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
 					author,
 					name: PLD.name,
@@ -206,6 +209,7 @@ class Agent {
 			}
 
 			// Create Agent
+			console.log("Create Agent")
 			{
 				let apmAgent = new APMAgent({
 					author,
@@ -215,6 +219,8 @@ class Agent {
 				});
 
 				apmAgent = await apmAgent.save();
+
+				console.log(apmAgent)
 
 				return apmAgent;
 			}

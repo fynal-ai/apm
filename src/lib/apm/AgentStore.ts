@@ -9,6 +9,8 @@ import { AGENT } from './Agent.js';
 class AgentStore {
 	axios: AxiosInstance;
 	baseURL: string = ServerConfig.apm.agentStore.baseURL;
+	username: string;
+	password: string;
 	sessionToken: string;
 
 	constructor(baseURL?, sessionToken?) {
@@ -35,6 +37,8 @@ class AgentStore {
 			url: '/agentstore/agent/login',
 			data: { username, password },
 		});
+		this.username = username;
+		this.password = password;
 		this.setSessionToken(response.data.sessionToken);
 		await this.saveToCachedAuthFile();
 		return response.data;
@@ -169,7 +173,11 @@ class AgentStore {
 			fileJSON = await fs.readJson(filepath);
 		}
 
-		Object.assign(fileJSON.auth.agentstore, { sessionToken: this.sessionToken });
+		Object.assign(fileJSON.auth.agentstore, {
+			username: this.username,
+			password: this.password,
+			sessionToken: this.sessionToken,
+		});
 
 		await fs.writeJson(filepath, fileJSON, { spaces: 4 });
 	}

@@ -33,6 +33,9 @@ Usage:
 
 	const { _ } = options;
 
+	// read agent.sjon
+	await APM_AGENT.loadConfig();
+
 	// install
 	if (_[0] === 'install') {
 		const agentSpec = _[1];
@@ -104,36 +107,44 @@ Usage:
 	// login
 	if (_[0] === 'login') {
 		console.log('Login to Agent Store...');
-		// read from cli
-		const rl = readline.createInterface({
-			input: process.stdin,
-			output: process.stdout,
-		});
-
-		let username = options.username;
-		if (!username) {
-			await new Promise((resolve) => {
-				rl.question(`Agent Store username: `, async (input) => {
-					username = input;
-
-					resolve(true);
-				});
+		if (!APM_AGENT.agentStoreSessionToken) {
+			// read from cli
+			const rl = readline.createInterface({
+				input: process.stdin,
+				output: process.stdout,
 			});
+
+			let username = options.username;
+			if (!username) {
+				await new Promise((resolve) => {
+					rl.question(`Agent Store username: `, async (input) => {
+						username = input;
+
+						resolve(true);
+					});
+				});
+			}
+
+			let password = options.password;
+			if (!password) {
+				await new Promise((resolve) => {
+					rl.question(`Agent Store password: `, async (input) => {
+						password = input;
+
+						resolve(true);
+					});
+				});
+			}
+
+			rl.close();
+
+			await APM_AGENT.login({ username, password });
 		}
 
-		let password = options.password;
-		if (!password) {
-			await new Promise((resolve) => {
-				rl.question(`Agent Store password: `, async (input) => {
-					password = input;
-
-					resolve(true);
-				});
-			});
-		}
-
-		rl.close();
-		await APM_AGENT.login({ username, password });
+		console.log(
+			`Logged to Agent Store with user`,
+			options.username || APM_AGENT.agentStoreUsername
+		);
 	}
 }
 main();

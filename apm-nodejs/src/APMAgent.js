@@ -234,7 +234,7 @@ class APMAgent {
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while install apm agent: ${error.message}`);
 		}
 	}
@@ -304,7 +304,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while upload agent: ${error.message}`);
 		}
 	}
@@ -346,7 +346,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while edit agent: ${error.message}`);
 		}
 	}
@@ -371,7 +371,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while create apm agent: ${error.message}`);
 		}
 	}

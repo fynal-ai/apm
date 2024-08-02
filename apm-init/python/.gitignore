@@ -1,2 +1,4 @@
 dist
 .venv
+__pycache__
+tmp

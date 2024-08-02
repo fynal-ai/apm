@@ -6,8 +6,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 class APMAgent {
-	apmApiKey = '';
+	apmAccessToken = '';
 	apmBaseURL = '';
+	agentStoreUsername = '';
+	agentStorePassword = '';
+	agentStoreSessionToken = '';
 	constructor() {}
 	async saveOutput(saveconfig, output = {}) {
 		try {
@@ -57,7 +60,7 @@ class APMAgent {
 				url: '/apm/agentstore/agent/uninstall',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apmApiKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: { spec },
 				baseURL: this.apmBaseURL,
@@ -148,8 +151,11 @@ class APMAgent {
 		if ((await fs.exists(filepath)) === true) {
 			const config = await fs.readJson(filepath);
 
-			this.apmApiKey = config?.auth?.apm?.apiKey;
+			this.apmAccessToken = config?.auth?.apm?.access_token;
 			this.apmBaseURL = config?.baseURL;
+			this.agentStoreUsername = config?.auth?.agentstore?.username;
+			this.agentStorePassword = config?.auth?.agentstore?.password;
+			this.agentStoreSessionToken = config?.auth?.agentstore?.sessionToken;
 		} else {
 			throw new Error(
 				'APM config file apm.json not found, it should be auto installed by APM (https://github.com/fynal-ai/apm) at env "APM_LOCAL_REPOSITORY_DIR". Try set env "APM_LOCAL_REPOSITORY_DIR" to you apm repository dir manual.'
@@ -218,7 +224,7 @@ class APMAgent {
 				url: '/apm/agentstore/agent/install',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apmApiKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: { spec },
 				baseURL: this.apmBaseURL,
@@ -228,7 +234,7 @@ class APMAgent {
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while install apm agent: ${error.message}`);
 		}
 	}
@@ -282,7 +288,7 @@ class APMAgent {
 				method: 'POST',
 				url,
 				headers: {
-					Authorization: this.apmApiKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: formData,
 				baseURL: this.apmBaseURL,
@@ -298,7 +304,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while upload agent: ${error.message}`);
 		}
 	}
@@ -316,7 +322,7 @@ class APMAgent {
 				method: 'POST',
 				url,
 				headers: {
-					Authorization: this.apmApiKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: {
 					_id,
@@ -340,7 +346,7 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while edit agent: ${error.message}`);
 		}
 	}
@@ -352,7 +358,7 @@ class APMAgent {
 				method: 'POST',
 				url: '/apm/agent/create',
 				headers: {
-					Authorization: this.apmApiKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: payload,
 				baseURL: this.apmBaseURL,
@@ -365,8 +371,34 @@ class APMAgent {
 			);
 			return responseJSON;
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error(error?.response?.data?.message);
 			throw new Error(`Error while create apm agent: ${error.message}`);
+		}
+	}
+	async login(payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agentstore/agent/login',
+				headers: {
+					Authorization: this.apmAccessToken,
+				},
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while login Agent Store: ${responseJSON.error}`);
+			}
+
+			console.log(`Succeed logged ${responseJSON.user.account}`);
+			return responseJSON;
+		} catch (error) {
+			console.error(error?.response?.data?.message);
+			throw new Error(`Error while login to Agent Store: ${error.message}`);
 		}
 	}
 }

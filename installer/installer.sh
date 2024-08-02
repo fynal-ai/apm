@@ -35,6 +35,8 @@ export NODE_ARGS=""
 
 export APM_LOCAL_REPOSITORY_DIR=~/.apm
 export APM_AGENT_STORE_BASE_URL="https://agentstoreemp.baystoneai.com"
+export APM_ACCESS_ID="apm_test"
+export APM_ACCESS_KEY="!#S3YN49HDWcedVyAW"
 
 EOF
 

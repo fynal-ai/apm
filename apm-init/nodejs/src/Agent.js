@@ -12,7 +12,7 @@ class Agent {
 		// send to ChatGPT
 		const responseJSON = {};
 
-		const output = { text: '' };
+		const output = { text: Math.random().toString().substring(2, 15) };
 
 		this.apmAgent.saveOutput(saveconfig, output);
 

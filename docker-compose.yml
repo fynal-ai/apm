@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    volumes:
+      - ~/mongodb12:/data/db
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'rs0']
+    restart: always
+  mongosetup:
+    image: mongodb/mongodb-community-server:latest
+    depends_on:
+      - mongodb
+    restart: 'no'
+    entrypoint: ['bash', '-c', "sleep 5 && mongosh --host mongodb:27017 --eval 'rs.initiate()'"]
+
+  redis:
+    image: redis:latest
+    restart: always
+
+  backend:
+    image: jobsimi/apm:latest
+    volumes:
+      - ~/.apm:/app/.apm
+    ports:
+      - '12008:12008'
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb://mongodb:27017/apm_emp_dev?readPreference=secondaryPreferred&directConnection=true&serverSelectionTimeoutMS=2000
+      - REDIS_CONNECTION_STRING=redis://default:foobared@redis:6379
+
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - mongodb
+      - redis
+    entrypoint: ['bash', '-c', 'sleep 10 && source ~/.nvm/nvm.sh && node /app/build/index.js']

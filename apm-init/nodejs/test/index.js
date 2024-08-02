@@ -12,6 +12,7 @@ const saveconfig = {
 	data: {
 		access_token:
 			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTlmODkzMThlNjI2YTEwNWQ1NDUzZiIsImlhdCI6MTcyMTgwMTMxNX0.0JlOvoihh70nchouIa9yLFj4U04x5ppQ3qDIHewXWFA',
+		runId: Math.random().toString().substring(2, 15),
 		name: 'fynal-ai/draw_image',
 		version: '1.0.1',
 		input: {

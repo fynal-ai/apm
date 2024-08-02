@@ -1,0 +1,62 @@
+####
+# build
+####
+
+FROM jobsimi/apm:base
+
+WORKDIR /app
+
+
+ENV HAPI_HOST="0.0.0.0"
+ENV HAPI_PORT=12008
+ENV MONGO_CONNECTION_STRING="mongodb://127.0.0.1:27017/apm_emp?readPreference=secondaryPreferred&directConnection=true&serverSelectionTimeoutMS=2000"
+ENV REDIS_CONNECTION_STRING="redis://default:foobared@127.0.0.1:6379"
+ENV CRYPTO_PRIVATE_KEY="NGloaXM2MXV3aWJsbGk1Y29lbm56b2Fkem16cjNpcDI="
+ENV CRYPTO_EXPIRE=60
+ENV SMTP_HOST="smtp.your-domain.com"
+ENV SMTP_PORT=465
+ENV SMTP_USERNAME="smtp_user"
+ENV SMTP_PASSWORD="smtp_password"
+ENV SMTP_FROM="admin_email"
+ENV SITE_ADMIN="site admin email"
+ENV SITE_ADMIN_PASSWORD="site admin password"
+ENV ZEROMQ_SERVER="127.0.0.1"
+ENV ZEROMQ_PORT=3000
+
+ENV NODE_TLS_REJECT_UNAUTHORIZED=1;
+ENV NODE_ARGS=""
+
+ENV APM_LOCAL_REPOSITORY_DIR=.apm
+ENV APM_AGENT_STORE_BASE_URL="https://agentstoreemp.baystoneai.com"
+ENV APM_ACCESS_ID="apm_test"
+ENV APM_ACCESS_KEY="!#S3YN49HDWcedVyAW"
+
+####
+# backend
+####
+
+
+# COPY package.json /app
+# COPY node_modules /app/node_modules
+COPY build /app/build
+RUN mkdir -p $APM_LOCAL_REPOSITORY_DIR
+COPY apm-init apm-init
+# RUN pnpm install --registry https://registry.npmmirror.com;
+
+####
+# frontend
+####
+
+# RUN mkdir -p /app/frt
+# COPY frt/package.json /app/frt
+# RUN pnpm install --dir /app/frt --registry https://registry.npmmirror.com;
+# COPY frt/build /app/frt/build
+
+
+####
+# run
+####
+CMD source ~/.nvm/nvm.sh && node /app/build/index.js
+# CMD ["node", "./frt/build/index.js"]
+
+

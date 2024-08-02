@@ -1,7 +1,7 @@
 {
-	"author": "jobsimi",
+	"author": "{{AUTHOR}}",
 	"version": "1.0.1",
-	"name": "jobsimi/draw-image",
+	"name": "{{AUTHOR}}/{{NAME}}",
 	"label": "绘画助理",
 	"description": "描述绘画风格和主题，绘画助理为您绘图。",
 	"icon": "https://bonsai.baystoneai.com/favicon.png",

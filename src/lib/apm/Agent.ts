@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
@@ -9,7 +10,9 @@ import EmpError from '../EmpError.js';
 import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
-	constructor() {}
+	constructor() {
+		this.getAPMFolderCreate();
+	}
 	async getDetail(payload): Promise<APMAgentType> {
 		const detail = await this.getDBDetail(payload);
 
@@ -53,6 +56,8 @@ class Agent {
 		}
 
 		const parsedAgentSpec = this.parseAgentSpec(spec);
+
+		await this.getAPMInitFolderCreate();
 
 		// Local APM Repository already has this agent
 		{
@@ -184,15 +189,18 @@ class Agent {
 			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
 
 			// extract to user dir
+			console.log("extract to user dir")
 			{
 				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
 
 				const workdir = await this.getUserWorkDirCreate(author);
 				// untar
+				console.log("untar")
 				const untarDir = path.resolve(tmp_dir, md5);
 				await AGENT_STORE.untar(tmp_filepath, untarDir);
 
 				// mv to author/name/version
+				console.log("mv to author/name/version")
 				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
 					author,
 					name: PLD.name,
@@ -201,6 +209,7 @@ class Agent {
 			}
 
 			// Create Agent
+			console.log("Create Agent")
 			{
 				let apmAgent = new APMAgent({
 					author,
@@ -210,6 +219,8 @@ class Agent {
 				});
 
 				apmAgent = await apmAgent.save();
+
+				console.log(apmAgent)
 
 				return apmAgent;
 			}
@@ -267,6 +278,10 @@ class Agent {
 			version,
 		};
 	}
+	async getAPMFolderCreate(){
+		await this.getConfigFileCreate();
+		await this.getAPMInitFolderCreate();
+	}
 	async getConfigFileCreate() {
 		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
 
@@ -274,14 +289,14 @@ class Agent {
 
 		// file 404
 		if ((await fs.exists(filepath)) === false) {
-			const apmApiKey = await this.getApiKey();
+			const access_token = await this.getAccessToken();
 			await fs.writeJson(
 				filepath,
 				{
 					baseURL: `http://127.0.0.1:${ServerConfig.hapi.port}`,
 					auth: {
 						apm: {
-							...(apmApiKey ? { apiKey: apmApiKey } : {}),
+							...(access_token ? { access_token } : {}),
 						},
 						agentstore: {},
 					},
@@ -292,12 +307,71 @@ class Agent {
 
 		return filepath;
 	}
-	async getApiKey() {
-		// first apm user
-		const user = await User.findOne({}).sort({ createdAt: -1 });
-		if (!user) {
-			return;
+	async getAPMInitFolderCreate() {
+		const localRepositoryDir=ServerConfig.apm.localRepositoryDir;
+		const filepath = path.resolve(localRepositoryDir, "apm-init");
+		console.log("apm-init");
+
+		// file 404
+		if ((await fs.exists(filepath)) === false) {
+			await fs.copy(path.resolve(localRepositoryDir,"../apm-init"),filepath)
 		}
+
+		return filepath;
+	}	
+	async getAccessToken() {
+		// apm user from process.env.ACCESS_ID
+		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({
+			createdAt: -1,
+		});
+		if (!user) {
+			console.log("Initial user")
+			const PLD={
+				username:ServerConfig.apm.access_id,
+				password:ServerConfig.apm.access_key,
+			};
+
+			const API_SERVER = `http://127.0.0.1:${ServerConfig.hapi.port}`;
+			console.log('API_SERVER', API_SERVER);
+
+			// 注册用户
+			if (!user) {
+				try {
+					const response = await axios('/account/register', {
+						method: 'POST',
+						baseURL: API_SERVER,
+						data: {
+							account: PLD.username,
+							username: PLD.username,
+							password: PLD.password,
+						},
+					});
+					if (!response.data._id) {
+						throw new EmpError('LOGIN_FAILED', 'login failed');
+					}
+				} catch (error) {
+					// console.log('error.response.data', error.response.data);
+					throw new EmpError(
+						'LOGIN_FAILED',
+						error.response.data.message,
+						'Your username or password is not valid.'
+					);
+				}
+			}
+
+			// 登录
+			const { data } = await axios('/account/login', {
+				method: 'POST',
+				baseURL: API_SERVER,
+				data: {
+					account: PLD.username,
+					password: PLD.password,
+				},
+			});
+
+			return data.sessionToken;
+		}
+
 		return JwtAuth.createToken({ id: user._id });
 	}
 

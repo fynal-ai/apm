@@ -345,9 +345,9 @@ class Agent {
 				},
 			});
 
-			return data.sessionToken;			
+			return data.sessionToken;
 		}
-		
+
 		return JwtAuth.createToken({ id: user._id });
 	}
 

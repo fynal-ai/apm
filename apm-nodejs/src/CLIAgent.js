@@ -16,6 +16,8 @@ Usage:
   - show help
     apm
     apm --help
+  - create agent in cwd from template
+    apm init
   - install agent from local folder or agent store
     apm install <agent-folder>
 	apm install	

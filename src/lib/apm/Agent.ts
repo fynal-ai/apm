@@ -11,7 +11,7 @@ import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
 	constructor() {
-		this.getConfigFileCreate();
+		this.getAPMFolderCreate();
 	}
 	async getDetail(payload): Promise<APMAgentType> {
 		const detail = await this.getDBDetail(payload);
@@ -56,6 +56,8 @@ class Agent {
 		}
 
 		const parsedAgentSpec = this.parseAgentSpec(spec);
+
+		await this.getAPMInitFolderCreate();
 
 		// Local APM Repository already has this agent
 		{
@@ -270,6 +272,10 @@ class Agent {
 			version,
 		};
 	}
+	async getAPMFolderCreate(){
+		await this.getConfigFileCreate();
+		await this.getAPMInitFolderCreate();
+	}
 	async getConfigFileCreate() {
 		const filepath = path.resolve(ServerConfig.apm.localRepositoryDir, 'apm.json');
 
@@ -295,6 +301,18 @@ class Agent {
 
 		return filepath;
 	}
+	async getAPMInitFolderCreate() {
+		const localRepositoryDir=ServerConfig.apm.localRepositoryDir;
+		const filepath = path.resolve(localRepositoryDir, "apm-init");
+		console.log("apm-init");
+
+		// file 404
+		if ((await fs.exists(filepath)) === false) {
+			await fs.copy(path.resolve(localRepositoryDir,"../apm-init"),filepath)
+		}
+
+		return filepath;
+	}	
 	async getAccessToken() {
 		// apm user from process.env.ACCESS_ID
 		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({

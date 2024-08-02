@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 class APMAgent {
-	apmAccessKey = '';
+	apmAccessToken = '';
 	apmBaseURL = '';
 	agentStoreUsername = '';
 	agentStorePassword = '';
@@ -60,7 +60,7 @@ class APMAgent {
 				url: '/apm/agentstore/agent/uninstall',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: { spec },
 				baseURL: this.apmBaseURL,
@@ -151,7 +151,7 @@ class APMAgent {
 		if ((await fs.exists(filepath)) === true) {
 			const config = await fs.readJson(filepath);
 
-			this.apmAccessKey = config?.auth?.apm?.access_key;
+			this.apmAccessToken = config?.auth?.apm?.access_token;
 			this.apmBaseURL = config?.baseURL;
 			this.agentStoreUsername = config?.auth?.agentstore?.username;
 			this.agentStorePassword = config?.auth?.agentstore?.password;
@@ -224,7 +224,7 @@ class APMAgent {
 				url: '/apm/agentstore/agent/install',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: { spec },
 				baseURL: this.apmBaseURL,
@@ -288,7 +288,7 @@ class APMAgent {
 				method: 'POST',
 				url,
 				headers: {
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: formData,
 				baseURL: this.apmBaseURL,
@@ -322,7 +322,7 @@ class APMAgent {
 				method: 'POST',
 				url,
 				headers: {
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: {
 					_id,
@@ -358,7 +358,7 @@ class APMAgent {
 				method: 'POST',
 				url: '/apm/agent/create',
 				headers: {
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: payload,
 				baseURL: this.apmBaseURL,
@@ -383,7 +383,7 @@ class APMAgent {
 				method: 'POST',
 				url: '/apm/agentstore/agent/login',
 				headers: {
-					Authorization: this.apmAccessKey,
+					Authorization: this.apmAccessToken,
 				},
 				data: payload,
 				baseURL: this.apmBaseURL,

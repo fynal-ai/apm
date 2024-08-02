@@ -21,11 +21,8 @@ class Agent {
 		const output = {
 			text: 'text',
 		};
-		const status = {
-			done: True,
-		};
 
-		this.apmAgent.save_output(saveconfig, status, output); // save output
+		this.apmAgent.save_output(saveconfig, output); // save output
 
 		return output;
 	}

@@ -6,6 +6,6 @@
 		"dev": "node test/index.js"
 	},
 	"dependencies": {
-		"@jobsimi/apm": "^0.1.0"
+		"@fynal/apm": "^0.1.0"
 	}
 }

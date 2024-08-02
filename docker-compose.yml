@@ -3,7 +3,7 @@ services:
   mongodb:
     image: mongodb/mongodb-community-server:latest
     volumes:
-      - ~/mongodb13:/data/db
+      - ~/mongodb12:/data/db
     entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'rs0']
     restart: always
   mongosetup:

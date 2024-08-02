@@ -3,7 +3,7 @@ services:
   mongodb:
     image: mongodb/mongodb-community-server:latest
     volumes:
-      - ~/mongodb12:/data/db
+      - ~/mongodb13:/data/db
     entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'rs0']
     restart: always
   mongosetup:
@@ -11,7 +11,7 @@ services:
     depends_on:
       - mongodb
     restart: 'no'
-    entrypoint: ['bash', '-c', "sleep 3 && mongosh --host mongodb:27017 --eval 'rs.initiate()'"]
+    entrypoint: ['bash', '-c', "sleep 5 && mongosh --host mongodb:27017 --eval 'rs.initiate()'"]
 
   redis:
     image: redis:latest
@@ -32,4 +32,4 @@ services:
     depends_on:
       - mongodb
       - redis
-    entrypoint: ['bash', '-c', 'sleep 5 && source ~/.nvm/nvm.sh && node /app/build/index.js']
+    entrypoint: ['bash', '-c', 'sleep 10 && source ~/.nvm/nvm.sh && node /app/build/index.js']

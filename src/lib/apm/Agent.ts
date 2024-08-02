@@ -9,7 +9,9 @@ import EmpError from '../EmpError.js';
 import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
-	constructor() {}
+	constructor() {
+		this.getConfigFileCreate();
+	}
 	async getDetail(payload): Promise<APMAgentType> {
 		const detail = await this.getDBDetail(payload);
 

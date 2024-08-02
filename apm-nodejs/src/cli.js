@@ -22,8 +22,11 @@ Usage:
 	apm install <name>:[version]
   - uninstall agent
     apm uninstall <name>:[version]
-  - cd to agent folder and publish agent
+  - publish agent: cd to agent folder and publish agent
     apm publish
+  - login to agent store
+    apm login --username <username> --password <password>
+	apm login
         `);
 		return;
 	}
@@ -96,6 +99,41 @@ Usage:
 	// publish
 	if (_[0] === 'publish') {
 		await APM_AGENT.publish();
+	}
+
+	// login
+	if (_[0] === 'login') {
+		console.log('Login to Agent Store...');
+		// read from cli
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+		});
+
+		let username = options.username;
+		if (!username) {
+			await new Promise((resolve) => {
+				rl.question(`Agent Store username: `, async (input) => {
+					username = input;
+
+					resolve(true);
+				});
+			});
+		}
+
+		let password = options.password;
+		if (!password) {
+			await new Promise((resolve) => {
+				rl.question(`Agent Store password: `, async (input) => {
+					password = input;
+
+					resolve(true);
+				});
+			});
+		}
+
+		rl.close();
+		await APM_AGENT.login({ username, password });
 	}
 }
 main();

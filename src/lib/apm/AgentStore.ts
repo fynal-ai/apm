@@ -87,10 +87,14 @@ class AgentStore {
 
 		// save to tmp
 		const tmp_dir = await AGENT.getTMPWorkDirCreate();
+		console.log("save to tmp",tmp_dir)
 		const md5 = await AGENT.saveUploadFile(tmp_dir, payload.file);
 		// read from tmp
+		console.log("read from tmp",md5)
 		const filename = `${md5}.tar.gz`;
+
 		const filepath = path.join(tmp_dir, filename);
+		console.log("filepath",filepath)
 
 		const response = await this.axios({
 			method: 'POST',
@@ -213,6 +217,10 @@ class AgentStore {
 		return await this.moveToAuthorAgentDir(untarDir, agentStoreAgent);
 	}
 	async untar(filepath, outputDir) {
+		if(await fs.exists(outputDir)){
+			return;
+		}
+		
 		await fs.ensureDir(outputDir);
 		console.log('untar', filepath, '=>', outputDir);
 		await child_process.exec(`tar zxvf ${filepath}`, {
@@ -232,6 +240,9 @@ class AgentStore {
 		);
 		const agentVersionDir = path.resolve(agentNameDir, agentStoreAgent.version);
 		await fs.ensureDir(path.dirname(agentNameDir));
+		if(await fs.exists(agentVersionDir)){
+			return agentVersionDir;
+		}
 		await fs.move(folder, agentVersionDir);
 
 		return agentVersionDir;

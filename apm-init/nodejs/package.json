@@ -3,7 +3,7 @@
 	"type": "module",
 	"main": "./src/index.js",
 	"scripts": {
-		"dev": "node example/index.js"
+		"dev": "node test/index.js"
 	},
 	"dependencies": {
 		"@jobsimi/apm": "^0.1.0"

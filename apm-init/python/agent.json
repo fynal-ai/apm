@@ -15,13 +15,5 @@
 			"text": "Hello APM!"
 		}
 	},
-	"executor": "python",
-
-	"price": {
-		"original": 0,
-		"discount": 0
-	},
-	"validity": {
-		"validityType": "forever"
-	}
+	"executor": "python"
 }

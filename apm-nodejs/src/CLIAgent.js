@@ -52,10 +52,6 @@ Usage:
 			await APM_AGENT.uninstall(agentSpec);
 		}
 
-		// init
-		if (_[0] === 'init') {
-			return;
-		}
 		if (_[0] === 'init') {
 			const rl = readline.createInterface({
 				input: process.stdin,

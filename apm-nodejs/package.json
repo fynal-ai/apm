@@ -1,5 +1,5 @@
 {
-	"name": "@jobsimi/apm",
+	"name": "@fynal/apm",
 	"version": "0.1.4",
 	"type": "module",
 	"main": "src/index.js",
@@ -10,7 +10,7 @@
 		"install-cli": "pnpm link -g",
 		"pub": "npm publish --access public --registry https://registry.npmjs.org/"
 	},
-	"author": "jobsimi",
+	"author": "fynal-ai",
 	"license": "MIT",
 	"repository": {
 		"type": "git",

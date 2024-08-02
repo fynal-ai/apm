@@ -1,3 +1,13 @@
+## Install as CLI
+
+```sh
+pnpm add -g @jobsimi/apm
+```
+
+```sh
+apm --help
+```
+
 ## Program Usage
 
 ```js
@@ -20,16 +30,6 @@ class Agent {
 		return output;
 	}
 }
-```
-
-## Install as CLI
-
-```sh
-pnpm add -g @jobsimi/apm
-```
-
-```sh
-apm --help
 ```
 
 ## Dev

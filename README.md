@@ -8,11 +8,10 @@ APM (Agent Package Manager)
    ```
 2. install APM CLI
    ```sh
-   pnpm install -g @fynal/apm
+   pnpm install -g @jobsimi/apm
    apm --help
    ```
 
 # Development
 
 [seperate-dev-start.md](./docs/seperate-dev-start.md)
-

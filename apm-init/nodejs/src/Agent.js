@@ -1,4 +1,4 @@
-import { APMAgent } from '@fynal/apm';
+import { APMAgent } from '@jobsimi/apm';
 
 class Agent {
 	constructor() {

@@ -125,7 +125,7 @@ class AgentService {
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
 
-		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+		const localRepositoryDir = path.resolve(ServerConfig.apm.localRepositoryDir);
 		const workdir = `${localRepositoryDir}/run/${runId}`;
 
 		const saveconfig = {
@@ -238,8 +238,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  source ~/.bashrc
-  symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 PACKAGE_JSON_FILE=package.json
@@ -299,8 +298,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  source ~/.bashrc
-  symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 INIT_FILE=${agentName}/__init__.py

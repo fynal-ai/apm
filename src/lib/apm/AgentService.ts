@@ -238,6 +238,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
+  source ~/.bashrc
   symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
@@ -298,6 +299,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
+  source ~/.bashrc
   symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 

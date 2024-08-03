@@ -2,7 +2,7 @@
 # build
 ####
 
-FROM fynal-ai/apm:base
+FROM jobsimi/apm:base
 
 WORKDIR /app
 

@@ -16,6 +16,8 @@ Usage:
   - show help
     apm
     apm --help
+  - create agent in cwd from template
+    apm init
   - install agent from local folder or agent store
     apm install <agent-folder>
 	apm install	
@@ -83,7 +85,7 @@ Usage:
 			let executor = options.executor;
 			if (!executor) {
 				await new Promise((resolve) => {
-					rl.question(`Agent executor (python, nodejs): `, async (input) => {
+					rl.question(`Agent executor (python, nodejs, remote): `, async (input) => {
 						executor = input;
 
 						resolve(true);

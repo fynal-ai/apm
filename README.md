@@ -8,7 +8,7 @@ APM (Agent Package Manager)
    ```
 2. install APM CLI
    ```sh
-   pnpm install -g @jobsimi/apm
+   pnpm install -g @fynal/apm
    apm --help
    ```
 

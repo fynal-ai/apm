@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
@@ -189,18 +189,18 @@ class Agent {
 			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
 
 			// extract to user dir
-			console.log("extract to user dir")
+			console.log('extract to user dir');
 			{
 				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
 
 				const workdir = await this.getUserWorkDirCreate(author);
 				// untar
-				console.log("untar")
+				console.log('untar');
 				const untarDir = path.resolve(tmp_dir, md5);
 				await AGENT_STORE.untar(tmp_filepath, untarDir);
 
 				// mv to author/name/version
-				console.log("mv to author/name/version")
+				console.log('mv to author/name/version');
 				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
 					author,
 					name: PLD.name,
@@ -209,7 +209,7 @@ class Agent {
 			}
 
 			// Create Agent
-			console.log("Create Agent")
+			console.log('Create Agent');
 			{
 				let apmAgent = new APMAgent({
 					author,
@@ -220,7 +220,7 @@ class Agent {
 
 				apmAgent = await apmAgent.save();
 
-				console.log(apmAgent)
+				console.log(apmAgent);
 
 				return apmAgent;
 			}
@@ -278,7 +278,7 @@ class Agent {
 			version,
 		};
 	}
-	async getAPMFolderCreate(){
+	async getAPMFolderCreate() {
 		await this.getConfigFileCreate();
 		await this.getAPMInitFolderCreate();
 	}
@@ -296,6 +296,9 @@ class Agent {
 					baseURL: `http://127.0.0.1:${ServerConfig.hapi.port}`,
 					auth: {
 						apm: {
+							access_id: ServerConfig.apm.access_id,
+							access_key: ServerConfig.apm.access_key,
+
 							...(access_token ? { access_token } : {}),
 						},
 						agentstore: {},
@@ -308,27 +311,28 @@ class Agent {
 		return filepath;
 	}
 	async getAPMInitFolderCreate() {
-		const localRepositoryDir=ServerConfig.apm.localRepositoryDir;
-		const filepath = path.resolve(localRepositoryDir, "apm-init");
-		console.log("apm-init");
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+		const filepath = path.resolve(localRepositoryDir, 'apm-init');
+		console.log('apm-init');
 
 		// file 404
 		if ((await fs.exists(filepath)) === false) {
-			await fs.copy(path.resolve(localRepositoryDir,"../apm-init"),filepath)
+			await fs.copy(path.resolve(localRepositoryDir, '../apm-init'), filepath);
 		}
 
 		return filepath;
-	}	
+	}
 	async getAccessToken() {
 		// apm user from process.env.ACCESS_ID
 		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({
 			createdAt: -1,
 		});
+		console.log('user', user);
 		if (!user) {
-			console.log("Initial user")
-			const PLD={
-				username:ServerConfig.apm.access_id,
-				password:ServerConfig.apm.access_key,
+			console.log('Initial user');
+			const PLD = {
+				username: ServerConfig.apm.access_id,
+				password: ServerConfig.apm.access_key,
 			};
 
 			const API_SERVER = `http://127.0.0.1:${ServerConfig.hapi.port}`;

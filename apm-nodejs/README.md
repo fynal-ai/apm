@@ -1,7 +1,9 @@
+APM(Agent Package Manager) CLI and library
+
 ## Install as CLI
 
 ```sh
-pnpm add -g @jobsimi/apm
+pnpm add -g @fynal/apm
 ```
 
 ```sh
@@ -11,7 +13,7 @@ apm --help
 ## Program Usage
 
 ```js
-import { APMAgent } from '@jobsimi/apm';
+import { APMAgent } from '@fynal/apm';
 
 class Agent {
 	constructor() {

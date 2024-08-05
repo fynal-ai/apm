@@ -18,10 +18,9 @@
 	},
 	"dependencies": {
 		"axios": "^1.7.2",
-		"chalk": "^5.3.0",
-		"cli-select": "^1.1.2",
 		"form-data": "^4.0.0",
 		"fs-extra": "^11.2.0",
+		"inquirer": "^10.1.7",
 		"minimist": "^1.2.8"
 	}
 }

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import chalk from "chalk";
-import cliSelect from "cli-select";
+import inquirer from "inquirer";
 import minimist from 'minimist';
 import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
@@ -77,60 +76,37 @@ Usage:
 	}
 
 	async init(options) {
-		const rl = readline.createInterface({
-			input: process.stdin,
-			output: process.stdout,
+		const answers = await inquirer.prompt([
+			...(options.author ? [] : [
+				{
+					type: "input",
+					name: "author",
+					message: "Agent author: ",
+				}
+			]),
+			...(options.name ? [] : [
+				{
+					type: "input",
+					name: "name",
+					message: "Agent name: ",
+				}
+			]),
+			...(options.executor ? [] : [{
+				type: "list",
+				name: "executor",
+				message: "Agent executor: ",
+				choices: [
+					{ name: "python", value: "python" },
+					{ name: "nodejs", value: "nodejs" },
+					{ name: "remote", value: "remote" },
+				]
+			}])
+		])
+
+		await APM_AGENT.init({
+			...options,
+			...answers
 		});
-
-		let author = options.author;
-		if (!author) {
-			await new Promise((resolve) => {
-				rl.question(`Agent author: `, async (input) => {
-					author = input;
-
-					resolve(true);
-				});
-			});
-		}
-
-		let name = options.name;
-		if (!name) {
-			await new Promise((resolve) => {
-				rl.question(`Agent name: ${author}/`, async (input) => {
-					name = `${author}/${input}`;
-
-					resolve(true);
-				});
-			});
-		}
-
-		rl.close();
-
-
-		let executor = options.executor;
-		if (!executor) {
-			console.log(`Agent executor:`)
-			try {
-				const response = await cliSelect({
-					values: ["python", "nodejs", "remote"],
-					selected: "(*)",
-					cleanup: false,
-					valueRenderer: (value, selected) => {
-						if (selected) {
-							return chalk.underline(value);
-						}
-						return value;
-					},
-				});
-
-				executor = response.value;
-
-			} catch (error) {
-				return;
-			}
-		}
-
-		await APM_AGENT.init({ author, name, executor, force: options.force });
 	}
 	async login(options) {
 		console.log('Login to Agent Store...');

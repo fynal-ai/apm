@@ -90,10 +90,9 @@ Usage:
 						message: "Agent author:",
 						validate: function (input) {
 							const schema = Joi.string()
-								.regex(/^[a-zA-Z][a-zA-Z0-9_]{2,28}[a-zA-Z0-9]$/)
+								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/)
 								.lowercase()
-								.required().min(2)
-								.max(30).label("author")
+								.required().label("author")
 							const e = schema.validate(input).error;
 							if (e?.message) {
 								return e.message;
@@ -148,8 +147,11 @@ Usage:
 					}
 				])
 				options.force = answers.force
+
+				// loop ask name
 				if (options.force != true) {
-					return;
+					delete options.name;
+					return this.init(options);
 				}
 			}
 

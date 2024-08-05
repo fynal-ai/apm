@@ -271,9 +271,10 @@ class Agent {
 	async init(PLD) {
 		const author = PLD.author;
 		const agentName = PLD.name.split('/').at(-1);
+		const executor = PLD.executor;
 
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
-		const templateDir = path.resolve(localRepositoryDir, 'apm-init', PLD.executor);
+		const templateDir = path.resolve(localRepositoryDir, 'apm-init', executor);
 
 		// Not exist
 		if ((await fs.exists(templateDir)) === false) {
@@ -288,12 +289,14 @@ class Agent {
 
 			// copy template to tmp/apm-init/taskId
 			{
+				console.log(`copy template apm-init/${executor} to tmp/${taskId}`);
 				const tmpDir = await this.getTMPWorkDirCreate();
 				const agentdir = path.resolve(tmpDir, taskId);
 				await fs.ensureDir(agentdir);
 				await fs.copy(templateDir, agentdir);
 
 				// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
+				console.log('replace {{AUTHOR}}, {{NAME}} in agent.json, package.json');
 				{
 					for (let file of ['agent.json', 'package.json']) {
 						const filePath = path.resolve(agentdir, file);
@@ -317,11 +320,13 @@ class Agent {
 						const filepath = tarFilePath;
 						const streamData = await fs.createReadStream(filepath);
 
-						// delete tmp/apm-init/taskId
-						{
+						// delete tmp/taskId
+						streamData.on('end', async () => {
+							console.log(`delete tmp/${taskId}*`);
+
 							await fs.remove(agentdir);
-							// await fs.remove(filepath);
-						}
+							await fs.remove(filepath);
+						});
 
 						return streamData;
 					}

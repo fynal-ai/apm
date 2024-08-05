@@ -320,7 +320,7 @@ class Agent {
 						// delete tmp/apm-init/taskId
 						{
 							await fs.remove(agentdir);
-							await fs.remove(filepath);
+							// await fs.remove(filepath);
 						}
 
 						return streamData;

@@ -113,6 +113,16 @@ Usage:
 						message: `Agent name:`,
 						transformer: function (input) {
 							return `${options.author}/${input}`
+						},
+						validate: function (input) {
+							const schema = Joi.string()
+								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/)
+								.required().label("name")
+							const e = schema.validate(input).error;
+							if (e?.message) {
+								return e.message;
+							}
+							return true;
 						}
 					}
 				])

@@ -171,17 +171,11 @@ class Agent {
 
 		// Check if exists
 
-		{
-			const apmAgent = await APMAgent.findOne({
-				author: author,
-				name: PLD.name,
-				version: PLD.version,
-			});
-
-			if (apmAgent) {
-				return apmAgent;
-			}
-		}
+		let apmAgent = await APMAgent.findOne({
+			author: author,
+			name: PLD.name,
+			version: PLD.version,
+		});
 
 		// save file
 		{
@@ -208,21 +202,34 @@ class Agent {
 				});
 			}
 
-			// Create Agent
-			console.log('Create Agent');
-			{
-				let apmAgent = new APMAgent({
-					author,
-					name: PLD.name,
-					version: PLD.version,
-					md5,
-				});
+			// save to database
+			if (!apmAgent) {
+				// Create Agent
+				console.log('Create Agent');
+				{
+					apmAgent = new APMAgent({
+						author,
+						name: PLD.name,
+						version: PLD.version,
+						md5,
+					});
 
-				apmAgent = await apmAgent.save();
+					apmAgent = await apmAgent.save();
 
-				console.log(apmAgent);
+					console.log(apmAgent);
 
-				return apmAgent;
+					return apmAgent;
+				}
+			} else {
+				// Update Agent
+				console.log('Update Agent');
+				{
+					apmAgent.md5 = md5;
+					apmAgent = await apmAgent.save();
+					console.log(apmAgent);
+
+					return apmAgent;
+				}
 			}
 		}
 	}

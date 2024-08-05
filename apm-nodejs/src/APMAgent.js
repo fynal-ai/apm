@@ -13,6 +13,12 @@ class APMAgent {
 	agentStoreSessionToken = '';
 	constructor() {}
 	async saveOutput(saveconfig, output = {}) {
+		// print output in console
+		if (!saveconfig) {
+			console.log('output', output);
+			return;
+		}
+
 		try {
 			const url = saveconfig['url'];
 			const headers = saveconfig['headers'];

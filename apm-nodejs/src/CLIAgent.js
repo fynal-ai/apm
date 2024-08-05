@@ -170,39 +170,54 @@ Usage:
 		}
 	}
 	async login(options) {
-		console.log('Login to Agent Store...');
-		// username
-		if (!options.username) {
-			const answers = await inquirer.prompt([
-				{
-					type: "input",
-					name: "username",
-					message: `Agent Store username:`,
-				}
-			])
-			options.username = answers.username
+		try {
+			console.log('Login or register to Agent Store...');
+			// username
+			if (!options.username) {
+				const answers = await inquirer.prompt([
+					{
+						type: "input",
+						name: "username",
+						message: `Agent Store username:`,
+						validate: function (input) {
+							const schema = Joi.string()
+								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/)
+								.lowercase()
+								.required().label("username")
+							const e = schema.validate(input).error;
+							if (e?.message) {
+								return e.message;
+							}
+							return true;
+						}
+					}
+				])
+				options.username = answers.username
+			}
+
+			// password
+			if (!options.password) {
+				const answers = await inquirer.prompt([
+
+					{
+						type: "password",
+						name: "password",
+						message: `Agent Store password:`,
+						mask: '*'
+					}
+				])
+				options.password = answers.password
+			}
+
+			await APM_AGENT.login({ username: options.username, password: options.password });
+
+			console.log(
+				`Logged to Agent Store with user`,
+				options.username || APM_AGENT.agentStoreUsername
+			);
+		} catch (error) {
+			console.log(error.message);
 		}
-
-		// password
-		if (!options.password) {
-			const answers = await inquirer.prompt([
-
-				{
-					type: "password",
-					name: "password",
-					message: `Agent Store password:`,
-					mask: '*'
-				}
-			])
-			options.password = answers.password
-		}
-
-		await APM_AGENT.login({ username: options.username, password: options.password });
-
-		console.log(
-			`Logged to Agent Store with user`,
-			options.username || APM_AGENT.agentStoreUsername
-		);
 	}
 }
 

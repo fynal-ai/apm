@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import inquirer from "inquirer";
+import Joi from "joi";
 import minimist from 'minimist';
 import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
@@ -76,37 +77,53 @@ Usage:
 	}
 
 	async init(options) {
-		const answers = await inquirer.prompt([
-			...(options.author ? [] : [
-				{
-					type: "input",
-					name: "author",
-					message: "Agent author: ",
-				}
-			]),
-			...(options.name ? [] : [
-				{
-					type: "input",
-					name: "name",
-					message: "Agent name: ",
-				}
-			]),
-			...(options.executor ? [] : [{
-				type: "list",
-				name: "executor",
-				message: "Agent executor: ",
-				choices: [
-					{ name: "python", value: "python" },
-					{ name: "nodejs", value: "nodejs" },
-					{ name: "remote", value: "remote" },
-				]
-			}])
-		])
+		try {
+			const answers = await inquirer.prompt([
+				...(options.author ? [] : [
+					{
+						type: "input",
+						name: "author",
+						message: "Agent author:",
+						validate: function (input) {
+							const schema = Joi.string()
+								.regex(/^[a-zA-Z][a-zA-Z0-9_]{2,28}[a-zA-Z0-9]$/)
+								.lowercase()
+								.required().min(2)
+								.max(30).label("author")
+							const e = schema.validate(input).error;
+							if (e?.message) {
+								return e.message;
+							}
+							return true;
+						}
+					}
+				]),
+				...(options.name ? [] : [
+					{
+						type: "input",
+						name: "name",
+						message: "Agent name:",
+					}
+				]),
+				...(options.executor ? [] : [{
+					type: "list",
+					name: "executor",
+					message: "Agent executor:",
+					choices: [
+						{ name: "python", value: "python" },
+						{ name: "nodejs", value: "nodejs" },
+						{ name: "remote", value: "remote" },
+					]
+				}])
+			])
 
-		await APM_AGENT.init({
-			...options,
-			...answers
-		});
+			await APM_AGENT.init({
+				...options,
+				...answers
+			});
+		} catch (error) {
+			console.log(error.message);
+		}
 	}
 	async login(options) {
 		console.log('Login to Agent Store...');

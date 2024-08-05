@@ -4,7 +4,6 @@ import inquirer from "inquirer";
 import Joi from "joi";
 import minimist from 'minimist';
 import path from 'path';
-import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
 
 class CLIAgent {
@@ -172,41 +171,33 @@ Usage:
 	}
 	async login(options) {
 		console.log('Login to Agent Store...');
-		if (!APM_AGENT.agentStoreSessionToken || options.username || options.password) {
-			// read from cli
-			const rl = readline.createInterface({
-				input: process.stdin,
-				output: process.stdout,
-			});
-
-			let username = options.username;
-			if (!username) {
-				await new Promise((resolve) => {
-					rl.question(`Agent Store username: `, async (input) => {
-						username = input;
-
-						resolve(true);
-					});
-				});
-				options.username = username;
-			}
-
-			let password = options.password;
-			if (!password) {
-				await new Promise((resolve) => {
-					rl.question(`Agent Store password: `, async (input) => {
-						password = input;
-
-						resolve(true);
-					});
-				});
-				options.password = password;
-			}
-
-			rl.close();
-
-			await APM_AGENT.login({ username, password });
+		// username
+		if (!options.username) {
+			const answers = await inquirer.prompt([
+				{
+					type: "input",
+					name: "username",
+					message: `Agent Store username:`,
+				}
+			])
+			options.username = answers.username
 		}
+
+		// password
+		if (!options.password) {
+			const answers = await inquirer.prompt([
+
+				{
+					type: "password",
+					name: "password",
+					message: `Agent Store password:`,
+					mask: '*'
+				}
+			])
+			options.password = answers.password
+		}
+
+		await APM_AGENT.login({ username: options.username, password: options.password });
 
 		console.log(
 			`Logged to Agent Store with user`,

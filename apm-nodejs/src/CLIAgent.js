@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+import fs from "fs-extra";
 import inquirer from "inquirer";
 import Joi from "joi";
 import minimist from 'minimist';
+import path from 'path';
 import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
 
@@ -129,6 +131,26 @@ Usage:
 						]
 					}])
 				])
+			}
+
+			// force
+			const agentName = options.name.split("/").at(-1);
+			const agentdir = path.resolve(agentName)
+			if (await fs.exists(agentdir)) {
+				options = {
+					...options,
+					...await inquirer.prompt([
+						{
+							type: "confirm",
+							name: "force",
+							message: `Agent folder already exists in ${agentdir}, overwrite?`,
+							default: false
+						}
+					])
+				}
+				if (options.force != true) {
+					return;
+				}
 			}
 
 			await APM_AGENT.init(options);

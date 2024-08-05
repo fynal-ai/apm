@@ -296,7 +296,9 @@ class Agent {
 				await fs.copy(templateDir, agentdir);
 
 				// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
-				console.log('replace {{AUTHOR}}, {{NAME}} in agent.json, package.json');
+				console.log(
+					`replace {{AUTHOR}} to ${author}, {{NAME}} to ${agentName} in agent.json, package.json`
+				);
 				{
 					for (let file of ['agent.json', 'package.json']) {
 						const filePath = path.resolve(agentdir, file);

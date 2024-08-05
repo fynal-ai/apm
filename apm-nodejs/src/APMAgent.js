@@ -246,15 +246,18 @@ class APMAgent {
 	}
 	async tarAgentFolder(folderpath) {
 		const outputDir = path.resolve(folderpath, 'tmp');
-		await fs.remove(outputDir);
-		await fs.ensureDir(outputDir);
+		if (await fs.exists(outputDir)) {
+			await fs.emptyDir(outputDir);
+		} else {
+			await fs.ensureDir(outputDir);
+		}
 
 		const foldername = path.basename(folderpath);
 		const outputname = `${foldername}.tar.gz`;
 		const outputFilePath = path.join(outputDir, outputname);
 
 		{
-			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore  .`;
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
 			// console.log('command', command);
 			await new Promise(async (resolve) => {
 				const childProcess = await child_process.exec(command, {

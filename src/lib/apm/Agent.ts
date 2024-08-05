@@ -399,12 +399,10 @@ class Agent {
 	async getAPMInitFolderCreate() {
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
 		const filepath = path.resolve(localRepositoryDir, 'apm-init');
-		console.log('apm-init');
+		console.log('Copy apm-init folder');
 
-		// file 404
-		if ((await fs.exists(filepath)) === false) {
-			await fs.copy(path.resolve(localRepositoryDir, '../apm-init'), filepath);
-		}
+		// always copy
+		await fs.copy(path.resolve(localRepositoryDir, '../apm-init'), filepath);
 
 		return filepath;
 	}

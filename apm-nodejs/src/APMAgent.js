@@ -83,6 +83,7 @@ class APMAgent {
 	}
 	async init({ author, name, executor = 'nodejs' } = {}) {
 		try {
+			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);
 			if (!author || !name) {
 				throw new Error('author and name are required');
 			}
@@ -96,26 +97,30 @@ class APMAgent {
 			{
 				const agentName = name.split('/').at(-1);
 				const agentdir = path.resolve(process.cwd(), agentName);
-				const tmp_filepath = path.resolve(process.cwd(), `${agentName}.tar.gz`);
+				{
+					const tmp_filepath = path.resolve(process.cwd(), `${agentName}.tar.gz`);
 
-				const response = await axios({
-					method: 'POST',
-					url: '/apm/agent/init',
-					data: { author, name, executor },
-					responseType: 'stream',
+					const response = await axios({
+						method: 'POST',
+						url: '/apm/agent/init',
+						data: { author, name, executor },
+						responseType: 'stream',
 
-					baseURL: this.apmBaseURL,
-				});
+						baseURL: this.apmBaseURL,
+					});
 
-				await response.data.pipe(fs.createWriteStream(tmp_filepath));
+					await response.data.pipe(fs.createWriteStream(tmp_filepath));
 
-				console.log(`Retrived agent init template from apm server to`, tmp_filepath);
+					console.log(`Retrived agent init template from apm server to`, tmp_filepath);
 
-				// untar <taskId>.tar.gz to agent folder
-				await this.untar(tmp_filepath, agentdir);
+					// untar <taskId>.tar.gz to agent folder
+					await this.untar(tmp_filepath, agentdir);
 
-				// remove .tar.gz
-				await fs.remove(tmp_filepath);
+					// remove .tar.gz
+					await fs.remove(tmp_filepath);
+				}
+
+				console.log('Succeed init agent', agentdir);
 			}
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);
@@ -282,10 +287,11 @@ class APMAgent {
 	}
 	async untar(filepath, outputDir) {
 		if (await fs.exists(outputDir)) {
-			return;
+			await fs.emptyDir(outputDir);
+		} else {
+			await fs.ensureDir(outputDir);
 		}
 
-		await fs.ensureDir(outputDir);
 		console.log('untar', filepath, '=>', outputDir);
 
 		{

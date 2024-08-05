@@ -18,9 +18,9 @@ import ServerConfig from '../config/server.js';
 import Jwt from 'jsonwebtoken';
 import { redisClient } from '../database/redis.js';
 //mongoose user object
-import { User } from '../database/models/User.js';
-import { Tenant } from '../database/models/Tenant.js';
 import { Employee } from '../database/models/Employee.js';
+import { Tenant } from '../database/models/Tenant.js';
+import { User } from '../database/models/User.js';
 
 // private key for signing
 const JwtAuth = {
@@ -41,6 +41,14 @@ const JwtAuth = {
 	 *
 	 */
 	validate: async function (decoded: Record<string, any>, request: Request, h: ResponseToolkit) {
+		try {
+			return await JwtAuth._validate(decoded, request, h);
+		} catch (e) {
+			console.log('JWT Error: ', e.message);
+			throw e;
+		}
+	},
+	_validate: async function (decoded: Record<string, any>, request: Request, h: ResponseToolkit) {
 		//POST方式，在headers中放了 authorization
 		let authorization = request.headers.authorization;
 		if (!authorization) {
@@ -72,7 +80,7 @@ const JwtAuth = {
 						userid: user._id,
 						tenant: tenant._id,
 						active: true,
-				  }).lean()
+					}).lean()
 				: null;
 			if (user && employee && tenant) {
 				result = {

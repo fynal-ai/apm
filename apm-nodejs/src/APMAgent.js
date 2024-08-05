@@ -13,6 +13,12 @@ class APMAgent {
 	agentStoreSessionToken = '';
 	constructor() {}
 	async saveOutput(saveconfig, output = {}) {
+		// print output in console
+		if (!saveconfig) {
+			console.log('output', output);
+			return;
+		}
+
 		try {
 			const url = saveconfig['url'];
 			const headers = saveconfig['headers'];
@@ -75,8 +81,9 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
-	async init({ author, name, executor = 'nodejs' } = {}) {
+	async init({ author, name, executor = 'nodejs', force = false } = {}) {
 		try {
+			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);
 			if (!author || !name) {
 				throw new Error('author and name are required');
 			}
@@ -84,30 +91,45 @@ class APMAgent {
 				throw new Error('name should start with author');
 			}
 
-			// copy template
-
-			const localRepositoryDir = this.getLocalRepositoryDir();
-			const tmpdir = path.resolve(localRepositoryDir, 'apm-init', executor);
-			const agentName = name.split('/').at(-1);
-			const agentdir = path.resolve(process.cwd(), agentName);
-			await fs.ensureDir(agentdir);
-			await fs.copy(tmpdir, agentdir);
-
-			// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
+			// Retrive apm-init template from apm server
+			// untar <taskId>.tar.gz to agent folder
+			// remove .tar.gz
 			{
-				for (let file of ['agent.json', 'package.json']) {
-					const filePath = path.resolve(agentdir, file);
-					if ((await fs.exists(filePath)) === false) {
-						continue;
-					}
-					let fileContent = await fs.readFile(filePath, 'utf8');
-					fileContent = fileContent.replace(/{{AUTHOR}}/g, author);
-					fileContent = fileContent.replace(/{{NAME}}/g, agentName);
-					await fs.writeFile(filePath, fileContent);
-				}
-			}
+				const agentName = name.split('/').at(-1);
+				const agentdir = path.resolve(process.cwd(), agentName);
 
-			console.log(`Succeed init apm agent for ${executor} in ${agentdir}`);
+				// if exists, error
+				if ((await fs.exists(agentdir)) && force === false) {
+					throw new Error(
+						`Agent ${agentName} already exists in ${agentdir}. Try --force to init anyway.`
+					);
+				}
+
+				{
+					const tmp_filepath = path.resolve(process.cwd(), `${agentName}.tar.gz`);
+
+					const response = await axios({
+						method: 'POST',
+						url: '/apm/agent/init',
+						data: { author, name, executor },
+						responseType: 'stream',
+
+						baseURL: this.apmBaseURL,
+					});
+
+					await response.data.pipe(fs.createWriteStream(tmp_filepath));
+
+					console.log(`Retrived agent init template from apm server to`, tmp_filepath);
+
+					// untar <taskId>.tar.gz to agent folder
+					await this.untar(tmp_filepath, agentdir);
+
+					// remove .tar.gz
+					await fs.remove(tmp_filepath);
+				}
+
+				console.log('Succeed init agent', agentdir);
+			}
 		} catch (error) {
 			console.log('Error while init apm agent: ', error.message);
 		}
@@ -240,15 +262,18 @@ class APMAgent {
 	}
 	async tarAgentFolder(folderpath) {
 		const outputDir = path.resolve(folderpath, 'tmp');
-		await fs.remove(outputDir);
-		await fs.ensureDir(outputDir);
+		if (await fs.exists(outputDir)) {
+			await fs.emptyDir(outputDir);
+		} else {
+			await fs.ensureDir(outputDir);
+		}
 
 		const foldername = path.basename(folderpath);
 		const outputname = `${foldername}.tar.gz`;
 		const outputFilePath = path.join(outputDir, outputname);
 
 		{
-			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore  .`;
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
 			// console.log('command', command);
 			await new Promise(async (resolve) => {
 				const childProcess = await child_process.exec(command, {
@@ -267,6 +292,34 @@ class APMAgent {
 		}
 
 		return outputFilePath;
+	}
+	async untar(filepath, outputDir) {
+		if (await fs.exists(outputDir)) {
+			await fs.emptyDir(outputDir);
+		} else {
+			await fs.ensureDir(outputDir);
+		}
+
+		console.log('untar', filepath, '=>', outputDir);
+
+		{
+			const command = `tar zxvf ${filepath}`;
+			// console.log('command', command);
+			await new Promise(async (resolve) => {
+				const childProcess = await child_process.exec(command, {
+					cwd: outputDir,
+				});
+				childProcess.stdout.on('data', async (data) => {
+					// console.log('data', data);
+				});
+				childProcess.stderr.on('data', async (data) => {
+					// console.log(data);
+				});
+				childProcess.stdout.on('close', async () => {
+					resolve(true);
+				});
+			});
+		}
 	}
 	async uploadAgentToAPM(filepath, apmAgent) {
 		return await this.uploadAgent('/apm/agent/upload', filepath, apmAgent);
@@ -379,15 +432,14 @@ class APMAgent {
 		await this.loadConfig();
 
 		try {
-			const response = await axios({
+			const postData = {
 				method: 'POST',
 				url: '/apm/agentstore/agent/login',
-				headers: {
-					Authorization: this.apmAccessToken,
-				},
 				data: payload,
 				baseURL: this.apmBaseURL,
-			});
+			};
+			// console.log('postData', postData);
+			const response = await axios(postData);
 			const responseJSON = response.data;
 			if (responseJSON.error) {
 				console.error(responseJSON.error, responseJSON.message);

@@ -6,6 +6,6 @@
 		"dev": "node test/index.js"
 	},
 	"dependencies": {
-		"@jobsimi/apm": "^0.1.3"
+		"@jobsimi/apm": "^0.1.4"
 	}
 }

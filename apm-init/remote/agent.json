@@ -1,11 +1,11 @@
 {
 	"author": "{{AUTHOR}}",
-	"version": "1.0.1",
 	"name": "{{AUTHOR}}/{{NAME}}",
-	"label": "绘画助理",
-	"description": "描述绘画风格和主题，绘画助理为您绘图。",
+	"version": "0.0.1",
+	"label": "HelloRemoteAgent",
+	"description": "APM remote agent template",
 	"icon": "https://bonsai.baystoneai.com/favicon.png",
-	"doc": "描述绘画风格和主题",
+	"doc": "Markdown doc",
 	"config": {
 		"input": {
 			"style": "水墨画",

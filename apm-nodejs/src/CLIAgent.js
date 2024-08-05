@@ -13,25 +13,25 @@ class CLIAgent {
 
 Usage:
 
-  - show help
-    apm
-    apm --help
-  - create agent in cwd from template
-    apm init
-  - install agent from local folder or agent store
-    apm install <agent-folder>
-	apm install	
-	apm install .
-	apm install <name>:[version]
-  - uninstall agent
-    apm uninstall <name>:[version]
-  - publish agent: cd to agent folder and publish agent
-    apm publish
-  - login to agent store
-    apm login --username <username> --password <password>
-	apm login
-  - logout from agent store
-    apm logout
+- show help
+  apm
+  apm --help
+- create agent in cwd from template
+  apm init
+- install agent from local folder or agent store
+  apm install <agent-folder>
+  apm install	
+  apm install .
+  apm install <name>:[version]
+- uninstall agent
+  apm uninstall <name>:[version]
+- publish agent: cd to agent folder and publish agent
+  apm publish
+- login to agent store
+  apm login --username <username> --password <password>
+  apm login
+- logout from agent store
+  apm logout
         `);
 			return;
 		}

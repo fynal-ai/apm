@@ -382,30 +382,44 @@ class APMAgent {
 		}
 	}
 	async login(payload) {
+		try {
+			const responseJSON = await this.post({
+				url: '/apm/agentstore/agent/login',
+				data: payload,
+			});
+			console.log(`Succeed logged ${responseJSON.user.account}`);
+			return responseJSON;
+		} catch (error) {
+			throw new Error(`Error while login to Agent Store: ${error.message}`);
+		}
+	}
+	async post({ url, data }) {
 		await this.loadConfig();
+
+		let responseJSON;
 
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: '/apm/agentstore/agent/login',
+				url,
 				headers: {
 					Authorization: this.apmAccessToken,
 				},
-				data: payload,
+				data,
 				baseURL: this.apmBaseURL,
 			});
-			const responseJSON = response.data;
-			if (responseJSON.error) {
-				console.error(responseJSON.error, responseJSON.message);
-				throw new Error(`Error while login Agent Store: ${responseJSON.error}`);
-			}
-
-			console.log(`Succeed logged ${responseJSON.user.account}`);
-			return responseJSON;
+			responseJSON = response.data;
 		} catch (error) {
 			console.error(error?.response?.data?.message);
-			throw new Error(`Error while login to Agent Store: ${error.message}`);
+			throw error;
 		}
+
+		if (responseJSON.error) {
+			console.error(responseJSON.error, responseJSON.message);
+			throw new Error(responseJSON.error);
+		}
+
+		return responseJSON;
 	}
 }
 

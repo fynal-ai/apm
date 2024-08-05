@@ -183,6 +183,31 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agent/init',
+			handler: Handlers.APM.Agent.Init,
+			config: {
+				// tags: ['api'],
+				description: 'download agent init template',
+				notes: 'Provide agent author, name, executor',
+				// auth: 'token',
+				validate: {
+					payload: Joi.object({
+						author: Joi.string().required().description('agent author').example('fynal-ai'),
+						name: Joi.string()
+							.required()
+							.description('agent name')
+							.example('fynal-ai/flood_control'),
+						executor: Joi.string()
+							.valid('python', 'nodejs', 'remote')
+							.description('agent executor')
+							.example('nodejs'),
+					}).label('AgentInitPayload'),
+					validator: Joi,
+				},
+			},
+		},
 
 		{
 			method: 'POST',

@@ -118,6 +118,15 @@ export default {
 					return AGENT.edit(PLD);
 				});
 			},
+			Init: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD) => {
+					const streamData = await AGENT.init(PLD);
+
+					const contentType = 'application/octet-stream';
+
+					return h.response(streamData).header('Content-Type', contentType);
+				});
+			},
 		},
 		AgentService: {
 			Auth: async (req: Request, h: ResponseToolkit) => {

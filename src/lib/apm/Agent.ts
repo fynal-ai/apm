@@ -263,6 +263,93 @@ class Agent {
 
 		return apmAgent;
 	}
+	/**
+	 * retrive apm-init template
+	 */
+	async init(PLD) {
+		// author in name
+		const author = PLD.name.split('/')[0];
+		{
+			{
+				if (author !== PLD.author) {
+					throw new EmpError(
+						'AUTHOR_MISSING_IN_AGENT_NAME',
+						'author is not in agent name, like author "fynalai" in "fynalai/flood_control"'
+					);
+				}
+			}
+		}
+
+		// Check if exists
+
+		let apmAgent = await APMAgent.findOne({
+			author: author,
+			name: PLD.name,
+			version: PLD.version,
+		});
+
+		// save file
+		{
+			const tmp_dir = await this.getTMPWorkDirCreate();
+			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
+
+			// escape duplicate .tar.gz
+			if (apmAgent && apmAgent.md5 === md5) {
+				console.log('Agent .tar.gz already exists');
+				return apmAgent;
+			}
+
+			// extract to user dir
+			console.log('extract to user dir');
+			{
+				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
+
+				const workdir = await this.getUserWorkDirCreate(author);
+				// untar
+				console.log('untar');
+				const untarDir = path.resolve(tmp_dir, md5);
+				await AGENT_STORE.untar(tmp_filepath, untarDir);
+
+				// mv to author/name/version
+				console.log('mv to author/name/version');
+				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
+					author,
+					name: PLD.name,
+					version: PLD.version,
+				});
+			}
+
+			// save to database
+			if (!apmAgent) {
+				// Create Agent
+				console.log('Create Agent');
+				{
+					apmAgent = new APMAgent({
+						author,
+						name: PLD.name,
+						version: PLD.version,
+						md5,
+					});
+
+					apmAgent = await apmAgent.save();
+
+					console.log(apmAgent);
+
+					return apmAgent;
+				}
+			} else {
+				// Update Agent
+				console.log('Update Agent');
+				{
+					apmAgent.md5 = md5;
+					apmAgent = await apmAgent.save();
+					console.log(apmAgent);
+
+					return apmAgent;
+				}
+			}
+		}
+	}
 
 	async publish(payload) {
 		const { file } = payload;

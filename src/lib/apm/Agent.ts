@@ -182,6 +182,12 @@ class Agent {
 			const tmp_dir = await this.getTMPWorkDirCreate();
 			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
 
+			// escape duplicate .tar.gz
+			if (apmAgent && apmAgent.md5 === md5) {
+				console.log('Agent .tar.gz already exists');
+				return apmAgent;
+			}
+
 			// extract to user dir
 			console.log('extract to user dir');
 			{

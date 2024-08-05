@@ -397,6 +397,32 @@ class Agent {
 			);
 		}
 
+		// fix access_token missing
+		{
+			const fileJSON = await fs.readJson(filepath);
+			if (!fileJSON?.auth?.apm?.access_token) {
+				const access_token = await this.getAccessToken();
+				await fs.writeJson(
+					filepath,
+					{
+						...fileJSON,
+
+						auth: {
+							...fileJSON.auth,
+
+							apm: {
+								access_id: ServerConfig.apm.access_id,
+								access_key: ServerConfig.apm.access_key,
+
+								...(access_token ? { access_token } : {}),
+							},
+						},
+					},
+					{ spaces: 4 }
+				);
+			}
+		}
+
 		return filepath;
 	}
 	async getAPMInitFolderCreate() {

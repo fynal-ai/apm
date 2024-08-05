@@ -18,6 +18,8 @@ Usage:
   apm --help
 - create agent in cwd from template
   apm init
+  apm init --author <author> --name <name> --executor <executor>
+  apm init --author <author> --name <name> --executor <executor> --force
 - install agent from local folder or agent store
   apm install <agent-folder>
   apm install	
@@ -96,7 +98,7 @@ Usage:
 
 			rl.close();
 
-			await APM_AGENT.init({ author, name, executor });
+			await APM_AGENT.init({ author, name, executor, force: options.force });
 		}
 
 		// publish

@@ -81,7 +81,7 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
-	async init({ author, name, executor = 'nodejs' } = {}) {
+	async init({ author, name, executor = 'nodejs', force = false } = {}) {
 		try {
 			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);
 			if (!author || !name) {
@@ -97,6 +97,14 @@ class APMAgent {
 			{
 				const agentName = name.split('/').at(-1);
 				const agentdir = path.resolve(process.cwd(), agentName);
+
+				// if exists, error
+				if ((await fs.exists(agentdir)) && force === false) {
+					throw new Error(
+						`Agent ${agentName} already exists in ${agentdir}. Try --force to init anyway.`
+					);
+				}
+
 				{
 					const tmp_filepath = path.resolve(process.cwd(), `${agentName}.tar.gz`);
 

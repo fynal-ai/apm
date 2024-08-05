@@ -460,10 +460,14 @@ class Agent {
 				},
 			});
 
-			return data.sessionToken;
+			this.accessToken = data.sessionToken;
+
+			return this.accessToken;
 		}
 
-		return JwtAuth.createToken({ id: user._id });
+		this.accessToken = JwtAuth.createToken({ id: user._id });
+
+		return this.accessToken;
 	}
 
 	async getUserWorkDirCreate(username) {

@@ -7,6 +7,11 @@ import path from 'path';
 import { APM_AGENT } from './APMAgent.js';
 
 class CLIAgent {
+	regex = {
+		author: /^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/,
+		password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
+		agentName: /^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/,
+	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
 		// console.log('options', options);
@@ -87,9 +92,9 @@ Usage:
 						type: "input",
 						name: "author",
 						message: "Agent author:",
-						validate: function (input) {
+						validate: (input) => {
 							const schema = Joi.string()
-								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/)
+								.regex(this.regex.author)
 								.lowercase()
 								.required().label("author")
 							const e = schema.validate(input).error;
@@ -113,9 +118,9 @@ Usage:
 						transformer: function (input) {
 							return `${options.author}/${input}`
 						},
-						validate: function (input) {
+						validate: (input) => {
 							const schema = Joi.string()
-								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/)
+								.regex(this.regex.agentName)
 								.required().label("name")
 							const e = schema.validate(input).error;
 							if (e?.message) {
@@ -179,9 +184,9 @@ Usage:
 						type: "input",
 						name: "username",
 						message: `Agent Store username:`,
-						validate: function (input) {
+						validate: (input) => {
 							const schema = Joi.string()
-								.regex(/^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/)
+								.regex(this.regex.author)
 								.lowercase()
 								.required().label("username")
 							const e = schema.validate(input).error;
@@ -204,10 +209,9 @@ Usage:
 						name: "password",
 						message: `Agent Store password:`,
 						mask: '*',
-						validate: function (input) {
+						validate: (input) => {
 							const schema = Joi.string()
-								.regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/)
-								.lowercase()
+								.regex(this.regex.password)
 								.required().label("password")
 							const e = schema.validate(input).error;
 							if (e?.message) {

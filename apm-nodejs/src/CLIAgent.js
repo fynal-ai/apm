@@ -78,7 +78,9 @@ Usage:
 
 	async init(options) {
 		try {
-			const answers = await inquirer.prompt([
+
+			// author
+			options = await inquirer.prompt([
 				...(options.author ? [] : [
 					{
 						type: "input",
@@ -98,29 +100,38 @@ Usage:
 						}
 					}
 				]),
-				...(options.name ? [] : [
-					{
-						type: "input",
-						name: "name",
-						message: "Agent name:",
-					}
-				]),
-				...(options.executor ? [] : [{
-					type: "list",
-					name: "executor",
-					message: "Agent executor:",
-					choices: [
-						{ name: "python", value: "python" },
-						{ name: "nodejs", value: "nodejs" },
-						{ name: "remote", value: "remote" },
-					]
-				}])
 			])
 
-			await APM_AGENT.init({
+			// name, executor
+			options = {
 				...options,
-				...answers
-			});
+
+				...await inquirer.prompt([
+
+					...(options.name ? [] : [
+						{
+							type: "input",
+							name: "name",
+							message: `Agent name:`,
+							transformer: function (input) {
+								return `${options.author}/${input}`
+							}
+						}
+					]),
+					...(options.executor ? [] : [{
+						type: "list",
+						name: "executor",
+						message: "Agent executor:",
+						choices: [
+							{ name: "python", value: "python" },
+							{ name: "nodejs", value: "nodejs" },
+							{ name: "remote", value: "remote" },
+						]
+					}])
+				])
+			}
+
+			await APM_AGENT.init(options);
 		} catch (error) {
 			console.log(error.message);
 		}

@@ -58,47 +58,7 @@ Usage:
 		}
 
 		if (_[0] === 'init') {
-			const rl = readline.createInterface({
-				input: process.stdin,
-				output: process.stdout,
-			});
-
-			let author = options.author;
-			if (!author) {
-				await new Promise((resolve) => {
-					rl.question(`Agent author: `, async (input) => {
-						author = input;
-
-						resolve(true);
-					});
-				});
-			}
-
-			let name = options.name;
-			if (!name) {
-				await new Promise((resolve) => {
-					rl.question(`Agent name: ${author}/`, async (input) => {
-						name = `${author}/${input}`;
-
-						resolve(true);
-					});
-				});
-			}
-
-			let executor = options.executor;
-			if (!executor) {
-				await new Promise((resolve) => {
-					rl.question(`Agent executor (python, nodejs, remote): `, async (input) => {
-						executor = input;
-
-						resolve(true);
-					});
-				});
-			}
-
-			rl.close();
-
-			await APM_AGENT.init({ author, name, executor, force: options.force });
+			await this.init(options);
 		}
 
 		// publish
@@ -111,6 +71,50 @@ Usage:
 		if (_[0] === 'login') {
 			await this.login(options);
 		}
+	}
+
+	async init(options) {
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+		});
+
+		let author = options.author;
+		if (!author) {
+			await new Promise((resolve) => {
+				rl.question(`Agent author: `, async (input) => {
+					author = input;
+
+					resolve(true);
+				});
+			});
+		}
+
+		let name = options.name;
+		if (!name) {
+			await new Promise((resolve) => {
+				rl.question(`Agent name: ${author}/`, async (input) => {
+					name = `${author}/${input}`;
+
+					resolve(true);
+				});
+			});
+		}
+
+		let executor = options.executor;
+		if (!executor) {
+			await new Promise((resolve) => {
+				rl.question(`Agent executor (python, nodejs, remote): `, async (input) => {
+					executor = input;
+
+					resolve(true);
+				});
+			});
+		}
+
+		rl.close();
+
+		await APM_AGENT.init({ author, name, executor, force: options.force });
 	}
 	async login(options) {
 		console.log('Login to Agent Store...');

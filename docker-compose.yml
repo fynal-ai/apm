@@ -30,6 +30,8 @@ services:
 
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+
+      - APM_AGENT_STORE_BASE_URL=http://172.16.7.141:11008
     depends_on:
       - mongodb
       - redis

@@ -203,7 +203,18 @@ Usage:
 						type: "password",
 						name: "password",
 						message: `Agent Store password:`,
-						mask: '*'
+						mask: '*',
+						validate: function (input) {
+							const schema = Joi.string()
+								.regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/)
+								.lowercase()
+								.required().label("password")
+							const e = schema.validate(input).error;
+							if (e?.message) {
+								return e.message;
+							}
+							return true;
+						}
 					}
 				])
 				options.password = answers.password

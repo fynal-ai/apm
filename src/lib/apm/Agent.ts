@@ -1,4 +1,5 @@
 import axios from 'axios';
+import child_process from 'child_process';
 import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
@@ -7,6 +8,7 @@ import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import { User } from '../../database/models/User.js';
 import EmpError from '../EmpError.js';
+import { AGENT_SERVICE } from './AgentService.js';
 import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
@@ -267,85 +269,62 @@ class Agent {
 	 * retrive apm-init template
 	 */
 	async init(PLD) {
-		// author in name
-		const author = PLD.name.split('/')[0];
-		{
-			{
-				if (author !== PLD.author) {
-					throw new EmpError(
-						'AUTHOR_MISSING_IN_AGENT_NAME',
-						'author is not in agent name, like author "fynalai" in "fynalai/flood_control"'
-					);
-				}
-			}
+		const author = PLD.author;
+		const agentName = PLD.name.split('/').at(-1);
+
+		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
+		const templateDir = path.resolve(localRepositoryDir, 'apm-init', PLD.executor);
+
+		// Not exist
+		if ((await fs.exists(templateDir)) === false) {
+			throw new EmpError(
+				'AGENT_INIT_TEMPLATE_FOR_EXECUTOR_NOT_FOUND',
+				`Agent init template for executor ${PLD.executor} not found`
+			);
 		}
 
-		// Check if exists
-
-		let apmAgent = await APMAgent.findOne({
-			author: author,
-			name: PLD.name,
-			version: PLD.version,
-		});
-
-		// save file
 		{
-			const tmp_dir = await this.getTMPWorkDirCreate();
-			let md5 = await this.saveUploadFile(tmp_dir, PLD.file);
+			const taskId = await AGENT_SERVICE.generateRunId();
 
-			// escape duplicate .tar.gz
-			if (apmAgent && apmAgent.md5 === md5) {
-				console.log('Agent .tar.gz already exists');
-				return apmAgent;
-			}
-
-			// extract to user dir
-			console.log('extract to user dir');
+			// copy template to tmp/apm-init/taskId
 			{
-				const tmp_filepath = path.resolve(tmp_dir, `${md5}.tar.gz`);
+				const tmpDir = await this.getTMPWorkDirCreate();
+				const agentdir = path.resolve(tmpDir, taskId);
+				await fs.ensureDir(agentdir);
+				await fs.copy(templateDir, agentdir);
 
-				const workdir = await this.getUserWorkDirCreate(author);
-				// untar
-				console.log('untar');
-				const untarDir = path.resolve(tmp_dir, md5);
-				await AGENT_STORE.untar(tmp_filepath, untarDir);
-
-				// mv to author/name/version
-				console.log('mv to author/name/version');
-				await AGENT_STORE.moveToAuthorAgentDir(untarDir, {
-					author,
-					name: PLD.name,
-					version: PLD.version,
-				});
-			}
-
-			// save to database
-			if (!apmAgent) {
-				// Create Agent
-				console.log('Create Agent');
+				// replace {{AUTHOR}}, {{NAME}} in agent.json, package.json
 				{
-					apmAgent = new APMAgent({
-						author,
-						name: PLD.name,
-						version: PLD.version,
-						md5,
-					});
-
-					apmAgent = await apmAgent.save();
-
-					console.log(apmAgent);
-
-					return apmAgent;
+					for (let file of ['agent.json', 'package.json']) {
+						const filePath = path.resolve(agentdir, file);
+						if ((await fs.exists(filePath)) === false) {
+							continue;
+						}
+						let fileContent = await fs.readFile(filePath, 'utf8');
+						fileContent = fileContent.replace(/{{AUTHOR}}/g, author);
+						fileContent = fileContent.replace(/{{NAME}}/g, agentName);
+						await fs.writeFile(filePath, fileContent);
+					}
 				}
-			} else {
-				// Update Agent
-				console.log('Update Agent');
-				{
-					apmAgent.md5 = md5;
-					apmAgent = await apmAgent.save();
-					console.log(apmAgent);
 
-					return apmAgent;
+				// tar tmp/<taskId>.tar.gz
+				{
+					const tarFilePath = await this.tarAgentFolder(agentdir, tmpDir);
+					console.log('tarFilePath', tarFilePath);
+
+					// retrive tmp/<taskId>.tar.gz
+					{
+						const filepath = tarFilePath;
+						const streamData = await fs.createReadStream(filepath);
+
+						// delete tmp/apm-init/taskId
+						{
+							await fs.remove(agentdir);
+							await fs.remove(filepath);
+						}
+
+						return streamData;
+					}
 				}
 			}
 		}
@@ -525,6 +504,42 @@ class Agent {
 				resolve(md5);
 			});
 		});
+	}
+	async tarAgentFolder(folderpath, outputDir?) {
+		if (!outputDir) {
+			outputDir = path.resolve(folderpath, 'tmp');
+
+			if (await fs.exists(outputDir)) {
+				await fs.emptyDir(outputDir);
+			} else {
+				await fs.ensureDir(outputDir);
+			}
+		}
+
+		const foldername = path.basename(folderpath);
+		const outputname = `${foldername}.tar.gz`;
+		const outputFilePath = path.join(outputDir, outputname);
+
+		{
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
+			// console.log('command', command);
+			await new Promise(async (resolve) => {
+				const childProcess = await child_process.exec(command, {
+					cwd: folderpath,
+				});
+				childProcess.stdout.on('data', async (data) => {
+					// console.log('data', data);
+				});
+				childProcess.stderr.on('data', async (data) => {
+					// console.log(data);
+				});
+				childProcess.stdout.on('close', async () => {
+					resolve(true);
+				});
+			});
+		}
+
+		return outputFilePath;
 	}
 }
 

@@ -82,8 +82,8 @@ Usage:
 		try {
 
 			// author
-			options = await inquirer.prompt([
-				...(options.author ? [] : [
+			if (!options.author) {
+				const answers = await inquirer.prompt([
 					{
 						type: "input",
 						name: "author",
@@ -101,53 +101,53 @@ Usage:
 							return true;
 						}
 					}
-				]),
-			])
-
-			// name, executor
-			options = {
-				...options,
-
-				...await inquirer.prompt([
-
-					...(options.name ? [] : [
-						{
-							type: "input",
-							name: "name",
-							message: `Agent name:`,
-							transformer: function (input) {
-								return `${options.author}/${input}`
-							}
-						}
-					]),
-					...(options.executor ? [] : [{
-						type: "list",
-						name: "executor",
-						message: "Agent executor:",
-						choices: [
-							{ name: "python", value: "python" },
-							{ name: "nodejs", value: "nodejs" },
-							{ name: "remote", value: "remote" },
-						]
-					}])
 				])
+				options.author = answers.author
+			}
+
+			// name, 
+			if (!options.name) {
+				const answers = await inquirer.prompt([
+					{
+						type: "input",
+						name: "name",
+						message: `Agent name:`,
+						transformer: function (input) {
+							return `${options.author}/${input}`
+						}
+					}
+				])
+				options.name = `${options.author}/${answers.name}`
+			}
+
+			// executor
+			if (!options.executor) {
+				const answers = await inquirer.prompt({
+					type: "list",
+					name: "executor",
+					message: "Agent executor:",
+					choices: [
+						{ name: "python", value: "python" },
+						{ name: "nodejs", value: "nodejs" },
+						{ name: "remote", value: "remote" },
+					]
+				})
+				options.executor = answers.executor
 			}
 
 			// force
 			const agentName = options.name.split("/").at(-1);
 			const agentdir = path.resolve(agentName)
 			if (await fs.exists(agentdir)) {
-				options = {
-					...options,
-					...await inquirer.prompt([
-						{
-							type: "confirm",
-							name: "force",
-							message: `Agent folder already exists in ${agentdir}, overwrite?`,
-							default: false
-						}
-					])
-				}
+				const answers = await inquirer.prompt([
+					{
+						type: "confirm",
+						name: "force",
+						message: `Agent folder already exists in ${agentdir}, overwrite?`,
+						default: false
+					}
+				])
+				options.force = answers.force
 				if (options.force != true) {
 					return;
 				}

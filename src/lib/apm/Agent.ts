@@ -12,6 +12,7 @@ import { AGENT_SERVICE } from './AgentService.js';
 import { AGENT_STORE } from './AgentStore.js';
 
 class Agent {
+	accessToken = '';
 	constructor() {
 		this.getAPMFolderCreate();
 	}
@@ -300,7 +301,7 @@ class Agent {
 					`replace {{AUTHOR}} to ${author}, {{NAME}} to ${agentName} in agent.json, package.json`
 				);
 				{
-					for (let file of ['agent.json', 'package.json']) {
+					for (let file of ['agent.json', 'package.json', 'test/index.js']) {
 						const filePath = path.resolve(agentdir, file);
 						if ((await fs.exists(filePath)) === false) {
 							continue;
@@ -308,6 +309,8 @@ class Agent {
 						let fileContent = await fs.readFile(filePath, 'utf8');
 						fileContent = fileContent.replace(/{{AUTHOR}}/g, author);
 						fileContent = fileContent.replace(/{{NAME}}/g, agentName);
+						fileContent = fileContent.replace(/{{PORT}}/g, ServerConfig.hapi.port);
+						fileContent = fileContent.replace(/{{ACCESS_TOKEN}}/g, this.accessToken);
 						await fs.writeFile(filePath, fileContent);
 					}
 				}

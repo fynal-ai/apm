@@ -7,18 +7,20 @@ const params = {
 	prompt: 'hello',
 };
 const saveconfig = {
-	url: 'http://127.0.0.1:12008/apm/agentservice/result/save',
+	url: 'http://127.0.0.1:{{PORT}}/apm/agentservice/result/save',
 	headers: {},
 	data: {
-		access_token:
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTlmODkzMThlNjI2YTEwNWQ1NDUzZiIsImlhdCI6MTcyMTgwMTMxNX0.0JlOvoihh70nchouIa9yLFj4U04x5ppQ3qDIHewXWFA',
+		access_token: '{{ACCESS_TOKEN}}',
 		runId: Math.random().toString().substring(2, 15),
-		name: 'fynal-ai/draw_image',
-		version: '1.0.1',
+		name: '{{AUTHOR}}/{{NAME}}',
+		version: '0.0.1',
 		input: {
-			style: '油画',
+			style: 'ink',
+			prompt: 'hello',
 		},
-		output: {},
+		output: {
+			text: 'Hello!',
+		},
 	},
 	status: {},
 };

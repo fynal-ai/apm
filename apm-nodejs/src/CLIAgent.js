@@ -1,7 +1,10 @@
 #!/usr/bin/env node
+import chalk from "chalk";
+import cliSelect from "cli-select";
 import minimist from 'minimist';
 import readline from 'readline';
 import { APM_AGENT } from './APMAgent.js';
+
 class CLIAgent {
 	async main() {
 		const options = minimist(process.argv.slice(2));
@@ -101,18 +104,31 @@ Usage:
 			});
 		}
 
+		rl.close();
+
+
 		let executor = options.executor;
 		if (!executor) {
-			await new Promise((resolve) => {
-				rl.question(`Agent executor (python, nodejs, remote): `, async (input) => {
-					executor = input;
-
-					resolve(true);
+			console.log(`Agent executor:`)
+			try {
+				const response = await cliSelect({
+					values: ["python", "nodejs", "remote"],
+					selected: "(*)",
+					cleanup: false,
+					valueRenderer: (value, selected) => {
+						if (selected) {
+							return chalk.underline(value);
+						}
+						return value;
+					},
 				});
-			});
-		}
 
-		rl.close();
+				executor = response.value;
+
+			} catch (error) {
+				return;
+			}
+		}
 
 		await APM_AGENT.init({ author, name, executor, force: options.force });
 	}

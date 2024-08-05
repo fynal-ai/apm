@@ -31,8 +31,6 @@ Usage:
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
-- logout from agent store
-  apm logout
         `);
 			return;
 		}
@@ -110,11 +108,6 @@ Usage:
 		// login
 		if (_[0] === 'login') {
 			await this.login(options);
-		}
-
-		// logout
-		if (_[0] === 'logout') {
-			await APM_AGENT.logout();
 		}
 	}
 	async login(options) {

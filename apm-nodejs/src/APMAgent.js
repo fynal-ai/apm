@@ -406,32 +406,6 @@ class APMAgent {
 			throw new Error(`Error while login to Agent Store: ${error.message}`);
 		}
 	}
-	async logout() {
-		await this.loadConfig();
-
-		try {
-			const response = await axios({
-				method: 'POST',
-				url: '/apm/agentstore/agent/logout',
-				headers: {
-					Authorization: this.apmAccessToken,
-				},
-				data: {},
-				baseURL: this.apmBaseURL,
-			});
-			const responseJSON = response.data;
-			if (responseJSON.error) {
-				console.error(responseJSON.error, responseJSON.message);
-				throw new Error(`Error while logout Agent Store: ${responseJSON.error}`);
-			}
-
-			console.log(`Succeed logout ${responseJSON.user.account}`);
-			return responseJSON;
-		} catch (error) {
-			console.error(error?.response?.data?.message);
-			throw new Error(`Error while logout to Agent Store: ${error.message}`);
-		}
-	}
 }
 
 const APM_AGENT = new APMAgent();

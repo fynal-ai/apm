@@ -28,8 +28,9 @@ Usage:
 - publish agent: cd to agent folder and publish agent
   apm publish
 - login to agent store
-  apm login --username <username> --password <password>
   apm login
+  apm login --username <username>
+  apm login --username <username> --password <password>
 - logout from agent store
   apm logout
         `);
@@ -118,7 +119,7 @@ Usage:
 	}
 	async login(options) {
 		console.log('Login to Agent Store...');
-		if (!APM_AGENT.agentStoreSessionToken) {
+		if (!APM_AGENT.agentStoreSessionToken || options.username || options.password) {
 			// read from cli
 			const rl = readline.createInterface({
 				input: process.stdin,

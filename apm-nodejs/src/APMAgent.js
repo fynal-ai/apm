@@ -385,12 +385,14 @@ class APMAgent {
 		await this.loadConfig();
 
 		try {
-			const response = await axios({
+			const postData = {
 				method: 'POST',
 				url: '/apm/agentstore/agent/login',
 				data: payload,
 				baseURL: this.apmBaseURL,
-			});
+			};
+			// console.log('postData', postData);
+			const response = await axios(postData);
 			const responseJSON = response.data;
 			if (responseJSON.error) {
 				console.error(responseJSON.error, responseJSON.message);

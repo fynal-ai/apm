@@ -506,7 +506,7 @@ class Agent {
 		const sharefolder = ServerConfig.apm.localRepositoryDir;
 		const workdir = path.join(sharefolder, 'tmp');
 		await fs.ensureDir(workdir);
-		return workdir;
+		return path.resolve(workdir);
 	}
 	async saveUploadFile(workdir, file) {
 		// 保存为随机文件名
@@ -563,7 +563,7 @@ class Agent {
 			// tar: unrecognized option '--options'
 			// const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp' .`;
 			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore .`;
-			// console.log('command', command);
+			console.log('command', command);
 			await new Promise(async (resolve, reject) => {
 				const childProcess = await child_process.exec(command, {
 					cwd: folderpath,

@@ -58,6 +58,29 @@ class APMAgent {
 	}
 
 	async uninstall(spec) {
+		// Try uninstall current folder
+		if (!spec) {
+			console.log('Try uninstall agent from current folder');
+
+			let folderpath = ".";
+			folderpath = path.resolve(folderpath);
+
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
+			if (await fs.exists(agentJSONFilePath) === false) {
+				throw new Error("Current folder is not an agent folder.")
+			}
+
+			console.log(`Uninstalling agent in folder ${folderpath}`);
+
+			// parse agent.json
+			const apmAgent = await fs.readJson(agentJSONFilePath);
+			console.log('Agent name', apmAgent.name);
+			console.log('Agent version', apmAgent.version);
+
+			spec = `${apmAgent.name}:${apmAgent.version}`
+
+		}
+
 		await this.loadConfig();
 
 		try {

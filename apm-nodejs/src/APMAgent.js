@@ -11,7 +11,7 @@ class APMAgent {
 	agentStoreUsername = '';
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
-	constructor() {}
+	constructor() { }
 	async saveOutput(saveconfig, output = {}) {
 		// print output in console
 		if (!saveconfig) {
@@ -74,7 +74,7 @@ class APMAgent {
 			const responseJSON = response.data;
 			console.log(
 				`Succeed uninstalled ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -253,6 +253,10 @@ class APMAgent {
 			});
 
 			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while upload agent: ${responseJSON.error}`);
+			}
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
@@ -353,7 +357,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -395,7 +399,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -420,7 +424,7 @@ class APMAgent {
 
 			console.log(
 				`Succeed created ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {

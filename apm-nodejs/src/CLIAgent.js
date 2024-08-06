@@ -86,6 +86,9 @@ Usage:
 				input: options["i"] || options["input"]
 			});
 		}
+
+		// Command not exist
+		console.log(`Command ${_[0]} not exist. Try apm --help`);
 	}
 
 	async init(options) {

@@ -36,13 +36,6 @@ Usage:
   apm install <name>[:version]
 - uninstall agent
   apm uninstall <name>[:version]
-- run agent
-  apm run
-  apm run --input <input.json>
-  apm run -i <input.json>
-  apm run <name>[:version]
-  apm run <name>[:version] --input <input.json>
-  apm run <name>[:version> -i <input.json>
 - publish agent: cd to agent folder and publish agent
   apm publish
 - login to agent store

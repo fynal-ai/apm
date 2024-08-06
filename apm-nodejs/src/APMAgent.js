@@ -184,7 +184,27 @@ class APMAgent {
 			console.log('Error while publish apm agent: ', error.message);
 		}
 	}
+	// TODO
 	async run(spec, { input } = {}) {
+		//   apm run
+		//   apm run --input <input.json>
+		//   apm run -i <input.json>
+		//   apm run <name>[:version]
+		//   apm run <name>[:version] --input <input.json>
+		//   apm run <name>[:version> -i <input.json>
+
+		if (!spec) {
+			console.log('Try run agent from current folder');
+			return await this.runFromAgentFolder(spec, { input });
+		}
+
+		const isAgentFolder = await this.isAgentFolder(spec);
+
+		if (isAgentFolder) {
+			return await this.runFromAgentFolder(spec, { input });
+		}
+
+		return await this.runFromAgentStore(spec, { input });
 
 	}
 	/**

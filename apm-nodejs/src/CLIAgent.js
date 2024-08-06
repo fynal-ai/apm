@@ -14,7 +14,7 @@ class CLIAgent {
 	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
-		console.log('options', options);
+		// console.log('options', options);
 
 		if (options.help || options._.length === 0) {
 			const version = await APM_AGENT.getCLIVersion();

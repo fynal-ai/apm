@@ -16,3 +16,5 @@ APM (Agent Package Manager)
 # Development
 
 [seperate-dev-start.md](./docs/seperate-dev-start.md)
+
+[publish-packages-to-public.md](./docs/publish-packages-to-public.md)

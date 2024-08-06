@@ -35,7 +35,7 @@ class Agent {
 
 1. change code in `src` directory
 2. change version in `package.json`
-3. pnpm config set '//registry.npmjs.org/:\_authToken' <YOUR_PUBLISH_TOKEN>
+3. (login) pnpm config set '//registry.npmjs.org/:\_authToken' <YOUR_PUBLISH_TOKEN>
 4. publish to npm
    ```sh
    pnpm run pubish

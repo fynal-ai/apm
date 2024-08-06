@@ -5,7 +5,7 @@ with open("README.md","r") as fh:
 
 setuptools.setup(
     # 包的分发名称，使用字母、数字、_、-
-    name="fynal-apm-python",
+    name="fynalai-apm-python",
     install_requires=["requests>=2.16.0"],
      # 版本号, 版本号规范：https://www.python.org/dev/peps/pep-0440/
     version="0.0.5",
@@ -20,7 +20,7 @@ setuptools.setup(
     # 和上条命令配合使用，声明加载的是markdown文件
     long_description_content_type="text/markdown",
     # 项目开源地址
-    url="https://github.com/fynal-ai/apm",
+    url="https://github.com/fynal-ai/apm/apm-python",
      # 如果项目由多个文件组成，我们可以使用find_packages()自动发现所有包和子包，而不是手动列出每个包，在这种情况下，包列表将是example_pkg
     packages=setuptools.find_packages(),
     # 关于包的其他元数据(metadata)

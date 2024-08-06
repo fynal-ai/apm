@@ -6,6 +6,7 @@ ENV SHELL=/bin/bash
 
 RUN set -eux && sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt update
+RUN apt clean
 
 WORKDIR /app
 RUN mkdir -p /app

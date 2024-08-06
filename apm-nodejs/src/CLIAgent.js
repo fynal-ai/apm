@@ -14,7 +14,7 @@ class CLIAgent {
 	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
-		// console.log('options', options);
+		console.log('options', options);
 
 		if (options.help || options._.length === 0) {
 			const version = await APM_AGENT.getCLIVersion();
@@ -33,9 +33,16 @@ Usage:
   apm install <agent-folder>
   apm install	
   apm install .
-  apm install <name>:[version]
+  apm install <name>[:version]
 - uninstall agent
-  apm uninstall <name>:[version]
+  apm uninstall <name>[:version]
+- run agent
+  apm run
+  apm run --input <input.json>
+  apm run -i <input.json>
+  apm run <name>[:version]
+  apm run <name>[:version] --input <input.json>
+  apm run <name>[:version> -i <input.json>
 - publish agent: cd to agent folder and publish agent
   apm publish
 - login to agent store
@@ -76,6 +83,14 @@ Usage:
 		// login
 		if (_[0] === 'login') {
 			await this.login(options);
+		}
+
+		// run
+		if (_[0] === 'run') {
+			const agentSpec = _[1];
+			await APM_AGENT.run(agentSpec, {
+				input: options["i"] || options["input"]
+			});
 		}
 	}
 

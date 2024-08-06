@@ -184,6 +184,9 @@ class APMAgent {
 			console.log('Error while publish apm agent: ', error.message);
 		}
 	}
+	async run(spec, { input } = {}) {
+
+	}
 	/**
 	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
 	 */

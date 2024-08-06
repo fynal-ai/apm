@@ -16,6 +16,14 @@ class CLIAgent {
 		const options = minimist(process.argv.slice(2));
 		// console.log('options', options);
 
+		// version
+		if (options.version || options.v) {
+			const version = await APM_AGENT.getCLIVersion();
+			console.log(version);
+			return;
+		}
+
+		// help
 		if (options.help || options._.length === 0) {
 			const version = await APM_AGENT.getCLIVersion();
 			console.log(`APM(Agent Package Manager) CLI v${version}
@@ -25,6 +33,9 @@ Usage:
 - show help
   apm
   apm --help
+- show version
+  apm --version
+  apm -v
 - create agent in cwd from template
   apm init
   apm init --author <author> --name <name> --executor <executor>
@@ -74,6 +85,7 @@ Usage:
 		if (_[0] === 'publish') {
 			await this.login(options);
 			await APM_AGENT.publish();
+			return;
 		}
 
 		// login
@@ -88,6 +100,7 @@ Usage:
 				input: options["i"] || options["input"]
 			});
 		}
+
 
 		// Command not exist
 		console.log(`Command ${_[0]} not exist. Try apm --help`);

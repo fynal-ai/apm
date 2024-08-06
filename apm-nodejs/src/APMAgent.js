@@ -172,7 +172,14 @@ class APMAgent {
 	}
 	async publish() {
 		try {
-			const folderpath = path.resolve('.');
+			// recursive find parent folder which has agent.json
+			let folderpath = await this.recursiveFindAgent(".");
+
+			if (!folderpath) {
+				console.log("Current folder is not an agent folder.")
+				return;
+			}
+
 			console.log(`Publish agent from folder ${folderpath}`);
 			// parse agent.json
 			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));

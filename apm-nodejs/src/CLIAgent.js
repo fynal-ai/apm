@@ -149,23 +149,25 @@ Usage:
 			}
 
 			// force
-			const agentName = options.name.split("/").at(-1);
-			const agentdir = path.resolve(agentName)
-			if (await fs.exists(agentdir)) {
-				const answers = await inquirer.prompt([
-					{
-						type: "confirm",
-						name: "force",
-						message: `Agent folder already exists in ${agentdir}, overwrite?`,
-						default: false
-					}
-				])
-				options.force = answers.force
+			if (!options.force) {
+				const agentName = options.name.split("/").at(-1);
+				const agentdir = path.resolve(agentName)
+				if (await fs.exists(agentdir)) {
+					const answers = await inquirer.prompt([
+						{
+							type: "confirm",
+							name: "force",
+							message: `Agent folder already exists in ${agentdir}, overwrite?`,
+							default: false
+						}
+					])
+					options.force = answers.force
 
-				// loop ask name
-				if (options.force != true) {
-					delete options.name;
-					return this.init(options);
+					// loop ask name
+					if (options.force != true) {
+						delete options.name;
+						return this.init(options);
+					}
 				}
 			}
 

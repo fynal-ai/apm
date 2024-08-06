@@ -534,7 +534,7 @@ class APMAgent {
 		while (folderpath !== '/') {
 			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
 			if (await fs.exists(agentJSONFilePath) === true) {
-				// console.log(`Found agent.json in folder ${folderpath}`);
+				console.log(`Found agent.json in folder ${folderpath}`);
 				return folderpath;
 			}
 			folderpath = path.resolve(folderpath, '..');

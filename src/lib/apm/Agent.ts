@@ -326,7 +326,7 @@ class Agent {
 						const streamData = await fs.createReadStream(filepath);
 
 						// delete tmp/taskId
-						streamData.on('end', async () => {
+						streamData.on('close', async () => {
 							console.log(`delete tmp/${taskId}*`);
 
 							await fs.remove(agentdir);

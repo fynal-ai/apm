@@ -328,8 +328,9 @@ class APMAgent {
 		const outputFilePath = path.join(outputDir, outputname);
 
 		{
-			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
-			// console.log('command', command);
+			// const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore .`;
+			console.log('command', command);
 			await new Promise(async (resolve) => {
 				const childProcess = await child_process.exec(command, {
 					cwd: folderpath,

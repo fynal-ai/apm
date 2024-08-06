@@ -79,6 +79,7 @@ Usage:
 
 		if (_[0] === 'init') {
 			await this.init(options);
+			return;
 		}
 
 		// publish
@@ -91,6 +92,7 @@ Usage:
 		// login
 		if (_[0] === 'login') {
 			await this.login(options);
+			return;
 		}
 
 		// run

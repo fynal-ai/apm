@@ -85,6 +85,8 @@ class APMAgent {
 
 			console.log(`Uninstalling agent in folder ${folderpath}`);
 
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+
 			// parse agent.json
 			const apmAgent = await fs.readJson(agentJSONFilePath);
 			console.log('Agent name', apmAgent.name);
@@ -176,6 +178,7 @@ class APMAgent {
 			let folderpath = await this.recursiveFindAgent(".");
 
 			if (!folderpath) {
+				console.log("folderpath", folderpath)
 				console.log("Current folder is not an agent folder.")
 				return;
 			}
@@ -532,7 +535,7 @@ class APMAgent {
 			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
 			if (await fs.exists(agentJSONFilePath) === true) {
 				// console.log(`Found agent.json in folder ${folderpath}`);
-				return await this.installFromAgentFolder(folderpath);
+				return folderpath;
 			}
 			folderpath = path.resolve(folderpath, '..');
 		}

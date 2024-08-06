@@ -3,7 +3,7 @@ APM(Agent Package Manager) CLI and library
 ## Install as CLI
 
 ```sh
-pnpm add -g @fynal/apm
+pnpm add -g @fynal-ai/apm
 ```
 
 ```sh
@@ -13,7 +13,7 @@ apm --help
 ## Program Usage
 
 ```js
-import { APMAgent } from '@fynal/apm';
+import { APMAgent } from '@fynal-ai/apm';
 
 class Agent {
 	constructor() {

@@ -29,16 +29,17 @@ Usage:
   apm init
   apm init --author <author> --name <name> --executor <executor>
   apm init --author <author> --name <name> --executor <executor> --force
-- install agent from local folder or agent store
+- install agent from local folder or agent store. If no agent name is specified, the agent in the current folder is installed. Duplicate agents are overwritten.
   apm install <agent-folder>
   apm install	
   apm install .
   apm install <name>[:version]
-- uninstall agent
+- uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
+  apm uninstall
   apm uninstall <name>[:version]
-- publish agent: cd to agent folder and publish agent
+- publish cwd agent folder to Agent Store
   apm publish
-- login to agent store
+- login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>

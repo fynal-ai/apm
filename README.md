@@ -7,9 +7,9 @@ APM (Agent Package Manager)
    docker compose -f docker-compose.yml up
    ```
    http://127.0.0.1:12008/documentation
-2. Install agent from APM CLI
+2. Install agent from APM CLI [@fynal-ai/apm](https://www.npmjs.com/package/@fynal-ai/apm)
    ```sh
-   pnpm install -g @jobsimi/apm
+   pnpm install -g @fynal-ai/apm
    apm --help
    ```
 

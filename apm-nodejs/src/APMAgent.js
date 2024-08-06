@@ -75,12 +75,12 @@ class APMAgent {
 		if (!spec) {
 			console.log('Try uninstall agent from current folder');
 
-			let folderpath = ".";
-			folderpath = path.resolve(folderpath);
+			// recursive find parent folder which has agent.json
+			let folderpath = await this.recursiveFindAgent(".");
 
-			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
-			if (await fs.exists(agentJSONFilePath) === false) {
-				throw new Error("Current folder is not an agent folder.")
+			if (!folderpath) {
+				console.log("Current folder is not an agent folder.")
+				return;
 			}
 
 			console.log(`Uninstalling agent in folder ${folderpath}`);

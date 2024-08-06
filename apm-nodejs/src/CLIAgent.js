@@ -63,6 +63,7 @@ Usage:
 		if (_[0] === 'uninstall') {
 			const agentSpec = _[1];
 			await APM_AGENT.uninstall(agentSpec);
+			return
 		}
 
 		if (_[0] === 'init') {

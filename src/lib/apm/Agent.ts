@@ -60,8 +60,6 @@ class Agent {
 
 		const parsedAgentSpec = this.parseAgentSpec(spec);
 
-		await this.getAPMInitFolderCreate();
-
 		// Local APM Repository already has this agent
 		{
 			const apmAgent = await this.getDetail({

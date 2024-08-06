@@ -1,6 +1,6 @@
 APM (Agent Package Manager)
 
-# Quick
+## Quick
 
 1. Download [docker-compose.yml](./docker-compose.yml) to start APM Server
    ```sh
@@ -13,8 +13,24 @@ APM (Agent Package Manager)
    apm --help
    ```
 
-# Development
+## Development
 
 [seperate-dev-start.md](./docs/seperate-dev-start.md)
 
 [publish-packages-to-public.md](./docs/publish-packages-to-public.md)
+
+## Q&A
+
+### Configure Agent Store endpoint to switch between dev and production environment
+
+setenv.sh:
+
+```sh
+export APM_AGENT_STORE_BASE_URL="https://agentstoreemp.baystoneai.com"
+```
+
+docker-compose.yml:
+
+```
+- APM_AGENT_STORE_BASE_URL=http://172.16.7.141:11008
+```

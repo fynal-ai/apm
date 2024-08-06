@@ -19,7 +19,7 @@ services:
     restart: always
 
   backend:
-    image: jobsimi/apm:latest
+    image: fynalai/apm:latest
     volumes:
       - ~/.apm:/app/.apm
     ports:

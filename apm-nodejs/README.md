@@ -47,7 +47,7 @@ class Agent {
 
 Upgrade Node.Js to >= 18.0.0
 
-### apm --help is Atom Package Manage but Agent Package Manage
+### apm --help is Atom Package Manage but not Agent Package Manage
 
 1. which apm
 2. mv <path/to/apm> <path/to/apm2>

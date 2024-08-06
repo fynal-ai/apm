@@ -178,7 +178,17 @@ Usage:
 	}
 	async login(options) {
 		try {
-			console.log('Login or register to Agent Store...');
+			console.log('Login or register to Agent Store...',);
+
+			if (APM_AGENT.agentStoreSessionToken && !options.username && !options.password) {
+				console.log(
+					`Logged to Agent Store with user`,
+					options.username || APM_AGENT.agentStoreUsername
+				);
+				return;
+
+			}
+
 			// username
 			if (!options.username) {
 				const answers = await inquirer.prompt([

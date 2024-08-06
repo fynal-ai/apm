@@ -11,7 +11,12 @@ class APMAgent {
 	agentStoreUsername = '';
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
-	constructor() {}
+	constructor() { }
+	/**
+	 * save output by saveconfig when saveconfig is setted, or print output to console
+	 * @param {Object} saveconfig
+	 * @param {Object} output
+	 */
 	async saveOutput(saveconfig, output = {}) {
 		// print output in console
 		if (!saveconfig) {
@@ -58,6 +63,29 @@ class APMAgent {
 	}
 
 	async uninstall(spec) {
+		// Try uninstall current folder
+		if (!spec) {
+			console.log('Try uninstall agent from current folder');
+
+			let folderpath = ".";
+			folderpath = path.resolve(folderpath);
+
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
+			if (await fs.exists(agentJSONFilePath) === false) {
+				throw new Error("Current folder is not an agent folder.")
+			}
+
+			console.log(`Uninstalling agent in folder ${folderpath}`);
+
+			// parse agent.json
+			const apmAgent = await fs.readJson(agentJSONFilePath);
+			console.log('Agent name', apmAgent.name);
+			console.log('Agent version', apmAgent.version);
+
+			spec = `${apmAgent.name}:${apmAgent.version}`
+
+		}
+
 		await this.loadConfig();
 
 		try {
@@ -74,7 +102,7 @@ class APMAgent {
 			const responseJSON = response.data;
 			console.log(
 				`Succeed uninstalled ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -160,6 +188,29 @@ class APMAgent {
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
 		}
+	}
+	// TODO
+	async run(spec, { input } = {}) {
+		//   apm run
+		//   apm run --input <input.json>
+		//   apm run -i <input.json>
+		//   apm run <name>[:version]
+		//   apm run <name>[:version] --input <input.json>
+		//   apm run <name>[:version> -i <input.json>
+
+		if (!spec) {
+			console.log('Try run agent from current folder');
+			return await this.runFromAgentFolder(spec, { input });
+		}
+
+		const isAgentFolder = await this.isAgentFolder(spec);
+
+		if (isAgentFolder) {
+			return await this.runFromAgentFolder(spec, { input });
+		}
+
+		return await this.runFromAgentStore(spec, { input });
+
 	}
 	/**
 	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
@@ -253,6 +304,10 @@ class APMAgent {
 			});
 
 			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while upload agent: ${responseJSON.error}`);
+			}
 			console.log(`Succeed installed ${responseJSON.name}:${responseJSON.version}`);
 			return responseJSON;
 		} catch (error) {
@@ -353,7 +408,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -395,7 +450,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -420,7 +475,7 @@ class APMAgent {
 
 			console.log(
 				`Succeed created ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {

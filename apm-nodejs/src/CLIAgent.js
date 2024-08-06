@@ -14,7 +14,7 @@ class CLIAgent {
 	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
-		// console.log('options', options);
+		console.log('options', options);
 
 		if (options.help || options._.length === 0) {
 			const version = await APM_AGENT.getCLIVersion();
@@ -29,16 +29,17 @@ Usage:
   apm init
   apm init --author <author> --name <name> --executor <executor>
   apm init --author <author> --name <name> --executor <executor> --force
-- install agent from local folder or agent store
+- install agent from local folder or agent store. If no agent name is specified, the agent in the current folder is installed. Duplicate agents are overwritten.
   apm install <agent-folder>
   apm install	
   apm install .
-  apm install <name>:[version]
-- uninstall agent
-  apm uninstall <name>:[version]
-- publish agent: cd to agent folder and publish agent
+  apm install <name>[:version]
+- uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
+  apm uninstall
+  apm uninstall <name>[:version]
+- publish cwd agent folder to Agent Store
   apm publish
-- login to agent store
+- login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
@@ -60,9 +61,6 @@ Usage:
 		// uninstall
 		if (_[0] === 'uninstall') {
 			const agentSpec = _[1];
-			if (!agentSpec) {
-				throw new Error('Invalid agent spec');
-			}
 			await APM_AGENT.uninstall(agentSpec);
 		}
 
@@ -79,6 +77,14 @@ Usage:
 		// login
 		if (_[0] === 'login') {
 			await this.login(options);
+		}
+
+		// run
+		if (_[0] === 'run') {
+			const agentSpec = _[1];
+			await APM_AGENT.run(agentSpec, {
+				input: options["i"] || options["input"]
+			});
 		}
 	}
 
@@ -149,23 +155,25 @@ Usage:
 			}
 
 			// force
-			const agentName = options.name.split("/").at(-1);
-			const agentdir = path.resolve(agentName)
-			if (await fs.exists(agentdir)) {
-				const answers = await inquirer.prompt([
-					{
-						type: "confirm",
-						name: "force",
-						message: `Agent folder already exists in ${agentdir}, overwrite?`,
-						default: false
-					}
-				])
-				options.force = answers.force
+			if (!options.force) {
+				const agentName = options.name.split("/").at(-1);
+				const agentdir = path.resolve(agentName)
+				if (await fs.exists(agentdir)) {
+					const answers = await inquirer.prompt([
+						{
+							type: "confirm",
+							name: "force",
+							message: `Agent folder already exists in ${agentdir}, overwrite?`,
+							default: false
+						}
+					])
+					options.force = answers.force
 
-				// loop ask name
-				if (options.force != true) {
-					delete options.name;
-					return this.init(options);
+					// loop ask name
+					if (options.force != true) {
+						delete options.name;
+						return this.init(options);
+					}
 				}
 			}
 
@@ -176,7 +184,17 @@ Usage:
 	}
 	async login(options) {
 		try {
-			console.log('Login or register to Agent Store...');
+			console.log('Login or register to Agent Store...',);
+
+			if (APM_AGENT.agentStoreSessionToken && !options.username && !options.password) {
+				console.log(
+					`Logged to Agent Store with user`,
+					options.username || APM_AGENT.agentStoreUsername
+				);
+				return;
+
+			}
+
 			// username
 			if (!options.username) {
 				const answers = await inquirer.prompt([

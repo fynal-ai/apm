@@ -326,7 +326,7 @@ class Agent {
 						const streamData = await fs.createReadStream(filepath);
 
 						// delete tmp/taskId
-						streamData.on('end', async () => {
+						streamData.on('close', async () => {
 							console.log(`delete tmp/${taskId}*`);
 
 							await fs.remove(agentdir);
@@ -506,7 +506,7 @@ class Agent {
 		const sharefolder = ServerConfig.apm.localRepositoryDir;
 		const workdir = path.join(sharefolder, 'tmp');
 		await fs.ensureDir(workdir);
-		return workdir;
+		return path.resolve(workdir);
 	}
 	async saveUploadFile(workdir, file) {
 		// 保存为随机文件名
@@ -559,9 +559,12 @@ class Agent {
 		const outputFilePath = path.join(outputDir, outputname);
 
 		{
-			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp'  .`;
-			// console.log('command', command);
-			await new Promise(async (resolve) => {
+			// Socket Hang Up
+			// tar: unrecognized option '--options'
+			// const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore --options '!timestamp' .`;
+			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore .`;
+			console.log('command', command);
+			await new Promise(async (resolve, reject) => {
 				const childProcess = await child_process.exec(command, {
 					cwd: folderpath,
 				});
@@ -569,7 +572,8 @@ class Agent {
 					// console.log('data', data);
 				});
 				childProcess.stderr.on('data', async (data) => {
-					// console.log(data);
+					console.log(data);
+					reject(data);
 				});
 				childProcess.stdout.on('close', async () => {
 					resolve(true);

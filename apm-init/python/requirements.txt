@@ -1,1 +1,1 @@
-jobsimi-apm-python=0.0.5
+fynalai-apm-python==0.0.5

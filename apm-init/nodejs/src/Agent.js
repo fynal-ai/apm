@@ -1,13 +1,13 @@
-import { APMAgent } from '@jobsimi/apm';
+import { APMAgent } from '@fynal-ai/apm';
 
 class Agent {
 	constructor() {
 		this.apmAgent = new APMAgent();
 	}
-	async run(params, saveconfig) {
-		console.log('Receive', params);
+	async run(input, saveconfig) {
+		console.log('Receive', input);
 
-		const text = { text: params.prompt };
+		const text = { text: input.prompt };
 
 		// send to ChatGPT
 		const responseJSON = {};

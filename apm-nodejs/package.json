@@ -1,6 +1,6 @@
 {
-	"name": "@jobsimi/apm",
-	"version": "0.1.5",
+	"name": "@fynal-ai/apm",
+	"version": "0.1.11",
 	"type": "module",
 	"main": "src/index.js",
 	"bin": {
@@ -8,19 +8,20 @@
 	},
 	"scripts": {
 		"install-cli": "pnpm link -g",
-		"pub": "npm publish --access public --registry https://registry.npmjs.org/"
+		"publish": "npm publish --access public --registry https://registry.npmjs.org/"
 	},
-	"author": "jobsimi",
+	"author": "fynal-ai",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/jobsimi/apm"
+		"url": "https://github.com/fynal-ai/apm"
 	},
 	"dependencies": {
 		"axios": "^1.7.2",
 		"form-data": "^4.0.0",
 		"fs-extra": "^11.2.0",
 		"inquirer": "^10.1.7",
+		"joi": "^17.13.3",
 		"minimist": "^1.2.8"
 	}
 }

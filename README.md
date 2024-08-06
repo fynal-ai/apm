@@ -2,16 +2,19 @@ APM (Agent Package Manager)
 
 # Quick
 
-1. download docker-compose.yml and start APM Server
+1. Download [docker-compose.yml](./docker-compose.yml) to start APM Server
    ```sh
    docker compose -f docker-compose.yml up
    ```
-2. install APM CLI
+   http://127.0.0.1:12008/documentation
+2. Install agent from APM CLI [@fynal-ai/apm](https://www.npmjs.com/package/@fynal-ai/apm)
    ```sh
-   pnpm install -g @jobsimi/apm
+   pnpm install -g @fynal-ai/apm
    apm --help
    ```
 
 # Development
 
 [seperate-dev-start.md](./docs/seperate-dev-start.md)
+
+[publish-packages-to-public.md](./docs/publish-packages-to-public.md)

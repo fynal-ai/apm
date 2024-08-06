@@ -6,6 +6,7 @@ ENV SHELL=/bin/bash
 
 RUN set -eux && sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt update
+RUN apt clean
 
 WORKDIR /app
 RUN mkdir -p /app
@@ -25,7 +26,7 @@ RUN pnpm setup
 RUN source ~/.bashrc
 RUN pnpm add -g pm2@5.4.2
 RUN pnpm add -g symlink-dir@6.0.1
-RUN curl https://raw.githubusercontent.com/jobsimi/apm/dev/package.json -o package.json
+RUN curl https://raw.githubusercontent.com/fynal-ai/apm/dev/package.json -o package.json
 RUN pnpm install --registry https://registry.npmmirror.com
 
 ####

@@ -6,8 +6,8 @@ class Agent:
         self.apmAgent = APMAgent()
         pass
 
-    def run(self, params, saveconfig):
-        print("params", params)
+    def run(self, input, saveconfig):
+        print("input", input)
         output = {
             "text": "Hello APM!"
         }

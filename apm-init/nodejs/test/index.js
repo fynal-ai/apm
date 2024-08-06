@@ -2,7 +2,7 @@ import { Agent } from '../src/index.js';
 
 const agent = new Agent();
 
-const params = {
+const input = {
 	style: 'ink',
 	prompt: 'hello',
 };
@@ -25,5 +25,5 @@ const saveconfig = {
 	status: {},
 };
 
-const output = await agent.run(params, saveconfig);
+const output = await agent.run(input, saveconfig);
 console.log('output', output);

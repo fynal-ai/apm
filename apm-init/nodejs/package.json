@@ -6,6 +6,6 @@
 		"dev": "node test/index.js"
 	},
 	"dependencies": {
-		"@fynal-ai/apm": "^0.1.4"
+		"@fynal-ai/apm": "^0.1.10"
 	}
 }

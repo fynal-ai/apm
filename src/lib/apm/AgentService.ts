@@ -254,13 +254,13 @@ fi
 tee main.js <<END
 import { Agent } from "${agentName}";
 
-const params = ${JSON.stringify(apmAgent.config.input)}
+const input = ${JSON.stringify(apmAgent.config.input)}
 
 const saveconfig = ${JSON.stringify(saveconfig)}
 
 const agent = new Agent();
 
-agent.run(params, saveconfig)
+agent.run(input, saveconfig)
 END
 
 REQUIREMENTS_FILE=${agentName}/package.json
@@ -310,13 +310,13 @@ fi
 tee main.py <<END
 from ${agentName}.Agent import Agent
 
-params = ${JSON.stringify(apmAgent.config.input)}
+input = ${JSON.stringify(apmAgent.config.input)}
 
 saveconfig = ${JSON.stringify(saveconfig)}
 
 agent = Agent()
 
-agent.run(params=params, saveconfig=saveconfig)
+agent.run(input=input, saveconfig=saveconfig)
 END
 
 REQUIREMENTS_FILE=${agentName}/requirements.txt

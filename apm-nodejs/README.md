@@ -36,6 +36,10 @@ Usage:
   apm login --username <username> --password <password>
 ```
 
+## Program Usage
+
+We package some utilities to help you to create agent.
+
 ```js
 import { APMAgent } from '@fynal-ai/apm';
 
@@ -43,12 +47,12 @@ class Agent {
 	constructor() {
 		this.apmAgent = new APMAgent();
 	}
-	async run(params, saveconfig) {
+	async run(input, saveconfig) {
 		const output = {
 			text: 'text',
 		};
 
-		this.apmAgent.save_output(saveconfig, output); // save output
+		this.apmAgent.save_output(saveconfig, output); // save output by saveconfig when saveconfig is setted, or print output to console
 
 		return output;
 	}
@@ -57,10 +61,14 @@ class Agent {
 
 ## Dev
 
-1. change code in `src` directory
-2. change version in `package.json`
-3. (login) pnpm config set '//registry.npmjs.org/:\_authToken' <YOUR_PUBLISH_TOKEN>
-4. publish to npm
+Join US to Contribute:
+
+1. fork at https://github.com/fynal-ai/apm
+2. goto `apm-nodejs` directory
+3. change code in `src` directory
+4. change version in `package.json`
+5. (login) pnpm config set '//registry.npmjs.org/:\_authToken' <YOUR_PUBLISH_TOKEN>
+6. publish to npm
    ```sh
    pnpm run pubish
    ```

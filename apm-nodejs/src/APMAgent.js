@@ -12,6 +12,11 @@ class APMAgent {
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
 	constructor() { }
+	/**
+	 * save output by saveconfig when saveconfig is setted, or print output to console
+	 * @param {Object} saveconfig
+	 * @param {Object} output
+	 */
 	async saveOutput(saveconfig, output = {}) {
 		// print output in console
 		if (!saveconfig) {

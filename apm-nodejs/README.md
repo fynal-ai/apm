@@ -39,3 +39,9 @@ class Agent {
    ```sh
    pnpm run pub
    ```
+
+## Q&A
+
+### items.findLastIndex is not a function
+
+Upgrade Node.Js to >= 18.0.0

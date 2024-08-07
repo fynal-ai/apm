@@ -5,7 +5,16 @@ services:
     user: root
     volumes:
       - ~/mongodb12:/data/db
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'rs0']
+      - /tmp/apm-mongo-logs:/var/log/mongodb
+    entrypoint:
+      [
+        '/usr/bin/mongod',
+        '--bind_ip_all',
+        '--logpath',
+        '/var/log/mongodb/mongo.log',
+        '--replSet',
+        'rs0',
+      ]
     restart: always
   mongosetup:
     image: mongodb/mongodb-community-server:latest

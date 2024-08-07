@@ -150,7 +150,18 @@ class AgentService {
 				input: apmAgent.config.input,
 				output: {},
 
-				remoteRunSaveResultOption,
+				...(remoteRunSaveResultOption?.callback
+					? {
+							remoteRunSaveResultOption: {
+								url: remoteRunSaveResultOption?.callback,
+								headers: {},
+								data: {
+									runId,
+									output: {},
+								},
+							},
+						}
+					: {}),
 			},
 		};
 

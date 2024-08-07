@@ -121,6 +121,7 @@ export default {
 			Init: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD) => {
 					const streamData = await AGENT.init(PLD);
+					// console.log('streamData', streamData, typeof streamData);
 
 					const contentType = 'application/octet-stream';
 

@@ -2,6 +2,7 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import shortuuid from 'short-uuid';
+import which from 'which';
 import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import {
@@ -232,6 +233,8 @@ class AgentService {
 		workdir,
 		saveconfig,
 	}) {
+		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
+		console.log('symlinkDirBinPath', symlinkDirBinPath);
 		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
@@ -241,7 +244,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 PACKAGE_JSON_FILE=package.json
@@ -292,6 +295,9 @@ node main.js
 	}) {
 		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
 
+		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
+		console.log('symlinkDirBinPath', symlinkDirBinPath);
+
 		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
@@ -301,7 +307,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 INIT_FILE=${agentName}/__init__.py
@@ -481,6 +487,9 @@ ${pythonProgram} main.py
 		}
 
 		return false;
+	}
+	async getSymlinkDirBinPath() {
+		return await which('symlink-dir');
 	}
 }
 

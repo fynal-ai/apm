@@ -27,7 +27,7 @@ class APMAgent {
 		// save output to run callback server
 		{
 			const config = saveconfig?.remoteRunSaveResultOption
-			if (config?.callback) {
+			if (config?.url) {
 				console.log('Try save output to callback server');
 				try {
 					const url = config["url"]

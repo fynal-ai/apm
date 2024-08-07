@@ -149,20 +149,20 @@ class AgentService {
 				version: apmAgent.version,
 				input: apmAgent.config.input,
 				output: {},
-
-				...(remoteRunSaveResultOption?.callback
-					? {
-							remoteRunSaveResultOption: {
-								url: remoteRunSaveResultOption?.callback,
-								headers: {},
-								data: {
-									runId,
-									output: {},
-								},
-							},
-						}
-					: {}),
 			},
+
+			...(remoteRunSaveResultOption?.callback
+				? {
+						remoteRunSaveResultOption: {
+							url: remoteRunSaveResultOption?.callback,
+							headers: {},
+							data: {
+								runId,
+								output: {},
+							},
+						},
+					}
+				: {}),
 		};
 
 		// Generate sh

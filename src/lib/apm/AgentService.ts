@@ -94,7 +94,9 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.access_token
+					payload.access_token,
+
+					payload.option
 				);
 			}
 
@@ -102,7 +104,9 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.access_token
+				payload.access_token,
+
+				payload.option
 			);
 			return { runId, runMode: 'async' };
 		}
@@ -124,7 +128,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token, remoteRunSaveResultOption?) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -145,6 +149,8 @@ class AgentService {
 				version: apmAgent.version,
 				input: apmAgent.config.input,
 				output: {},
+
+				remoteRunSaveResultOption,
 			},
 		};
 

@@ -20,7 +20,10 @@ class AgentService {
 		}
 
 		if (!apmAgent?.endpoints?.authType) {
-			throw new EmpError('AGENT_NOT_REMOTE', `Agent ${payload.name} is not remote agent`);
+			throw new EmpError(
+				'AGENT_NOT_REMOTE',
+				`Agent ${payload.name}:${payload.version} is not remote agent`
+			);
 		}
 
 		const remoteAgent = new RemoteAgent(apmAgent);
@@ -31,7 +34,7 @@ class AgentService {
 		// retrive agent info from database
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 		if (!apmAgent) {
-			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name}:${payload.version} not found`);
 		}
 
 		if (apmAgent.executor === 'remote') {

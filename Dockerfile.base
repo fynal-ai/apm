@@ -26,7 +26,7 @@ RUN pnpm setup
 RUN source ~/.bashrc
 RUN pnpm add -g pm2@5.4.2
 RUN pnpm add -g symlink-dir@6.0.1
-RUN curl https://raw.githubusercontent.com/fynal-ai/apm/main/package.json -o package.json
+COPY package.json package.json
 RUN pnpm install --registry https://registry.npmmirror.com
 
 ####

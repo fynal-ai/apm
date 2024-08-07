@@ -48,6 +48,9 @@ class APMAgent {
 					console.log('Error while saving output to callback servier: ', error);
 				}
 			}
+			if (config) {
+				delete saveconfig.remoteRunSaveResultOption
+			}
 		}
 
 

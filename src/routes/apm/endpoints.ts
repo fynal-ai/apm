@@ -253,6 +253,12 @@ const internals = {
 							start_time: 1715961600,
 							end_time: 1721364927,
 						}),
+
+						option: Joi.object({
+							callback: Joi.string().description('async agent callback url'),
+						}).label("APMAgentServiceRunOption").description(
+							'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
+						),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},

@@ -256,9 +256,11 @@ const internals = {
 
 						option: Joi.object({
 							callback: Joi.string().description('async agent callback url'),
-						}).label("APMAgentServiceRunOption").description(
-							'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
-						),
+						})
+							.label('APMAgentServiceRunOption')
+							.description(
+								'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
+							),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},
@@ -358,6 +360,24 @@ const internals = {
 						name: Joi.string().description('agent name'),
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),
+						output: Joi.object().description('agent output'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/test/save',
+			handler: Handlers.APM.AgentService.Result.Test.Save,
+			config: {
+				// tags: ['api'],
+				description: 'Create a run result and save',
+				notes: 'save',
+				// auth: 'token',
+				validate: {
+					payload: {
+						runId: Joi.string().required().description('run id'),
 						output: Joi.object().description('agent output'),
 					},
 					validator: Joi,

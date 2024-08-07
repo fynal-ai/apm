@@ -157,6 +157,13 @@ export default {
 						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},
+				Test: {
+					Save: async (req: Request, h: ResponseToolkit) => {
+						return easyResponse(req, h, async (PLD, CRED) => {
+							return PLD;
+						});
+					},
+				},
 			},
 		},
 		AgentStore: {

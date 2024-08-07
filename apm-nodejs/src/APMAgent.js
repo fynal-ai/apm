@@ -50,7 +50,15 @@ class APMAgent {
 		if (!spec) {
 			console.log('Try install agent from current folder');
 
-			return await this.installFromAgentFolder('.');
+			// recursive find parent folder which has agent.json
+			let folderpath = await this.recursiveFindAgent(".");
+
+			if (!folderpath) {
+				console.log("Current folder is not an agent folder.")
+				return;
+			}
+
+			return await this.installFromAgentFolder(folderpath);
 		}
 
 		const isAgentFolder = await this.isAgentFolder(spec);
@@ -67,15 +75,17 @@ class APMAgent {
 		if (!spec) {
 			console.log('Try uninstall agent from current folder');
 
-			let folderpath = ".";
-			folderpath = path.resolve(folderpath);
+			// recursive find parent folder which has agent.json
+			let folderpath = await this.recursiveFindAgent(".");
 
-			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
-			if (await fs.exists(agentJSONFilePath) === false) {
-				throw new Error("Current folder is not an agent folder.")
+			if (!folderpath) {
+				console.log("Current folder is not an agent folder.")
+				return;
 			}
 
 			console.log(`Uninstalling agent in folder ${folderpath}`);
+
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
 
 			// parse agent.json
 			const apmAgent = await fs.readJson(agentJSONFilePath);
@@ -164,7 +174,15 @@ class APMAgent {
 	}
 	async publish() {
 		try {
-			const folderpath = path.resolve('.');
+			// recursive find parent folder which has agent.json
+			let folderpath = await this.recursiveFindAgent(".");
+
+			if (!folderpath) {
+				console.log("folderpath", folderpath)
+				console.log("Current folder is not an agent folder.")
+				return;
+			}
+
 			console.log(`Publish agent from folder ${folderpath}`);
 			// parse agent.json
 			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
@@ -507,6 +525,19 @@ class APMAgent {
 		} catch (error) {
 			console.error(error?.response?.data?.message);
 			throw new Error(`Error while login to Agent Store: ${error.message}`);
+		}
+	}
+	async recursiveFindAgent(folderpath) {
+		// recursive find parent folder which has agent.json
+		folderpath = path.resolve(folderpath);
+		// console.log('folderpath', folderpath);
+		while (folderpath !== '/') {
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
+			if (await fs.exists(agentJSONFilePath) === true) {
+				console.log(`Found agent.json in folder ${folderpath}`);
+				return folderpath;
+			}
+			folderpath = path.resolve(folderpath, '..');
 		}
 	}
 }

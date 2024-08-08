@@ -666,6 +666,11 @@ class APMAgent {
 		}
 	}
 	async beautifyPrintList(list) {
+		if (!list || Array.isArray(list) === false || list.length === 0) {
+			console.log("No data.")
+			return;
+		}
+
 		const table = new CLITable({
 			head: Object.keys(list[0]),
 			// colWidths: [100, 200]

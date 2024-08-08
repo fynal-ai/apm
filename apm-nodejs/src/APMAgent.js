@@ -169,7 +169,7 @@ class APMAgent {
 				console.error(responseJSON.error, responseJSON.message);
 				throw new Error(`Error while list apm agent: ${responseJSON.error}`);
 			}
-			// console.log(responseJSON)			
+			// console.log(responseJSON)
 			// [{
 			// 	_id: '66b18cdfee884b6462f373f4',
 			// 	author: 'jobsimi',
@@ -294,6 +294,42 @@ class APMAgent {
 			console.log('Succeed published agent to agent store');
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
+		}
+	}
+	async search(payload) {
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agentstore/agent/search',
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while search Agent Store agents: ${responseJSON.error}`);
+			}
+			// console.log(responseJSON)
+			console.log(`List of Agent Store agents (${responseJSON.length}):`);
+			const columns = [
+				"name", "author", "version", "executor",
+				"updatedAt", "description",
+			]
+			await this.beautifyPrintList(responseJSON.map((a, index) => {
+				return {
+					"": index,
+					...columns.reduce((previousValue, currentValue) => {
+						previousValue[currentValue] = a[currentValue]
+						return previousValue
+					}, {}),
+				}
+			}));
+
+			return responseJSON;
+		} catch (error) {
+			console.error(error?.response?.data?.message);
+			throw new Error(`Error while search Agent Store agents: ${error.message}`);
 		}
 	}
 	// TODO

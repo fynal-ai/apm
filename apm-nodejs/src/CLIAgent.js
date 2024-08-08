@@ -58,6 +58,10 @@ Usage:
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
+- search agents in Agent Store
+  apm search
+  apm search --limit 20
+  apm search --q "hello"
         `);
 			return;
 		}
@@ -106,6 +110,16 @@ Usage:
 		// login
 		if (_[0] === 'login') {
 			await this.login(options);
+			return;
+		}
+
+		// search
+		if (_[0] === 'search') {
+			await APM_AGENT.search({
+				...options,
+
+				_: undefined
+			});
 			return;
 		}
 

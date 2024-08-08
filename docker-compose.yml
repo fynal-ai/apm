@@ -2,6 +2,7 @@ version: '3'
 services:
   mongodb:
     image: mongodb/mongodb-community-server:latest
+    restart: always
     user: root
     volumes:
       - ~/mongodb12:/data/db
@@ -15,12 +16,11 @@ services:
         '--replSet',
         'rs0',
       ]
-    restart: always
   mongosetup:
     image: mongodb/mongodb-community-server:latest
+    restart: 'no'
     depends_on:
       - mongodb
-    restart: 'no'
     entrypoint:
       [
         'bash',
@@ -35,6 +35,10 @@ services:
 
   backend:
     image: fynalai/apm:latest
+    restart: always
+    depends_on:
+      - mongodb
+      - redis
     volumes:
       - ~/.apm:/app/.apm
     ports:
@@ -47,7 +51,4 @@ services:
       - REDIS_PORT=6379
 
       # - APM_AGENT_STORE_BASE_URL=http://172.16.7.141:11008
-    depends_on:
-      - mongodb
-      - redis
-    entrypoint: ['bash', '-c', 'sleep 10 && source ~/.nvm/nvm.sh && node /app/build/index.js']
+    entrypoint: ['bash', '--login', '-i', '-c', 'sleep 10 && node /app/build/index.js']

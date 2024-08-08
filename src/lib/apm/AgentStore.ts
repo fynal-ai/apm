@@ -114,6 +114,17 @@ class AgentStore {
 		}
 		return response.data;
 	}
+	async search(payload) {
+		const response = await this.axios({
+			method: 'POST',
+			url: '/agentstore/agent/search',
+			data: payload,
+		});
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
+		return response.data;
+	}
 
 	setSessionToken(sessionToken: string) {
 		if (sessionToken) {

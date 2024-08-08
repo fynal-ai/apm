@@ -2,6 +2,7 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import shortuuid from 'short-uuid';
+import which from 'which';
 import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import {
@@ -20,7 +21,10 @@ class AgentService {
 		}
 
 		if (!apmAgent?.endpoints?.authType) {
-			throw new EmpError('AGENT_NOT_REMOTE', `Agent ${payload.name} is not remote agent`);
+			throw new EmpError(
+				'AGENT_NOT_REMOTE',
+				`Agent ${payload.name}:${payload.version} is not remote agent`
+			);
 		}
 
 		const remoteAgent = new RemoteAgent(apmAgent);
@@ -31,7 +35,7 @@ class AgentService {
 		// retrive agent info from database
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 		if (!apmAgent) {
-			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name}:${payload.version} not found`);
 		}
 
 		if (apmAgent.executor === 'remote') {
@@ -90,7 +94,9 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.access_token
+					payload.access_token,
+
+					payload.option
 				);
 			}
 
@@ -98,7 +104,9 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.access_token
+				payload.access_token,
+
+				payload.option
 			);
 			return { runId, runMode: 'async' };
 		}
@@ -120,7 +128,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token, remoteRunSaveResultOption?) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -142,6 +150,19 @@ class AgentService {
 				input: apmAgent.config.input,
 				output: {},
 			},
+
+			...(remoteRunSaveResultOption?.callback
+				? {
+						remoteRunSaveResultOption: {
+							url: remoteRunSaveResultOption?.callback,
+							headers: {},
+							data: {
+								runId,
+								output: {},
+							},
+						},
+					}
+				: {}),
 		};
 
 		// Generate sh
@@ -229,6 +250,15 @@ class AgentService {
 		workdir,
 		saveconfig,
 	}) {
+		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
+		console.log('symlinkDirBinPath', symlinkDirBinPath);
+
+		const packageJSON = await fs.readJson(
+			path.resolve(localRepositoryDir, 'agents', author, agentName, version, 'package.json')
+		);
+		const agentNameInPackageJSON = packageJSON.name;
+		console.log('agentNameInPackageJSON', agentNameInPackageJSON);
+
 		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
@@ -238,7 +268,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 PACKAGE_JSON_FILE=package.json
@@ -252,7 +282,7 @@ END
 fi
 
 tee main.js <<END
-import { Agent } from "${agentName}";
+import { Agent } from "${agentNameInPackageJSON}";
 
 const input = ${JSON.stringify(apmAgent.config.input)}
 
@@ -287,7 +317,16 @@ node main.js
 		workdir,
 		saveconfig,
 	}) {
+		// SyntaxError
+		// from hello-apm-python.Agent import Agent
+		// => from hello_apm_python.Agent import Agent
+		const originAgentName = agentName;
+		agentName = agentName.replace(/-/g, '_');
+
 		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
+
+		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
+		console.log('symlinkDirBinPath', symlinkDirBinPath);
 
 		const sh = `#!/bin/bash
 
@@ -298,7 +337,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  /root/.local/share/pnpm/symlink-dir $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${originAgentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 INIT_FILE=${agentName}/__init__.py
@@ -478,6 +517,15 @@ ${pythonProgram} main.py
 		}
 
 		return false;
+	}
+	async getSymlinkDirBinPath() {
+		try {
+			return await which('symlink-dir');
+		} catch (error) {
+			console.log('Try install symlink-dir: pnpm add -g symlink-dir');
+			throw error;
+		}
+		// return '/root/.local/share/pnpm/symlink-dir';
 	}
 }
 

@@ -46,6 +46,7 @@ const internals = {
 						...PAGING_PAYLOAD,
 
 						q: Joi.string().allow('').description('query'),
+						executor: Joi.string().allow('').description('agent executor'),
 					},
 					validator: Joi,
 				},
@@ -253,6 +254,14 @@ const internals = {
 							start_time: 1715961600,
 							end_time: 1721364927,
 						}),
+
+						option: Joi.object({
+							callback: Joi.string().description('async agent callback url'),
+						})
+							.label('APMAgentServiceRunOption')
+							.description(
+								'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
+							),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},
@@ -352,6 +361,24 @@ const internals = {
 						name: Joi.string().description('agent name'),
 						version: Joi.string().allow('').description('agent version'),
 						input: Joi.object().description('agent input'),
+						output: Joi.object().description('agent output'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentservice/result/test/save',
+			handler: Handlers.APM.AgentService.Result.Test.Save,
+			config: {
+				// tags: ['api'],
+				description: 'Create a run result and save',
+				notes: 'save',
+				// auth: 'token',
+				validate: {
+					payload: {
+						runId: Joi.string().required().description('run id'),
 						output: Joi.object().description('agent output'),
 					},
 					validator: Joi,
@@ -549,6 +576,25 @@ const internals = {
 								quantity: 1,
 								unit: 'year',
 							}),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agentstore/agent/search',
+			handler: Handlers.APM.AgentStore.Agent.Search,
+			config: {
+				tags: ['api'],
+				description: 'Search agents in Agent Store',
+				notes: 'Provide search info',
+				validate: {
+					payload: {
+						...PAGING_PAYLOAD,
+
+						q: Joi.string().allow('').description('query'),
+						executor: Joi.string().allow('').description('agent executor'),
 					},
 					validator: Joi,
 				},

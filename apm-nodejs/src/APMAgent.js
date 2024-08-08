@@ -1,5 +1,6 @@
 import axios from 'axios';
 import child_process from 'child_process';
+import CLITable from "cli-table3";
 import FormData from 'form-data';
 import fs from 'fs-extra';
 import path from 'path';
@@ -24,6 +25,37 @@ class APMAgent {
 			return;
 		}
 
+		// save output to run callback server
+		{
+			const config = saveconfig?.remoteRunSaveResultOption
+			if (config?.url) {
+				console.log('Try save output to callback server');
+				try {
+					const url = config["url"]
+					const headers = config['headers'];
+
+					const data = config["data"]
+					data['output'] = output;
+
+					const response = await axios({
+						method: 'POST',
+						url,
+						headers,
+						data,
+					});
+					const responseJSON = response.data;
+					console.log('Callback server responseJSON', responseJSON);
+				} catch (error) {
+					console.log('Error while saving output to callback servier: ', error);
+				}
+			}
+			if (config) {
+				delete saveconfig.remoteRunSaveResultOption
+			}
+		}
+
+
+		// save output to apm server
 		try {
 			const url = saveconfig['url'];
 			const headers = saveconfig['headers'];
@@ -119,6 +151,63 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
+	async list(payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/search',
+				headers: {
+					Authorization: this.apmAccessToken,
+				},
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while list apm agent: ${responseJSON.error}`);
+			}
+			// console.log(responseJSON)
+			// [{
+			// 	_id: '66b18cdfee884b6462f373f4',
+			// 	author: 'jobsimi',
+			// 	version: '0.0.1',
+			// 	name: 'jobsimi/HelloAPM',
+			// 	label: 'HelloPythonAgent',
+			// 	description: 'APM python agent template',
+			// 	icon: 'https://bonsai.baystoneai.com/favicon.png',
+			// 	doc: 'Markdown doc',
+			// 	config: { input: [Object], output: [Object] },
+			// 	executor: 'python',
+			// 	md5: 'cc033e0df3bee6ddfdb74361f25d5a48',
+			// 	createdAt: '2024-08-06T02:39:27.342Z',
+			// 	updatedAt: '2024-08-06T02:39:27.342Z',
+			// 	__v: 0
+			// }]
+			// format to |name|author|version|description|
+			console.log(`List of installed APM agents (${responseJSON.length}):`);
+			const columns = [
+				"name", "author", "version", "executor",
+				"updatedAt", "description",
+			]
+			await this.beautifyPrintList(responseJSON.map((a, index) => {
+				return {
+					"": index,
+					...columns.reduce((previousValue, currentValue) => {
+						previousValue[currentValue] = a[currentValue]
+						return previousValue
+					}, {}),
+				}
+			}));
+
+			return responseJSON;
+		} catch (error) {
+			console.error(error?.response?.data?.message);
+			throw new Error(`Error while list apm agent: ${error.message}`);
+		}
+	}
 	async init({ author, name, executor = 'nodejs', force = false } = {}) {
 		try {
 			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);
@@ -205,6 +294,42 @@ class APMAgent {
 			console.log('Succeed published agent to agent store');
 		} catch (error) {
 			console.log('Error while publish apm agent: ', error.message);
+		}
+	}
+	async search(payload) {
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agentstore/agent/search',
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while search Agent Store agents: ${responseJSON.error}`);
+			}
+			// console.log(responseJSON)
+			console.log(`List of Agent Store agents (${responseJSON.length}):`);
+			const columns = [
+				"name", "author", "version", "executor",
+				"updatedAt", "description",
+			]
+			await this.beautifyPrintList(responseJSON.map((a, index) => {
+				return {
+					"": index,
+					...columns.reduce((previousValue, currentValue) => {
+						previousValue[currentValue] = a[currentValue]
+						return previousValue
+					}, {}),
+				}
+			}));
+
+			return responseJSON;
+		} catch (error) {
+			console.error(error?.response?.data?.message);
+			throw new Error(`Error while search Agent Store agents: ${error.message}`);
 		}
 	}
 	// TODO
@@ -539,6 +664,25 @@ class APMAgent {
 			}
 			folderpath = path.resolve(folderpath, '..');
 		}
+	}
+	async beautifyPrintList(list) {
+		if (!list || Array.isArray(list) === false || list.length === 0) {
+			console.log("No data.")
+			return;
+		}
+
+		const table = new CLITable({
+			head: Object.keys(list[0]),
+			// colWidths: [100, 200]
+		}
+		);
+
+		// table is an Array, so you can `push`, `unshift`, `splice` and friends
+		for (let i = 0; i < list.length; i = i + 1) {
+			table.push(Object.values(list[i]))
+		}
+
+		console.log(table.toString());
 	}
 }
 

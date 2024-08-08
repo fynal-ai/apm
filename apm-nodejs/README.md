@@ -16,6 +16,9 @@ Usage:
 - show help
   apm
   apm --help
+- show version
+  apm --version
+  apm -v
 - create agent in cwd from template
   apm init
   apm init --author <author> --name <name> --executor <executor>
@@ -28,12 +31,26 @@ Usage:
 - uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
   apm uninstall
   apm uninstall <name>[:version]
+- list installed agents in APM Server
+  apm list
+  apm list --limit 20
+  apm list --q "hello"
+  apm list --executor nodejs
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
+- search agents in Agent Store
+  apm search
+  apm search --limit 20
+  apm search --q "hello"
+  apm search --executor nodejs
+- Update apm package to latest in local Node.Js Agent Folders together:
+  for i in $(ls); do pnpm add @fynal-ai/apm:latest --dir $i; done
+- Install local Agent Folders together to APM Server:
+  for i in $(ls); do apm install $i; done
 ```
 
 ## Program Usage

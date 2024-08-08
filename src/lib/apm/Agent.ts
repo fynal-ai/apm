@@ -299,7 +299,7 @@ class Agent {
 					`replace {{AUTHOR}} to ${author}, {{NAME}} to ${agentName} in agent.json, package.json`
 				);
 				{
-					for (let file of ['agent.json', 'package.json', 'test/index.js']) {
+					for (let file of ['agent.json', 'package.json', 'test/index.js', 'test/index.py']) {
 						const filePath = path.resolve(agentdir, file);
 						if ((await fs.exists(filePath)) === false) {
 							continue;
@@ -314,11 +314,13 @@ class Agent {
 				}
 
 				// tar tmp/<taskId>.tar.gz
+				// console.log('tar tmp/<taskId>.tar.gz');
 				{
 					const tarFilePath = await this.tarAgentFolder(agentdir, tmpDir);
 					console.log('tarFilePath', tarFilePath);
 
 					// retrive tmp/<taskId>.tar.gz
+					console.log('retrive tmp/<taskId>.tar.gz');
 					{
 						const filepath = tarFilePath;
 						const streamData = await fs.createReadStream(filepath);
@@ -330,6 +332,8 @@ class Agent {
 							await fs.remove(agentdir);
 							await fs.remove(filepath);
 						});
+
+						// console.log('streamData', streamData);
 
 						return streamData;
 					}
@@ -561,15 +565,24 @@ class Agent {
 			const command = `tar zcvf ${outputFilePath} --exclude-from=.gitignore .`;
 			console.log('command', command);
 			await new Promise(async (resolve, reject) => {
-				const childProcess = await child_process.exec(command, {
-					cwd: folderpath,
-				});
+				const childProcess = await child_process.exec(
+					command,
+					{
+						cwd: folderpath,
+					},
+					async (error, stdout, stderr) => {
+						if (error) {
+							console.log('error', error);
+							reject(error);
+						}
+					}
+				);
 				childProcess.stdout.on('data', async (data) => {
-					// console.log('data', data);
+					console.log('stdout', data);
 				});
 				childProcess.stderr.on('data', async (data) => {
-					console.log(data);
-					reject(data);
+					console.log('stderr', data);
+					// reject(data);
 				});
 				childProcess.stdout.on('close', async () => {
 					resolve(true);

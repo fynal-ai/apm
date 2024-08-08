@@ -12,11 +12,8 @@ class Agent:
         output = {
             "text": "text"
         }
-        status = {
-            "done": True
-        }
 
-        self.apmAgent.save_output(saveconfig=saveconfig, status=status, output=output) # save output
+        self.apmAgent.save_output(saveconfig=saveconfig, output=output) # save output
 
         return output
 ```

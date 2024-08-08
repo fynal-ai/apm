@@ -48,12 +48,26 @@ Usage:
 - uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
   apm uninstall
   apm uninstall <name>[:version]
+- list installed agents in APM Server
+  apm list
+  apm list --limit 20
+  apm list --q "hello"
+  apm list --executor nodejs
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
+- search agents in Agent Store
+  apm search
+  apm search --limit 20
+  apm search --q "hello"
+  apm search --executor nodejs
+- Update apm package to latest in local Node.Js Agent Folders together:
+  for i in $(ls); do pnpm add @fynal-ai/apm:latest --dir $i; done
+- Install local Agent Folders together to APM Server:
+  for i in $(ls); do apm install $i; done
         `);
 			return;
 		}
@@ -77,6 +91,16 @@ Usage:
 			return
 		}
 
+		// list
+		if (_[0] === 'list') {
+			await APM_AGENT.list({
+				...options,
+
+				_: undefined
+			});
+			return;
+		}
+
 		if (_[0] === 'init') {
 			await this.init(options);
 			return;
@@ -95,12 +119,23 @@ Usage:
 			return;
 		}
 
+		// search
+		if (_[0] === 'search') {
+			await APM_AGENT.search({
+				...options,
+
+				_: undefined
+			});
+			return;
+		}
+
 		// run
 		if (_[0] === 'run') {
 			const agentSpec = _[1];
 			await APM_AGENT.run(agentSpec, {
 				input: options["i"] || options["input"]
 			});
+			return
 		}
 
 
@@ -200,6 +235,9 @@ Usage:
 			await APM_AGENT.init(options);
 		} catch (error) {
 			console.log(error.message);
+			if (error.message === "items.findLastIndex is not a function") {
+				console.log("Try upgrade Node.Js >= 18.0.0")
+			}
 		}
 	}
 	async login(options) {

@@ -27,6 +27,9 @@ export default {
 					if (PLD.name) {
 						Object.assign(filters, { name: PLD.name });
 					}
+					if (PLD.executor) {
+						Object.assign(filters, { executor: PLD.executor });
+					}
 
 					if (PLD.pagingMark) {
 						Object.assign(filters, { updatedAt: { $lt: PLD.pagingMark } });
@@ -46,8 +49,16 @@ export default {
 										}),
 									},
 								},
+
 								{
 									label: {
+										$all: PLD.q.split(' ').map((word: string) => {
+											return new RegExp(word, 'i');
+										}),
+									},
+								},
+								{
+									executor: {
 										$all: PLD.q.split(' ').map((word: string) => {
 											return new RegExp(word, 'i');
 										}),
@@ -121,6 +132,7 @@ export default {
 			Init: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD) => {
 					const streamData = await AGENT.init(PLD);
+					// console.log('streamData', streamData, typeof streamData);
 
 					const contentType = 'application/octet-stream';
 
@@ -157,6 +169,13 @@ export default {
 						return await AGENT_SERVICE.saveResult(PLD);
 					});
 				},
+				Test: {
+					Save: async (req: Request, h: ResponseToolkit) => {
+						return easyResponse(req, h, async (PLD, CRED) => {
+							return PLD;
+						});
+					},
+				},
 			},
 		},
 		AgentStore: {
@@ -184,6 +203,11 @@ export default {
 				Shelf: async (req: Request, h: ResponseToolkit) => {
 					return easyResponse(req, h, async (PLD, CRED) => {
 						return AGENT_STORE.shelf(PLD);
+					});
+				},
+				Search: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return AGENT_STORE.search(PLD);
 					});
 				},
 			},

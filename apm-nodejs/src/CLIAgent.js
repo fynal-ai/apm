@@ -48,6 +48,8 @@ Usage:
 - uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
   apm uninstall
   apm uninstall <name>[:version]
+- list installed agents in APM Server
+  apm list
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
@@ -77,6 +79,12 @@ Usage:
 			return
 		}
 
+		// list
+		if (_[0] === 'list') {
+			await APM_AGENT.list();
+			return;
+		}
+
 		if (_[0] === 'init') {
 			await this.init(options);
 			return;
@@ -101,6 +109,7 @@ Usage:
 			await APM_AGENT.run(agentSpec, {
 				input: options["i"] || options["input"]
 			});
+			return
 		}
 
 

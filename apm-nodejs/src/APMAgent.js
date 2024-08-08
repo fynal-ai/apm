@@ -150,6 +150,57 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
+	async list(payload) {
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/search',
+				headers: {
+					Authorization: this.apmAccessToken,
+				},
+				data: payload,
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			if (responseJSON.error) {
+				console.error(responseJSON.error, responseJSON.message);
+				throw new Error(`Error while list apm agent: ${responseJSON.error}`);
+			}
+			// [{
+			// 	_id: '66b18cdfee884b6462f373f4',
+			// 	author: 'jobsimi',
+			// 	version: '0.0.1',
+			// 	name: 'jobsimi/HelloAPM',
+			// 	label: 'HelloPythonAgent',
+			// 	description: 'APM python agent template',
+			// 	icon: 'https://bonsai.baystoneai.com/favicon.png',
+			// 	doc: 'Markdown doc',
+			// 	config: { input: [Object], output: [Object] },
+			// 	executor: 'python',
+			// 	md5: 'cc033e0df3bee6ddfdb74361f25d5a48',
+			// 	createdAt: '2024-08-06T02:39:27.342Z',
+			// 	updatedAt: '2024-08-06T02:39:27.342Z',
+			// 	__v: 0
+			// }]
+			// format to |name|author|version|description|
+			console.log('List of apm agents:');
+			console.log('---------------------');
+			console.log('|name|author|version|description|');
+			console.log('---------------------');
+			responseJSON.forEach((agent) => {
+				console.log(
+					`|${agent.name}|${agent.author}|${agent.version}|${agent.description}|`
+				);
+			})
+			// console.log(responseJSON);
+			return responseJSON;
+		} catch (error) {
+			console.error(error?.response?.data?.message);
+			throw new Error(`Error while list apm agent: ${error.message}`);
+		}
+	}
 	async init({ author, name, executor = 'nodejs', force = false } = {}) {
 		try {
 			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);

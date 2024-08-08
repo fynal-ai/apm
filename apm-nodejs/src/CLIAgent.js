@@ -200,6 +200,9 @@ Usage:
 			await APM_AGENT.init(options);
 		} catch (error) {
 			console.log(error.message);
+			if (error.message === "items.findLastIndex is not a function") {
+				console.log("Try upgrade Node.Js >= 18.0.0")
+			}
 		}
 	}
 	async login(options) {

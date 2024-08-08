@@ -310,6 +310,12 @@ node main.js
 		workdir,
 		saveconfig,
 	}) {
+		// SyntaxError
+		// from hello-apm-python.Agent import Agent
+		// => from hello_apm_python.Agent import Agent
+		const originAgentName = agentName;
+		agentName = agentName.replace(/-/g, '_');
+
 		const pythonProgram = ServerConfig.apm.pythonProgram || 'python3.10';
 
 		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
@@ -324,7 +330,7 @@ mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ ! -d ${agentName} ]; then
-  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${agentName}/${version} ${agentName} # pnpm add -g symlink-dir
+  ${symlinkDirBinPath} $APM_LOCAL_REPOSITORY_DIR/agents/${author}/${originAgentName}/${version} ${agentName} # pnpm add -g symlink-dir
 fi
 
 INIT_FILE=${agentName}/__init__.py

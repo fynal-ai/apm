@@ -41,8 +41,8 @@ ENV APM_ACCESS_KEY="!#S3YN49HDWcedVyAW"
 COPY build /app/build
 RUN mkdir -p $APM_LOCAL_REPOSITORY_DIR
 COPY apm-init apm-init
-COPY package.json ./
-RUN pnpm install --registry https://registry.npmmirror.com;
+# COPY package.json ./
+# RUN pnpm install --registry https://registry.npmmirror.com;
 
 ####
 # frontend
@@ -57,7 +57,7 @@ RUN pnpm install --registry https://registry.npmmirror.com;
 ####
 # run
 ####
-CMD source ~/.nvm/nvm.sh && node /app/build/index.js
+CMD node /app/build/index.js
 # CMD ["node", "./frt/build/index.js"]
 
 

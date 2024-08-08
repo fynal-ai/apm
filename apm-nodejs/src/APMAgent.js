@@ -1,5 +1,6 @@
 import axios from 'axios';
 import child_process from 'child_process';
+import CLITable from "cli-table3";
 import FormData from 'form-data';
 import fs from 'fs-extra';
 import path from 'path';
@@ -168,6 +169,7 @@ class APMAgent {
 				console.error(responseJSON.error, responseJSON.message);
 				throw new Error(`Error while list apm agent: ${responseJSON.error}`);
 			}
+			// console.log(responseJSON)			
 			// [{
 			// 	_id: '66b18cdfee884b6462f373f4',
 			// 	author: 'jobsimi',
@@ -186,15 +188,18 @@ class APMAgent {
 			// }]
 			// format to |name|author|version|description|
 			console.log('List of apm agents:');
-			console.log('---------------------');
-			console.log('|name|author|version|description|');
-			console.log('---------------------');
-			responseJSON.forEach((agent) => {
-				console.log(
-					`|${agent.name}|${agent.author}|${agent.version}|${agent.description}|`
-				);
-			})
-			// console.log(responseJSON);
+			await this.beautifyPrintList(responseJSON.map((a, index) => {
+				return {
+					"": index,
+					name: a.name,
+					author: a.author,
+					version: a.version,
+					executor: a.executor,
+					updatedAt: a.updatedAt,
+					description: a.description
+				}
+			}));
+
 			return responseJSON;
 		} catch (error) {
 			console.error(error?.response?.data?.message);
@@ -621,6 +626,20 @@ class APMAgent {
 			}
 			folderpath = path.resolve(folderpath, '..');
 		}
+	}
+	async beautifyPrintList(list) {
+		const table = new CLITable({
+			head: Object.keys(list[0]),
+			// colWidths: [100, 200]
+		}
+		);
+
+		// table is an Array, so you can `push`, `unshift`, `splice` and friends
+		for (let i = 0; i < list.length; i = i + 1) {
+			table.push(Object.values(list[i]))
+		}
+
+		console.log(table.toString());
 	}
 }
 

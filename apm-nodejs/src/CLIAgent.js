@@ -52,6 +52,7 @@ Usage:
   apm list
   apm list --limit 20
   apm list --q "hello"
+  apm list --executor nodejs
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.

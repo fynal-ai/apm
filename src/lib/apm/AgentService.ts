@@ -2,6 +2,7 @@ import child_process from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import shortuuid from 'short-uuid';
+import which from 'which';
 import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
 import {
@@ -505,8 +506,13 @@ ${pythonProgram} main.py
 		return false;
 	}
 	async getSymlinkDirBinPath() {
-		// return await which('symlink-dir');
-		return '/root/.local/share/pnpm/symlink-dir';
+		try {
+			return await which('symlink-dir');
+		} catch (error) {
+			console.log('Try install symlink-dir: pnpm add -g symlink-dir');
+			throw error;
+		}
+		// return '/root/.local/share/pnpm/symlink-dir';
 	}
 }
 

@@ -50,4 +50,4 @@ services:
     depends_on:
       - mongodb
       - redis
-    entrypoint: ['bash', '-c', 'sleep 10 && node /app/build/index.js']
+    entrypoint: ['bash', '--login', '-i', '-c', 'sleep 10 && node /app/build/index.js']

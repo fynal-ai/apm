@@ -47,6 +47,10 @@ Usage:
   apm search --limit 20
   apm search --q "hello"
   apm search --executor nodejs
+- Update apm package to latest in local Node.Js Agent Folders together:
+  for i in $(ls); do pnpm add @fynal-ai/apm:latest --dir $i; done
+- Install local Agent Folders together to APM Server:
+  for i in $(ls); do apm install $i; done
 ```
 
 ## Program Usage

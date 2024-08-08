@@ -187,7 +187,7 @@ class APMAgent {
 			// 	__v: 0
 			// }]
 			// format to |name|author|version|description|
-			console.log(`List of apm agents (${responseJSON.length}):`);
+			console.log(`List of installed APM agents (${responseJSON.length}):`);
 			const columns = [
 				"name", "author", "version", "executor",
 				"updatedAt", "description",

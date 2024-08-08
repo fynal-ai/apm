@@ -46,6 +46,7 @@ const internals = {
 						...PAGING_PAYLOAD,
 
 						q: Joi.string().allow('').description('query'),
+						executor: Joi.string().allow('').description('agent executor'),
 					},
 					validator: Joi,
 				},
@@ -593,6 +594,7 @@ const internals = {
 						...PAGING_PAYLOAD,
 
 						q: Joi.string().allow('').description('query'),
+						executor: Joi.string().allow('').description('agent executor'),
 					},
 					validator: Joi,
 				},

@@ -4,6 +4,10 @@
 
 FROM fynalai/apm:base
 
+SHELL ["/bin/bash", "--login", "-i", "-c"]
+ENV SHELL=/bin/bash
+
+
 WORKDIR /app
 
 

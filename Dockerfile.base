@@ -1,10 +1,13 @@
-# Build the first stage with alpine node image and name as build
+####
+# system environment
+####
 FROM ubuntu:jammy
 
 SHELL ["/bin/bash", "--login", "-i", "-c"]
 ENV SHELL=/bin/bash
 
 RUN set -eux && sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN set -eux && sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt update
 RUN apt clean
 

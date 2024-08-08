@@ -50,6 +50,8 @@ Usage:
   apm uninstall <name>[:version]
 - list installed agents in APM Server
   apm list
+  apm list --limit 20
+  apm list --q "hello"
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
@@ -81,7 +83,11 @@ Usage:
 
 		// list
 		if (_[0] === 'list') {
-			await APM_AGENT.list();
+			await APM_AGENT.list({
+				...options,
+
+				_: undefined
+			});
 			return;
 		}
 

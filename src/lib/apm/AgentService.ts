@@ -252,6 +252,13 @@ class AgentService {
 	}) {
 		const symlinkDirBinPath = await this.getSymlinkDirBinPath();
 		console.log('symlinkDirBinPath', symlinkDirBinPath);
+
+		const packageJSON = await fs.readJson(
+			path.resolve(localRepositoryDir, 'agents', author, agentName, version, 'package.json')
+		);
+		const agentNameInPackageJSON = packageJSON.name;
+		console.log('agentNameInPackageJSON', agentNameInPackageJSON);
+
 		const sh = `#!/bin/bash
 
 APM_LOCAL_REPOSITORY_DIR=${localRepositoryDir}
@@ -275,7 +282,7 @@ END
 fi
 
 tee main.js <<END
-import { Agent } from "${agentName}";
+import { Agent } from "${agentNameInPackageJSON}";
 
 const input = ${JSON.stringify(apmAgent.config.input)}
 

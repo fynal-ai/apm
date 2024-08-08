@@ -187,16 +187,18 @@ class APMAgent {
 			// 	__v: 0
 			// }]
 			// format to |name|author|version|description|
-			console.log('List of apm agents:');
+			console.log(`List of apm agents (${responseJSON.length}):`);
+			const columns = [
+				"name", "author", "version", "executor",
+				"updatedAt", "description",
+			]
 			await this.beautifyPrintList(responseJSON.map((a, index) => {
 				return {
 					"": index,
-					name: a.name,
-					author: a.author,
-					version: a.version,
-					executor: a.executor,
-					updatedAt: a.updatedAt,
-					description: a.description
+					...columns.reduce((previousValue, currentValue) => {
+						previousValue[currentValue] = a[currentValue]
+						return previousValue
+					}, {}),
 				}
 			}));
 

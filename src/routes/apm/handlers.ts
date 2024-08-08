@@ -27,6 +27,9 @@ export default {
 					if (PLD.name) {
 						Object.assign(filters, { name: PLD.name });
 					}
+					if (PLD.executor) {
+						Object.assign(filters, { executor: PLD.executor });
+					}
 
 					if (PLD.pagingMark) {
 						Object.assign(filters, { updatedAt: { $lt: PLD.pagingMark } });
@@ -46,8 +49,16 @@ export default {
 										}),
 									},
 								},
+
 								{
 									label: {
+										$all: PLD.q.split(' ').map((word: string) => {
+											return new RegExp(word, 'i');
+										}),
+									},
+								},
+								{
+									executor: {
 										$all: PLD.q.split(' ').map((word: string) => {
 											return new RegExp(word, 'i');
 										}),

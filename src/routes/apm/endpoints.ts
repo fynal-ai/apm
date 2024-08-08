@@ -580,6 +580,24 @@ const internals = {
 				},
 			},
 		},
+		{
+			method: 'POST',
+			path: '/apm/agentstore/agent/search',
+			handler: Handlers.APM.AgentStore.Agent.Search,
+			config: {
+				tags: ['api'],
+				description: 'Search agents in Agent Store',
+				notes: 'Provide search info',
+				validate: {
+					payload: {
+						...PAGING_PAYLOAD,
+
+						q: Joi.string().allow('').description('query'),
+					},
+					validator: Joi,
+				},
+			},
+		},
 	],
 };
 

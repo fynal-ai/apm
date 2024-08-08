@@ -194,6 +194,11 @@ export default {
 						return AGENT_STORE.shelf(PLD);
 					});
 				},
+				Search: async (req: Request, h: ResponseToolkit) => {
+					return easyResponse(req, h, async (PLD, CRED) => {
+						return AGENT_STORE.search(PLD);
+					});
+				},
 			},
 		},
 	},

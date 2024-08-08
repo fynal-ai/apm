@@ -299,7 +299,7 @@ class Agent {
 					`replace {{AUTHOR}} to ${author}, {{NAME}} to ${agentName} in agent.json, package.json`
 				);
 				{
-					for (let file of ['agent.json', 'package.json', 'test/index.js']) {
+					for (let file of ['agent.json', 'package.json', 'test/index.js', 'test/index.py']) {
 						const filePath = path.resolve(agentdir, file);
 						if ((await fs.exists(filePath)) === false) {
 							continue;

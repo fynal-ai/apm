@@ -62,6 +62,7 @@ Usage:
   apm search
   apm search --limit 20
   apm search --q "hello"
+  apm search --executor nodejs
         `);
 			return;
 		}

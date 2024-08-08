@@ -6,12 +6,27 @@ APM (Agent Package Manager)
    ```sh
    docker compose -f docker-compose.yml up
    ```
-   http://127.0.0.1:12008/documentation
+   See http://127.0.0.1:12008/documentation for Application development.
 2. Install agent from APM CLI [@fynal-ai/apm](https://www.npmjs.com/package/@fynal-ai/apm)
    ```sh
    pnpm install -g @fynal-ai/apm
    apm --help
    ```
+
+## Deploy APM Server alone with exist external database
+
+Instead of deploying all in one with [docker-compose.yml](./docker-compose.yml), you can deploy APM
+Server alone with exist external database.
+
+```sh
+export APM_LOCAL_REPOSITORY_DIR=~/.apm
+
+docker run --name apm-test --rm -p 12008:12008  -v $APM_LOCAL_REPOSITORY_DIR:/app/.apm -e MONGO_CONNECTION_STRING=<MONGO_CONNECTION_STRING> -e REDIS_CONNECTION_STRING=<REDIS_CONNECTION_STRING> fynalai/apm:latest
+```
+
+See http://127.0.0.1:12008/documentation for Application development.
+
+For more environment variables, see [Dockerfile.latest](./Dockerfile.latest)
 
 ## Development
 

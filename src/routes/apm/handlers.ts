@@ -4,6 +4,7 @@ import { Request, ResponseToolkit } from '@hapi/hapi';
 import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import { AGENT } from '../../lib/apm/Agent.js';
+import { AGENT_RESULT_CONSUMER } from '../../lib/apm/AgentResultConsumer.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
 import { AGENT_STORE } from '../../lib/apm/AgentStore.js';
 import { Auth } from '../../lib/apm/Auth.js';
@@ -177,15 +178,14 @@ export default {
 					},
 				},
 			},
-		
 		},
-		AgentResultConsumer:{
-				IAmAlive: async (req: Request, h: ResponseToolkit) => {
+		AgentResultConsumer: {
+			IAmAlive: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
-					return await AGENT_SERVICE.saveResult(PLD);
+					return await AGENT_RESULT_CONSUMER.IAmAlive(PLD);
 				});
 			},
-		}
+		},
 		AgentStore: {
 			Agent: {
 				Login: async (req: Request, h: ResponseToolkit) => {

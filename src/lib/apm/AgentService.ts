@@ -58,7 +58,7 @@ class AgentService {
 				name: apmAgent.name,
 				version: apmAgent.version,
 
-				...(await this.convertToDBRemoteRunSaveResultOption(response.runId, payload.option)),
+				...(await this.convertToDBRemoteRunSaveResultOption(payload.option,response.runId)),
 			});
 			await apmAgentRun.save();
 		}
@@ -88,7 +88,7 @@ class AgentService {
 			runId,
 			runMode: apmAgent.runMode,
 
-			...(await this.convertToDBRemoteRunSaveResultOption(runId, payload.option)),
+			...(await this.convertToDBRemoteRunSaveResultOption(payload.option, runId)),
 		});
 
 		// execute agent
@@ -518,7 +518,7 @@ ${pythonProgram} main.py
 		}
 		// return '/root/.local/share/pnpm/symlink-dir';
 	}
-	async convertToDBRemoteRunSaveResultOption(runId, remoteRunSaveResultOption) {
+	async convertToDBRemoteRunSaveResultOption(remoteRunSaveResultOption, runId?) {
 		if (remoteRunSaveResultOption?.callback) {
 			return {
 				remoteRunSaveResultOption: {

@@ -399,12 +399,10 @@ const internals = {
 						access_token: Joi.string().required().description('access_token'),
 
 						option: Joi.object({
-							callback: Joi.string().description('async agent callback url'),
+							callback: Joi.string().required().description('async agent callback url'),
 						})
-							.label('APMAgentServiceRunOption')
-							.description(
-								'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
-							),
+							.required()
+							.description('Option for recognize async agent'),
 					},
 					validator: Joi,
 				},

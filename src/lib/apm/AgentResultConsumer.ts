@@ -36,11 +36,28 @@ class AgentResultConsumer {
 		}
 		this.savingIds.push(_id);
 
+		let output = {};
+		{
+			try {
+				const detail = await AGENT_SERVICE.getResult({
+					runId: apmAgentServiceRun.runId || apmAgentServiceRun.remoteRunId,
+				});
+				output = detail.output;
+
+				// throw new EmpError('NOT_IMPLEMENTED', 'not implemented');
+			} catch (error) {
+				console.log('singleSave getResult', error);
+				output = {
+					...output,
+
+					route: 'error',
+					message: error.message,
+				};
+			}
+		}
 		const response = await this.saveOutputToCallbackServer(
 			apmAgentServiceRun.remoteRunSaveResultOption,
-			await AGENT_SERVICE.getResult({
-				runId: apmAgentServiceRun.runId || apmAgentServiceRun.remoteRunId,
-			})
+			output
 		);
 
 		// always delete _id after save, even if response is not 'Acknowledged', avoid next IAmAlive cannot save it

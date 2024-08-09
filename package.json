@@ -52,6 +52,7 @@
 		"@svgdotjs/svg.js": "^3.2.0",
 		"alipay-sdk": "^3.6.1",
 		"archiver": "^7.0.0",
+		"async": "^3.2.5",
 		"axios": "^1.7.2",
 		"axios-better-stacktrace": "^2.1.5",
 		"bufferutil": "^4.0.7",

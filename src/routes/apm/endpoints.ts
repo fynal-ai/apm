@@ -283,7 +283,7 @@ const internals = {
 			path: '/apm/agentservice/result/get',
 			handler: Handlers.APM.AgentService.Result.Get,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Get agent run result',
 				notes: 'By runId',
 				// auth: 'token',
@@ -329,7 +329,7 @@ const internals = {
 			path: '/apm/agentservice/result/clean',
 			handler: Handlers.APM.AgentService.Result.Clean,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Clean run results',
 				notes: 'By runId',
 				// auth: 'token',
@@ -380,6 +380,29 @@ const internals = {
 					payload: {
 						runId: Joi.string().required().description('run id'),
 						output: Joi.object().description('agent output'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
+			path: '/apm/agentResultConsumer/iamalive',
+			handler: Handlers.APM.AgentResultConsumer.IAmAlive,
+			config: {
+				tags: ['api'],
+				description: 'Callback ping',
+				notes: 'ping',
+				validate: {
+					payload: {
+						access_token: Joi.string().required().description('access_token'),
+
+						option: Joi.object({
+							callback: Joi.string().required().description('async agent callback url'),
+						})
+							.required()
+							.description('Option for recognize async agent'),
 					},
 					validator: Joi,
 				},
@@ -586,7 +609,7 @@ const internals = {
 			path: '/apm/agentstore/agent/search',
 			handler: Handlers.APM.AgentStore.Agent.Search,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Search agents in Agent Store',
 				notes: 'Provide search info',
 				validate: {

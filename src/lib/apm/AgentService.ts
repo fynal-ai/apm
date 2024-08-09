@@ -57,6 +57,8 @@ class AgentService {
 				remoteRunId: response.runId,
 				name: apmAgent.name,
 				version: apmAgent.version,
+
+				...(await this.convertToDBRemoteRunSaveResultOption(payload.option, response.runId)),
 			});
 			await apmAgentRun.save();
 		}
@@ -85,6 +87,8 @@ class AgentService {
 		await this.saveResult({
 			runId,
 			runMode: apmAgent.runMode,
+
+			...(await this.convertToDBRemoteRunSaveResultOption(payload.option, runId)),
 		});
 
 		// execute agent
@@ -150,19 +154,6 @@ class AgentService {
 				input: apmAgent.config.input,
 				output: {},
 			},
-
-			...(remoteRunSaveResultOption?.callback
-				? {
-						remoteRunSaveResultOption: {
-							url: remoteRunSaveResultOption?.callback,
-							headers: {},
-							data: {
-								runId,
-								output: {},
-							},
-						},
-					}
-				: {}),
 		};
 
 		// Generate sh
@@ -187,6 +178,7 @@ class AgentService {
 			await this.saveResult({ runId, status: 'ST_RUN' });
 
 			let hasError = false;
+			let errorMessage = '';
 			await new Promise(async (resolve) => {
 				{
 					const childProcess = await child_process.exec('bash ./run.sh', {
@@ -205,9 +197,10 @@ class AgentService {
 						this.saveLog(workdir, data);
 
 						hasError = true;
+						errorMessage = errorMessage + data;
 					});
 					childProcess.stdout.on('close', async () => {
-						console.log('child process exited');
+						console.log(`runId ${runId} child process closed`);
 
 						resolve('close');
 					});
@@ -216,7 +209,14 @@ class AgentService {
 
 			{
 				if (hasError) {
-					await this.saveResult({ runId, status: 'ST_FAIL' });
+					await this.saveResult({
+						runId,
+						status: 'ST_FAIL',
+						output: {
+							route: 'error',
+							error: errorMessage,
+						},
+					});
 				} else {
 					await this.saveResult({ runId, status: 'ST_DONE' });
 				}
@@ -494,6 +494,12 @@ ${pythonProgram} main.py
 					...payload,
 
 					status: payload.status || apmAgentServiceRun.status,
+
+					output: {
+						...apmAgentServiceRun.output, // 保留中间结果
+
+						...payload.output,
+					},
 				},
 			},
 			{
@@ -526,6 +532,21 @@ ${pythonProgram} main.py
 			throw error;
 		}
 		// return '/root/.local/share/pnpm/symlink-dir';
+	}
+	async convertToDBRemoteRunSaveResultOption(remoteRunSaveResultOption, runId?) {
+		if (remoteRunSaveResultOption?.callback) {
+			return {
+				remoteRunSaveResultOption: {
+					url: remoteRunSaveResultOption.callback,
+					headers: {},
+					data: {
+						runId,
+						output: {},
+					},
+				},
+			};
+		}
+		return {};
 	}
 }
 

@@ -4,7 +4,7 @@ class AgentResultConsumer {
 	taskList: [] = [];
 	async IAmAlive(payload) {
 		const apmAgentServiceRuns = await APMAgentServiceRun.find({
-			remoteRunSaveResultOption: payload.option,
+			'remoteRunSaveResultOption.url': payload.option.callback,
 
 			status: { $in: ['ST_DONE', 'ST_FAIL'] },
 		});

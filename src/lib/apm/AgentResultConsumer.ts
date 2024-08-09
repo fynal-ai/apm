@@ -5,6 +5,7 @@ import {
 } from '../../database/models/APMAgentServiceRun.js';
 
 class AgentResultConsumer {
+	runIds: string[] = [];
 	async IAmAlive(payload) {
 		const apmAgentServiceRuns = await APMAgentServiceRun.find({
 			'remoteRunSaveResultOption.url': payload.option.callback,
@@ -14,10 +15,22 @@ class AgentResultConsumer {
 
 		//
 		for (const apmAgentServiceRun of apmAgentServiceRuns) {
-			await this.saveOutputToCallbackServer(apmAgentServiceRun);
+			if (this.runIds.includes(apmAgentServiceRun._id.toString())) {
+				continue;
+			}
+			this.runIds.push(apmAgentServiceRun._id.toString());
+
+			const response = await this.saveOutputToCallbackServer(apmAgentServiceRun);
+
+			if (response === 'Acknowledged') {
+				// delete apmAgentServiceRun
+				// await APMAgentServiceRun.deleteOne({ _id });
+				// console.log(data.runId, 'Delete apmAgentServiceRun');
+				this.runIds.splice(this.runIds.indexOf(apmAgentServiceRun._id.toString()), 1);
+			}
 		}
 
-		return apmAgentServiceRuns;
+		return apmAgentServiceRuns.length;
 	}
 
 	async saveOutputToCallbackServer(apmAgentServiceRun: APMAgentServiceRunType) {
@@ -28,7 +41,7 @@ class AgentResultConsumer {
 		// save output to run callback server
 		{
 			if (config?.url) {
-				console.log('Try save output to callback server');
+				console.log('Try save output to callback server', config.url);
 				try {
 					const url = config['url'];
 					const headers = config['headers'];
@@ -55,12 +68,7 @@ class AgentResultConsumer {
 							return;
 						}
 
-						if (responseJSON === 'Acknowledged') {
-							// delete apmAgentServiceRun
-							await APMAgentServiceRun.deleteOne({ _id });
-							console.log('Delete apmAgentServiceRun');
-							return;
-						}
+						return responseJSON;
 					}
 				} catch (error) {
 					console.log(

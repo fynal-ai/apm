@@ -494,6 +494,12 @@ ${pythonProgram} main.py
 					...payload,
 
 					status: payload.status || apmAgentServiceRun.status,
+
+					output: {
+						...apmAgentServiceRun.output, // 保留中间结果
+
+						...payload.output,
+					},
 				},
 			},
 			{

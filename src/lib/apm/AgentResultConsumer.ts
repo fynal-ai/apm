@@ -43,15 +43,15 @@ class AgentResultConsumer {
 						data,
 					});
 					const responseJSON = response.data;
-					console.log('Callback server responseJSON', responseJSON);
+					console.log(data.runId, 'Callback server responseJSON', responseJSON);
 
 					{
 						if (!responseJSON) {
-							console.log('Callback server responseJSON is empty');
+							console.log(data.runId, 'Callback server responseJSON is empty');
 							return;
 						}
 						if (responseJSON.error) {
-							console.log('Callback server responseJSON error', responseJSON.error);
+							console.log(data.runId, 'Callback server responseJSON error', responseJSON.error);
 							return;
 						}
 
@@ -63,7 +63,11 @@ class AgentResultConsumer {
 						}
 					}
 				} catch (error) {
-					console.log('Error while saving output to callback servier: ', error.message);
+					console.log(
+						config?.data?.runId,
+						'Error while saving output to callback servier: ',
+						error.message
+					);
 				}
 			}
 		}

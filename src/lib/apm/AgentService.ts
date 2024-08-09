@@ -57,6 +57,8 @@ class AgentService {
 				remoteRunId: response.runId,
 				name: apmAgent.name,
 				version: apmAgent.version,
+
+				remoteRunSaveResultOption: payload.option,
 			});
 			await apmAgentRun.save();
 		}
@@ -85,6 +87,8 @@ class AgentService {
 		await this.saveResult({
 			runId,
 			runMode: apmAgent.runMode,
+
+			remoteRunSaveResultOption: payload.option,
 		});
 
 		// execute agent

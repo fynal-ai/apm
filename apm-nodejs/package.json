@@ -1,6 +1,6 @@
 {
 	"name": "@fynal-ai/apm",
-	"version": "0.1.17",
+	"version": "0.1.18",
 	"type": "module",
 	"main": "src/index.js",
 	"bin": {
@@ -14,7 +14,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/fynal-ai/apm"
+		"url": "https://github.com/fynal-ai/apm/tree/main/apm-nodejs"
 	},
 	"dependencies": {
 		"axios": "^1.7.2",

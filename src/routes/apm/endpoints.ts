@@ -283,7 +283,7 @@ const internals = {
 			path: '/apm/agentservice/result/get',
 			handler: Handlers.APM.AgentService.Result.Get,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Get agent run result',
 				notes: 'By runId',
 				// auth: 'token',
@@ -329,7 +329,7 @@ const internals = {
 			path: '/apm/agentservice/result/clean',
 			handler: Handlers.APM.AgentService.Result.Clean,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Clean run results',
 				notes: 'By runId',
 				// auth: 'token',
@@ -609,7 +609,7 @@ const internals = {
 			path: '/apm/agentstore/agent/search',
 			handler: Handlers.APM.AgentStore.Agent.Search,
 			config: {
-				tags: ['api'],
+				// tags: ['api'],
 				description: 'Search agents in Agent Store',
 				notes: 'Provide search info',
 				validate: {

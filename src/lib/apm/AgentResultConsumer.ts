@@ -1,6 +1,15 @@
+import { APMAgentServiceRun } from '../../database/models/APMAgentServiceRun.js';
+
 class AgentResultConsumer {
+	taskList: [] = [];
 	async IAmAlive(payload) {
-		return true;
+		const apmAgentServiceRuns = await APMAgentServiceRun.find({
+			remoteRunSaveResultOption: payload.option,
+
+			status: { $in: ['ST_DONE', 'ST_FAIL'] },
+		});
+
+		return apmAgentServiceRuns;
 	}
 }
 

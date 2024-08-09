@@ -177,7 +177,15 @@ export default {
 					},
 				},
 			},
+		
 		},
+		AgentResultConsumer:{
+				IAmAlive: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT_SERVICE.saveResult(PLD);
+				});
+			},
+		}
 		AgentStore: {
 			Agent: {
 				Login: async (req: Request, h: ResponseToolkit) => {

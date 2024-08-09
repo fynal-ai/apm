@@ -388,6 +388,31 @@ const internals = {
 
 		{
 			method: 'POST',
+			path: '/apm/agentResultConsumer/iamalive',
+			handler: Handlers.APM.AgentResultConsumer.IAmAlive,
+			config: {
+				tags: ['api'],
+				description: 'Callback ping',
+				notes: 'ping',
+				validate: {
+					payload: {
+						access_token: Joi.string().required().description('access_token'),
+
+						option: Joi.object({
+							callback: Joi.string().description('async agent callback url'),
+						})
+							.label('APMAgentServiceRunOption')
+							.description(
+								'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
+							),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
 			path: '/apm/agentstore/agent/login',
 			handler: Handlers.APM.AgentStore.Agent.Login,
 			config: {

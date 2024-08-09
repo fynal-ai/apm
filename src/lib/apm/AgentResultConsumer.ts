@@ -51,7 +51,7 @@ class AgentResultConsumer {
 					...output,
 
 					route: 'error',
-					message: error.message,
+					error: error.message,
 				};
 			}
 		}

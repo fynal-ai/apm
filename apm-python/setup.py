@@ -8,7 +8,7 @@ setuptools.setup(
     name="fynalai-apm-python",
     install_requires=["requests>=2.16.0"],
      # 版本号, 版本号规范：https://www.python.org/dev/peps/pep-0440/
-    version="0.0.6",
+    version="0.0.7",
     # 作者名
     author="fynal-ai",
      # 作者邮箱

@@ -528,10 +528,9 @@ ${pythonProgram} main.py
 		try {
 			return await which('symlink-dir');
 		} catch (error) {
-			console.log('Try install symlink-dir: pnpm add -g symlink-dir');
-			throw error;
+			console.log(error);
+			return '/root/.local/share/pnpm/symlink-dir';
 		}
-		// return '/root/.local/share/pnpm/symlink-dir';
 	}
 	async convertToDBRemoteRunSaveResultOption(remoteRunSaveResultOption, runId?) {
 		if (remoteRunSaveResultOption?.callback) {

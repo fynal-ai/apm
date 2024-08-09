@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { APMAgentServiceRun } from '../../database/models/APMAgentServiceRun.js';
+import {
+	APMAgentServiceRun,
+	APMAgentServiceRunType,
+} from '../../database/models/APMAgentServiceRun.js';
 
 class AgentResultConsumer {
 	async IAmAlive(payload) {
@@ -11,16 +14,17 @@ class AgentResultConsumer {
 
 		//
 		for (const apmAgentServiceRun of apmAgentServiceRuns) {
-			await this.saveOutputToCallbackServer(
-				apmAgentServiceRun.remoteRunSaveResultOption,
-				apmAgentServiceRun.output
-			);
+			await this.saveOutputToCallbackServer(apmAgentServiceRun);
 		}
 
 		return apmAgentServiceRuns;
 	}
 
-	async saveOutputToCallbackServer(config, output) {
+	async saveOutputToCallbackServer(apmAgentServiceRun: APMAgentServiceRunType) {
+		const config = apmAgentServiceRun.remoteRunSaveResultOption;
+		const output = apmAgentServiceRun.output;
+		const _id = apmAgentServiceRun._id;
+
 		// save output to run callback server
 		{
 			if (config?.url) {
@@ -40,7 +44,23 @@ class AgentResultConsumer {
 					});
 					const responseJSON = response.data;
 					console.log('Callback server responseJSON', responseJSON);
-					if (responseJSON === 'Acknowledged') {
+
+					{
+						if (!responseJSON) {
+							console.log('Callback server responseJSON is empty');
+							return;
+						}
+						if (responseJSON.error) {
+							console.log('Callback server responseJSON error', responseJSON.error);
+							return;
+						}
+
+						if (responseJSON === 'Acknowledged') {
+							// delete apmAgentServiceRun
+							await APMAgentServiceRun.deleteOne({ _id });
+							console.log('Delete apmAgentServiceRun');
+							return;
+						}
 					}
 				} catch (error) {
 					console.log('Error while saving output to callback servier: ', error.message);

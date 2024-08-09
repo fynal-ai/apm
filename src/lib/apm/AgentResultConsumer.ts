@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { APMAgentServiceRun } from '../../database/models/APMAgentServiceRun.js';
+import {
+	APMAgentServiceRun,
+	APMAgentServiceRunType,
+} from '../../database/models/APMAgentServiceRun.js';
 
 class AgentResultConsumer {
 	savingIds: string[] = [];
@@ -10,33 +13,39 @@ class AgentResultConsumer {
 			status: { $in: ['ST_DONE', 'ST_FAIL'] },
 		});
 
-		//
-		for (const apmAgentServiceRun of apmAgentServiceRuns) {
-			const _id = apmAgentServiceRun._id.toString();
-			// avoid duplicate save
-			if (this.savingIds.includes(_id)) {
-				continue;
-			}
-			this.savingIds.push(_id);
-
-			const response = await this.saveOutputToCallbackServer(
-				apmAgentServiceRun.remoteRunSaveResultOption,
-				apmAgentServiceRun.output
-			);
-
-			// always delete _id after save, even if response is not 'Acknowledged', avoid next IAmAlive cannot save it
-			this.savingIds.splice(this.savingIds.indexOf(_id), 1);
-
-			if (response === 'Acknowledged') {
-				// delete apmAgentServiceRun
-				await APMAgentServiceRun.deleteOne({ _id });
-				console.log('Deleted apmAgentServiceRun');
-			}
-		}
+		// 并发保存
+		this.multiSave(apmAgentServiceRuns);
 
 		return {
 			total: apmAgentServiceRuns.length,
 		};
+	}
+	async multiSave(apmAgentServiceRuns: APMAgentServiceRunType[]) {
+		for (const apmAgentServiceRun of apmAgentServiceRuns) {
+			await this.singleSave(apmAgentServiceRun);
+		}
+	}
+	async singleSave(apmAgentServiceRun: APMAgentServiceRunType) {
+		const _id = apmAgentServiceRun._id.toString();
+		// avoid duplicate save
+		if (this.savingIds.includes(_id)) {
+			return;
+		}
+		this.savingIds.push(_id);
+
+		const response = await this.saveOutputToCallbackServer(
+			apmAgentServiceRun.remoteRunSaveResultOption,
+			apmAgentServiceRun.output
+		);
+
+		// always delete _id after save, even if response is not 'Acknowledged', avoid next IAmAlive cannot save it
+		this.savingIds.splice(this.savingIds.indexOf(_id), 1);
+
+		if (response === 'Acknowledged') {
+			// delete apmAgentServiceRun
+			await APMAgentServiceRun.deleteOne({ _id });
+			console.log('Deleted apmAgentServiceRun');
+		}
 	}
 
 	async saveOutputToCallbackServer(config, output) {

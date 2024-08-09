@@ -4,6 +4,7 @@ import {
 	APMAgentServiceRun,
 	APMAgentServiceRunType,
 } from '../../database/models/APMAgentServiceRun.js';
+import { AGENT_SERVICE } from './AgentService.js';
 
 class AgentResultConsumer {
 	savingIds: string[] = [];
@@ -37,7 +38,9 @@ class AgentResultConsumer {
 
 		const response = await this.saveOutputToCallbackServer(
 			apmAgentServiceRun.remoteRunSaveResultOption,
-			apmAgentServiceRun.output
+			await AGENT_SERVICE.getResult({
+				runId: apmAgentServiceRun.runId || apmAgentServiceRun.remoteRunId,
+			})
 		);
 
 		// always delete _id after save, even if response is not 'Acknowledged', avoid next IAmAlive cannot save it

@@ -25,36 +25,6 @@ class APMAgent {
 			return;
 		}
 
-		// save output to run callback server
-		{
-			const config = saveconfig?.remoteRunSaveResultOption
-			if (config?.url) {
-				console.log('Try save output to callback server');
-				try {
-					const url = config["url"]
-					const headers = config['headers'];
-
-					const data = config["data"]
-					data['output'] = output;
-
-					const response = await axios({
-						method: 'POST',
-						url,
-						headers,
-						data,
-					});
-					const responseJSON = response.data;
-					console.log('Callback server responseJSON', responseJSON);
-				} catch (error) {
-					console.log('Error while saving output to callback servier: ', error);
-				}
-			}
-			if (config) {
-				delete saveconfig.remoteRunSaveResultOption
-			}
-		}
-
-
 		// save output to apm server
 		try {
 			const url = saveconfig['url'];

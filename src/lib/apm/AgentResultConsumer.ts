@@ -13,6 +13,7 @@ class AgentResultConsumer {
 		//
 		for (const apmAgentServiceRun of apmAgentServiceRuns) {
 			const _id = apmAgentServiceRun._id.toString();
+			// avoid duplicate save
 			if (this.savingIds.includes(_id)) {
 				continue;
 			}
@@ -23,8 +24,10 @@ class AgentResultConsumer {
 				apmAgentServiceRun.output
 			);
 
+			// always delete _id after save, even if response is not 'Acknowledged', avoid next IAmAlive cannot save it
+			this.savingIds.splice(this.savingIds.indexOf(_id), 1);
+
 			if (response === 'Acknowledged') {
-				this.savingIds.splice(this.savingIds.indexOf(_id), 1);
 				// delete apmAgentServiceRun
 				await APMAgentServiceRun.deleteOne({ _id });
 				console.log('Deleted apmAgentServiceRun');

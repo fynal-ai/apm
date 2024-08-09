@@ -1,3 +1,4 @@
+import async from 'async';
 import axios from 'axios';
 import {
 	APMAgentServiceRun,
@@ -6,6 +7,7 @@ import {
 
 class AgentResultConsumer {
 	savingIds: string[] = [];
+	savingConcurrent = 5;
 	async IAmAlive(payload) {
 		const apmAgentServiceRuns = await APMAgentServiceRun.find({
 			'remoteRunSaveResultOption.url': payload.option.callback,
@@ -13,7 +15,7 @@ class AgentResultConsumer {
 			status: { $in: ['ST_DONE', 'ST_FAIL'] },
 		});
 
-		// 并发保存
+		// multi save
 		this.multiSave(apmAgentServiceRuns);
 
 		return {
@@ -21,9 +23,9 @@ class AgentResultConsumer {
 		};
 	}
 	async multiSave(apmAgentServiceRuns: APMAgentServiceRunType[]) {
-		for (const apmAgentServiceRun of apmAgentServiceRuns) {
-			await this.singleSave(apmAgentServiceRun);
-		}
+		async.mapLimit(apmAgentServiceRuns, this.savingConcurrent, async (apmAgentServiceRun) => {
+			return await this.singleSave(apmAgentServiceRun);
+		});
 	}
 	async singleSave(apmAgentServiceRun: APMAgentServiceRunType) {
 		const _id = apmAgentServiceRun._id.toString();

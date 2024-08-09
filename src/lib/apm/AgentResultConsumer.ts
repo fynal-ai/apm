@@ -40,8 +40,10 @@ class AgentResultConsumer {
 					});
 					const responseJSON = response.data;
 					console.log('Callback server responseJSON', responseJSON);
+					if (responseJSON === 'Acknowledged') {
+					}
 				} catch (error) {
-					console.log('Error while saving output to callback servier: ', error);
+					console.log('Error while saving output to callback servier: ', error.message);
 				}
 			}
 		}

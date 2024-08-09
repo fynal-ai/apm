@@ -3,6 +3,7 @@ import { Request, ResponseToolkit } from '@hapi/hapi';
 
 import { APMAgent } from '../../database/models/APMAgent.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
+import EmpError from '../../lib/EmpError.js';
 import { AGENT } from '../../lib/apm/Agent.js';
 import { AGENT_RESULT_CONSUMER } from '../../lib/apm/AgentResultConsumer.js';
 import { AGENT_SERVICE } from '../../lib/apm/AgentService.js';
@@ -173,7 +174,15 @@ export default {
 				Test: {
 					Save: async (req: Request, h: ResponseToolkit) => {
 						return easyResponse(req, h, async (PLD, CRED) => {
-							return PLD;
+							// 随机：正常返回或失败
+							if (Math.random() > 0.5) {
+								return 'Acknowledged';
+							} else {
+								throw new EmpError(
+									'CALLBACK_SAVE_OUTPUT_ERROR',
+									'Error to save output to callback server'
+								);
+							}
 						});
 					},
 				},

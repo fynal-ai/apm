@@ -173,7 +173,16 @@ class AgentService {
 			await fs.writeFile(`${workdir}/run.sh`, sh);
 		}
 
-		// 执行sh
+		// prepare input.json, saveconfig.json
+		{
+			console.log('prepare input.json, saveconfig.json');
+			await fs.ensureDir(workdir);
+
+			await fs.writeJSON(`${workdir}/input.json`, apmAgent.config.input);
+			await fs.writeJSON(`${workdir}/saveconfig.json`, saveconfig);
+		}
+
+		// execute sh
 		{
 			await this.saveResult({ runId, status: 'ST_RUN' });
 
@@ -275,18 +284,22 @@ PACKAGE_JSON_FILE=package.json
 if [ ! -f $PACKAGE_JSON_FILE ]; then
   tee $PACKAGE_JSON_FILE <<END
 {
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  }
 }
 END
   pnpm add ./${agentName};
 fi
 
 tee main.js <<END
+import fs from "fs-extra";
 import { Agent } from "${agentNameInPackageJSON}";
 
-const input = ${JSON.stringify(apmAgent.config.input)}
+const input = await fs.readJSON("input.json");
 
-const saveconfig = ${JSON.stringify(saveconfig)}
+const saveconfig = await fs.readJSON("saveconfig.json");
 
 const agent = new Agent();
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import child_process from 'child_process';
-import CLITable from "cli-table3";
+import CLITable from 'cli-table3';
 import FormData from 'form-data';
 import fs from 'fs-extra';
 import path from 'path';
@@ -12,7 +12,7 @@ class APMAgent {
 	agentStoreUsername = '';
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
-	constructor() { }
+	constructor() {}
 	/**
 	 * save output by saveconfig when saveconfig is setted, or print output to console
 	 * @param {Object} saveconfig
@@ -53,10 +53,10 @@ class APMAgent {
 			console.log('Try install agent from current folder');
 
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("Current folder is not an agent folder.")
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
@@ -78,10 +78,10 @@ class APMAgent {
 			console.log('Try uninstall agent from current folder');
 
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("Current folder is not an agent folder.")
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
@@ -94,8 +94,7 @@ class APMAgent {
 			console.log('Agent name', apmAgent.name);
 			console.log('Agent version', apmAgent.version);
 
-			spec = `${apmAgent.name}:${apmAgent.version}`
-
+			spec = `${apmAgent.name}:${apmAgent.version}`;
 		}
 
 		await this.loadConfig();
@@ -114,7 +113,7 @@ class APMAgent {
 			const responseJSON = response.data;
 			console.log(
 				`Succeed uninstalled ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -158,19 +157,18 @@ class APMAgent {
 			// }]
 			// format to |name|author|version|description|
 			console.log(`List of installed APM agents (${responseJSON.length}):`);
-			const columns = [
-				"name", "author", "version", "executor",
-				"updatedAt", "description",
-			]
-			await this.beautifyPrintList(responseJSON.map((a, index) => {
-				return {
-					"": index,
-					...columns.reduce((previousValue, currentValue) => {
-						previousValue[currentValue] = a[currentValue]
-						return previousValue
-					}, {}),
-				}
-			}));
+			const columns = ['name', 'author', 'version', 'executor', 'updatedAt', 'description'];
+			await this.beautifyPrintList(
+				responseJSON.map((a, index) => {
+					return {
+						'': index,
+						...columns.reduce((previousValue, currentValue) => {
+							previousValue[currentValue] = a[currentValue];
+							return previousValue;
+						}, {}),
+					};
+				})
+			);
 
 			return responseJSON;
 		} catch (error) {
@@ -234,11 +232,11 @@ class APMAgent {
 	async publish() {
 		try {
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("folderpath", folderpath)
-				console.log("Current folder is not an agent folder.")
+				console.log('folderpath', folderpath);
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
@@ -267,7 +265,6 @@ class APMAgent {
 		}
 	}
 	async search(payload) {
-
 		try {
 			const response = await axios({
 				method: 'POST',
@@ -282,19 +279,18 @@ class APMAgent {
 			}
 			// console.log(responseJSON)
 			console.log(`List of Agent Store agents (${responseJSON.length}):`);
-			const columns = [
-				"name", "author", "version", "executor",
-				"updatedAt", "description",
-			]
-			await this.beautifyPrintList(responseJSON.map((a, index) => {
-				return {
-					"": index,
-					...columns.reduce((previousValue, currentValue) => {
-						previousValue[currentValue] = a[currentValue]
-						return previousValue
-					}, {}),
-				}
-			}));
+			const columns = ['name', 'author', 'version', 'executor', 'updatedAt', 'description'];
+			await this.beautifyPrintList(
+				responseJSON.map((a, index) => {
+					return {
+						'': index,
+						...columns.reduce((previousValue, currentValue) => {
+							previousValue[currentValue] = a[currentValue];
+							return previousValue;
+						}, {}),
+					};
+				})
+			);
 
 			return responseJSON;
 		} catch (error) {
@@ -323,7 +319,6 @@ class APMAgent {
 		}
 
 		return await this.runFromAgentStore(spec, { input });
-
 	}
 	/**
 	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
@@ -522,7 +517,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -564,7 +559,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -589,7 +584,7 @@ class APMAgent {
 
 			console.log(
 				`Succeed created ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -627,8 +622,8 @@ class APMAgent {
 		folderpath = path.resolve(folderpath);
 		// console.log('folderpath', folderpath);
 		while (folderpath !== '/') {
-			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
-			if (await fs.exists(agentJSONFilePath) === true) {
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+			if ((await fs.exists(agentJSONFilePath)) === true) {
 				console.log(`Found agent.json in folder ${folderpath}`);
 				return folderpath;
 			}
@@ -637,19 +632,18 @@ class APMAgent {
 	}
 	async beautifyPrintList(list) {
 		if (!list || Array.isArray(list) === false || list.length === 0) {
-			console.log("No data.")
+			console.log('No data.');
 			return;
 		}
 
 		const table = new CLITable({
 			head: Object.keys(list[0]),
 			// colWidths: [100, 200]
-		}
-		);
+		});
 
 		// table is an Array, so you can `push`, `unshift`, `splice` and friends
 		for (let i = 0; i < list.length; i = i + 1) {
-			table.push(Object.values(list[i]))
+			table.push(Object.values(list[i]));
 		}
 
 		console.log(table.toString());

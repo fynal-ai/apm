@@ -284,22 +284,19 @@ PACKAGE_JSON_FILE=package.json
 if [ ! -f $PACKAGE_JSON_FILE ]; then
   tee $PACKAGE_JSON_FILE <<END
 {
-  "type": "module",
-  "dependencies": {
-    "fs-extra": "^11.2.0"
-  }
+  "type": "module"
 }
 END
   pnpm add ./${agentName};
 fi
 
 tee main.js <<END
-import fs from "fs-extra";
+import fs from "fs";
 import { Agent } from "${agentNameInPackageJSON}";
 
-const input = await fs.readJSON("input.json");
+const input = JSON.parse(fs.readFileSync('input.json', 'utf8'));
 
-const saveconfig = await fs.readJSON("saveconfig.json");
+const saveconfig =JSON.parse(fs.readFileSync('saveconfig.json', 'utf8'));
 
 const agent = new Agent();
 

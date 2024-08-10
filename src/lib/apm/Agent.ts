@@ -378,9 +378,9 @@ class Agent {
 
 		await fs.ensureDir(path.dirname(filepath));
 
+		const access_token = await this.getAccessToken();
 		// file 404
 		if ((await fs.exists(filepath)) === false) {
-			const access_token = await this.getAccessToken();
 			await fs.writeJson(
 				filepath,
 				{
@@ -402,7 +402,6 @@ class Agent {
 		// always update access_token
 		{
 			const fileJSON = await fs.readJson(filepath);
-			const access_token = await this.getAccessToken();
 			await fs.writeJson(
 				filepath,
 				{
@@ -452,27 +451,18 @@ class Agent {
 			console.log('API_SERVER', API_SERVER);
 
 			// 注册用户
-			if (!user) {
-				try {
-					const response = await axios('/account/register', {
-						method: 'POST',
-						baseURL: API_SERVER,
-						data: {
-							account: PLD.username,
-							username: PLD.username,
-							password: PLD.password,
-						},
-					});
-					if (!response.data._id) {
-						throw new EmpError('LOGIN_FAILED', 'login failed');
-					}
-				} catch (error) {
-					// console.log('error.response.data', error.response.data);
-					throw new EmpError(
-						'LOGIN_FAILED',
-						error.response.data.message,
-						'Your username or password is not valid.'
-					);
+			{
+				const response = await axios('/account/register', {
+					method: 'POST',
+					baseURL: API_SERVER,
+					data: {
+						account: PLD.username,
+						username: PLD.username,
+						password: PLD.password,
+					},
+				});
+				if (!response.data._id) {
+					throw new EmpError('LOGIN_FAILED', 'login failed');
 				}
 			}
 

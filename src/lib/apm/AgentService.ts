@@ -360,11 +360,12 @@ END
 fi
 
 tee main.py <<END
+import json
 from ${agentName}.Agent import Agent
 
-input = ${JSON.stringify(apmAgent.config.input)}
+input = json.loads(open("input.json").read())
 
-saveconfig = ${JSON.stringify(saveconfig)}
+saveconfig = json.loads(open("saveconfig.json").read())
 
 agent = Agent()
 

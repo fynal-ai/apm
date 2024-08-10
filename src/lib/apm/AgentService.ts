@@ -265,8 +265,10 @@ class AgentService {
 		const packageJSON = await fs.readJson(
 			path.resolve(localRepositoryDir, 'agents', author, agentName, version, 'package.json')
 		);
-		const agentNameInPackageJSON = packageJSON.name;
-		console.log('agentNameInPackageJSON', agentNameInPackageJSON);
+		// const agentNameInPackageJSON = packageJSON.name;
+		// console.log('agentNameInPackageJSON', agentNameInPackageJSON);
+		const mainScript = packageJSON.main;
+		console.log('mainScript', mainScript);
 
 		const sh = `#!/bin/bash
 
@@ -287,12 +289,11 @@ if [ ! -f $PACKAGE_JSON_FILE ]; then
   "type": "module"
 }
 END
-  pnpm add ./${agentName};
 fi
 
 tee main.js <<END
 import fs from "fs";
-import { Agent } from "${agentNameInPackageJSON}";
+import { Agent } from "./${agentName}/${mainScript}";
 
 const input = JSON.parse(fs.readFileSync('input.json', 'utf8'));
 

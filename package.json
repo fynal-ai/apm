@@ -99,7 +99,6 @@
 		"p-timeout": "^6.1.2",
 		"path": "^0.12.7",
 		"pdfreader": "^3.0.2",
-		"puppeteer": "^21.3.7",
 		"redis": "^4.6.10",
 		"sanitize-html": "^2.11.0",
 		"saslprep": "^1.0.3",

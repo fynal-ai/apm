@@ -162,16 +162,7 @@ Usage:
 						name: 'author',
 						message: 'Agent author:',
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.author)
-								.lowercase()
-								.required()
-								.label('author');
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
+							return this.validataAuthor(input)
 						},
 					},
 				]);
@@ -189,12 +180,7 @@ Usage:
 							return `${options.author}/${input}`;
 						},
 						validate: (input) => {
-							const schema = Joi.string().regex(this.regex.agentName).required().label('name');
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
+							return this.validateAgentName(input)
 						},
 					},
 				]);
@@ -313,6 +299,26 @@ Usage:
 		} catch (error) {
 			console.log(error.message);
 		}
+	}
+	validataAuthor(input) {
+		const schema = Joi.string()
+			.regex(this.regex.author)
+			.lowercase()
+			.required()
+			.label('author');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
+	}
+	validateAgentName(input) {
+		const schema = Joi.string().regex(this.regex.agentName).required().label('name');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
 	}
 }
 

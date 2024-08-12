@@ -648,7 +648,7 @@ class APMAgent {
 		console.log('Agent version', apmAgent.version);
 		console.log('Agent executor', apmAgent.executor);
 
-		return apmAgent
+		return apmAgent;
 	}
 }
 

@@ -12,7 +12,7 @@ class APMAgent {
 	agentStoreUsername = '';
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
-	constructor() {}
+	constructor() { }
 	/**
 	 * save output by saveconfig when saveconfig is setted, or print output to console
 	 * @param {Object} saveconfig
@@ -90,9 +90,7 @@ class APMAgent {
 			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
 
 			// parse agent.json
-			const apmAgent = await fs.readJson(agentJSONFilePath);
-			console.log('Agent name', apmAgent.name);
-			console.log('Agent version', apmAgent.version);
+			const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath);
 
 			spec = `${apmAgent.name}:${apmAgent.version}`;
 		}
@@ -113,7 +111,7 @@ class APMAgent {
 			const responseJSON = response.data;
 			console.log(
 				`Succeed uninstalled ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -242,11 +240,8 @@ class APMAgent {
 
 			console.log(`Publish agent from folder ${folderpath}`);
 			// parse agent.json
-			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
-			console.log('Agent author', apmAgent.author);
-			console.log('Agent name', apmAgent.name);
-			console.log('Agent version', apmAgent.version);
-			console.log('Agent executor', apmAgent.executor);
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+			const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath);
 
 			// tar ignore .gitignore files to dist/[agentName]-v[version].tar.gz
 			// folder to .tmp/[md5].tar.gz
@@ -361,11 +356,8 @@ class APMAgent {
 		console.log(`Installing agent from folder ${folderpath}`);
 
 		// parse agent.json
-		const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
-		console.log('Agent author', apmAgent.author);
-		console.log('Agent name', apmAgent.name);
-		console.log('Agent version', apmAgent.version);
-		console.log('Agent executor', apmAgent.executor);
+		const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
+		const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath)
 		// remote agent
 		if (apmAgent.executor === 'remote') {
 			await this.installRemoteFromAgentFolder(folderpath, apmAgent);
@@ -517,7 +509,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -559,7 +551,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -584,7 +576,7 @@ class APMAgent {
 
 			console.log(
 				`Succeed created ${responseJSON.name}` +
-					(responseJSON.version ? `:${responseJSON.version}` : '')
+				(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -647,6 +639,16 @@ class APMAgent {
 		}
 
 		console.log(table.toString());
+	}
+	async parseAgentJSONFile(agentJSONFilePath) {
+		// parse agent.json
+		const apmAgent = await fs.readJson(agentJSONFilePath);
+		console.log('Agent author', apmAgent.author);
+		console.log('Agent name', apmAgent.name);
+		console.log('Agent version', apmAgent.version);
+		console.log('Agent executor', apmAgent.executor);
+
+		return apmAgent
 	}
 }
 

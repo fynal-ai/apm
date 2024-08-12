@@ -156,7 +156,7 @@ Usage:
 						name: 'author',
 						message: 'Agent author:',
 						validate: (input) => {
-							return APM_AGENT.validataAuthor(input)
+							return APM_AGENT.validateAuthor(input)
 						},
 					},
 				]);

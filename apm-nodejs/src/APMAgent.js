@@ -196,7 +196,7 @@ class APMAgent {
 			// untar <taskId>.tar.gz to agent folder
 			// remove .tar.gz
 			{
-				const agentName = name.split('/').at(-1);
+				const agentName = this.parseAgentName(name);
 				const agentdir = path.resolve(process.cwd(), agentName);
 
 				// if exists, error
@@ -656,9 +656,30 @@ class APMAgent {
 		console.log('Agent version', apmAgent.version);
 		console.log('Agent executor', apmAgent.executor);
 
+		// validate
+		{
+			// author
+			{
+				const valid = this.validateAuthor(apmAgent.author);
+				if (valid !== true) {
+					throw new Error(`Agent author ${apmAgent.author} is invalid: ${valid}`);
+				}
+			}
+			{
+				const agentName = this.parseAgentName(apmAgent.name)
+				const valid = this.validateAgentName(agentName);
+				if (valid !== true) {
+					throw new Error(`Agent name ${agentName} without author ${apmAgent.author} is invalid: ${valid}`);
+				}
+			}
+		}
+
 		return apmAgent;
 	}
-	validataAuthor(input) {
+	parseAgentName(name) {
+		return name.substring(name.indexOf("/") + 1);
+	}
+	validateAuthor(input) {
 		const schema = Joi.string()
 			.regex(this.regex.author)
 			.lowercase()

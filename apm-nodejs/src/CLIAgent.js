@@ -1,17 +1,11 @@
 #!/usr/bin/env node
 import fs from 'fs-extra';
 import inquirer from 'inquirer';
-import Joi from 'joi';
 import minimist from 'minimist';
 import path from 'path';
 import { APM_AGENT } from './APMAgent.js';
 
 class CLIAgent {
-	regex = {
-		author: /^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/,
-		password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
-		agentName: /^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/,
-	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
 		// console.log('options', options);
@@ -162,7 +156,7 @@ Usage:
 						name: 'author',
 						message: 'Agent author:',
 						validate: (input) => {
-							return this.validataAuthor(input)
+							return APM_AGENT.validataAuthor(input)
 						},
 					},
 				]);
@@ -180,7 +174,7 @@ Usage:
 							return `${options.author}/${input}`;
 						},
 						validate: (input) => {
-							return this.validateAgentName(input)
+							return APM_AGENT.validateAgentName(input)
 						},
 					},
 				]);
@@ -253,16 +247,7 @@ Usage:
 						name: 'username',
 						message: `Agent Store username:`,
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.author)
-								.lowercase()
-								.required()
-								.label('username');
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
+							return APM_AGENT.validateUsername(input);
 						},
 					},
 				]);
@@ -278,12 +263,7 @@ Usage:
 						message: `Agent Store password:`,
 						mask: '*',
 						validate: (input) => {
-							const schema = Joi.string().regex(this.regex.password).required().label('password');
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
+							return APM_AGENT.validatePassword(input);
 						},
 					},
 				]);
@@ -299,26 +279,6 @@ Usage:
 		} catch (error) {
 			console.log(error.message);
 		}
-	}
-	validataAuthor(input) {
-		const schema = Joi.string()
-			.regex(this.regex.author)
-			.lowercase()
-			.required()
-			.label('author');
-		const e = schema.validate(input).error;
-		if (e?.message) {
-			return e.message;
-		}
-		return true;
-	}
-	validateAgentName(input) {
-		const schema = Joi.string().regex(this.regex.agentName).required().label('name');
-		const e = schema.validate(input).error;
-		if (e?.message) {
-			return e.message;
-		}
-		return true;
 	}
 }
 

@@ -15,5 +15,6 @@
 			"text": "Hello!"
 		}
 	},
-	"executor": "python"
+	"executor": "python",
+	"runMode": "async"
 }

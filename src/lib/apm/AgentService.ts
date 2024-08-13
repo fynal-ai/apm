@@ -256,7 +256,7 @@ class AgentService {
 
 		return {
 			runId: executedResult.runId,
-			runMode: executedResult.runMode,
+			// runMode: executedResult.runMode,
 			output: executedResult.output,
 			extra: executedResult?.remoteRunSaveResultOption?.data?.extra,
 		};
@@ -582,7 +582,7 @@ ${pythonProgram} main.py
 						runId,
 						output: {},
 						extra: remoteRunSaveResultOption.extra,
-						runMode: remoteRunSaveResultOption.runMode,
+						// runMode: remoteRunSaveResultOption.runMode,
 					},
 				},
 			};

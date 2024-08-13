@@ -58,7 +58,13 @@ class AgentService {
 				name: apmAgent.name,
 				version: apmAgent.version,
 
-				...(await this.convertToDBRemoteRunSaveResultOption(payload.option, response.runId)),
+				...(await this.convertToDBRemoteRunSaveResultOption(
+					{
+						callback: payload.callback,
+						extra: payload.extra,
+					},
+					response.runId
+				)),
 			});
 			await apmAgentRun.save();
 		}
@@ -80,6 +86,16 @@ class AgentService {
 			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
 		}
 
+		{
+			// check payload.callback
+			if ((!apmAgent.runMode || apmAgent.runMode === 'async') && !payload.callback) {
+				throw new EmpError('ASYNC_AGENT_CALLBACK_NOT_FOUND', `Async agent callback is required`);
+			}
+			if (apmAgent.runMode === 'sync' && payload.callback) {
+				console.log("Sync agent dont's support callback");
+			}
+		}
+
 		// inject input
 		apmAgent.config.input = payload.input;
 
@@ -88,7 +104,13 @@ class AgentService {
 			runId,
 			runMode: apmAgent.runMode,
 
-			...(await this.convertToDBRemoteRunSaveResultOption(payload.option, runId)),
+			...(await this.convertToDBRemoteRunSaveResultOption(
+				{
+					callback: payload.callback,
+					extra: payload.extra,
+				},
+				runId
+			)),
 		});
 
 		// execute agent
@@ -98,9 +120,7 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.access_token,
-
-					payload.option
+					payload.access_token
 				);
 			}
 
@@ -108,11 +128,9 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.access_token,
-
-				payload.option
+				payload.access_token
 			);
-			return { runId, runMode: 'async' };
+			return { runId, runMode: 'async', extra: payload.extra };
 		}
 	}
 	async isRunIdExist(runId) {
@@ -132,7 +150,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, access_token, remoteRunSaveResultOption?) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -554,6 +572,7 @@ ${pythonProgram} main.py
 					data: {
 						runId,
 						output: {},
+						extra: remoteRunSaveResultOption.extra,
 					},
 				},
 			};

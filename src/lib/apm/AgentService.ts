@@ -11,6 +11,7 @@ import {
 } from '../../database/models/APMAgentServiceRun.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
+import { AGENT_RESULT_CONSUMER } from './AgentResultConsumer.js';
 import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
@@ -253,6 +254,12 @@ class AgentService {
 		}
 
 		const executedResult = await this.getResult({ runId, deleteAfter: false });
+
+		// push to callback server
+		if (!apmAgent.runMode || apmAgent.runMode === 'async') {
+			const apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId });
+			await AGENT_RESULT_CONSUMER.singleSave(apmAgentServiceRun);
+		}
 
 		return {
 			runId: executedResult.runId,
@@ -568,7 +575,7 @@ ${pythonProgram} main.py
 		try {
 			return await which('symlink-dir');
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			return '/root/.local/share/pnpm/symlink-dir';
 		}
 	}

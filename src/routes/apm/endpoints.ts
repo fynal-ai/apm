@@ -179,6 +179,7 @@ const internals = {
 							.valid('python', 'nodejs', 'aiwork')
 							.required()
 							.description('Use which executor to run agent'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 					},
 					validator: Joi,
 				},

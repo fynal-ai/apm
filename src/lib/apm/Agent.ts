@@ -251,6 +251,7 @@ class Agent {
 					doc: PLD.doc,
 					config: PLD.config,
 					executor: PLD.executor,
+					runMode: PLD.runMode,
 				},
 			},
 			{

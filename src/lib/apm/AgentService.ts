@@ -109,6 +109,8 @@ class AgentService {
 				{
 					callback: payload.callback,
 					extra: payload.extra,
+
+					runMode: apmAgent.runMode,
 				},
 				runId
 			)),
@@ -259,7 +261,12 @@ class AgentService {
 			await AGENT_RESULT_CONSUMER.singleSave(apmAgentServiceRun);
 		}
 
-		return executedResult;
+		return {
+			runId: executedResult.runId,
+			runMode: executedResult.runMode,
+			output: executedResult.output,
+			extra: executedResult?.remoteRunSaveResultOption?.data?.extra,
+		};
 	}
 	async generateRunId() {
 		return shortuuid.generate();
@@ -582,6 +589,7 @@ ${pythonProgram} main.py
 						runId,
 						output: {},
 						extra: remoteRunSaveResultOption.extra,
+						runMode: remoteRunSaveResultOption.runMode,
 					},
 				},
 			};

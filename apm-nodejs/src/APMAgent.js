@@ -549,6 +549,7 @@ class APMAgent {
 					doc: payload.doc,
 					config: payload.config,
 					executor: payload.executor,
+					runMode: payload.runMode
 				},
 				baseURL: this.apmBaseURL,
 			});

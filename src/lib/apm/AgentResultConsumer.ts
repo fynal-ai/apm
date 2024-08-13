@@ -82,8 +82,6 @@ class AgentResultConsumer {
 					const data = config['data'];
 					data['output'] = output;
 
-					data['extra'] = config['extra'];
-
 					const response = await axios({
 						method: 'POST',
 						url,

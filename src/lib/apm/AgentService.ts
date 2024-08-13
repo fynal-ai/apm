@@ -11,6 +11,7 @@ import {
 } from '../../database/models/APMAgentServiceRun.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
+import { AGENT_RESULT_CONSUMER } from './AgentResultConsumer.js';
 import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
@@ -250,7 +251,15 @@ class AgentService {
 			}
 		}
 
-		return await this.getResult({ runId, deleteAfter: false });
+		const executedResult = await this.getResult({ runId, deleteAfter: false });
+
+		// push result when async
+		if (!apmAgent.runMode || apmAgent.runMode === 'async') {
+			const apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId });
+			await AGENT_RESULT_CONSUMER.singleSave(apmAgentServiceRun);
+		}
+
+		return executedResult;
 	}
 	async generateRunId() {
 		return shortuuid.generate();

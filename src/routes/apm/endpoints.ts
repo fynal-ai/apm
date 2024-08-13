@@ -379,6 +379,8 @@ const internals = {
 					payload: {
 						runId: Joi.string().required().description('run id'),
 						output: Joi.object().description('agent output'),
+
+						extra: Joi.object().optional().description('extra'),
 					},
 					validator: Joi,
 				},

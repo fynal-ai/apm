@@ -562,6 +562,7 @@ const internals = {
 							.valid('python', 'nodejs', 'aiwork')
 							.required()
 							.description('Use which executor to run agent'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 
 						price: Joi.object({
 							original: Joi.number().default(0).description('agent original price'),

@@ -5,14 +5,18 @@ class APMAgent:
     def __init__(self):
         pass
 
-    def save_output(self, saveconfig:dict, output = {}):
+    def save_output(self, saveconfig: dict = None, output={}):
         """
         save output apm server
         """
+        if saveconfig is None:
+            print("output", output)
+            return None
+
         try:
             url = saveconfig.get("url")
             headers = saveconfig.get("headers")
-            
+
             data = saveconfig.get("data")
             data["output"] = output
 

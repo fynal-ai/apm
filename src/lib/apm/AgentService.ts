@@ -393,6 +393,10 @@ END
 fi
 
 tee main.py <<END
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), "${agentName}")) # ModuleNotFoundError: No module named 'PageContent'
+
 import json
 from ${agentName}.Agent import Agent
 

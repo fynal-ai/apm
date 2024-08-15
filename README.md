@@ -1,4 +1,9 @@
-APM (Agent Package Manager)
+<div align="center">
+	<h1>APM (Agent Package Manager)
+</h1>
+</div>
+
+<br>
 
 ## Quick
 
@@ -27,6 +32,12 @@ docker run --name apm-test --rm -p 12008:12008  -v $APM_LOCAL_REPOSITORY_DIR:/ap
 See http://127.0.0.1:12008/documentation for Application development.
 
 For more environment variables, see [Dockerfile.latest](./Dockerfile.latest)
+
+## Install agent from Agent Store
+
+<div align="center">
+	<img src="frt/static/images/AgentFlow-Install agent from Agent Store.drawio.png" alt="APM" />
+</div>
 
 ## Development
 

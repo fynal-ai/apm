@@ -36,7 +36,7 @@ For more environment variables, see [Dockerfile.latest](./Dockerfile.latest)
 ## Install agent from Agent Store
 
 <div align="center">
-	<img src="frt/static/svg/AgentFlow-Install agent from Agent Store.drawio.svg" alt="APM" />
+	<img src="frt/static/images/AgentFlow-Install agent from Agent Store.drawio.png" alt="APM" />
 </div>
 
 ## Development

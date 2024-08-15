@@ -43,6 +43,9 @@ services:
       - ~/.apm:/app/.apm
     ports:
       - '12008:12008'
+    dns:
+      - 114.114.114.114
+      - 8.8.8.8
     environment:
       - MONGO_CONNECTION_STRING=mongodb://mongodb:27017/apm_emp_dev?readPreference=secondaryPreferred&directConnection=true&serverSelectionTimeoutMS=2000
       - REDIS_CONNECTION_STRING=redis://default:foobared@redis:6379

@@ -1,17 +1,11 @@
 #!/usr/bin/env node
-import fs from "fs-extra";
-import inquirer from "inquirer";
-import Joi from "joi";
+import fs from 'fs-extra';
+import inquirer from 'inquirer';
 import minimist from 'minimist';
 import path from 'path';
 import { APM_AGENT } from './APMAgent.js';
 
 class CLIAgent {
-	regex = {
-		author: /^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/,
-		password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
-		agentName: /^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/,
-	};
 	async main() {
 		const options = minimist(process.argv.slice(2));
 		// console.log('options', options);
@@ -80,6 +74,16 @@ Usage:
 		// install
 		if (_[0] === 'install') {
 			const agentSpec = _[1];
+
+			// install from Agent Store, login if needed
+			if (agentSpec) {
+				const isAgentFolder = await APM_AGENT.isAgentFolder(agentSpec);
+				if (!isAgentFolder) {
+					console.log(`Try install from Agent Store`);
+					await this.login(options);
+				}
+			}
+
 			await APM_AGENT.install(agentSpec);
 			return;
 		}
@@ -88,7 +92,7 @@ Usage:
 		if (_[0] === 'uninstall') {
 			const agentSpec = _[1];
 			await APM_AGENT.uninstall(agentSpec);
-			return
+			return;
 		}
 
 		// list
@@ -96,7 +100,7 @@ Usage:
 			await APM_AGENT.list({
 				...options,
 
-				_: undefined
+				_: undefined,
 			});
 			return;
 		}
@@ -124,7 +128,7 @@ Usage:
 			await APM_AGENT.search({
 				...options,
 
-				_: undefined
+				_: undefined,
 			});
 			return;
 		}
@@ -133,11 +137,10 @@ Usage:
 		if (_[0] === 'run') {
 			const agentSpec = _[1];
 			await APM_AGENT.run(agentSpec, {
-				input: options["i"] || options["input"]
+				input: options['i'] || options['input'],
 			});
-			return
+			return;
 		}
-
 
 		// Command not exist
 		console.log(`Command ${_[0]} not exist. Try apm --help`);
@@ -145,84 +148,68 @@ Usage:
 
 	async init(options) {
 		try {
-
 			// author
 			if (!options.author) {
 				const answers = await inquirer.prompt([
 					{
-						type: "input",
-						name: "author",
-						message: "Agent author:",
+						type: 'input',
+						name: 'author',
+						message: 'Agent author:',
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.author)
-								.lowercase()
-								.required().label("author")
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
-						}
-					}
-				])
-				options.author = answers.author
+							return APM_AGENT.validateAuthor(input)
+						},
+					},
+				]);
+				options.author = answers.author;
 			}
 
-			// name, 
+			// name,
 			if (!options.name) {
 				const answers = await inquirer.prompt([
 					{
-						type: "input",
-						name: "name",
+						type: 'input',
+						name: 'name',
 						message: `Agent name:`,
 						transformer: function (input) {
-							return `${options.author}/${input}`
+							return `${options.author}/${input}`;
 						},
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.agentName)
-								.required().label("name")
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
-						}
-					}
-				])
-				options.name = `${options.author}/${answers.name}`
+							return APM_AGENT.validateAgentName(input)
+						},
+					},
+				]);
+				options.name = `${options.author}/${answers.name}`;
 			}
 
 			// executor
 			if (!options.executor) {
 				const answers = await inquirer.prompt({
-					type: "list",
-					name: "executor",
-					message: "Agent executor:",
+					type: 'list',
+					name: 'executor',
+					message: 'Agent executor:',
 					choices: [
-						{ name: "python", value: "python" },
-						{ name: "nodejs", value: "nodejs" },
-						{ name: "remote", value: "remote" },
-					]
-				})
-				options.executor = answers.executor
+						{ name: 'python', value: 'python' },
+						{ name: 'nodejs', value: 'nodejs' },
+						{ name: 'remote', value: 'remote' },
+					],
+				});
+				options.executor = answers.executor;
 			}
 
 			// force
 			if (!options.force) {
-				const agentName = options.name.split("/").at(-1);
-				const agentdir = path.resolve(agentName)
+				const agentName = options.name.split('/').at(-1);
+				const agentdir = path.resolve(agentName);
 				if (await fs.exists(agentdir)) {
 					const answers = await inquirer.prompt([
 						{
-							type: "confirm",
-							name: "force",
+							type: 'confirm',
+							name: 'force',
 							message: `Agent folder already exists in ${agentdir}, overwrite?`,
-							default: false
-						}
-					])
-					options.force = answers.force
+							default: false,
+						},
+					]);
+					options.force = answers.force;
 
 					// loop ask name
 					if (options.force != true) {
@@ -235,14 +222,14 @@ Usage:
 			await APM_AGENT.init(options);
 		} catch (error) {
 			console.log(error.message);
-			if (error.message === "items.findLastIndex is not a function") {
-				console.log("Try upgrade Node.Js >= 18.0.0")
+			if (error.message === 'items.findLastIndex is not a function') {
+				console.log('Try upgrade Node.Js >= 18.0.0');
 			}
 		}
 	}
 	async login(options) {
 		try {
-			console.log('Login or register to Agent Store...',);
+			console.log('Login or register to Agent Store...');
 
 			if (APM_AGENT.agentStoreSessionToken && !options.username && !options.password) {
 				console.log(
@@ -250,54 +237,37 @@ Usage:
 					options.username || APM_AGENT.agentStoreUsername
 				);
 				return;
-
 			}
 
 			// username
 			if (!options.username) {
 				const answers = await inquirer.prompt([
 					{
-						type: "input",
-						name: "username",
+						type: 'input',
+						name: 'username',
 						message: `Agent Store username:`,
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.author)
-								.lowercase()
-								.required().label("username")
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
-						}
-					}
-				])
-				options.username = answers.username
+							return APM_AGENT.validateUsername(input);
+						},
+					},
+				]);
+				options.username = answers.username;
 			}
 
 			// password
 			if (!options.password) {
 				const answers = await inquirer.prompt([
-
 					{
-						type: "password",
-						name: "password",
+						type: 'password',
+						name: 'password',
 						message: `Agent Store password:`,
 						mask: '*',
 						validate: (input) => {
-							const schema = Joi.string()
-								.regex(this.regex.password)
-								.required().label("password")
-							const e = schema.validate(input).error;
-							if (e?.message) {
-								return e.message;
-							}
-							return true;
-						}
-					}
-				])
-				options.password = answers.password
+							return APM_AGENT.validatePassword(input);
+						},
+					},
+				]);
+				options.password = answers.password;
 			}
 
 			await APM_AGENT.login({ username: options.username, password: options.password });

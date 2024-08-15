@@ -179,6 +179,7 @@ const internals = {
 							.valid('python', 'nodejs', 'aiwork')
 							.required()
 							.description('Use which executor to run agent'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 					},
 					validator: Joi,
 				},
@@ -255,13 +256,12 @@ const internals = {
 							end_time: 1721364927,
 						}),
 
-						option: Joi.object({
-							callback: Joi.string().description('async agent callback url'),
-						})
-							.label('APMAgentServiceRunOption')
-							.description(
-								'Option for async agent to save output with POST {runId: <runId>, output: <output>}'
-							),
+						callback: Joi.string().description(
+							'async agent callback url, when agent runMode is async, callback is reuired.'
+						),
+						extra: Joi.object()
+							.label('APMAgentServiceRunExtra')
+							.description('agent run extra data'),
 					}).label('APMAgentServiceRunPayload'),
 					validator: Joi,
 				},
@@ -380,6 +380,8 @@ const internals = {
 					payload: {
 						runId: Joi.string().required().description('run id'),
 						output: Joi.object().description('agent output'),
+
+						extra: Joi.object().optional().description('extra'),
 					},
 					validator: Joi,
 				},
@@ -398,11 +400,7 @@ const internals = {
 					payload: {
 						access_token: Joi.string().required().description('access_token'),
 
-						option: Joi.object({
-							callback: Joi.string().required().description('async agent callback url'),
-						})
-							.required()
-							.description('Option for recognize async agent'),
+						callback: Joi.string().required().description('async agent callback url'),
 					},
 					validator: Joi,
 				},
@@ -564,6 +562,7 @@ const internals = {
 							.valid('python', 'nodejs', 'aiwork')
 							.required()
 							.description('Use which executor to run agent'),
+						runMode: Joi.string().valid('sync', 'async').description('run mode'),
 
 						price: Joi.object({
 							original: Joi.number().default(0).description('agent original price'),

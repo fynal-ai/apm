@@ -35,11 +35,14 @@ pnpm install
 ### mongodb not found
 
 ```sh
-docker run --name myMongo -d -p 27017:27017 -u $(id -u):$(id -g) -v $HOME/mongodb6:/data/db mongodb/mongodb-community-server:latest --dbpath /data/db --replSet rs0
+# mongodb
+docker run --name mongodb -d -p 27017:27017 --restart always -u root -v $HOME/mongodb6:/data/db mongodb/mongodb-community-server:latest --dbpath /data/db --replSet rs0
+# mongosetup
+sleep 5 && docker exec -it mongodb mongosh --host 127.0.0.1:27017 --eval "rs.initiate({ _id: \"rs0\", version: 1, members: [ { _id: 0, host : \"127.0.0.1:27017\" } ] })"
 ```
 
 ## redis not found
 
 ```sh
-docker run --rm --name myRedis -p 6379:6379 -d redis:latest
+docker run --name redis -d --restart always -p 6379:6379 redis:latest
 ```

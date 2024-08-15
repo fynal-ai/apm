@@ -11,6 +11,7 @@ import {
 } from '../../database/models/APMAgentServiceRun.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
+import { AGENT_RESULT_CONSUMER } from './AgentResultConsumer.js';
 import { RemoteAgent } from './RemoteAgent.js';
 
 class AgentService {
@@ -58,7 +59,13 @@ class AgentService {
 				name: apmAgent.name,
 				version: apmAgent.version,
 
-				...(await this.convertToDBRemoteRunSaveResultOption(payload.option, response.runId)),
+				...(await this.convertToDBRemoteRunSaveResultOption(
+					{
+						callback: payload.callback,
+						extra: payload.extra,
+					},
+					response.runId
+				)),
 			});
 			await apmAgentRun.save();
 		}
@@ -80,6 +87,16 @@ class AgentService {
 			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
 		}
 
+		{
+			// check payload.callback
+			if ((!apmAgent.runMode || apmAgent.runMode === 'async') && !payload.callback) {
+				throw new EmpError('ASYNC_AGENT_CALLBACK_NOT_FOUND', `Async agent callback is required`);
+			}
+			if (apmAgent.runMode === 'sync' && payload.callback) {
+				console.log("Sync agent dont's support callback");
+			}
+		}
+
 		// inject input
 		apmAgent.config.input = payload.input;
 
@@ -88,7 +105,15 @@ class AgentService {
 			runId,
 			runMode: apmAgent.runMode,
 
-			...(await this.convertToDBRemoteRunSaveResultOption(payload.option, runId)),
+			...(await this.convertToDBRemoteRunSaveResultOption(
+				{
+					callback: payload.callback,
+					extra: payload.extra,
+
+					runMode: apmAgent.runMode,
+				},
+				runId
+			)),
 		});
 
 		// execute agent
@@ -98,9 +123,7 @@ class AgentService {
 					runId,
 
 					apmAgent,
-					payload.access_token,
-
-					payload.option
+					payload.access_token
 				);
 			}
 
@@ -108,11 +131,9 @@ class AgentService {
 				runId,
 
 				apmAgent,
-				payload.access_token,
-
-				payload.option
+				payload.access_token
 			);
-			return { runId, runMode: 'async' };
+			return { runId, runMode: 'async', extra: payload.extra };
 		}
 	}
 	async isRunIdExist(runId) {
@@ -132,7 +153,7 @@ class AgentService {
 
 		return false;
 	}
-	async executeAgentCode(runId, apmAgent: APMAgentType, access_token, remoteRunSaveResultOption?) {
+	async executeAgentCode(runId, apmAgent: APMAgentType, access_token) {
 		const author = apmAgent.author;
 		const agentName = apmAgent.name.split('/').at(-1);
 		const version = apmAgent.version;
@@ -173,7 +194,16 @@ class AgentService {
 			await fs.writeFile(`${workdir}/run.sh`, sh);
 		}
 
-		// 执行sh
+		// prepare input.json, saveconfig.json
+		{
+			console.log('prepare input.json, saveconfig.json');
+			await fs.ensureDir(workdir);
+
+			await fs.writeJSON(`${workdir}/input.json`, apmAgent.config.input);
+			await fs.writeJSON(`${workdir}/saveconfig.json`, saveconfig);
+		}
+
+		// execute sh
 		{
 			await this.saveResult({ runId, status: 'ST_RUN' });
 
@@ -223,7 +253,20 @@ class AgentService {
 			}
 		}
 
-		return await this.getResult({ runId, deleteAfter: false });
+		const executedResult = await this.getResult({ runId, deleteAfter: false });
+
+		// push to callback server
+		if (!apmAgent.runMode || apmAgent.runMode === 'async') {
+			const apmAgentServiceRun = await APMAgentServiceRun.findOne({ runId });
+			await AGENT_RESULT_CONSUMER.singleSave(apmAgentServiceRun);
+		}
+
+		return {
+			runId: executedResult.runId,
+			// runMode: executedResult.runMode,
+			output: executedResult.output,
+			extra: executedResult?.remoteRunSaveResultOption?.data?.extra,
+		};
 	}
 	async generateRunId() {
 		return shortuuid.generate();
@@ -258,6 +301,8 @@ class AgentService {
 		);
 		const agentNameInPackageJSON = packageJSON.name;
 		console.log('agentNameInPackageJSON', agentNameInPackageJSON);
+		// const mainScript = packageJSON.main;
+		// console.log('mainScript', mainScript);
 
 		const sh = `#!/bin/bash
 
@@ -282,11 +327,12 @@ END
 fi
 
 tee main.js <<END
+import fs from "fs";
 import { Agent } from "${agentNameInPackageJSON}";
 
-const input = ${JSON.stringify(apmAgent.config.input)}
+const input = JSON.parse(fs.readFileSync('input.json', 'utf8'));
 
-const saveconfig = ${JSON.stringify(saveconfig)}
+const saveconfig =JSON.parse(fs.readFileSync('saveconfig.json', 'utf8'));
 
 const agent = new Agent();
 
@@ -347,11 +393,16 @@ END
 fi
 
 tee main.py <<END
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), "${agentName}")) # ModuleNotFoundError: No module named 'PageContent'
+
+import json
 from ${agentName}.Agent import Agent
 
-input = ${JSON.stringify(apmAgent.config.input)}
+input = json.loads(open("input.json").read())
 
-saveconfig = ${JSON.stringify(saveconfig)}
+saveconfig = json.loads(open("saveconfig.json").read())
 
 agent = Agent()
 
@@ -528,7 +579,7 @@ ${pythonProgram} main.py
 		try {
 			return await which('symlink-dir');
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			return '/root/.local/share/pnpm/symlink-dir';
 		}
 	}
@@ -541,6 +592,8 @@ ${pythonProgram} main.py
 					data: {
 						runId,
 						output: {},
+						extra: remoteRunSaveResultOption.extra,
+						// runMode: remoteRunSaveResultOption.runMode,
 					},
 				},
 			};

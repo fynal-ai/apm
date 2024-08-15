@@ -15,5 +15,6 @@
 			"text": "Hello!"
 		}
 	},
-	"executor": "nodejs"
+	"executor": "nodejs",
+	"runMode": "async"
 }

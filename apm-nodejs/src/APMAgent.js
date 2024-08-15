@@ -1,10 +1,12 @@
 import axios from 'axios';
 import child_process from 'child_process';
-import CLITable from "cli-table3";
+import CLITable from 'cli-table3';
 import FormData from 'form-data';
 import fs from 'fs-extra';
+import Joi from 'joi';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 
 class APMAgent {
 	apmAccessToken = '';
@@ -12,6 +14,12 @@ class APMAgent {
 	agentStoreUsername = '';
 	agentStorePassword = '';
 	agentStoreSessionToken = '';
+
+	regex = {
+		author: /^[a-zA-Z][a-zA-Z0-9_\-]{2,28}[a-zA-Z0-9]$/,
+		password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
+		agentName: /^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/,
+	};
 	constructor() { }
 	/**
 	 * save output by saveconfig when saveconfig is setted, or print output to console
@@ -53,10 +61,10 @@ class APMAgent {
 			console.log('Try install agent from current folder');
 
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("Current folder is not an agent folder.")
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
@@ -78,10 +86,10 @@ class APMAgent {
 			console.log('Try uninstall agent from current folder');
 
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("Current folder is not an agent folder.")
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
@@ -90,12 +98,9 @@ class APMAgent {
 			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
 
 			// parse agent.json
-			const apmAgent = await fs.readJson(agentJSONFilePath);
-			console.log('Agent name', apmAgent.name);
-			console.log('Agent version', apmAgent.version);
+			const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath);
 
-			spec = `${apmAgent.name}:${apmAgent.version}`
-
+			spec = `${apmAgent.name}:${apmAgent.version}`;
 		}
 
 		await this.loadConfig();
@@ -158,19 +163,18 @@ class APMAgent {
 			// }]
 			// format to |name|author|version|description|
 			console.log(`List of installed APM agents (${responseJSON.length}):`);
-			const columns = [
-				"name", "author", "version", "executor",
-				"updatedAt", "description",
-			]
-			await this.beautifyPrintList(responseJSON.map((a, index) => {
-				return {
-					"": index,
-					...columns.reduce((previousValue, currentValue) => {
-						previousValue[currentValue] = a[currentValue]
-						return previousValue
-					}, {}),
-				}
-			}));
+			const columns = ['name', 'author', 'version', 'executor', 'updatedAt', 'description'];
+			await this.beautifyPrintList(
+				responseJSON.map((a, index) => {
+					return {
+						'': index,
+						...columns.reduce((previousValue, currentValue) => {
+							previousValue[currentValue] = a[currentValue];
+							return previousValue;
+						}, {}),
+					};
+				})
+			);
 
 			return responseJSON;
 		} catch (error) {
@@ -192,7 +196,7 @@ class APMAgent {
 			// untar <taskId>.tar.gz to agent folder
 			// remove .tar.gz
 			{
-				const agentName = name.split('/').at(-1);
+				const agentName = this.parseAgentName(name);
 				const agentdir = path.resolve(process.cwd(), agentName);
 
 				// if exists, error
@@ -234,21 +238,18 @@ class APMAgent {
 	async publish() {
 		try {
 			// recursive find parent folder which has agent.json
-			let folderpath = await this.recursiveFindAgent(".");
+			let folderpath = await this.recursiveFindAgent('.');
 
 			if (!folderpath) {
-				console.log("folderpath", folderpath)
-				console.log("Current folder is not an agent folder.")
+				console.log('folderpath', folderpath);
+				console.log('Current folder is not an agent folder.');
 				return;
 			}
 
 			console.log(`Publish agent from folder ${folderpath}`);
 			// parse agent.json
-			const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
-			console.log('Agent author', apmAgent.author);
-			console.log('Agent name', apmAgent.name);
-			console.log('Agent version', apmAgent.version);
-			console.log('Agent executor', apmAgent.executor);
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+			const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath);
 
 			// tar ignore .gitignore files to dist/[agentName]-v[version].tar.gz
 			// folder to .tmp/[md5].tar.gz
@@ -267,7 +268,6 @@ class APMAgent {
 		}
 	}
 	async search(payload) {
-
 		try {
 			const response = await axios({
 				method: 'POST',
@@ -282,19 +282,18 @@ class APMAgent {
 			}
 			// console.log(responseJSON)
 			console.log(`List of Agent Store agents (${responseJSON.length}):`);
-			const columns = [
-				"name", "author", "version", "executor",
-				"updatedAt", "description",
-			]
-			await this.beautifyPrintList(responseJSON.map((a, index) => {
-				return {
-					"": index,
-					...columns.reduce((previousValue, currentValue) => {
-						previousValue[currentValue] = a[currentValue]
-						return previousValue
-					}, {}),
-				}
-			}));
+			const columns = ['name', 'author', 'version', 'executor', 'updatedAt', 'description'];
+			await this.beautifyPrintList(
+				responseJSON.map((a, index) => {
+					return {
+						'': index,
+						...columns.reduce((previousValue, currentValue) => {
+							previousValue[currentValue] = a[currentValue];
+							return previousValue;
+						}, {}),
+					};
+				})
+			);
 
 			return responseJSON;
 		} catch (error) {
@@ -323,7 +322,6 @@ class APMAgent {
 		}
 
 		return await this.runFromAgentStore(spec, { input });
-
 	}
 	/**
 	 * load apm.json in APM_LOCAL_REPOSITORY_DIR
@@ -366,11 +364,8 @@ class APMAgent {
 		console.log(`Installing agent from folder ${folderpath}`);
 
 		// parse agent.json
-		const apmAgent = await fs.readJson(path.resolve(folderpath, 'agent.json'));
-		console.log('Agent author', apmAgent.author);
-		console.log('Agent name', apmAgent.name);
-		console.log('Agent version', apmAgent.version);
-		console.log('Agent executor', apmAgent.executor);
+		const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
+		const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath)
 		// remote agent
 		if (apmAgent.executor === 'remote') {
 			await this.installRemoteFromAgentFolder(folderpath, apmAgent);
@@ -554,6 +549,7 @@ class APMAgent {
 					doc: payload.doc,
 					config: payload.config,
 					executor: payload.executor,
+					runMode: payload.runMode
 				},
 				baseURL: this.apmBaseURL,
 			});
@@ -627,8 +623,8 @@ class APMAgent {
 		folderpath = path.resolve(folderpath);
 		// console.log('folderpath', folderpath);
 		while (folderpath !== '/') {
-			const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
-			if (await fs.exists(agentJSONFilePath) === true) {
+			const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+			if ((await fs.exists(agentJSONFilePath)) === true) {
 				console.log(`Found agent.json in folder ${folderpath}`);
 				return folderpath;
 			}
@@ -637,22 +633,92 @@ class APMAgent {
 	}
 	async beautifyPrintList(list) {
 		if (!list || Array.isArray(list) === false || list.length === 0) {
-			console.log("No data.")
+			console.log('No data.');
 			return;
 		}
 
 		const table = new CLITable({
 			head: Object.keys(list[0]),
 			// colWidths: [100, 200]
-		}
-		);
+		});
 
 		// table is an Array, so you can `push`, `unshift`, `splice` and friends
 		for (let i = 0; i < list.length; i = i + 1) {
-			table.push(Object.values(list[i]))
+			table.push(Object.values(list[i]));
 		}
 
 		console.log(table.toString());
+	}
+	async parseAgentJSONFile(agentJSONFilePath) {
+		// parse agent.json
+		const apmAgent = await fs.readJson(agentJSONFilePath);
+		console.log('Agent author', apmAgent.author);
+		console.log('Agent name', apmAgent.name);
+		console.log('Agent version', apmAgent.version);
+		console.log('Agent executor', apmAgent.executor);
+
+		// validate
+		{
+			// author
+			{
+				const valid = this.validateAuthor(apmAgent.author);
+				if (valid !== true) {
+					throw new Error(`Agent author ${apmAgent.author} is invalid: ${valid}`);
+				}
+			}
+			{
+				const agentName = this.parseAgentName(apmAgent.name)
+				const valid = this.validateAgentName(agentName);
+				if (valid !== true) {
+					throw new Error(`Agent name ${agentName} without author ${apmAgent.author} is invalid: ${valid}`);
+				}
+			}
+		}
+
+		return apmAgent;
+	}
+	parseAgentName(name) {
+		return name.substring(name.indexOf("/") + 1);
+	}
+	validateAuthor(input) {
+		const schema = Joi.string()
+			.regex(this.regex.author)
+			.lowercase()
+			.required()
+			.label('author');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
+	}
+	validateAgentName(input) {
+		const schema = Joi.string().regex(this.regex.agentName).required().label('name');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
+	}
+	validateUsername(input) {
+		const schema = Joi.string()
+			.regex(this.regex.author)
+			.lowercase()
+			.required()
+			.label('username');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
+	}
+	validatePassword(input) {
+		const schema = Joi.string().regex(this.regex.password).required().label('password');
+		const e = schema.validate(input).error;
+		if (e?.message) {
+			return e.message;
+		}
+		return true;
 	}
 }
 

@@ -11,7 +11,7 @@ class AgentResultConsumer {
 	savingConcurrent = 5;
 	async IAmAlive(payload) {
 		const apmAgentServiceRuns = await APMAgentServiceRun.find({
-			'remoteRunSaveResultOption.url': payload.option.callback,
+			'remoteRunSaveResultOption.url': payload.callback,
 
 			status: { $in: ['ST_DONE', 'ST_FAIL'] },
 		});

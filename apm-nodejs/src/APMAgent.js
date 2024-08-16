@@ -126,6 +126,32 @@ class APMAgent {
 			console.log('Error while uninstalling apm agent: ', error.message);
 		}
 	}
+	async inspect(spec) {
+		// Try inspect agent
+		if (!spec) {
+			throw new Error('Agent spec is required. Try "apm --help"');
+		}
+
+		await this.loadConfig();
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: '/apm/agent/inspect',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: this.apmAccessToken,
+				},
+				data: { spec },
+				baseURL: this.apmBaseURL,
+			});
+			const responseJSON = response.data;
+			console.log(responseJSON);
+			return responseJSON;
+		} catch (error) {
+			console.log('Error while inspect apm agent: ', error.message);
+		}
+	}
 	async list(payload) {
 		await this.loadConfig();
 

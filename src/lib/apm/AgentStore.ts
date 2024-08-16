@@ -216,6 +216,10 @@ class AgentStore {
 			responseType: 'stream',
 		});
 
+		if (response.data.error) {
+			throw new EmpError(response.data.error, response.data.message);
+		}
+
 		await response.data.pipe(fs.createWriteStream(tmp_filepath));
 
 		console.log('Retrived agent data from Agent Store', tmp_filepath);

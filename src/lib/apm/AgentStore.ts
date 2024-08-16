@@ -75,6 +75,7 @@ class AgentStore {
 				doc: payload.doc,
 				config: payload.config,
 				executor: payload.executor,
+				runMode: payload.runMode,
 			},
 		});
 		if (response.data.error) {

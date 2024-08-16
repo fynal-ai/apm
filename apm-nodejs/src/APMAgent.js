@@ -132,6 +132,8 @@ class APMAgent {
 			throw new Error('Agent spec is required. Try "apm --help"');
 		}
 
+		console.log('Try inspect agent in APM Server');
+
 		await this.loadConfig();
 
 		try {
@@ -146,7 +148,7 @@ class APMAgent {
 				baseURL: this.apmBaseURL,
 			});
 			const responseJSON = response.data;
-			console.log(responseJSON);
+			console.log(JSON.stringify(responseJSON, null, 4));
 			return responseJSON;
 		} catch (error) {
 			console.log('Error while inspect apm agent: ', error.message);

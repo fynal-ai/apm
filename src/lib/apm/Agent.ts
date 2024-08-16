@@ -40,8 +40,7 @@ class Agent {
 			});
 
 			if (!apmAgent) {
-				console.log('Agent dont exist');
-				return parsedAgentSpec;
+				throw new EmpError('AGENT_NOT_FOUND', 'Agent not found');
 			}
 
 			return apmAgent;

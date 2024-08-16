@@ -684,6 +684,7 @@ class APMAgent {
 		console.log('Agent name', apmAgent.name);
 		console.log('Agent version', apmAgent.version);
 		console.log('Agent executor', apmAgent.executor);
+		console.log("Agent runMode", apmAgent.runMode)
 
 		// validate
 		{

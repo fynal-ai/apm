@@ -47,6 +47,8 @@ Usage:
   apm list --limit 20
   apm list --q "hello"
   apm list --executor nodejs
+- view agent details in APM Server
+  apm inspect <name>[:version]
 - publish cwd agent folder to Agent Store
   apm publish
 - login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
@@ -92,6 +94,13 @@ Usage:
 		if (_[0] === 'uninstall') {
 			const agentSpec = _[1];
 			await APM_AGENT.uninstall(agentSpec);
+			return;
+		}
+
+		// inspect
+		if (_[0] === 'inspect') {
+			const agentSpec = _[1];
+			await APM_AGENT.inspect(agentSpec);
 			return;
 		}
 

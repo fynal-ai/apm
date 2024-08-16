@@ -23,6 +23,30 @@ class Agent {
 
 		return detail;
 	}
+	async inspect(payload) {
+		const { spec } = payload;
+
+		if (!spec) {
+			throw new EmpError('MISSING_AGENT_INSPECT_SPEC', 'spec is required');
+		}
+
+		const parsedAgentSpec = this.parseAgentSpec(spec);
+
+		// Local APM Repository already has this agent
+		{
+			const apmAgent = await this.getDetail({
+				name: parsedAgentSpec.name,
+				version: parsedAgentSpec.version,
+			});
+
+			if (!apmAgent) {
+				console.log('Agent dont exist');
+				return parsedAgentSpec;
+			}
+
+			return apmAgent;
+		}
+	}
 	replaceRemoteEndpoints(detail) {
 		if (detail?.executor === 'remote') {
 			let baseURL = 'https://apmemp.baystoneai.com';

@@ -72,6 +72,26 @@ const internals = {
 		},
 		{
 			method: 'POST',
+			path: '/apm/agent/inspect',
+			handler: Handlers.APM.Agent.Inspect,
+			config: {
+				// tags: ['api'],
+				description: 'Inspect Agent detail',
+				notes: 'Provide agent specification',
+				auth: 'token',
+				validate: {
+					payload: {
+						spec: Joi.string()
+							.required()
+							.description('Agent uninstall specification')
+							.example('fynalai/flood_control:1.0.1'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
 			path: '/apm/agent/create',
 			handler: Handlers.APM.Agent.Create,
 			config: {

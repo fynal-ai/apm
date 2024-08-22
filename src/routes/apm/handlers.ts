@@ -99,6 +99,11 @@ export default {
 					return await AGENT.getDetail(PLD);
 				});
 			},
+			Inspect: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, CRED) => {
+					return await AGENT.inspect(PLD);
+				});
+			},
 			Create: async (req: Request, h: ResponseToolkit) => {
 				return easyResponse(req, h, async (PLD, CRED) => {
 					// check if exists

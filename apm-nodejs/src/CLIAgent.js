@@ -22,47 +22,51 @@ class CLIAgent {
 			const version = await APM_AGENT.getCLIVersion();
 			console.log(`APM(Agent Package Manager) CLI v${version}
 
-Usage:
+Usage: apm [command] [flags]
+       apm [ -h | --help | -v | --version ]
 
-- show help
-  apm
-  apm --help
-- show version
-  apm --version
-  apm -v
-- create agent in cwd from template
+Create agent in cwd from template
   apm init
   apm init --author <author> --name <name> --executor <executor>
   apm init --author <author> --name <name> --executor <executor> --force
-- install agent from local folder or agent store. If no agent name is specified, the agent in the current folder is installed. Duplicate agents are overwritten.
+
+Install agent to APM server from local folder or agent store. If no agent name is specified, the agent in the current folder is installed. Duplicate agents are overwritten.
   apm install <agent-folder>
   apm install	
   apm install .
   apm install <name>[:version]
-- uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
+
+Uninstall agent. If no agent name is specified, the agent in the current folder is uninstalled in APM Server.
   apm uninstall
   apm uninstall <name>[:version]
-- list installed agents in APM Server
+
+List installed agents in APM Server
   apm list
   apm list --limit 20
   apm list --q "hello"
   apm list --executor nodejs
-- view agent details in APM Server
+
+View agent details in APM Server
   apm inspect <name>[:version]
-- publish cwd agent folder to Agent Store
+
+Publish cwd agent folder to Agent Store
   apm publish
-- login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
+
+Login to agent store. If no username is specified, the username in $HOME/.apm/apm.json is used.
   apm login
   apm login --username <username>
   apm login --username <username> --password <password>
-- search agents in Agent Store
+
+Search agents in Agent Store
   apm search
   apm search --limit 20
   apm search --q "hello"
   apm search --executor nodejs
-- Update apm package to latest in local Node.Js Agent Folders together:
+
+Update apm package to latest in local Node.Js Agent Folders together:
   for i in $(ls); do pnpm add @fynal-ai/apm:latest --dir $i; done
-- Install local Agent Folders together to APM Server:
+
+Install local Agent Folders together to APM Server:
   for i in $(ls); do apm install $i; done
         `);
 			return;
@@ -74,85 +78,80 @@ Usage:
 		await APM_AGENT.loadConfig();
 
 		// install
-		if (_[0] === 'install') {
-			const agentSpec = _[1];
+		let agentSpec = '';
+		switch (_[0]) {
+			case 'install':
+				agentSpec = _[1];
 
-			// install from Agent Store, login if needed
-			if (agentSpec) {
-				const isAgentFolder = await APM_AGENT.isAgentFolder(agentSpec);
-				if (!isAgentFolder) {
-					console.log(`Try install from Agent Store`);
-					await this.login(options);
+				// install from Agent Store, login if needed
+				if (agentSpec) {
+					const isAgentFolder = await APM_AGENT.isAgentFolder(agentSpec);
+					if (!isAgentFolder) {
+						console.log(`Try install from Agent Store`);
+						await this.login(options);
+					}
 				}
-			}
 
-			await APM_AGENT.install(agentSpec);
-			return;
-		}
+				await APM_AGENT.install(agentSpec);
+				break;
 
-		// uninstall
-		if (_[0] === 'uninstall') {
-			const agentSpec = _[1];
-			await APM_AGENT.uninstall(agentSpec);
-			return;
-		}
+			// uninstall
+			case 'uninstall':
+				agentSpec = _[1];
+				await APM_AGENT.uninstall(agentSpec);
+				break;
 
-		// inspect
-		if (_[0] === 'inspect') {
-			const agentSpec = _[1];
-			await APM_AGENT.inspect(agentSpec);
-			return;
-		}
+			// inspect
+			case 'inspect':
+				agentSpec = _[1];
+				await APM_AGENT.inspect(agentSpec);
+				break;
 
-		// list
-		if (_[0] === 'list') {
-			await APM_AGENT.list({
-				...options,
+			// list
+			case 'list':
+				await APM_AGENT.list({
+					...options,
 
-				_: undefined,
-			});
-			return;
-		}
+					_: undefined,
+				});
+				break;
 
-		if (_[0] === 'init') {
-			await this.init(options);
-			return;
-		}
+			case 'init':
+				await this.init(options);
+				break;
 
-		// publish
-		if (_[0] === 'publish') {
-			await this.login(options);
-			await APM_AGENT.publish();
-			return;
-		}
+			// publish
+			case 'publish':
+				await this.login(options);
+				await APM_AGENT.publish();
+				break;
 
-		// login
-		if (_[0] === 'login') {
-			await this.login(options);
-			return;
-		}
+			// login
+			case 'login':
+				await this.login(options);
+				break;
 
-		// search
-		if (_[0] === 'search') {
-			await APM_AGENT.search({
-				...options,
+			// search
+			case 'search':
+				await APM_AGENT.search({
+					...options,
 
-				_: undefined,
-			});
-			return;
-		}
+					_: undefined,
+				});
+				break;
 
-		// run
-		if (_[0] === 'run') {
-			const agentSpec = _[1];
-			await APM_AGENT.run(agentSpec, {
-				input: options['i'] || options['input'],
-			});
-			return;
+			// run
+			case 'run':
+				agentSpec = _[1];
+				await APM_AGENT.run(agentSpec, {
+					input: options['i'] || options['input'],
+				});
+				break;
+			default:
+				console.log(`Command ${_[0]} is unknown. Try apm --help`);
 		}
 
 		// Command not exist
-		console.log(`Command ${_[0]} not exist. Try apm --help`);
 	}
 
 	async init(options) {
@@ -165,7 +164,7 @@ Usage:
 						name: 'author',
 						message: 'Agent author:',
 						validate: (input) => {
-							return APM_AGENT.validateAuthor(input)
+							return APM_AGENT.validateAuthor(input);
 						},
 					},
 				]);
@@ -183,7 +182,7 @@ Usage:
 							return `${options.author}/${input}`;
 						},
 						validate: (input) => {
-							return APM_AGENT.validateAgentName(input)
+							return APM_AGENT.validateAgentName(input);
 						},
 					},
 				]);

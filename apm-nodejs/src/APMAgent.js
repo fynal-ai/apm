@@ -7,7 +7,6 @@ import Joi from 'joi';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
 class APMAgent {
 	apmAccessToken = '';
 	apmBaseURL = '';
@@ -20,7 +19,7 @@ class APMAgent {
 		password: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
 		agentName: /^[a-zA-Z][a-zA-Z0-9_\-]{0,28}[a-zA-Z0-9]?$/,
 	};
-	constructor() { }
+	constructor() {}
 	/**
 	 * save output by saveconfig when saveconfig is setted, or print output to console
 	 * @param {Object} saveconfig
@@ -119,7 +118,7 @@ class APMAgent {
 			const responseJSON = response.data;
 			console.log(
 				`Succeed uninstalled ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -129,7 +128,8 @@ class APMAgent {
 	async inspect(spec) {
 		// Try inspect agent
 		if (!spec) {
-			throw new Error('Agent spec is required. Try "apm --help"');
+			console.log('Agent spec is required. Try "apm --help"');
+			return;
 		}
 
 		console.log(`Try inspect agent ${spec} in APM Server`);
@@ -263,6 +263,7 @@ class APMAgent {
 			console.log('Error while init apm agent: ', error.message);
 		}
 	}
+
 	async publish() {
 		try {
 			// recursive find parent folder which has agent.json
@@ -392,8 +393,8 @@ class APMAgent {
 		console.log(`Installing agent from folder ${folderpath}`);
 
 		// parse agent.json
-		const agentJSONFilePath = path.resolve(folderpath, 'agent.json')
-		const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath)
+		const agentJSONFilePath = path.resolve(folderpath, 'agent.json');
+		const apmAgent = await this.parseAgentJSONFile(agentJSONFilePath);
 		// remote agent
 		if (apmAgent.executor === 'remote') {
 			await this.installRemoteFromAgentFolder(folderpath, apmAgent);
@@ -545,7 +546,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed uploaded ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -577,7 +578,7 @@ class APMAgent {
 					doc: payload.doc,
 					config: payload.config,
 					executor: payload.executor,
-					runMode: payload.runMode
+					runMode: payload.runMode,
 				},
 				baseURL: this.apmBaseURL,
 			});
@@ -588,7 +589,7 @@ class APMAgent {
 			}
 			console.log(
 				`Succeed edited ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -613,7 +614,7 @@ class APMAgent {
 
 			console.log(
 				`Succeed created ${responseJSON.name}` +
-				(responseJSON.version ? `:${responseJSON.version}` : '')
+					(responseJSON.version ? `:${responseJSON.version}` : '')
 			);
 			return responseJSON;
 		} catch (error) {
@@ -684,7 +685,7 @@ class APMAgent {
 		console.log('Agent name', apmAgent.name);
 		console.log('Agent version', apmAgent.version);
 		console.log('Agent executor', apmAgent.executor);
-		console.log("Agent runMode", apmAgent.runMode)
+		console.log('Agent runMode', apmAgent.runMode);
 
 		// validate
 		{
@@ -696,10 +697,12 @@ class APMAgent {
 				}
 			}
 			{
-				const agentName = this.parseAgentName(apmAgent.name)
+				const agentName = this.parseAgentName(apmAgent.name);
 				const valid = this.validateAgentName(agentName);
 				if (valid !== true) {
-					throw new Error(`Agent name ${agentName} without author ${apmAgent.author} is invalid: ${valid}`);
+					throw new Error(
+						`Agent name ${agentName} without author ${apmAgent.author} is invalid: ${valid}`
+					);
 				}
 			}
 		}
@@ -707,14 +710,10 @@ class APMAgent {
 		return apmAgent;
 	}
 	parseAgentName(name) {
-		return name.substring(name.indexOf("/") + 1);
+		return name.substring(name.indexOf('/') + 1);
 	}
 	validateAuthor(input) {
-		const schema = Joi.string()
-			.regex(this.regex.author)
-			.lowercase()
-			.required()
-			.label('author');
+		const schema = Joi.string().regex(this.regex.author).lowercase().required().label('author');
 		const e = schema.validate(input).error;
 		if (e?.message) {
 			return e.message;
@@ -730,11 +729,7 @@ class APMAgent {
 		return true;
 	}
 	validateUsername(input) {
-		const schema = Joi.string()
-			.regex(this.regex.author)
-			.lowercase()
-			.required()
-			.label('username');
+		const schema = Joi.string().regex(this.regex.author).lowercase().required().label('username');
 		const e = schema.validate(input).error;
 		if (e?.message) {
 			return e.message;

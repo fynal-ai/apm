@@ -1,11 +1,11 @@
 version: '3'
 services:
   mongodb:
-    image: mongodb/mongodb-community-server:latest
+    image: mongo:latest
     restart: always
     user: root
     volumes:
-      - ~/mongodb12:/data/db
+      - ~/mongodb_apm:/data/db
       - /tmp/apm-mongo-logs:/var/log/mongodb
     entrypoint:
       [
@@ -17,7 +17,7 @@ services:
         'rs0',
       ]
   mongosetup:
-    image: mongodb/mongodb-community-server:latest
+    image: mongo:latest
     restart: 'no'
     depends_on:
       - mongodb

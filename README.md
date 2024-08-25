@@ -5,17 +5,28 @@
 
 <br>
 
-## Quick
+## Quick start
 
 1. Download [docker-compose.yml](./docker-compose.yml) to start APM Server
    ```sh
    docker compose -f docker-compose.yml up
    ```
-   See http://127.0.0.1:12008/documentation for Application development.
 2. Install agent from APM CLI [@fynal-ai/apm](https://www.npmjs.com/package/@fynal-ai/apm)
    ```sh
    pnpm install -g @fynal-ai/apm
    apm --help
+   ```
+3. Create a new agent
+
+   ```sh
+   apm init
+   ```
+
+   follow the instruction to create a new agent
+
+4. Install agent to AMP server
+   ```sh
+   apm install
    ```
 
 ## Deploy APM Server alone with exist external database
@@ -41,6 +52,7 @@ For more environment variables, see [Dockerfile.latest](./Dockerfile.latest)
 
 ## Development
 
+See http://127.0.0.1:12008/documentation for Application development.
 [seperate-dev-start.md](./docs/seperate-dev-start.md)
 
 [publish-packages-to-public.md](./docs/publish-packages-to-public.md)

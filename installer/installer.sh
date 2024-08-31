@@ -27,8 +27,6 @@ export SMTP_PASSWORD="smtp_password"
 export SMTP_FROM="admin_email"
 export SITE_ADMIN="site admin email"
 export SITE_ADMIN_PASSWORD="site admin password"
-export ZEROMQ_SERVER="127.0.0.1"
-export ZEROMQ_PORT=3000
 
 export NODE_TLS_REJECT_UNAUTHORIZED=1;
 export NODE_ARGS=""

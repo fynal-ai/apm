@@ -3,12 +3,10 @@
 import { Request, ResponseObject, ResponseToolkit, Server } from '@hapi/hapi';
 import Inert from '@hapi/inert';
 import Vision from '@hapi/vision';
-import hapiWebSocket from 'hapi-plugin-websocket';
 import HapiSwagger from 'hapi-swagger';
 import JasonWebToken from 'jsonwebtoken';
 import JwtAuth from '../auth/jwt-strategy.js';
 import ServerConfig from '../config/server.js';
-import * as ZeroMQ from '../lib/ZeroMQ.js';
 import Routes from './routes.js';
 import Views from './views.js';
 
@@ -90,15 +88,6 @@ additionalExposedHeaders - a strings array of additional headers to exposedHeade
 	register_authJwt: async () => {
 		await theHapiServer.server.register({ plugin: hapiAuthJwt });
 	},
-	register_websocket: async () => {
-		await theHapiServer.server.register(hapiWebSocket);
-		console.log('!!!! websocket registered!!!');
-	},
-	register_zeroMQ: async () => {
-		ZeroMQ.startZeroMQPushServer().then(() => {
-			console.log('ZeroMQ server registered');
-		});
-	},
 	register_swagger: async () => {
 		await theHapiServer.server.register([
 			Inert,
@@ -129,11 +118,8 @@ additionalExposedHeaders - a strings array of additional headers to exposedHeade
 		if (theHapiServer.server_initialized) {
 			return theHapiServer.server;
 		}
-		// await theHapiServer.register_Good();
 		await theHapiServer.register_authJwt();
 		await theHapiServer.register_swagger();
-		await theHapiServer.register_websocket();
-		// await theHapiServer.register_zeroMQ();
 
 		await JwtAuth.setJwtStrategy(theHapiServer.server);
 		await Routes.init(theHapiServer.server);
@@ -182,9 +168,7 @@ additionalExposedHeaders - a strings array of additional headers to exposedHeade
 		}
 		// await theHapiServer.register_Good();
 		await theHapiServer.register_authJwt();
-		await theHapiServer.register_websocket();
-		// await theHapiServer.register_zeroMQ();
-		//await register_swagger();
+		await theHapiServer.register_swagger();
 
 		await JwtAuth.setJwtStrategy(theHapiServer.server);
 		await Views.init(theHapiServer.server);

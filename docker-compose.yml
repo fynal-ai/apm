@@ -2,32 +2,19 @@ version: '3'
 services:
   mongodb:
     image: mongo:latest
-    restart: always
     user: root
+    container_name: apmMongoServer
     volumes:
-      - ~/mongodb_apm:/data/db
+      - ~/apmMongo:/data/db
       - /tmp/apm-mongo-logs:/var/log/mongodb
-    entrypoint:
-      [
-        '/usr/bin/mongod',
-        '--bind_ip_all',
-        '--logpath',
-        '/var/log/mongodb/mongo.log',
-        '--replSet',
-        'rs0',
-      ]
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all',  "--logpath",  "/var/log/mongodb/mongo.log",  '--replSet', 'rs0']
+    restart: always
   mongosetup:
     image: mongo:latest
-    restart: 'no'
     depends_on:
       - mongodb
-    entrypoint:
-      [
-        'bash',
-        '-c',
-        'sleep 5 && mongosh --host mongodb:27017 --eval "rs.initiate({ _id: \"rs0\", version: 1,
-        members: [ { _id: 0, host : \"mongodb:27017\" } ] })"',
-      ]
+    restart: 'no'
+    entrypoint: ['bash', '-c', "sleep 5 && mongosh --host apmMongoServer:27017 --eval 'rs.initiate({ _id: \"rs0\", version: 1, members: [ { _id: 0, host : \"apmMongoServer:27017\" } ] })'"]
 
   redis:
     image: redis:latest
@@ -52,6 +39,4 @@ services:
 
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-
-      # - APM_AGENT_STORE_BASE_URL=http://172.16.7.141:11008
-    entrypoint: ['bash', '--login', '-i', '-c', 'sleep 10 && node /app/build/index.js']
+    entrypoint: ['bash', '-c', 'sleep 10 && source ~/.nvm/nvm.sh && node /app/build/index.js']

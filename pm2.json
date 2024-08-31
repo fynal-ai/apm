@@ -1,7 +1,7 @@
 {
 	"name": "apm_backend",
 	"script": "./build/index.js",
-	"node_args": ["--inspect=9449"],
+	"node_args": ["--inspect=12449"],
 	"watch": ["build"],
 	"ignore_watch": ["test"],
 	"interpreter": "node",

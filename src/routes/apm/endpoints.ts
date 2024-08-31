@@ -46,12 +46,14 @@ const internals = {
 						...PAGING_PAYLOAD,
 
 						q: Joi.string().allow('').description('query'),
+						owner: Joi.string().description('the agent owner'),
 						executor: Joi.string().allow('').description('agent executor'),
 					},
 					validator: Joi,
 				},
 			},
 		},
+
 		{
 			method: 'POST',
 			path: '/apm/agent/detail',
@@ -279,6 +281,7 @@ const internals = {
 						callback: Joi.string().description(
 							'async agent callback url, when agent runMode is async, callback is reuired.'
 						),
+						owner: Joi.string().description('the agent owner').default('public'),
 						extra: Joi.object()
 							.label('APMAgentServiceRunExtra')
 							.description('agent run extra data'),
@@ -637,6 +640,61 @@ const internals = {
 
 						q: Joi.string().allow('').description('query'),
 						executor: Joi.string().allow('').description('agent executor'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+
+		{
+			method: 'POST',
+			path: '/apm/agent/ownership/runable',
+			handler: Handlers.APM.Ownership.Runable,
+			config: {
+				tags: ['api'],
+				description: 'Check whether the agent is runnable by owner or not',
+				notes: 'Agent is specified by name, owner is specified by "tenant_id:eid"',
+				auth: 'token',
+				validate: {
+					payload: {
+						name: Joi.string().description('Agent name'),
+						owner: Joi.string().description('The agent owner'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agent/ownership/set',
+			handler: Handlers.APM.Ownership.Set,
+			config: {
+				tags: ['api'],
+				description: 'Set ownership',
+				notes: 'Agent is specified by name, owner is specified by "tenant_id:eid"',
+				auth: 'token',
+				validate: {
+					payload: {
+						name: Joi.string().description('Agent name'),
+						owner: Joi.string().description('The agent owner'),
+					},
+					validator: Joi,
+				},
+			},
+		},
+		{
+			method: 'POST',
+			path: '/apm/agent/ownership/remove',
+			handler: Handlers.APM.Ownership.Remove,
+			config: {
+				tags: ['api'],
+				description: 'Remove ownership',
+				notes: 'Agent is specified by name, owner is specified by "tenant_id:eid"',
+				auth: 'token',
+				validate: {
+					payload: {
+						name: Joi.string().description('Agent name'),
+						owner: Joi.string().description('The agent owner'),
 					},
 					validator: Joi,
 				},

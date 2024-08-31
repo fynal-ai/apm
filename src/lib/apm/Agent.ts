@@ -452,7 +452,8 @@ class Agent {
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
 		const filepath = path.resolve(localRepositoryDir, 'apm-init');
 		console.log('Copy apm-init folder');
-
+		console.log('FROM', path.resolve(localRepositoryDir, '../apm-init'));
+		console.log('TO', filepath);
 		// always copy
 		await fs.copy(path.resolve(localRepositoryDir, '../apm-init'), filepath);
 
@@ -460,12 +461,10 @@ class Agent {
 	}
 	async getAccessToken() {
 		// apm user from process.env.ACCESS_ID
-		const user = await User.findOne({ account: ServerConfig.apm.access_id }).sort({
-			createdAt: -1,
-		});
-		console.log('user', user);
+		const user = await User.findOne({ account: ServerConfig.apm.access_id });
+		console.log(`Check user ${ServerConfig.apm.access_id} from DB, got:`, user);
 		if (!user) {
-			console.log('Initial user');
+			console.log(`User ${ServerConfig.apm.access_id} not exist, Initial user`);
 			const PLD = {
 				username: ServerConfig.apm.access_id,
 				password: ServerConfig.apm.access_key,
@@ -486,7 +485,10 @@ class Agent {
 					},
 				});
 				if (!response.data._id) {
-					throw new EmpError('LOGIN_FAILED', 'login failed');
+					throw new EmpError(
+						'REGISER_FAILED',
+						'register failed, may already exist, check database to make sure'
+					);
 				}
 			}
 
@@ -502,11 +504,13 @@ class Agent {
 
 			this.accessToken = data.sessionToken;
 
+			console.log('User register successfully, return token: ', this.accessToken);
 			return this.accessToken;
 		}
 
 		this.accessToken = JwtAuth.createToken({ id: user._id });
 
+		console.log('Found existing user, return token: ', this.accessToken);
 		return this.accessToken;
 	}
 

@@ -2,6 +2,7 @@
 import { Request, ResponseToolkit } from '@hapi/hapi';
 
 import { APMAgent } from '../../database/models/APMAgent.js';
+import { Ownership } from '../../database/models/Ownership.js';
 import { easyResponse } from '../../lib/EasyResponse.js';
 import EmpError from '../../lib/EmpError.js';
 import { AGENT } from '../../lib/apm/Agent.js';
@@ -41,8 +42,9 @@ export default {
 						Object.assign(filters, PLD.extrajson);
 					}
 
+					const andCondition = [];
 					if (PLD.q) {
-						Object.assign(filters, {
+						andCondition.push({
 							$or: [
 								{
 									name: {
@@ -70,6 +72,13 @@ export default {
 						});
 					}
 
+					const ownedAgentNames = await Ownership.find({ owner: PLD.owner }).distinct('agentName');
+					andCondition.push({
+						$or: [{ isPublic: true }, { name: { $in: ownedAgentNames } }],
+					});
+
+					Object.assign(filters, { $and: andCondition });
+
 					let task = APMAgent.find(filters, {}).lean().sort(PLD.sortBy).limit(PLD.limit);
 
 					if (PLD.skip) {
@@ -95,17 +104,17 @@ export default {
 				});
 			},
 			Detail: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
+				return easyResponse(req, h, async (PLD, _) => {
 					return await AGENT.getDetail(PLD);
 				});
 			},
 			Inspect: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
+				return easyResponse(req, h, async (PLD, _) => {
 					return await AGENT.inspect(PLD);
 				});
 			},
 			Create: async (req: Request, h: ResponseToolkit) => {
-				return easyResponse(req, h, async (PLD, CRED) => {
+				return easyResponse(req, h, async (PLD, _) => {
 					// check if exists
 					{
 						const apmAgent = await APMAgent.findOne({
@@ -232,6 +241,39 @@ export default {
 						return AGENT_STORE.search(PLD);
 					});
 				},
+			},
+		},
+		Ownership: {
+			Runable: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, _) => {
+					const ownedAgentNames = await Ownership.find({ owner: PLD.owner }).distinct('agentName');
+					const apmAgent = await APMAgent.findOne({ name: PLD.name });
+					if (!apmAgent) {
+						throw new EmpError('AGENT_NOT_FOUND', `Agent ${PLD.name} not found`);
+					}
+					return apmAgent.isPublic || ownedAgentNames.includes(PLD.name);
+				});
+			},
+			Set: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, _) => {
+					const apmAgent = await APMAgent.findOne({ name: PLD.name });
+					if (!apmAgent) {
+						throw new EmpError('AGENT_NOT_FOUND', `Agent ${PLD.name} not found`);
+					}
+					if (apmAgent.isPublic) {
+						throw new EmpError('AGENT_IS_PUBLIC', `Add ownership is not allowed for pulbic agent`);
+					}
+					return await new Ownership({ agentName: PLD.name, owner: PLD.owner }).save();
+				});
+			},
+			Remove: async (req: Request, h: ResponseToolkit) => {
+				return easyResponse(req, h, async (PLD, _) => {
+					const apmAgent = await APMAgent.findOne({ name: PLD.name });
+					if (!apmAgent) {
+						throw new EmpError('AGENT_NOT_FOUND', `Agent ${PLD.name} not found`);
+					}
+					return await Ownership.deleteOne({ agentName: PLD.name, owner: PLD.owner });
+				});
 			},
 		},
 	},

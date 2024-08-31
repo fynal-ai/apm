@@ -124,7 +124,10 @@ async function RegisterUser(req: Request, h: ResponseToolkit) {
 				});
 				personalTenant = await personalTenant.save({ session });
 			} else {
-				throw new EmpError('ALREADY_EXIST', `${PLD.account} has been occupied`);
+				throw new EmpError(
+					'PERSONAL_TENANT_ALREADY_EXIST',
+					`Tenant ${PLD.account} has been occupied`
+				);
 			}
 
 			PLD.password = Crypto.encrypt(PLD.password);

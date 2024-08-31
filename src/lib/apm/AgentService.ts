@@ -9,6 +9,7 @@ import {
 	APMAgentServiceRun,
 	APMAgentServiceRunType,
 } from '../../database/models/APMAgentServiceRun.js';
+import { Ownership } from '../../database/models/Ownership.js';
 import EmpError from '../EmpError.js';
 import { AGENT } from './Agent.js';
 import { AGENT_RESULT_CONSUMER } from './AgentResultConsumer.js';
@@ -85,6 +86,15 @@ class AgentService {
 		const apmAgent = await AGENT.getDetail({ name: payload.name, version: payload.version });
 		if (!apmAgent) {
 			throw new EmpError('AGENT_NOT_FOUND', `Agent ${payload.name} not found`);
+		}
+		if (apmAgent.isPublic === false) {
+			const ownedAgentNames = await Ownership.find({ owner: payload.owner }).distinct('agentName');
+			if (ownedAgentNames.indexOf(payload.name) === -1) {
+				throw new EmpError(
+					'AGENT_NOT_OWNED',
+					`Agent ${payload.name} not executable for ${payload.owner}`
+				);
+			}
 		}
 
 		{

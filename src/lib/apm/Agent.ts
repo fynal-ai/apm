@@ -3,6 +3,7 @@ import child_process from 'child_process';
 import * as crypto from 'crypto';
 import fs from 'fs-extra';
 import path from 'path';
+import { marked as Marked } from 'marked';
 import JwtAuth from '../../auth/jwt-strategy.js';
 import ServerConfig from '../../config/server.js';
 import { APMAgent, APMAgentType } from '../../database/models/APMAgent.js';
@@ -20,10 +21,11 @@ class Agent {
 		const detail = await this.getDBDetail(payload);
 
 		this.replaceRemoteEndpoints(detail);
+		this.replaceMarkdownToHTML(detail);
 
 		return detail;
 	}
-	async inspect(payload) {
+	async inspect(payload: any) {
 		const { spec } = payload;
 
 		if (!spec) {
@@ -46,7 +48,11 @@ class Agent {
 			return apmAgent;
 		}
 	}
-	replaceRemoteEndpoints(detail) {
+
+	replaceMarkdownToHTML(detail: any) {
+		detail.doc = Marked.parse(detail.doc.replace(/\\n/g, '\n'), {}).replace(/\\n/g, '<br>');
+	}
+	replaceRemoteEndpoints(detail: any) {
 		if (detail?.executor === 'remote') {
 			let baseURL = 'https://apmemp.baystoneai.com';
 			detail.endpoints = {
@@ -59,7 +65,7 @@ class Agent {
 			};
 		}
 	}
-	async getDBDetail(payload): Promise<APMAgentType> {
+	async getDBDetail(payload: any): Promise<APMAgentType> {
 		const filters = { name: payload.name };
 
 		if (payload.version) {
@@ -68,13 +74,13 @@ class Agent {
 
 		return await APMAgent.findOne(filters).sort({ version: -1 }).lean();
 	}
-	async login(payload) {
+	async login(payload: any) {
 		// cache apm auth
 		await this.getConfigFileCreate();
 		// login to agent store
 		return await AGENT_STORE.login(payload.username, payload.password);
 	}
-	async install(payload) {
+	async install(payload: any) {
 		const { spec } = payload;
 
 		if (!spec) {

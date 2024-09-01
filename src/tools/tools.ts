@@ -1,6 +1,5 @@
 import { Cheerio, Element } from 'cheerio';
 import Jimp from 'jimp';
-import { marked as Marked } from 'marked';
 import Cache from '../lib/Cache.js';
 import EmpError from '../lib/EmpError.js';
 import { Types } from 'mongoose';

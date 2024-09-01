@@ -648,7 +648,7 @@ const internals = {
 
 		{
 			method: 'POST',
-			path: '/apm/agent/ownership/runable',
+			path: '/apm/agent/ownership/isrunable',
 			handler: Handlers.APM.Ownership.Runable,
 			config: {
 				tags: ['api'],

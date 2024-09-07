@@ -190,13 +190,17 @@ const internals = {
 							.description('agent input params and output example')
 							.example({
 								input: {
-									style: '水墨画',
+									style: 'Painting',
 									prompt: '无边落木萧萧下，不尽长江滚滚来。',
 								},
 								output: {
 									text: "![Create a serene landscape using the style of traditional Chinese ink painting. Focus on capturing the essence of the poem 'Wild Geese Flapping Down, Endless River Rolling On'. Emphasize the interplay of light and shadow to evoke a sense of tranquility and depth. Incorporate the imagery of falling leaves and a flowing river, ensuring the composition reflects the poem's themes of nature's constant cycle and the passage of time.](https://staticxin.baystoneai.com/d8daa6efa267455f9eb0635fd8ca7170.jpg)",
 								},
 							}),
+						apikey_provider: Joi.string()
+							.valid('user', 'me')
+							.required()
+							.description('Who provide the apikey'),
 						executor: Joi.string()
 							.valid('python', 'nodejs', 'aiwork')
 							.required()
@@ -223,6 +227,10 @@ const internals = {
 							.required()
 							.description('agent name')
 							.example('fynal-ai/flood_control'),
+						apikey_provider: Joi.string()
+							.valid('user', 'me')
+							.description('agent  apikey provider')
+							.example('me'),
 						executor: Joi.string()
 							.valid('python', 'nodejs', 'remote')
 							.description('agent executor')
@@ -273,7 +281,7 @@ const internals = {
 							.example('fynal-ai/flood_control'),
 						version: Joi.string().allow('').description('agent version').example('1.0.1'),
 						input: Joi.object().required().description('agent input').example({
-							prompt: '潘家塘最大降雨量多少？',
+							prompt: 'Who is who?',
 							start_time: 1715961600,
 							end_time: 1721364927,
 						}),

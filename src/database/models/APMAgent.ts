@@ -15,6 +15,7 @@ const schema = new Schema(
 			output: { type: Object },
 		},
 		executor: { type: String },
+		apikey_provider: { type: String, default: 'me' },
 		executorConfig: { type: Object },
 		md5: { type: String },
 		runMode: { type: String, enum: ['sync', 'async'] },

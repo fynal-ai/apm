@@ -269,6 +269,7 @@ class Agent {
 			}
 		}
 	}
+
 	async edit(PLD) {
 		const apmAgent = await APMAgent.findOneAndUpdate(
 			{ _id: PLD._id },
@@ -279,6 +280,7 @@ class Agent {
 					icon: PLD.icon,
 					doc: PLD.doc,
 					config: PLD.config,
+					apikey_provider: PLD.apikey_provider,
 					executor: PLD.executor,
 					runMode: PLD.runMode,
 				},
@@ -301,6 +303,7 @@ class Agent {
 		const author = PLD.author;
 		const agentName = PLD.name.split('/').at(-1);
 		const executor = PLD.executor;
+		const apikey_provider = PLD.apikey_provider;
 
 		const localRepositoryDir = ServerConfig.apm.localRepositoryDir;
 		const templateDir = path.resolve(localRepositoryDir, 'apm-init', executor);
@@ -339,6 +342,9 @@ class Agent {
 						fileContent = fileContent.replace(/{{NAME}}/g, agentName);
 						fileContent = fileContent.replace(/{{PORT}}/g, ServerConfig.hapi.port);
 						fileContent = fileContent.replace(/{{ACCESS_TOKEN}}/g, this.accessToken);
+						if (file === 'agent.json') {
+							fileContent = fileContent.replace(/{{APIKEY_PROVIDER}}/g, apikey_provider);
+						}
 						await fs.writeFile(filePath, fileContent);
 					}
 				}

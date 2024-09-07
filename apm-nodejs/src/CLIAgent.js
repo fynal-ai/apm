@@ -204,6 +204,20 @@ Install local Agent Folders together to APM Server:
 				options.executor = answers.executor;
 			}
 
+			// apikey_provider
+			if (!options.apikey_provider) {
+				const answers = await inquirer.prompt({
+					type: 'list',
+					name: 'apikey_provider',
+					message: 'API Key Provider:',
+					choices: [
+						{ name: 'from User', value: 'user' },
+						{ name: 'from Me', value: 'me' },
+					],
+				});
+				options.apikey_provider = answers.apikey_provider;
+			}
+
 			// force
 			if (!options.force) {
 				const agentName = options.name.split('/').at(-1);
@@ -235,6 +249,7 @@ Install local Agent Folders together to APM Server:
 			}
 		}
 	}
+
 	async login(options) {
 		try {
 			console.log('Login or register to Agent Store...');

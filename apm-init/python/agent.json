@@ -1,6 +1,7 @@
 {
 	"author": "{{AUTHOR}}",
 	"name": "{{AUTHOR}}/{{NAME}}",
+	"apikey_provider": "{{APIKEY_PROVIDER}}",
 	"version": "0.0.1",
 	"label": "HelloPythonAgent",
 	"description": "APM python agent template",

@@ -210,9 +210,11 @@ class APMAgent {
 			throw new Error(`Error while list apm agent: ${error.message}`);
 		}
 	}
-	async init({ author, name, executor = 'nodejs', force = false } = {}) {
+	async init({ author, name, executor = 'nodejs', apikey_provider = 'me', force = false } = {}) {
 		try {
-			console.log(`Try init a agent for author ${author}, name ${name}, executor ${executor} `);
+			console.log(
+				`Try init a agent for author ${author}, name ${name}, executor ${executor}, apikey_provider: ${apikey_provider} `
+			);
 			if (!author || !name) {
 				throw new Error('author and name are required');
 			}
@@ -240,7 +242,7 @@ class APMAgent {
 					const response = await axios({
 						method: 'POST',
 						url: '/apm/agent/init',
-						data: { author, name, executor },
+						data: { author, name, executor, apikey_provider },
 						responseType: 'stream',
 
 						baseURL: this.apmBaseURL,
@@ -578,6 +580,7 @@ class APMAgent {
 					doc: payload.doc,
 					config: payload.config,
 					executor: payload.executor,
+					apikey_provider: payload.apikey_provider,
 					runMode: payload.runMode,
 				},
 				baseURL: this.apmBaseURL,
